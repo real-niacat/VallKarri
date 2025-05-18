@@ -6,30 +6,30 @@ SMODS.Joker {
             "{X:inactive,C:mult,s:1.9}#1#I{C:mult,s:1.9} Mult",
             "Increase {C:attention}[N]{} by {C:attention}1{} if played hand contains {C:attention}9{} scored {C:attention}9s{}.",
             "{C:inactive,s:0.6}Limited at N=100",
-            "Increase {C:attention}[I]{} by {C:attention}0.09{} per 9 scored.",
+            "Increase {C:attention}[I]{} by {C:attention}#4#{} per 9 scored.",
             "{C:inactive,s:0.9}Currently #2##3#{}",
             quote("lily"),
             credit("Scraptake")
         }
     },
-    config = { extra = { op = 1, ex = 2 } },
+    config = { extra = { op = 1, ex = 2, inc = 0.09 } },
     loc_vars = function(self, info_queue, card)
         local string = "{N}"
-        return {vars = {string, "{" .. card.ability.extra.op .. "}", card.ability.extra.ex} }
+        return {vars = {string, "{" .. card.ability.extra.op .. "}", card.ability.extra.ex, card.ability.extra.inc} }
     end,
     rarity = "valk_selfinsert",
     atlas = "main",
     pos = {x = 0, y = 0},
     soul_pos = {x = 1, y = 0},
     cost = 500,
-    immutable = true,
+    -- immutable = true,
     calculate = function(self, card, context)
         if context.cardarea == G.play then
 
             if context.individual then
 
                 if context.other_card:get_id() == 9 then
-                    card.ability.extra.ex = card.ability.extra.ex + 0.09
+                    card.ability.extra.ex = card.ability.extra.ex + card.ability.extra.inc
                 end
         
             end

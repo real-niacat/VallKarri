@@ -64,8 +64,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Femtanyl",
         text = {
-            "Prevents death at the cost of {C:attention}-#1#{} joker slot.",
-            "Cost increases by {C:attention}+#2#{} Joker slots when death is prevented.",
+            "Prevents death at the cost of {C:attention}#1#{} joker slot.",
+            "Cost increases by {C:attention}#2#{} Joker slots when death is prevented.",
             "{C:inactive}Does not prevent death if you end up below 3 joker slots.{}",
             "{C:inactive}When death is prevented, earn {C:money}$8{}",
             quote("femtanyl"),

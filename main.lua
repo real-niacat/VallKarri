@@ -31,6 +31,9 @@ SMODS.Atlas {
     py = 95,
 }
 
+maxArrow = 1e5
+-- lovely patch is used if pwx is installed - as this should override since it's a larger limit anyway lol
+
 
 merge_recipes = {
 
@@ -119,8 +122,13 @@ SMODS.Rarity {
 
 assert(SMODS.load_file("Items/helpers.lua"))()
 assert(SMODS.load_file("Items/consumables.lua"))()
-assert(SMODS.load_file("Items/jokers.lua"))()
 assert(SMODS.load_file("Items/ante.lua"))()
+
+assert(SMODS.load_file("Items/Jokers/subepic.lua"))()
+assert(SMODS.load_file("Items/Jokers/epic.lua"))()
+assert(SMODS.load_file("Items/Jokers/legendary.lua"))()
+assert(SMODS.load_file("Items/Jokers/exotic.lua"))()
+assert(SMODS.load_file("Items/Jokers/exoticplus.lua"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
 Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
