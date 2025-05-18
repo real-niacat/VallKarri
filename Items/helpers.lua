@@ -11,7 +11,8 @@ function quote(character)
         quilla2 = "and no, lily isn't lying.",
         niko = "sorry im not wearing the twink bowtie :c",
         orivander = "Behold, the absolute force of gravity",
-        raxd = "NUCLEAR BOMB!??!?!?"
+        raxd = "NUCLEAR BOMB!??!?!?",
+        femtanyl = "we r online. we r online."
     }
 
     -- return " " --disable for now
