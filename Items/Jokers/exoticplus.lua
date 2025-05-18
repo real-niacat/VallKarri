@@ -4,7 +4,7 @@ SMODS.Joker {
         name = "Lily Felli",
         text = {
             "{X:inactive,C:mult,s:1.9}#1#I{C:mult,s:1.9} Mult",
-            "Increase {C:attention}[N]{} by {C:attention}1{} if played hand contains {C:attention}9{} scored {C:attention}9s{}.",
+            "Increase {C:attention}[N]{} by {C:attention}#5#{} if played hand contains {C:attention}9{} scored {C:attention}9s{}.",
             "{C:inactive,s:0.6}Limited at N=100",
             "Increase {C:attention}[I]{} by {C:attention}#4#{} per 9 scored.",
             "{C:inactive,s:0.9}Currently #2##3#{}",
@@ -12,17 +12,17 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { op = 1, ex = 2, inc = 0.09 } },
+    config = { extra = { op = 1, ex = 2, inc = 0.09, opinc = 1 } },
     loc_vars = function(self, info_queue, card)
         local string = "{N}"
-        return {vars = {string, "{" .. card.ability.extra.op .. "}", card.ability.extra.ex, card.ability.extra.inc} }
+        return {vars = {string, "{" .. card.ability.extra.op .. "}", card.ability.extra.ex, card.ability.extra.inc, card.ability.extra.opinc} }
     end,
     rarity = "valk_selfinsert",
     atlas = "main",
     pos = {x = 0, y = 0},
     soul_pos = {x = 1, y = 0},
     cost = 500,
-    -- immutable = true,
+    immutable = true,
     calculate = function(self, card, context)
         if context.cardarea == G.play then
 
@@ -44,7 +44,7 @@ SMODS.Joker {
                 end
             end
             if (nines >= 9) then
-                card.ability.extra.op = card.ability.extra.op + 1
+                card.ability.extra.op = card.ability.extra.op + card.ability.extra.opinc
                 if card.ability.extra.op > 100 then
                     card.ability.extra.op = 100
                 end
