@@ -3,8 +3,8 @@ local config = {
     base_arrows = 1,
     base_arrow_inc = function(x) return x+math.sqrt(x) end,
 
-    base_exponent = 1.5,
-    base_exponent_inc = function(x) return x+math.sqrt(x) end,
+    base_exponent = 2,
+    base_exponent_inc = function(x) return x+(2*math.sqrt(x)) end,
 
     ante_base_inc = 1,
     ante_exponent = 2,
@@ -23,7 +23,6 @@ function ease_ante(x)
 
     if next(SMODS.find_mod('entr')) then
         if (G.GAME.chips and G.GAME.blind.chips) then
-
 
 
             -- print("Valid chips to enable anti-overscoring")
