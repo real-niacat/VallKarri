@@ -88,6 +88,7 @@ SMODS.Consumable {
         text = {
             "{C:attention}+#1# Hand size {}and {C:attention}Card selection limit{}",
             "Creates {C:cry_azure,s:1.5}The Entropic Lordess{}",
+            credit("Scraptake")
         }
     },
     key = "lordcall",
