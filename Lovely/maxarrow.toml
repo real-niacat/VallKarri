@@ -1,0 +1,12 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS jen "Jen.lua"]'''
+pattern = '''maxArrow = 2.5e4'''
+position = "at"
+payload = '''maxArrow = 1e5'''
+match_indent = true
