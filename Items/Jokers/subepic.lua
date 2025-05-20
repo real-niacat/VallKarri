@@ -22,7 +22,7 @@ SMODS.Joker {
             return {chips = card.ability.extra.curchips}
         end
 
-        if (context.end_of_round and not context.blueprint) then
+        if (context.end_of_round and not context.blueprint and not context.individual) then
 
             card.ability.extra.curchips = card.ability.extra.curchips + card.ability.extra.inc
             card.ability.extra.inc = card.ability.extra.inc + card.ability.extra.incsq
