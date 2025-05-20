@@ -112,10 +112,10 @@ SMODS.Joker {
         G.jokers.config.card_limit = G.jokers.config.card_limit + 1
 
         if context.individual and context.cardarea == G.play then
-            local card2 = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'valk_quilla')
-			card2:set_edition("e_polychrome", true)
+            local card2 = create_card('Consumeables', G.consumeables, nil, nil, nil, nil, nil, 'valk_quilla')
+			card2:set_edition("e_negative", true)
 			card2:add_to_deck()
-			G.jokers:emplace(card2)
+			G.consumeables:emplace(card2)
         end 
 
         if context.joker_main then

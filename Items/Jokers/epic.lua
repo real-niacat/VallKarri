@@ -78,7 +78,7 @@ SMODS.Joker {
     end,
     rarity = "cry_epic",
     atlas = "main",
-    pos = {x=0, y=9},
+    pos = {x=0, y=5},
     soul_pos = {x=1, y=5},
     cost = 15,
     calculate = function(self, card, context)

@@ -48,3 +48,38 @@ SMODS.Joker {
 
     end
 }
+
+SMODS.Joker {
+    key = "lilac",
+    loc_txt = {
+        name = "Lilac Lilybean",
+        text = {
+            "Creates a random {C:attention}food joker{} at end of round.",
+            "Earn {C:money}$#1#{} when boss blind defeated.",
+            quote("lilac"),
+            credit("Scraptake")
+        }
+    },
+    config = { extra = {money = 54.01} },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.money}}
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = {x=0,y=9},
+    soul_pos = {x=1,y=7},
+    cost = 20, 
+    calculate = function(self, card, context)
+        if (context.end_of_round) then
+
+            local c = create_card("Food", G.jokers, nil, nil, nil, nil, nil, "valk_lilac")
+            c:add_to_deck()
+            G.jokers:emplace(c)
+
+            if (G.GAME.blind.boss) then
+                ease_dollars(card.ability.extra.money)
+            end
+
+        end
+    end
+}
