@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+# initiate variables
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "rental_rate = 3,"
+position = "after"
+payload = '''
+  external_data = {},
+'''
+match_indent = true

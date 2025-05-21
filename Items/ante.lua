@@ -10,7 +10,7 @@ local config = {
     ante_exponent = 2,
     ante_dollar_influence = 1,
 
-    arrow_inc_threshold = 5,
+    arrow_inc_threshold = 2,
 }
 
 

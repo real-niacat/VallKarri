@@ -2,6 +2,16 @@ function credit(artist)
 	return ('{C:dark_edition,s:0.6,E:2}Art by : ' .. artist .. '{}')
 end
 
+function placeholder()
+    return {x=0, y=0}
+    -- do note, this is done to make it *clearer* that a joker is a placeholder
+    -- this does obviously not save space
+end
+
+external_joker_data = {
+    
+}
+
 function quote(character)
     -- assume character is in quotes because i'm not a fucking idiot
     local quotes = {
@@ -13,7 +23,8 @@ function quote(character)
         orivander = "Behold, the absolute force of gravity",
         raxd = "NUCLEAR BOMB!??!?!?",
         femtanyl = "we r online. we r online.",
-        lilac = "A medium iced cappuccino, p-please."
+        lilac = "A medium iced cappuccino, p-please.",
+        ovilidoth = "NO QUOTE RIGHT NOW PLEASE",
     }
 
     -- return " " --disable for now

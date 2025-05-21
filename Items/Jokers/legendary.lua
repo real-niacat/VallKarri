@@ -66,11 +66,11 @@ SMODS.Joker {
     end,
     rarity = 4,
     atlas = "main",
-    pos = {x=0,y=9},
+    pos = {x=0,y=7},
     soul_pos = {x=1,y=7},
     cost = 20, 
     calculate = function(self, card, context)
-        if (context.end_of_round) then
+        if (context.end_of_round and not context.blueprint and not context.individual) then
 
             local c = create_card("Food", G.jokers, nil, nil, nil, nil, nil, "valk_lilac")
             c:add_to_deck()
