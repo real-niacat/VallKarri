@@ -87,7 +87,7 @@ SMODS.Consumable {
         name = "The Lordess Call",
         text = {
             "{C:attention}+#1# Hand size {}and {C:attention}Card selection limit{}",
-            "Creates {C:cry_azure,s:1.5}The Entropic Lordess{}",
+            "Creates {C:cry_azure,s:1.5}The Dormant Lordess{}",
             credit("Scraptake")
         }
     },
@@ -113,7 +113,7 @@ SMODS.Consumable {
         G.hand:change_size(card.ability.extra.morecards)
         G.hand.config.highlighted_limit = G.hand.config.highlighted_limit + card.ability.extra.morecards
 
-        local lily = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_valk_lily", "valk_lordcall")
+        local lily = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_valk_dormantlordess", "valk_lordcall")
         lily:add_to_deck()
         G.jokers:emplace(lily)
         lily:juice_up(0.3, 0.5)

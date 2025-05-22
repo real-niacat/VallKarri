@@ -2,11 +2,13 @@ function credit(artist)
 	return ('{C:dark_edition,s:0.6,E:2}Art by : ' .. artist .. '{}')
 end
 
-function placeholder()
-    return {x=0, y=0}
-    -- do note, this is done to make it *clearer* that a joker is a placeholder
-    -- this does obviously not save space
-end
+short_sprites = {
+    placeholder = {x=0,y=0},
+
+    halo = {x=2, y=2}
+}
+
+
 
 external_joker_data = {
     
@@ -15,7 +17,8 @@ external_joker_data = {
 function quote(character)
     -- assume character is in quotes because i'm not a fucking idiot
     local quotes = {
-        lily = "ehe, i'm not that powerful! go ask Quilla!",
+        lily = "thank you. that feels much better.",
+        lily2 = "i'm not all that, go ask Quilla",
         illena = "i'm here to help, nothing better to do.",
         quilla = "sorry i can't help you directly, i don't want to hurt anything.",
         quilla2 = "and no, lily isn't lying.",
@@ -25,6 +28,8 @@ function quote(character)
         femtanyl = "we r online. we r online.",
         lilac = "A medium iced cappuccino, p-please.",
         ovilidoth = "NO QUOTE RIGHT NOW PLEASE",
+        dormant = "I'm missing something.",
+        dormant2 = "Help me find it and I'll make it worth your time."
     }
 
     -- return " " --disable for now

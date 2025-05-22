@@ -37,7 +37,8 @@ maxArrow = 1e5
 
 merge_recipes = {
 
-    {input = {"c_cry_gateway", "c_cry_pointer", "c_soul"}, output = "c_valk_lordcall"}    
+    {input = {"c_cry_gateway", "c_cry_pointer", "c_soul"}, output = "c_valk_lordcall"},
+    {input = {"j_valk_dormantlordess", "j_valk_keystonefragment"}, output = "j_valk_lily"}   
 
 }
 
@@ -111,11 +112,27 @@ SMODS.Rarity {
 }
 
 SMODS.Rarity {
+    key = 'unobtainable',
+    loc_txt = {
+        name = 'U N O B T A I N A B L E'
+    },
+    badge_colour = HEX("CE3EA3")
+}
+
+SMODS.Rarity {
     key = 'unsurpassed',
     loc_txt = {
         name = 'Unsurpassed'
     },
     badge_colour = HEX("B080FF")
+}
+
+SMODS.Rarity {
+    key = 'equip',
+    loc_txt = {
+        name = 'Equippable..?'
+    },
+    badge_colour = HEX("EB4D4D")
 }
 
 

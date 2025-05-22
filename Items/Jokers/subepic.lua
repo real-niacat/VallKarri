@@ -14,7 +14,7 @@ SMODS.Joker {
     end,
     rarity = 2,
     atlas = "main",
-    pos = {x=0, y=9},
+    pos = {x=5, y=2},
     soul_pos = {x=6, y=2},
     cost = 4,
     calculate = function(self, card, context)
@@ -122,14 +122,14 @@ SMODS.Joker {
         name = "{C:money}Key{C:red}stone {C:money}Frag{C:red}ment",
         text = {
             "Channels the power from the {C:edition,X:dark_edition}Infinite{}",
-            "Slightly reduces blind size, but it is better used {C:edition,X:dark_edition}elsewhere...{}",
+            "Does nothing, it is better used {C:edition,X:dark_edition}elsewhere...{}",
         }
     },
     config = { extra = {  } },
-    rarity = 3,
-    atlas = "phold",
-    pos = placeholder(),
-    soul_pos = placeholder(),
+    rarity = "valk_equip",
+    atlas = "main",
+    pos = {x=4,y=2},
+    soul_pos = {x=2,y=2}, --halo
     cost = 66,
 
     calculate = function(self, card, context)

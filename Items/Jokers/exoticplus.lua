@@ -1,4 +1,37 @@
 SMODS.Joker {
+    key = "dormantlordess",
+    loc_txt = {
+        name = "{C:cry_azure}The Dormant Lordess",
+        text = {
+            "{C:mult}+#1#{} Mult",
+            quote("dormant"),
+            quote("dormant2"),
+            credit("Scraptake (Edit by Lily)")
+        }
+    },
+    config = { extra = { mult_bonus = 9 } },
+    loc_vars = function(self, info_queue, card)
+        local string = "{N}"
+        return {vars = {card.ability.extra.mult_bonus} }
+    end,
+    rarity = "valk_unsurpassed",
+    atlas = "main",
+    pos = {x = 3, y = 0},
+    soul_pos = {x = 4, y = 0, extra = {x = 4, y = 1}},
+    cost = 500,
+    immutable = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+
+            return {
+                mult = card.ability.extra.mult_bonus
+            }
+        end
+    end
+}
+
+SMODS.Joker {
     key = "lily",
     loc_txt = {
         name = "Lily Felli",
@@ -9,6 +42,7 @@ SMODS.Joker {
             "Increase {C:attention}[I]{} by {C:attention}#4#{} per 9 scored.",
             "{C:inactive,s:0.9}Currently #2##3#{}",
             quote("lily"),
+            quote("lily2"),
             credit("Scraptake")
         }
     },
@@ -20,7 +54,8 @@ SMODS.Joker {
     rarity = "valk_selfinsert",
     atlas = "main",
     pos = {x = 0, y = 0},
-    soul_pos = {x = 1, y = 0},
+    -- soul_pos = {x=short_sprites.halo.x, y=short_sprites.halo.y, extra = {x=1,y=0}},
+    soul_pos = {x=3,y=2},
     cost = 500,
     immutable = true,
     calculate = function(self, card, context)
@@ -76,7 +111,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
 
     end,
-    rarity = "valk_quillagod",
+    rarity = "valk_unobtainable",
     atlas = "main",
     pos = {x=0,y=3},
     soul_pos = {x=1, y=3},
