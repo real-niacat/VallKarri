@@ -6,7 +6,7 @@
 --- MOD_DESCRIPTION: I genuinely cannot give you a consistent description of what to expect from this mod.
 --- BADGE_COLOUR: e5bf3a
 --- DEPENDENCIES: [JenLib, Talisman, Cryptid]
---- VERSION: 0.0.0a
+--- VERSION: 0.0.1
 --- PRIORITY: 2147483647
 
 
