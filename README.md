@@ -1,7 +1,7 @@
 lily's terrible balatro mod
 
 features
-- 9 or so jokers
+- 12 new jokers
 - 2 consumables
 - 2 new mechanics
 - overscoring:
