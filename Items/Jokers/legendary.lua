@@ -70,7 +70,7 @@ SMODS.Joker {
     soul_pos = {x=1,y=7},
     cost = 20, 
     calculate = function(self, card, context)
-        if (context.end_of_round and not context.blueprint and not context.individual) then
+        if (context.end_of_round and not context.repetition and not context.individual and not context.blueprint) then
 
             local c = create_card("Food", G.jokers, nil, nil, nil, nil, nil, "valk_lilac")
             c:add_to_deck()

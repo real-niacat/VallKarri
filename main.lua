@@ -100,7 +100,8 @@ SMODS.Rarity {
     loc_txt = {
         name = 'The Obligatory Self-Insert Overpowered Character'
     },
-    badge_colour = G.C.CRY_TWILIGHT
+    badge_colour = G.C.CRY_TWILIGHT,
+    pools = { ["Joker"] = true },
 }
 
 SMODS.Rarity {
@@ -108,7 +109,8 @@ SMODS.Rarity {
     loc_txt = {
         name = '???'
     },
-    badge_colour = G.C.CRY_DAWN
+    badge_colour = G.C.CRY_DAWN,
+    pools = { ["Joker"] = true },
 }
 
 SMODS.Rarity {
@@ -116,7 +118,8 @@ SMODS.Rarity {
     loc_txt = {
         name = 'U N O B T A I N A B L E'
     },
-    badge_colour = HEX("CE3EA3")
+    badge_colour = HEX("CE3EA3"),
+    pools = { ["Joker"] = true },
 }
 
 SMODS.Rarity {
@@ -124,7 +127,8 @@ SMODS.Rarity {
     loc_txt = {
         name = 'Unsurpassed'
     },
-    badge_colour = HEX("B080FF")
+    badge_colour = HEX("B080FF"),
+    pools = { ["Joker"] = true },
 }
 
 SMODS.Rarity {
@@ -132,7 +136,11 @@ SMODS.Rarity {
     loc_txt = {
         name = 'Equippable..?'
     },
-    badge_colour = HEX("EB4D4D")
+    badge_colour = HEX("EB4D4D"),
+    pools = { ["Joker"] = true },
+	get_weight = function(self, weight, object_type)
+		return 0.2
+	end,
 }
 
 

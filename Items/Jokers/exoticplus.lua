@@ -56,6 +56,7 @@ SMODS.Joker {
     pos = {x = 0, y = 0},
     -- soul_pos = {x=short_sprites.halo.x, y=short_sprites.halo.y, extra = {x=1,y=0}},
     soul_pos = {x=3,y=2},
+    no_doe = true,
     cost = 500,
     immutable = true,
     calculate = function(self, card, context)
@@ -115,6 +116,7 @@ SMODS.Joker {
     atlas = "main",
     pos = {x=0,y=3},
     soul_pos = {x=1, y=3},
+    no_doe = true,
     cost = 2e100,
 
     update = function(self, card, front)

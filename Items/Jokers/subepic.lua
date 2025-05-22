@@ -131,13 +131,5 @@ SMODS.Joker {
     pos = {x=4,y=2},
     soul_pos = {x=2,y=2}, --halo
     cost = 66,
-
-    calculate = function(self, card, context)
-
-        if (context.setting_blind and not context.individual) then
-            G.GAME.blind.chips = G.GAME.blind.chips * 0.76 
-        end
-
-    end
 }
 -- watcher does NOT always look stupid 

@@ -24,7 +24,7 @@ SMODS.Joker {
     end,
     --  (select(2, next(SMODS.find_card("c_valk_gravitywell")))):destroy()
     add_to_deck = function(self, card, from_debuff)
-        if (not from_debuff and #SMODS.find_card("c_valk_gravitywell") == 0) then
+        if (not from_debuff) then
             local ability = create_card("Consumable", G.consumeables, nil, nil, nil, nil, "c_valk_gravitywell", "orivander")
             ability:add_to_deck()
             
