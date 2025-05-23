@@ -25,6 +25,13 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
+    key = "tau",
+    path = "tauic_sprites.png",
+    px = 71,
+    py = 95,
+}
+
+SMODS.Atlas {
     key = "phold",
     path = "placeholder.png",
     px = 71,
@@ -132,6 +139,15 @@ SMODS.Rarity {
 }
 
 SMODS.Rarity {
+    key = 'tauic',
+    loc_txt = {
+        name = 'Tauic'
+    },
+    badge_colour = HEX("B080FF"),
+    pools = { ["Joker"] = true },
+}
+
+SMODS.Rarity {
     key = 'equip',
     loc_txt = {
         name = 'Equippable..?'
@@ -139,7 +155,7 @@ SMODS.Rarity {
     badge_colour = HEX("EB4D4D"),
     pools = { ["Joker"] = true },
 	get_weight = function(self, weight, object_type)
-		return 0.2
+		return 0.002
 	end,
 }
 
@@ -153,6 +169,9 @@ assert(SMODS.load_file("Items/Jokers/subepic.lua"))()
 assert(SMODS.load_file("Items/Jokers/epic.lua"))()
 assert(SMODS.load_file("Items/Jokers/legendary.lua"))()
 assert(SMODS.load_file("Items/Jokers/exotic.lua"))()
+
+assert(SMODS.load_file("Items/Jokers/tau.lua"))()
+
 assert(SMODS.load_file("Items/Jokers/exoticplus.lua"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
