@@ -12,6 +12,7 @@ tauics = {
     {base = "j_cartomancer", tau = "j_valk_tau_cartomancer"},
     {base = "j_rocket", tau = "j_valk_tau_rocket"},
     {base = "j_oops", tau = "j_valk_tau_oops"},
+    {base = "j_troubadour", tau = "j_valk_tau_troubadour"},
 }
 
 function tauic_check()
@@ -284,7 +285,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Obelisk{}",
         text = {
-            "Gains {X:mult,C:white}X#1#{} Mult if",
+            "Gains {X:mult,C:white}X#1#{} Mult per scored card if",
             "played hand is not your most played {C:attention}poker hand{}",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
             credit("Scraptake")
@@ -343,7 +344,7 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-        if (context.using_consumeable and pseudorandom("tau_cartomancer", 1, card.ability.extra.prob) <= (card.ability.extra.min * G.GAME.proabbilities.normal) ) then
+        if (context.using_consumeable and pseudorandom("tau_cartomancer", 1, card.ability.extra.prob) <= (card.ability.extra.min * G.GAME.probabilities.normal) ) then
             local tarot = create_card("Tarot", G.consumeables, nil, nil, nil, nil, nil, "tauic_cartomancer")
             tarot:add_to_deck()
             G.consumeables:emplace(tarot)
@@ -442,4 +443,53 @@ SMODS.Joker {
 
     end,
 
+}
+
+SMODS.Joker {
+    key = "tau_troubadour",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Troubadour{}",
+        text = {
+            "{C:attention}+#1#{} hand size when card scored",
+            "Convert hand size beyond {C:attention}#2#{} to consumable slots at a {C:attention}#3# : 1{} ratio",
+            "Convert consumable slots beyond {C:attention}#2#{} to joker slots at a {C:attention}#3# : 1{} ratio",
+            "Convert joker slots beyond {C:attention}#2#{} to shop slots at a {C:attention}#3# : 1{} ratio",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { max = 100, gain = 1, ratio = 5} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gain, card.ability.extra.max, card.ability.extra.ratio } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=9, y=1},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.individual and context.cardarea == G.play then
+
+            G.hand.config.card_limit = G.hand.config.card_limit + card.ability.extra.gain
+            -- change_shop_size(center_table.extra)
+
+            if (G.hand.config.card_limit > card.ability.extra.max) then
+                G.hand.config.card_limit = G.hand.config.card_limit - card.ability.extra.ratio
+                G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.gain
+            end
+
+            if (G.consumeables.config.card_limit > card.ability.extra.max) then
+                G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.ratio
+                G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.gain
+            end
+
+            if (G.jokers.config.card_limit > card.ability.extra.max) then
+                G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.ratio
+                change_shop_size(card.ability.extra.gain)
+            end
+
+        end
+
+    end
 }
