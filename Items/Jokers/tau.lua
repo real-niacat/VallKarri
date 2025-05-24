@@ -26,6 +26,14 @@ tauics = {
     {base = "j_troubadour", tau = "j_valk_tau_troubadour"},
 }
 
+legendary_tauics = {
+    {base = "j_canio", tau = "j_valk_tau_canio"},
+    {base = "j_triboulet", tau = "j_valk_tau_triboulet"},
+    {base = "j_yorick", tau = "j_valk_tau_yorick"},
+    {base = "j_chicot", tau = "j_valk_tau_chicot"},
+    {base = "j_perkeo", tau = "j_valk_tau_perkeo"},
+}
+
 function tauic_check()
     if (#G.jokers.cards > 0) then
         local jkr = select(2,next(G.jokers.cards))
@@ -105,6 +113,64 @@ SMODS.Consumable {
 
             
 
+        end
+
+    end
+
+
+
+}
+
+SMODS.Consumable {
+    set = "SpecialCards",
+    key = "absolutetau",
+
+    cost = 150,
+    atlas = "main",
+    pos = {x=3, y=5},
+
+    loc_txt = { 
+        name = "Absolute Tau",
+        text = {
+            "Converts all legendary jokers into {C:cry_ember}Tauic{} {C:legendary}legendary{} joker",
+            "{C:inactive}(If no applicable jokers, create a random {C:cry_ember}Tauic{} {C:legendary}Legendary{}{C:inactive}){}",
+            credit("Scraptake")
+        }
+    },
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, area, copier) 
+
+        local worked = false
+        if (#G.jokers.cards > 0) then
+            local joker = select(2,next(G.jokers.cards))
+
+            for j,tauic in ipairs(legendary_tauics) do
+
+                if (joker.config.center_key == tauic.base) then
+                    joker:set_ability(G.P_CENTERS[tauic.tau])
+                    worked = true
+                end
+
+            end
+
+            
+
+        end
+
+        if (not worked) then
+            local legendary_keys = {}
+            for i,t in ipairs(legendary_tauics) do
+                table:insert(legendary_keys, t.tau)
+            end
+
+            
+
+            simple_create("Joker", G.jokers, table:random_element(legendary_keys))
+            
         end
 
     end
@@ -540,6 +606,196 @@ SMODS.Joker {
             if (context.joker_main) then
                 return {e_mult = 1 + (card.ability.extra.gain * count), e_chips = 1 + (card.ability.extra.gain * count)}
             end
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_canio",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Canio{}",
+        text = {
+            "{X:dark_edition,C:white}+^^#1#{} Mult when any card destroyed",
+            "{C:inactive}Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { gain = 0.2, cur = 1} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gain, card.ability.extra.cur } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=3, y=9, extra = {x=3, y=8}},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if (context.remove_playing_cards) then
+
+            card.ability.extra.cur = card.ability.extra.cur + (card.ability.extra.gain * #context.removed)
+
+        end
+
+        if (context.joker_main) then
+            return {ee_mult = card.ability.extra.cur}
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_triboulet",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Triboulet{}",
+        text = {
+            "{X:mult,C:white}^#1#{} Mult when any face card or Ace is scored",
+            "Increases by {X:mult,C:white}+^#2#{} when any face card or Ace is scored",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { gain = 0.02, cur = 1} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.cur, card.ability.extra.gain } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=4, y=9, extra = {x=4, y=8}},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if (context.individual and context.cardarea == G.play and context.other_card:get_id() >= 11) then
+
+            card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
+            return {e_mult = card.ability.extra.cur}
+
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_yorick",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Yorick{}",
+        text = {
+            "{X:mult,C:white}^#1#{} Mult",
+            "Increases by {X:mult,C:white}+^#2#{} when any card discarded",
+            "Scales {C:attention}Quadratically{}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { gainsq = 0.02, gain = 0.02, cur = 1} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.cur, card.ability.extra.gain } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=5, y=9, extra = {x=5, y=8}},
+    cost = 4,
+    no_doe = true,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+        
+        if (context.discard) then
+
+            card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
+            card.ability.extra.gain = card.ability.extra.gain + card.ability.extra.gainsq
+
+        end
+
+        if (context.joker_main) then
+            return {e_mult = card.ability.extra.cur}
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_chicot",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Chicot{}",
+        text = {
+            "Disables effect of every {C:attention}Boss Blind{}",
+            "{X:dark_edition,C:white}^^(1 / #1#){} blind size",
+            "{C:inactive}(Ineffective at large blind sizes)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { antitetration = 50} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.antitetration } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=6, y=9, extra = {x=6, y=8}},
+    cost = 4,
+    no_doe = true,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+        
+
+        if context.setting_blind then
+            
+
+            if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
+                G.GAME.blind:disable()
+                play_sound('timpani')
+                card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+            end
+
+            G.GAME.blind.chips = to_big(G.GAME.blind.chips):arrow(2, 1 / card.ability.extra.antitetration)
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            G.HUD_blind:recalculate()
+
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_perkeo",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Perkeo{}",
+        text = {
+            "Create {C:attention}#1#{} copies of a random consumable when exiting shop",
+            "Remove {C:dark_edition}negative{} from {C:attention}#2#{} random consumable at end of round",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { antitetration = 50} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.antitetration } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=7, y=9, extra = {x=7, y=8}},
+    cost = 4,
+    no_doe = true,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+        
+
+        if context.setting_blind then
+            
+
+            if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
+                G.GAME.blind:disable()
+                play_sound('timpani')
+                card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+            end
+
+            G.GAME.blind.chips = to_big(G.GAME.blind.chips):arrow(2, 1 / card.ability.extra.antitetration)
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            G.HUD_blind:recalculate()
+
         end
 
     end

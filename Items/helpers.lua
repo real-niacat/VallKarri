@@ -62,9 +62,24 @@ function table:superset(t_a, t_b)
     return valid
 end
 
+function table:random_element(table)
+    local keys = {}
+    for key in pairs(table) do
+        table.insert(keys, key)
+    end
+    local random_key = keys[math.random(#keys)]
+    return table[random_key]
+end
+
 function destroy_first_instance(key)
     local found = SMODS.find_card(key)
     if #found > 0 then
         (select(2, next(found))):destroy()
     end
+end
+
+function simple_create(type, area, key)
+    local card = create_card(type, area, nil, nil, nil, nil, key, "simple_create")
+    card:add_to_deck()
+    area:emplace(card)
 end
