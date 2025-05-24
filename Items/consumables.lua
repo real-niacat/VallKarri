@@ -37,6 +37,8 @@ SMODS.Consumable {
         }
     },
 
+    no_doe = true,
+
     config = { extra = { multifactor = 0.5, stored = to_big(0), active = true, rounds = 0} },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.multifactor, card.ability.extra.active and "charging up" or "discharging", card.ability.extra.stored, card.ability.extra.rounds}}

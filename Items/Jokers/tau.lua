@@ -10,6 +10,8 @@ tauics = {
     {base = "j_mime", tau = "j_valk_tau_mime"},
     {base = "j_obelisk", tau = "j_valk_tau_obelisk"},
     {base = "j_cartomancer", tau = "j_valk_tau_cartomancer"},
+    {base = "j_rocket", tau = "j_valk_tau_rocket"},
+    {base = "j_oops", tau = "j_valk_tau_oops"},
 }
 
 function tauic_check()
