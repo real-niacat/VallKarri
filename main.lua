@@ -26,7 +26,7 @@ SMODS.Atlas {
 
 SMODS.Atlas {
     key = "tau",
-    path = "tauic_sprites.png",
+    path = "tauics.png",
     px = 71,
     py = 95,
 }
@@ -177,4 +177,6 @@ assert(SMODS.load_file("Items/Jokers/exoticplus.lua"))()
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
 Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
 Cryptid.pointerblistifytype("rarity", "valk_unsurpassed", nil)
+Cryptid.pointerblistifytype("rarity", "valk_tauic", nil)
+
 
