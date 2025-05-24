@@ -46,7 +46,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { op = 1, ex = 2, inc = 0.09, opinc = 1 } },
+    config = { extra = { op = 1, ex = 1, inc = 0.09, opinc = 1 } },
     loc_vars = function(self, info_queue, card)
         local string = "{N}"
         return {vars = {string, "{" .. card.ability.extra.op .. "}", card.ability.extra.ex, card.ability.extra.inc, card.ability.extra.opinc} }
@@ -93,6 +93,10 @@ SMODS.Joker {
                 hyper_mult = {card.ability.extra.op, card.ability.extra.ex}
             }
         end
+    end,
+
+    add_to_deck = function(self, card, from_debuff)
+        card.ability.cry_absolute = true
     end
 }
 
