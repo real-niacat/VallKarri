@@ -4,6 +4,17 @@ tauics = {
     {base = "j_greedy_joker",  tau = "j_valk_tau_sins"},
     {base = "j_wrathful_joker",  tau = "j_valk_tau_sins"},
     {base = "j_gluttenous_joker",  tau = "j_valk_tau_sins"},
+
+    {base = "j_jolly_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_zany_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_mad_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_crazy_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_droll_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_sly_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_wily_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_clever_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_devious_joker",  tau = "j_valk_tau_emotion"},
+    {base = "j_crafty_joker",  tau = "j_valk_tau_emotion"},
     -- localthunk PLEASE stop FUCKING WITH ME
     -- ITS SPELLED GLUTTONOUS
     {base = "j_chaos",  tau = "j_valk_tau_clown"},
@@ -327,7 +338,6 @@ SMODS.Joker {
         name = "{C:cry_ember}Tauic Cartomancer{}",
         text = {
             "{C:green}#1# in #2#{} chance to create a {C:tarot}tarot{} card when a {C:attention}consumable{} is used",
-            "{C:inactive}(Mustn't have room){}",
             credit("Scraptake")
         }
     },
@@ -489,6 +499,47 @@ SMODS.Joker {
                 change_shop_size(card.ability.extra.gain)
             end
 
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_emotion",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Emotional Joker{}",
+        text = {
+            "{X:dark_edition,C:white}+^#1#{} Chips & Mult per {C:attention}poker hand{} contained in played hand",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { gain = 1} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gain } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=1, y=0},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if (context.poker_hands) then
+            local count = 0
+            
+            for i,hand in pairs(context.poker_hands) do
+                
+                if (hand and next(hand) ~= nil) then
+                    -- print(hand)
+                    count = count + 1
+                end
+            end
+
+
+            if (context.joker_main) then
+                return {e_mult = 1 + (card.ability.extra.gain * count), e_chips = 1 + (card.ability.extra.gain * count)}
+            end
         end
 
     end
