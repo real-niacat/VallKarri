@@ -149,6 +149,11 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
+        if (context.other_card) then 
+            if ((not context.other_card.edition)) then
+                context.other_card:set_edition("e_negative", true)
+            end
+        end
 
         G.jokers.config.card_limit = G.jokers.config.card_limit + 1
 
@@ -156,17 +161,26 @@ SMODS.Joker {
             local card2 = create_card('Consumeables', G.consumeables, nil, nil, nil, nil, nil, 'valk_quilla')
 			card2:set_edition("e_negative", true)
 			card2:add_to_deck()
-			G.consumeables:emplace(card2)
+			G.jokers:emplace(card2)
+
+            local card3 = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'valk_quilla')
+			card3:set_edition("e_negative", true)
+			card3:add_to_deck()
+			G.consumeables:emplace(card3)
         end 
 
         if context.joker_main then
             return {
-                mult = G.GAME.blind.chips
+                mult = to_big(G.GAME.blind.chips):arrow(66,666)
             }
         end
 
 
         
 
+    end,
+
+    calc_dollar_bonus = function(self, card)
+        return G.GAME.dollars ^ 2
     end
 }

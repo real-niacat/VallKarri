@@ -116,7 +116,7 @@ function ease_ante(x)
             -- announce
             -- format: jl.a(txt, duration, size, col, snd, sndpitch, sndvol)
 
-            if (anteChange) > 0 then
+            if (to_big(anteChange)) > to_big(0) then
 
                 local realchange = x * (1+anteChange)
 
@@ -149,7 +149,12 @@ function Game:update(dt)
     fakeupd(self, dt)
 
     if (G.GAME.blind) then
-        G.GAME.blind.overchips = to_big(G.GAME.blind.chips):arrow(config.base_arrows, config.base_exponent)
+
+        if (G.GAME.blind.boss) then
+            G.GAME.blind.overchips = "Overscoring at " .. to_big(G.GAME.blind.chips):arrow(config.base_arrows, config.base_exponent) .. " chips."
+        else
+            G.GAME.blind.overchips = "Upcoming..."
+        end
     end
 
 end
@@ -177,7 +182,7 @@ function create_UIBox_HUD_blind()
                         n = G.UIT.O,
                         config = {
                             object = DynaText({
-                                string = { { ref_table = G.GAME.blind, ref_value = "overchips", prefix = "Overscoring at ", suffix = " chips on boss." } },
+                                string = { { ref_table = G.GAME.blind, ref_value = "overchips"} },
                                 colours = { G.C.UI.TEXT_LIGHT },
                                 shadow = true,
                                 float = true,
