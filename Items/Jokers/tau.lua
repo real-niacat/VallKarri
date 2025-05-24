@@ -769,7 +769,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { antitetration = 50} },
+    config = { extra = { copies = 2, reverse = 1} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.antitetration } }
     end,
@@ -783,19 +783,23 @@ SMODS.Joker {
     calculate = function(self, card, context)
         
 
-        if context.setting_blind then
+        if context.ending_shop then
+            
             
 
-            if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
-                G.GAME.blind:disable()
-                play_sound('timpani')
-                card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+            local c = copy_card(table:random_element(G.consumeables.cards))
+            c:set_edition("e_negative", true)
+
+            if (SMODS.find_mod("inc")) then
+                
             end
 
-            G.GAME.blind.chips = to_big(G.GAME.blind.chips):arrow(2, 1 / card.ability.extra.antitetration)
-            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
-            G.HUD_blind:recalculate()
+            G.consumeables:emplace(c)
 
+        end
+
+        if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+            table:random_element(G.consumeables.cards):set_edition("e_negative",false)
         end
 
     end
