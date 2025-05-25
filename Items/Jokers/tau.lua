@@ -771,7 +771,7 @@ SMODS.Joker {
     },
     config = { extra = { copies = 2, reverse = 1} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.antitetration } }
+        return { vars = { card.ability.extra.copies, card.ability.extra.reverse } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -786,20 +786,65 @@ SMODS.Joker {
         if context.ending_shop then
             
             
-
-            local c = copy_card(table:random_element(G.consumeables.cards))
-            c:set_edition("e_negative", true)
-
-            if (SMODS.find_mod("inc")) then
-                
+            
+            if G.consumeables.cards[1] then
+                for i = 1, card.ability.extra.copies do
+                    G.E_MANAGER:add_event(Event({
+                        func = function() 
+                            local total, checked, center = 0, 0, nil
+                            for i = 1, #G.consumeables.cards do
+                                total = total + (G.consumeables.cards[i]:getQty())
+                            end
+                            local poll = pseudorandom(pseudoseed('tau_perkeo')) * total
+                            for i = 1, #G.consumeables.cards do
+                                checked = checked + (G.consumeables.cards[i]:getQty())
+                                if checked >= poll then
+                                    center = G.consumeables.cards[i]
+                                    break
+                                end
+                            end
+                            local copied_card = copy_card(center, nil)
+                            copied_card.ability.qty = 1
+                            copied_card.ability.infinite = nil
+                            copied_card:set_edition({negative = true}, true)
+                            copied_card:add_to_deck()
+                            G.consumeables:emplace(copied_card) 
+                            return true
+                        end
+                    }))
+                end
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
+                -- return {calculated = true}
             end
-
-            G.consumeables:emplace(c)
 
         end
 
         if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-            table:random_element(G.consumeables.cards):set_edition("e_negative",false)
+
+            if G.consumeables.cards[1] then
+                G.E_MANAGER:add_event(Event({
+                    func = function() 
+                        local total, checked, center = 0, 0, nil
+                        for i = 1, #G.consumeables.cards do
+                            total = total + (G.consumeables.cards[i]:getQty())
+                        end
+                        local poll = pseudorandom(pseudoseed('tau_perkeo')) * total
+                        for i = 1, #G.consumeables.cards do
+                            checked = checked + (G.consumeables.cards[i]:getQty())
+                            if checked >= poll and G.consumeables.cards[i].edition then
+                                center = G.consumeables.cards[i]
+                                break
+                            end
+                        end
+                        if (center) then 
+                            center:set_edition({negative = false}, true)
+                        end
+                        return true
+                    end
+                }))
+                -- return {calculated = true}
+            end
+            
         end
 
     end
