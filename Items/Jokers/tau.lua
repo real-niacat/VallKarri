@@ -144,34 +144,12 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier) 
 
-        local worked = false
-        if (#G.jokers.cards > 0) then
-            local joker = select(2,next(G.jokers.cards))
-
-            for j,tauic in ipairs(legendary_tauics) do
-
-                if (joker.config.center_key == tauic.base) then
-                    joker:set_ability(G.P_CENTERS[tauic.tau])
-                    worked = true
-                end
-
-            end
-
-            
-
+        local legendary_keys = {}
+        for i,t in ipairs(legendary_tauics) do
+            table.insert(legendary_keys, t.tau)
         end
-
-        if (not worked) then
-            local legendary_keys = {}
-            for i,t in ipairs(legendary_tauics) do
-                table:insert(legendary_keys, t.tau)
-            end
-
-            
-
-            simple_create("Joker", G.jokers, table:random_element(legendary_keys))
-            
-        end
+        
+        simple_create("Joker", G.jokers, legendary_keys[math.random(#legendary_keys)])
 
     end
 

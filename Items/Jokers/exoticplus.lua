@@ -1,4 +1,55 @@
 SMODS.Joker {
+    key = "scraptake",
+    loc_txt = {
+        name = "Scraptake",
+        text = {
+            "{X:dark_edition,C:white,s:1.3}^^[M]{} Mult",
+            "Earn {C:money}$#2#{} per hand played",
+            "{C:inactive}(M = Owned jokers from Vall-Karri ^ Enhanced cards in deck)",
+            quote("scraptake"),
+            quote("scraptake2"),
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { money = 15 } },
+    loc_vars = function(self, info_queue, card)
+        local string = "{N}"
+        return {vars = {card.ability.extra.money} }
+    end,
+    rarity = "valk_unsurpassed",
+    atlas = "main",
+    pos = {x = 7, y = 0},
+    soul_pos = {x = 9, y = 0, extra = {x = 8, y = 0}},
+    cost = 500,
+    immutable = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+            ease_dollars(card.ability.extra.money)
+            local calced, b = 0, 0
+
+            for i,jok in ipairs(G.jokers.cards) do
+                if (jok.config.center_key.find("valk")) then
+                    calced = calced + 1
+                end
+            end
+
+            for _, playing_card in pairs(G.playing_cards) do
+                if next(SMODS.get_enhancements(playing_card)) then
+                    b = b + 1
+                end
+            end
+
+            calced = calced ^ b
+
+            return {
+                ee_mult = calced
+            }
+        end
+    end
+}
+
+SMODS.Joker {
     key = "dormantlordess",
     loc_txt = {
         name = "{C:cry_azure}The Dormant Lordess",

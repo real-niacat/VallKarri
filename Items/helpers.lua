@@ -29,7 +29,9 @@ function quote(character)
         lilac = "A medium iced cappuccino, p-please.",
         ovilidoth = "NO QUOTE RIGHT NOW PLEASE",
         dormant = "I'm missing something.",
-        dormant2 = "Help me find it and I'll make it worth your time."
+        dormant2 = "Help me find it and I'll make it worth your time.",
+        scraptake = "",
+        scraptake2 = "",
     }
 
     -- return " " --disable for now
