@@ -50,6 +50,35 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "hornet",
+    -- feb 14th 2019
+    loc_txt = {
+        name = "Hornet",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult for every day since {C:attention}Hollow Knight Silksong{} was announced",
+            "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+            quote("hornet"),
+            credit("Scraptake"),
+        }
+    },
+    config = { extra = {gain = 0.1}},
+    loc_vars = function(self,info_queue,card)
+        return {vars = {card.ability.extra.gain, card.ability.extra.gain * days_since(2019, 2, 14)}}
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = {x=5,y=0},
+    soul_pos = {x=6,y=0},
+    cost = 20,
+    calculate = function(self, card, context) 
+        if (context.joker_main) then
+            return {x_mult = card.ability.extra.gain * days_since(2019, 2, 14)}
+        end
+    end
+
+}
+
+SMODS.Joker {
     key = "lilac",
     loc_txt = {
         name = "Lilac Lilybean",

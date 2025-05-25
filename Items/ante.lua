@@ -3,11 +3,11 @@ local config = {
     base_arrows = 1,
     base_arrow_inc = function(x) return x+math.sqrt(x) end,
 
-    base_exponent = 2,
+    base_exponent = 5,
     base_exponent_inc = function(x) return x+(2*math.sqrt(x)) end,
 
     ante_base_inc = 1,
-    ante_exponent = 2,
+    ante_exponent = 1,
     ante_dollar_influence = 1,
 
     arrow_inc_threshold = 2,

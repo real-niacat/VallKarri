@@ -79,7 +79,7 @@ SMODS.Consumable {
     cost = 15,
     atlas = "main",
     pos = {x=2, y=5},
-    soul_rate = 0.03,
+    soul_rate = 0.01,
 
     loc_txt = { 
         name = "Tauism",
@@ -122,24 +122,29 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
-    set = "SpecialCards",
+    set = "Spectral",
     key = "absolutetau",
 
     cost = 150,
     atlas = "main",
     pos = {x=3, y=5},
 
+    soul_rate = 0.0000,
+
     loc_txt = { 
         name = "Absolute Tau",
         text = {
-            "Converts all legendary jokers into {C:cry_ember}Tauic{} {C:legendary}legendary{} joker",
-            "{C:inactive}(If no applicable jokers, create a random {C:cry_ember}Tauic{} {C:legendary}Legendary{}{C:inactive}){}",
+            "Create a random {C:cry_ember}Tauic{} {C:legendary}Legendary{}",
             credit("Scraptake")
         }
     },
 
     can_use = function(self, card)
         return true
+    end,
+
+    in_pool = function()
+        return false 
     end,
 
     use = function(self, card, area, copier) 

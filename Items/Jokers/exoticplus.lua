@@ -4,16 +4,14 @@ SMODS.Joker {
         name = "Scraptake",
         text = {
             "{X:dark_edition,C:white,s:1.3}^^[M]{} Mult",
-            "Earn {C:money}$#2#{} per hand played",
+            "Earn {C:money}$#1#{} per hand played",
             "{C:inactive}(M = Owned jokers from Vall-Karri ^ Enhanced cards in deck)",
             quote("scraptake"),
-            quote("scraptake2"),
             credit("Scraptake")
         }
     },
     config = { extra = { money = 15 } },
     loc_vars = function(self, info_queue, card)
-        local string = "{N}"
         return {vars = {card.ability.extra.money} }
     end,
     rarity = "valk_unsurpassed",
@@ -29,7 +27,7 @@ SMODS.Joker {
             local calced, b = 0, 0
 
             for i,jok in ipairs(G.jokers.cards) do
-                if (jok.config.center_key.find("valk")) then
+                if (string.find(jok.config.center_key, "valk")) then
                     calced = calced + 1
                 end
             end
@@ -89,7 +87,7 @@ SMODS.Joker {
         text = {
             "{X:inactive,C:mult,s:1.9}#1#I{C:mult,s:1.9} Mult",
             "Increase {C:attention}[N]{} by {C:attention}#5#{} if played hand contains {C:attention}9{} scored {C:attention}9s{}.",
-            "{C:inactive,s:0.6}Limited at N=100",
+            "{C:inactive,s:0.6}Limited at N=1000",
             "Increase {C:attention}[I]{} by {C:attention}#4#{} per 9 scored.",
             "{C:inactive,s:0.9}Currently #2##3#{}",
             quote("lily"),
@@ -123,6 +121,16 @@ SMODS.Joker {
 
         end
 
+        if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
+            local search = SMODS.find_card("j_valk_scraptake")
+            if (#search > 0) then
+                card_eval_status_text(select(2,next(search)),"extra",nil,nil,nil,{message = "Good kitty!"})
+                card_eval_status_text(card,"extra",nil,nil,nil,{message = "meow!"})
+                card.ability.extra.op = card.ability.extra.op + (card.ability.extra.opinc * 3)
+            end
+
+        end
+
         if context.cardarea == G.jokers and context.before and not context.blueprint then
             local nines = 0
             for k, v in ipairs(context.scoring_hand) do
@@ -132,8 +140,8 @@ SMODS.Joker {
             end
             if (nines >= 9) then
                 card.ability.extra.op = card.ability.extra.op + card.ability.extra.opinc
-                if card.ability.extra.op > 100 then
-                    card.ability.extra.op = 100
+                if card.ability.extra.op > 1000 then
+                    card.ability.extra.op = 1000
                 end
             end
         end

@@ -2,11 +2,24 @@ function credit(artist)
 	return ('{C:dark_edition,s:0.6,E:2}Art by : ' .. artist .. '{}')
 end
 
+function concept(creator)
+	return ('{C:dark_edition,s:0.6,E:2}Idea by : ' .. creator .. '{}')
+end
+
 short_sprites = {
     placeholder = {x=0,y=0},
 
     halo = {x=2, y=2}
 }
+
+function days_since(year, month, day)
+
+    local now = os.date("*t")
+    local then_time = os.time{year=year, month=month, day=day, hour=0}
+    local diff = os.difftime(os.time(now), then_time)
+    return math.floor(diff / (60 * 60 * 24))
+
+end
 
 
 
@@ -30,8 +43,8 @@ function quote(character)
         ovilidoth = "NO QUOTE RIGHT NOW PLEASE",
         dormant = "I'm missing something.",
         dormant2 = "Help me find it and I'll make it worth your time.",
-        scraptake = "",
-        scraptake2 = "",
+        scraptake = "good kitty..",
+        hornet = "silksong tommorow",
     }
 
     -- return " " --disable for now

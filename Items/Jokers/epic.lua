@@ -101,3 +101,32 @@ SMODS.Joker {
         end
     end
 }
+
+SMODS.Joker {
+    key = "legeater",
+    loc_txt = {
+        name = "Leg-Eater",
+        text = {
+            "Creates a copy of the {C:attention}topmost{} tag when blind selected",
+            "Lose {C:money}$#1#{} when this happens",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { money = 5 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {card.ability.extra.money}}
+    end,
+    rarity = "cry_epic",
+    atlas = "main",
+    pos = {x=5, y=1},
+    soul_pos = {x=6, y=1},
+    cost = 15,
+    calculate = function(self, card, context)
+        
+        if (context.setting_blind and #G.GAME.tags > 0) then
+            add_tag(Tag(G.GAME.tags[#G.GAME.tags].key))
+            ease_dollars(-card.ability.extra.money)
+        end
+
+    end
+}
