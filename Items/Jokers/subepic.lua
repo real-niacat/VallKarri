@@ -1,4 +1,24 @@
 SMODS.Joker {
+    key = "suckit",
+    loc_txt = {
+        name = "{C:red}Suck It{}",
+        text = {
+            "Creates itself when removed",
+            "{C:inactive}Suck it.{}",
+        }
+    },
+    config = { extra = {} },
+    rarity = 1,
+    atlas = "main",
+    pos = {x=4, y=5},
+    cost = 1,
+
+    remove_from_deck = function(self, card, from_debuff)
+        simple_create("Joker", G.jokers, "j_valk_suckit")
+    end
+}
+
+SMODS.Joker {
     key = "bags",
     loc_txt = {
         name = "Bags",
@@ -12,7 +32,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.curchips, card.ability.extra.inc, card.ability.extra.incsq } }
     end,
-    rarity = 2,
+    rarity = 3,
     atlas = "main",
     pos = {x=5, y=2},
     soul_pos = {x=6, y=2},
@@ -63,8 +83,8 @@ local function level(xp, exponent)
     return {level = curlevel, xpreq = start}
 end
 
-SMODS.Joker {
--- disabledjoker = {
+-- SMODS.Joker {
+disabledjoker = {
     -- I FUCKING HATE OIL LAMP
     key = "ovilidoth",
     loc_txt = {
@@ -117,6 +137,60 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "femtanyl",
+    loc_txt = {
+        name = "Femtanyl",
+        text = {
+            "Prevents death at the cost of {C:attention}#1#{} joker slot",
+            "Return lost joker slot after {C:attention}#2#{} round(s)",
+            "Increase round timer by {C:attention}#3#{} and earn {C:money}$#4#{} when death is prevented",
+            "{C:inactive}Dying again or removing this joker while the timer is active{}",
+            "{C:inactive}will result in not recovering a joker slot{}",
+            "{C:inactive}Does not prevent death if you end up below 3 joker slots{}",
+            
+            quote("femtanyl"),
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { cost = 1, increase = 1, timer = 0, timerbase = 2, money = 10 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {card.ability.extra.cost, card.ability.extra.timerbase, card.ability.extra.increase, card.ability.extra.money}}
+    end,
+    rarity = 3,
+    atlas = "main",
+    pos = {x=0, y=5},
+    soul_pos = {x=1, y=5},
+    cost = 6,
+    calculate = function(self, card, context)
+
+        if (context.end_of_round and not context.blueprint and not context.individual) then
+            card.ability.extra.timer = card.ability.extra.timer - 1
+
+            if (card.ability.extra.timer == 0) then
+                G.jokers:change_size(card.ability.extra.cost, false)
+            end
+        end
+
+        if (context.end_of_round and not context.blueprint and context.game_over) then
+
+            local slots = G.jokers.config.card_limit - card.ability.extra.cost
+            G.jokers:change_size(-card.ability.extra.cost, false)
+            card.ability.extra.timer = card.ability.extra.timerbase
+            card.ability.extra.timerbase = card.ability.extra.timerbase + card.ability.extra.increase
+            
+
+            if (slots >= 3) then
+                ease_dollars(card.ability.extra.money)
+                return {saved = true}
+            end
+
+        end
+
+        
+    end
+}
+
+SMODS.Joker {
     key = "keystonefragment",
     loc_txt = {
         name = "{C:money}Key{C:red}stone {C:money}Frag{C:red}ment",
@@ -131,5 +205,9 @@ SMODS.Joker {
     pos = {x=4,y=2},
     soul_pos = {x=2,y=2}, --halo
     cost = 66,
+
+    in_pool = function()
+        return (#SMODS.find_card("j_valk_dormantlordess") > 0)
+    end
 }
 -- watcher does NOT always look stupid 

@@ -22,7 +22,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
 
     end,
-    --  (select(2, next(SMODS.find_card("c_valk_gravitywell")))):destroy()
+    --  (select(2, next(SMODS.find_card("c_valk_gravitywell")))):quick_dissolve()
     add_to_deck = function(self, card, from_debuff)
         if (not from_debuff) then
             local ability = create_card("Consumable", G.consumeables, nil, nil, nil, nil, "c_valk_gravitywell", "orivander")
@@ -37,7 +37,7 @@ SMODS.Joker {
         if (not from_debuff) then
             local found = SMODS.find_card("c_valk_gravitywell")
             if #found > 0 then
-                (select(2, next(found))):destroy()
+                (select(2, next(found))):quick_dissolve()
             end
         end
     end,

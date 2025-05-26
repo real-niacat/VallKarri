@@ -136,6 +136,7 @@ SMODS.Consumable {
     pos = { x = 4, y = 4 },
     atlas = "main",
     soul_rate = 0.07,
+    -- is_soul = true,
 
     config = { extra = { jokers = 1, limit = 50, base = 1.2} },
 
@@ -158,6 +159,82 @@ SMODS.Consumable {
             Cryptid.misprintize(c, {min=card.ability.extra.base, max=card.ability.extra.base+(card.ability.extra.limit/100)}, nil, true)
 
         end
+
+    end
+}
+
+SMODS.Consumable {
+    set = "Code",
+    loc_txt = { 
+        name = "://MEMORYLEAK",
+        text = {
+            "Make all jokers {C:dark_edition}Absolute{}, multiply their values by {C:attention}#1#{}",
+            "set joker slots to {C:attention}[Jokers]+#2#{} and create an {C:cry_azure}Unsurpassed{} Joker",
+            credit("Scraptake")
+        }
+    },
+    key = "memoryleak",
+    pos = { x = 3, y = 4 },
+    atlas = "main",
+    -- soul_rate = 0.07,
+    soul_rate = 2,
+    -- is_soul = true,
+
+    config = { extra = { valuemult = 1e-10, create_new = true, inc = 1} },
+
+    loc_vars = function(self, info_queue, card)
+
+        return {vars = { number_format(card.ability.extra.valuemult), card.ability.extra.inc }}
+        
+    end,
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    update = function(self, card, front)
+        
+        if (card.area == G.pack_cards and card.ability and card.ability.extra and card.ability.extra.create_new) then
+            card.ability.extra.create_new = false
+            card:quick_dissolve()
+            simple_create("Consumable", G.consumeables, "c_valk_memoryleak")
+        end
+
+    end,
+
+    add_to_deck = function(self, card, from_debuff)
+
+        if (#G.jokers.cards > 0 ) then 
+            for i,joker in ipairs(G.jokers.cards) do
+                joker:set_eternal(true)
+            end
+        end
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+
+        if (#G.jokers.cards > 0 ) then 
+            for i,joker in ipairs(G.jokers.cards) do
+                joker:set_eternal(false)
+            end
+        end
+
+    end,
+
+    use = function(self, card, area, copier)
+        
+        G.jokers.config.card_limit = #G.jokers.cards + card.ability.extra.inc
+        for i,c in ipairs(G.jokers.cards) do
+
+            Cryptid.misprintize(c, {min=card.ability.extra.valuemult,max=card.ability.extra.valuemult}, nil, true)
+
+            c.ability.cry_absolute = true
+
+        end
+
+        local jkr = create_card("Joker", G.jokers, nil, "valk_unsurpassed", nil, nil, nil, "c_valk_memoryleak")
+        jkr:add_to_deck()
+        G.jokers:emplace(jkr)
 
     end
 }

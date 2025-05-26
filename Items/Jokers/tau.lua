@@ -79,6 +79,7 @@ SMODS.Consumable {
     cost = 15,
     atlas = "main",
     pos = {x=2, y=5},
+    -- is_soul = true,
     soul_rate = 0.01,
 
     loc_txt = { 
@@ -128,7 +129,7 @@ SMODS.Consumable {
     cost = 150,
     atlas = "main",
     pos = {x=3, y=5},
-
+    -- is_soul = true,
     soul_rate = 0.0000,
 
     loc_txt = { 

@@ -89,8 +89,15 @@ end
 function destroy_first_instance(key)
     local found = SMODS.find_card(key)
     if #found > 0 then
-        (select(2, next(found))):destroy()
+        (select(2, next(found))):quick_dissolve()
     end
+end
+
+function Card:quick_dissolve()
+	self.ability.eternal = nil
+	self.ignore_incantation_consumable_in_use = true
+	self.true_dissolve = true
+	self:start_dissolve(nil, nil, nil, nil)
 end
 
 function simple_create(type, area, key)

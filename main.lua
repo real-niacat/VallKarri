@@ -3,9 +3,9 @@
 --- MOD_ID: vallkarri
 --- PREFIX: valk
 --- MOD_AUTHOR: [Lily]
---- MOD_DESCRIPTION: I genuinely cannot give you a consistent description of what to expect from this mod.
+--- MOD_DESCRIPTION: join the polterworx discord server -lily
 --- BADGE_COLOUR: e5bf3a
---- DEPENDENCIES: [JenLib, Talisman, Cryptid, incantation]
+--- DEPENDENCIES: [JenLib, Talisman, Cryptid>=0.5.6dev, incantation]
 --- VERSION: 0.0.1
 --- PRIORITY: 2147483647
 
@@ -82,7 +82,7 @@ function Card.add_to_deck(self, from_debuff)
             end
             -- destroy all cards that are part of recipe
             if table:contains(j.input, self.config.center_key) then
-                self:destroy()
+                self:quick_dissolve()
             end
 
             local swj = j.output:find("^j_")
@@ -157,7 +157,7 @@ SMODS.Rarity {
     badge_colour = HEX("EB4D4D"),
     pools = { ["Joker"] = true },
 	get_weight = function(self, weight, object_type)
-		return 0.002
+		return 0.2
 	end,
 }
 
