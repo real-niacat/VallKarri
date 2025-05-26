@@ -129,7 +129,8 @@ SMODS.Consumable {
         name = "Luck",
         text = {
             "Select {C:attention}#1#{} joker, change all values on selected joker by between {C:attention}X#2#{} and {C:attention}X#3#{}",
-            credit("Scraptake")
+            credit("Scraptake"),
+            concept("techwizard72")
         }
     },
     key = "luck",

@@ -4,6 +4,7 @@ SMODS.Joker {
         name = "{C:red}Suck It{}",
         text = {
             "Creates itself when removed",
+            "Makes itself {C:purple}eternal{} when created",
             "{C:inactive}Suck it.{}",
         }
     },
@@ -13,8 +14,43 @@ SMODS.Joker {
     pos = {x=4, y=5},
     cost = 1,
 
+    add_to_deck = function(self, card, from_debuff)
+        card:set_eternal(true)
+    end,
+
     remove_from_deck = function(self, card, from_debuff)
         simple_create("Joker", G.jokers, "j_valk_suckit")
+    end
+}
+
+SMODS.Joker {
+    key = "whereclick",
+    loc_txt = {
+        name = "{C:red}Where do I click?{}",
+        text = {
+            "Gains {X:mult,C:white}X#1#{} Mult when mouse clicked",
+            "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
+            "{C:inactive}Where do I click, Drago?{}"
+        }
+    },
+    config = { extra = {cur = 0.99, gain = 1e-3} },
+    rarity = 2,
+    atlas = "main",
+    pos = {x=4, y=6},
+    cost = 6,
+
+    loc_vars = function(self,info_queue, card)
+        return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
+    end,
+
+    calculate = function(self, card, context)
+        if context.cry_press then
+            card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
+        end
+
+        if context.joker_main then
+            return {x_mult = card.ability.extra.cur}
+        end
     end
 }
 
@@ -53,6 +89,7 @@ SMODS.Joker {
 }
 
 local function op(lvl)
+    lvl = to_big(lvl)
     if (lvl < to_big(5)) then
         return "+"
     elseif (lvl < to_big(10)) then
@@ -63,6 +100,7 @@ local function op(lvl)
 end
 
 local function strength(lvl)
+    lvl = to_big(lvl)
     if (lvl < to_big(5)) then
         return lvl * 5
     elseif (lvl < to_big(10)) then
@@ -72,20 +110,20 @@ local function strength(lvl)
     end
 end
 
-local function level(xp, exponent)
+local function level(xp)
     local start = to_big(10)
     local curlevel = to_big(0)
     while (to_big(xp) > start) do
         curlevel = curlevel + 1
-        start = start:pow(1.2 or exponent)
+        start = start:pow(to_big(1.15))
     end
 
-    return {level = curlevel, xpreq = start}
+    return {level = lenient_bignum(curlevel), xpreq = start}
 end
 
 -- SMODS.Joker {
 disabledjoker = {
-    -- I FUCKING HATE OIL LAMP
+    -- this joker is not worth my time. please shoot me
     key = "ovilidoth",
     loc_txt = {
         name = "Ovilidoth",
@@ -99,14 +137,12 @@ disabledjoker = {
 
         }
     },
-    -- config = { extra = { xp = to_big(1), }, external_data = {level = 1, req = to_big(10), scale_exp = 2} },
     config = { extra = { xp = to_big(1), } },
-    -- config = { extra = { xp = 1, }, level = 1, req = 10, scale_exp = 2},
     loc_vars = function(self, info_queue, card)
 
         local stats = level(card.ability.extra.xp)
 
-        return {vars = {(card.ability.extra.xp), stats.xpreq, stats.level, op(stats.level) .. strength(stats.level)}}
+        return {vars = {number_format(card.ability.extra.xp), number_format(stats.xpreq), number_format(stats.level), op(stats.level) .. number_format(strength(stats.level))}}
     end,
     rarity = 3,
     atlas = "main",

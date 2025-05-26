@@ -105,3 +105,7 @@ function simple_create(type, area, key)
     card:add_to_deck()
     area:emplace(card)
 end
+
+function get_first(area) 
+    return select(2,next(area))
+end
