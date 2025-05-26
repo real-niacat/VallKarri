@@ -33,9 +33,9 @@ SMODS.Joker {
 }
 
 local function op(lvl)
-    if (lvl < 5) then
+    if (lvl < to_big(5)) then
         return "+"
-    elseif (lvl < 10) then
+    elseif (lvl < to_big(10)) then
         return "X"
     else
         return "^"
@@ -43,9 +43,9 @@ local function op(lvl)
 end
 
 local function strength(lvl)
-    if (lvl < 5) then
+    if (lvl < to_big(5)) then
         return lvl * 5
-    elseif (lvl < 10) then
+    elseif (lvl < to_big(10)) then
         return lvl
     else
         return lvl / 2
@@ -53,11 +53,11 @@ local function strength(lvl)
 end
 
 local function level(xp, exponent)
-    local start = 10
-    local curlevel = 0
-    while (xp > start) do
+    local start = to_big(10)
+    local curlevel = to_big(0)
+    while (to_big(xp) > start) do
         curlevel = curlevel + 1
-        start = math.pow(start, (exponent or 1.2))
+        start = start:pow(1.2 or exponent)
     end
 
     return {level = curlevel, xpreq = start}
@@ -80,7 +80,7 @@ SMODS.Joker {
         }
     },
     -- config = { extra = { xp = to_big(1), }, external_data = {level = 1, req = to_big(10), scale_exp = 2} },
-    config = { extra = { xp = 1, } },
+    config = { extra = { xp = to_big(1), } },
     -- config = { extra = { xp = 1, }, level = 1, req = 10, scale_exp = 2},
     loc_vars = function(self, info_queue, card)
 

@@ -122,3 +122,42 @@ SMODS.Consumable {
 
     end
 }
+
+SMODS.Consumable {
+    set = "Spectral",
+    loc_txt = { 
+        name = "Luck",
+        text = {
+            "Select {C:attention}#1#{} joker, change all values on selected joker by between {C:attention}X#2#{} and {C:attention}X#3#{}",
+            credit("Scraptake")
+        }
+    },
+    key = "luck",
+    pos = { x = 4, y = 4 },
+    atlas = "main",
+    soul_rate = 0.07,
+
+    config = { extra = { jokers = 1, limit = 50, base = 1.2} },
+
+    loc_vars = function(self, info_queue, card)
+
+        return {vars = { card.ability.extra.jokers, card.ability.extra.base, card.ability.extra.base+(card.ability.extra.limit/100) }}
+        
+    end,
+
+    can_use = function(self, card)
+        return #G.jokers.highlighted <= card.ability.extra.jokers and #G.jokers.highlighted > 0
+    end,
+
+    
+
+    use = function(self, card, area, copier)
+        
+        for i,c in ipairs(G.jokers.highlighted) do
+
+            Cryptid.misprintize(c, {min=card.ability.extra.base, max=card.ability.extra.base+(card.ability.extra.limit/100)}, nil, true)
+
+        end
+
+    end
+}
