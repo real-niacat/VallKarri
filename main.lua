@@ -46,7 +46,7 @@ merge_recipes = {
 
     {input = {"c_cry_gateway", "c_cry_pointer", "c_soul"}, output = "c_valk_lordcall"},
     {input = {"j_valk_dormantlordess", "j_valk_keystonefragment"}, output = "j_valk_lily"},
-    {input = {"j_valk_keystonefragment", "c_cry_gateway", "c_cry_pointer", "c_soul", "j_valk_lily" }, output = "j_valk_quilla"},
+    -- {input = {"j_valk_keystonefragment", "c_cry_gateway", "c_cry_pointer", "c_soul", "j_valk_lily" }, output = "j_valk_quilla"},
     {input = {"c_valk_tauism", "c_soul", "c_wraith" }, output = "c_valk_absolutetau"}
 
 }

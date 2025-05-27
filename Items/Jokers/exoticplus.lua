@@ -181,7 +181,8 @@ SMODS.Joker {
     end
 }
 
-SMODS.Joker {
+-- SMODS.Joker {
+quilla = {
     key = "quilla",
     loc_txt = {
         name = "Aquilegia \"Quilla\" Felli",
