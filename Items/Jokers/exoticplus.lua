@@ -6,13 +6,14 @@ SMODS.Joker {
             "{X:dark_edition,C:white,s:1.3}^^[M]{} Mult",
             "Earn {C:money}$#1#{} per hand played",
             "{C:inactive}(M = Owned jokers from Vall-Karri ^ Enhanced cards in deck)",
+            "{C:inactive}(Currently {X:dark_edition,C:white,s:1.3}^^#2#{C:inactive} Mult)",
             quote("scraptake"),
             credit("Scraptake")
         }
     },
     config = { extra = { money = 15 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.money} }
+        return {vars = {card.ability.extra.money, scraptake_calculation()} }
     end,
     rarity = "valk_unsurpassed",
     atlas = "main",
@@ -24,22 +25,8 @@ SMODS.Joker {
         
         if context.joker_main then
             ease_dollars(card.ability.extra.money)
-            local calced, b = 0, 0
-
-            for i,jok in ipairs(G.jokers.cards) do
-                if (string.find(jok.config.center_key, "valk")) then
-                    calced = calced + 1
-                end
-            end
-
-            for _, playing_card in pairs(G.playing_cards) do
-                if next(SMODS.get_enhancements(playing_card)) then
-                    b = b + 1
-                end
-            end
-
-            calced = calced ^ b
-
+            
+            local calced = scraptake_calculation()
             return {
                 ee_mult = calced
             }
@@ -60,7 +47,6 @@ SMODS.Joker {
     },
     config = { extra = { mult_bonus = 9 } },
     loc_vars = function(self, info_queue, card)
-        local string = "{N}"
         return {vars = {card.ability.extra.mult_bonus} }
     end,
     rarity = "valk_unsurpassed",
@@ -75,6 +61,42 @@ SMODS.Joker {
 
             return {
                 mult = card.ability.extra.mult_bonus
+            }
+        end
+    end
+}
+
+SMODS.Joker {
+    key = "vallkarrilua",
+    loc_txt = {
+        name = "{C:cry_azure}Vall-Karri.lua",
+        text = {
+            "{X:dark_edition,C:white}^^^#1#{} Mult for every piece of content that {B:1,E:2,C:white}Vall-karri{} adds",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^^^#2#{C:inactive} Mult){}",
+            quote("valklua"),
+            credit("Scraptake"),
+            concept("Arris"),
+        }
+    },
+    config = { extra = { mult = 1 } },
+    loc_vars = function(self, info_queue, card)
+        local total = valk_additions()
+
+        
+
+        return {vars = {card.ability.extra.mult, total*card.ability.extra.mult, colours = {HEX("e5bf3a")}}  }
+    end,
+    rarity = "valk_unsurpassed",
+    atlas = "main",
+    pos = {x = 3, y = 6},
+    cost = 500,
+    immutable = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+
+            return {
+                eee_mult = valk_additions()*card.ability.extra.mult
             }
         end
     end

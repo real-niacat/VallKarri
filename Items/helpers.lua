@@ -45,6 +45,7 @@ function quote(character)
         dormant2 = "Help me find it and I'll make it worth your time.",
         scraptake = "good kitty..",
         hornet = "silksong tommorow",
+        valklua = "Thank you for playing <3",
     }
 
     -- return " " --disable for now
@@ -108,4 +109,34 @@ end
 
 function get_first(area) 
     return select(2,next(area))
+end
+
+function valk_additions()
+    local total = 0
+    for _, entry in pairs(G.P_CENTERS) do
+        if string.find(entry.key, "valk") then
+            total = total + 1
+        end
+    end
+
+    return total
+end
+
+function scraptake_calculation()
+    local calced, b = 0, 0
+
+    for i,jok in ipairs(G.jokers.cards) do
+        if (string.find(jok.config.center_key, "valk")) then
+            calced = calced + 1
+        end
+    end
+
+    for _, playing_card in pairs(G.playing_cards) do
+        if next(SMODS.get_enhancements(playing_card)) then
+            b = b + 1
+        end
+    end
+
+    calced = calced ^ b
+    return calced
 end
