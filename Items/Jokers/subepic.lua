@@ -121,8 +121,8 @@ local function level(xp)
     return {level = lenient_bignum(curlevel), xpreq = start}
 end
 
--- SMODS.Joker {
-disabledjoker = {
+SMODS.Joker {
+-- disabledjoker = {
     -- this joker is not worth my time. please shoot me
     key = "ovilidoth",
     loc_txt = {

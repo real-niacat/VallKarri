@@ -181,4 +181,4 @@ Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
 Cryptid.pointerblistifytype("rarity", "valk_unsurpassed", nil)
 Cryptid.pointerblistifytype("rarity", "valk_tauic", nil)
 
-
+Cryptid.mod_whitelist["Vall-karri"] = true
