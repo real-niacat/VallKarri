@@ -94,6 +94,14 @@ function destroy_first_instance(key)
     end
 end
 
+function get_first_instance(key)
+    local found = SMODS.find_card(key)
+    if #found > 0 then
+        return select(2, next(found))
+    end
+    return nil
+end
+
 function Card:quick_dissolve()
 	self.ability.eternal = nil
 	self.ignore_incantation_consumable_in_use = true
@@ -124,6 +132,11 @@ end
 
 function scraptake_calculation()
     local calced, b = 0, 0
+
+    if (not G.jokers or not G.playing_cards) then
+        return 0
+    end
+
 
     for i,jok in ipairs(G.jokers.cards) do
         if (string.find(jok.config.center_key, "valk")) then

@@ -106,7 +106,7 @@ local function strength(lvl)
     elseif (lvl < to_big(10)) then
         return lvl
     else
-        return lvl / 2
+        return (lvl / 2):pow(lvl/5)
     end
 end
 
@@ -163,7 +163,7 @@ SMODS.Joker {
             elseif (operator == "X") then
                 return {x_mult = str}
             else
-                return {e_mult = math.pow(str,lvl/5)}
+                return {e_mult = str:pow(lvl/5)}
             end
 
 

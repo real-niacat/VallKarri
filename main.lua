@@ -167,6 +167,10 @@ assert(SMODS.load_file("Items/helpers.lua"))()
 assert(SMODS.load_file("Items/consumables.lua"))()
 assert(SMODS.load_file("Items/ante.lua"))()
 
+-- assert(SMODS.load_file("Items/Jokers/minesweeper.lua"))()
+-- one day. i will fix minesweeper
+-- today is not that day.
+
 assert(SMODS.load_file("Items/Jokers/subepic.lua"))()
 assert(SMODS.load_file("Items/Jokers/epic.lua"))()
 assert(SMODS.load_file("Items/Jokers/legendary.lua"))()
