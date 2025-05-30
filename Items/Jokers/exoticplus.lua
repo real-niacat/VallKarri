@@ -156,7 +156,6 @@ SMODS.Joker {
                         jl.a(original .. " -> " .. new, "1", 1, G.C.PURPLE)
                         jl.rd(1)
 
-                        G.P_CENTER_POOLS
                     end
                 
                 end
