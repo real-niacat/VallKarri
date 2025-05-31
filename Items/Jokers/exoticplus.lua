@@ -55,6 +55,7 @@ SMODS.Joker {
     soul_pos = {x = 4, y = 0, extra = {x = 4, y = 1}},
     cost = 500,
     immutable = true,
+    pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         
         if context.joker_main then
@@ -103,13 +104,49 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "corruptedworld",
+    loc_txt = {
+        name = "{C:cry_azure}Corrupted World",
+        text = {
+            "{X:dark_edition,C:white,s:1.4}#1##2#{} Mult",
+            "Increase operator for every {C:attention}#3#{} jokers owned",
+            "Increase index by the total of all joker values",
+            credit("Scraptake"),
+            concept("techwizard72"),
+        }
+    },
+    config = { extra = { reqowned = 25 } },
+    loc_vars = function(self, info_queue, card)
+
+
+        
+
+        return {vars = {"{" .. math.ceil(jokercount() / card.ability.extra.reqowned) .. "}", totaljokervalues(), card.ability.extra.reqowned}}
+    end,
+    rarity = "valk_unsurpassed",
+    atlas = "phold",
+    pos = {x = 0, y = 0},
+    cost = 500,
+    immutable = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+
+            return {
+                hyper_mult = {math.ceil(jokercount() / card.ability.extra.reqowned), totaljokervalues()}
+            }
+        end
+    end
+}
+
+SMODS.Joker {
     key = "jokerofequality",
     loc_txt = {
         name = "{C:cry_verdant}Joker of Equality",
         text = {
             "At end of round, downgrade the rarity of {C:attention}#1#{} random jokers",
             "{C:inactive}Order:",
-            "{C:common}Common{C:inactive} < {C:uncommon}Uncommon{C:inactive} < {C:rare}Rare{C:inactive} < {C:legendary}Legendary{C:inactive} < {C:cry_exotic}Exotic{}",
+            "{C:common}Common{C:inactive} < {C:uncommon}Uncommon{C:inactive} < {C:rare}Rare{C:inactive} < {C:cry_epic}Epic{C:inactive} < {C:legendary}Legendary{C:inactive} < {C:cry_exotic}Exotic{}",
             credit("Scraptake"),
         }
     },
@@ -129,8 +166,8 @@ SMODS.Joker {
 
             for mostlyuselessiterationvariable = 1, card.ability.extra.downgrades do
                 local candidates = {}
-                local order = {1, 2, 3, 4, "cry_exotic"}
-                local names = {"Common", "Uncommon", "Rare", "Legendary", "Exotic"}
+                local order = {1, 2, 3, "cry_epic", 4, "cry_exotic"}
+                local names = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Exotic"}
                 for i, center in pairs(G.P_CENTERS) do
                     if center.rarity and table:contains(order, center.rarity) then
                         table.insert(candidates, {index = i, cen = center})
@@ -153,7 +190,7 @@ SMODS.Joker {
                         local original = names[idx]
                         local new = names[idx-1]
                         G.P_CENTERS[chosen.index].rarity = order[idx-1]
-                        local time = math.max(1 - (mostlyuselessiterationvariable/10), 0.05) 
+                        local time = math.max(1 - (mostlyuselessiterationvariable/10), 0) 
                         jl.a(original .. " -> " .. new, tostring(time), 1, G.C.PURPLE)
                         jl.rd(time)
 
@@ -274,7 +311,7 @@ quilla = {
     update = function(self, card, front)
         if card.ability and card.ability.extra.state and card.ability.extra.ctr and card.children and card.children.center and card.children.floating_sprite then
             
-            card.ability.extra.ctr = (card.ability.extra.ctr + 1) % 60
+            card.ability.extra.ctr = (card.ability.extra.ctr + 1) % 6
             if (card.ability.extra.ctr == 0) then
                 card.ability.extra.state = card.ability.extra.state + 1
                 if card.ability.extra.state > 4 then

@@ -17,6 +17,19 @@
     please don't judge if it's a bit terrible
 ]]--
 
+if (not vallkarri) then
+    vallkarri = {}
+end
+
+vallkarri = {
+    show_options_button = true,
+}
+
+vallkarri = SMODS.current_mod
+vallkarri_config = vallkarri.config
+vallkarri.enabled = copy_table(vallkarri_config)
+
+
 SMODS.Atlas {
     key = "main",
     path = "assets.png",
@@ -165,7 +178,10 @@ SMODS.Rarity {
 
 assert(SMODS.load_file("Items/helpers.lua"))()
 assert(SMODS.load_file("Items/consumables.lua"))()
-assert(SMODS.load_file("Items/ante.lua"))()
+
+if (vallkarri.config.overscoring) then
+    assert(SMODS.load_file("Items/ante.lua"))()
+end
 
 -- assert(SMODS.load_file("Items/Jokers/minesweeper.lua"))()
 -- one day. i will fix minesweeper
@@ -179,6 +195,12 @@ assert(SMODS.load_file("Items/Jokers/exotic.lua"))()
 assert(SMODS.load_file("Items/Jokers/tau.lua"))()
 
 assert(SMODS.load_file("Items/Jokers/exoticplus.lua"))()
+
+assert(SMODS.load_file("Items/tags.lua"))()
+
+assert(SMODS.load_file("Items/configui.lua"))()
+
+assert(SMODS.load_file("Items/stakes.lua"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
 Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)

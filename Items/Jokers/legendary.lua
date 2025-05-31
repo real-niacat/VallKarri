@@ -15,6 +15,7 @@ SMODS.Joker {
     end,
     rarity = 4,
     atlas = "main",
+    pools = { ["Kitties"] = true },
     pos = {x=0,y=4},
     soul_pos = {x=1,y=4},
     cost = 20,
@@ -94,6 +95,7 @@ SMODS.Joker {
         return {vars = {card.ability.extra.money}}
     end,
     rarity = 4,
+    pools = { ["Kitties"] = true },
     atlas = "main",
     pos = {x=0,y=7},
     soul_pos = {x=1,y=7},

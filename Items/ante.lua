@@ -1,27 +1,37 @@
--- i dont know how to make an ingame config - so have this
-local config = {
-    base_arrows = 1,
-    base_arrow_inc = function(x) return x+math.sqrt(x) end,
-
-    base_exponent = 5,
-    base_exponent_inc = function(x) return x+(2*math.sqrt(x)) end,
-
-    ante_base_inc = 1,
-    ante_exponent = 1,
-    ante_dollar_influence = 1,
-
-    arrow_inc_threshold = 2,
+-- i'm not making these configurable ingame
+-- sorry!
+ante_config = {
+    
 }
 
+function config_reset()
+    ante_config = {
+        base_arrows = 1,
+        base_arrow_inc = function(x) return x+math.sqrt(x) end,
+
+        base_exponent = 5,
+        base_exponent_inc = function(x) return x+(2*math.sqrt(x)) end,
+
+        ante_base_inc = 1,
+        ante_exponent = 1,
+        ante_dollar_influence = 1,
+
+        arrow_inc_threshold = 2,
+    }
+end
+
+config_reset()
 
 local easeantecopy = ease_ante
 function ease_ante(x)
-    if (x < 1) then
+    x = to_big(x)
+    if (x < to_big(1)) then
         easeantecopy(x)
         return
     end
 
-    if next(SMODS.find_mod('entr')) then
+    -- if next(SMODS.find_mod('entr')) then
+    if true then
         if (G.GAME.chips and G.GAME.blind.chips) then
 
 
@@ -31,8 +41,8 @@ function ease_ante(x)
 
 
 
-            local arrowIter = config.base_exponent --despite what its name says, this is the exponent
-            local arrowCount = config.base_arrows --req starts at beating blind size by ^2
+            local arrowIter = ante_config.base_exponent --despite what its name says, this is the exponent
+            local arrowCount = ante_config.base_arrows --req starts at beating blind size by ^2
 
             local start_ante = G.GAME.round_resets.ante
             local anteChange = 0
@@ -40,19 +50,19 @@ function ease_ante(x)
             if type(G.GAME.blind.chips) == "table" then
                 while winPot > G.GAME.blind.chips:arrow(arrowCount, arrowIter) do
                     -- print("Must hit N{" .. arrowCount .. "}" .. arrowIter .. ", +1 ante.")
-                    anteChange = anteChange + config.ante_base_inc
-                    arrowIter = config.base_exponent_inc(arrowIter)
-                    if arrowIter > (arrowCount+config.arrow_inc_threshold) then
-                        arrowIter = config.base_exponent
-                        arrowCount = config.base_arrow_inc(arrowCount)
-                        anteChange = (anteChange + config.ante_base_inc) ^ 1+(config.ante_exponent/25)
+                    anteChange = anteChange + ante_config.ante_base_inc
+                    arrowIter = ante_config.base_exponent_inc(arrowIter)
+                    if arrowIter > (arrowCount+ante_config.arrow_inc_threshold) then
+                        arrowIter = ante_config.base_exponent
+                        arrowCount = ante_config.base_arrow_inc(arrowCount)
+                        anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
                     end
                 end
             end
 
             -- print("+"..anteChange.." ante postjen")
-            anteChange = anteChange * (math.log10(G.GAME.dollars) * config.ante_dollar_influence) --every digit in your money is more ante scaling
-            anteChange = anteChange ^ config.ante_exponent --keep you on your toes, ehe
+            anteChange = anteChange * (math.log10(to_big(G.GAME.dollars) > to_big(0) and G.GAME.dollars or 1) * ante_config.ante_dollar_influence) --every digit in your money is more ante scaling
+            anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
             
 
             anteChange = math.floor(anteChange)
@@ -87,8 +97,8 @@ function ease_ante(x)
 
 
 
-            local arrowIter = config.base_exponent --despite what its name says, this is the exponent
-            local arrowCount = config.base_arrows --req starts at beating blind size by ^2
+            local arrowIter = ante_config.base_exponent --despite what its name says, this is the exponent
+            local arrowCount = ante_config.base_arrows --req starts at beating blind size by ^2
 
             local start_ante = G.GAME.round_resets.ante
             local anteChange = 0
@@ -96,19 +106,19 @@ function ease_ante(x)
             if type(G.GAME.blind.chips) == "table" then
                 while winPot > G.GAME.blind.chips:arrow(arrowCount, arrowIter) do
                     -- print("Must hit N{" .. arrowCount .. "}" .. arrowIter .. ", +1 ante.")
-                    anteChange = anteChange + config.ante_base_inc
-                    arrowIter = config.base_exponent_inc(arrowIter)
-                    if arrowIter > (arrowCount+config.arrow_inc_threshold) then
-                        arrowIter = config.base_exponent
-                        arrowCount = config.base_arrow_inc(arrowCount)
-                        anteChange = (anteChange + config.ante_base_inc) ^ 1+(config.ante_exponent/25)
+                    anteChange = anteChange + ante_config.ante_base_inc
+                    arrowIter = ante_config.base_exponent_inc(arrowIter)
+                    if arrowIter > (arrowCount+ante_config.arrow_inc_threshold) then
+                        arrowIter = ante_config.base_exponent
+                        arrowCount = ante_config.base_arrow_inc(arrowCount)
+                        anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
                     end
                 end
             end
 
             -- print("+"..anteChange.." ante postjen")
-            anteChange = anteChange * (math.log10(G.GAME.dollars) * config.ante_dollar_influence) --every digit in your money is more ante scaling
-            anteChange = anteChange ^ config.ante_exponent --keep you on your toes, ehe
+            anteChange = anteChange * (math.log10(to_big(G.GAME.dollars) > to_big(0) and G.GAME.dollars or 1) * ante_config.ante_dollar_influence) --every digit in your money is more ante scaling
+            anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
             
 
             anteChange = math.floor(anteChange)
@@ -151,9 +161,9 @@ function Game:update(dt)
     if (G.GAME.blind) then
 
         if (G.GAME.blind.boss) then
-            G.GAME.blind.overchips = "Overscoring at " .. to_big(G.GAME.blind.chips):arrow(config.base_arrows, config.base_exponent) .. " chips."
+            G.GAME.blind.overchips = "Overscoring at " .. to_big(G.GAME.blind.chips):arrow(ante_config.base_arrows, ante_config.base_exponent) .. " chips."
         else
-            G.GAME.blind.overchips = "Upcoming..."
+            G.GAME.blind.overchips = ""
         end
     end
 
@@ -165,7 +175,7 @@ function create_UIBox_HUD_blind()
     local ret = _create_UIBox_HUD_blind()
 
 
-    if (G.GAME.blind.name == "Small Blind" or G.GAME.blind.name == "Big Blind") then
+    if (not G.GAME.blind.boss) then
         return ret
     end
 
@@ -197,4 +207,49 @@ function create_UIBox_HUD_blind()
         },
     }
     return ret
+end
+
+local gba = get_blind_amount
+function get_blind_amount(ante)
+    ante = to_big(ante)
+    if (ante <= to_big(1500)) then
+        return gba(to_number(ante))
+    end
+
+
+    if (G.GAME.round_resets.ante ~= math.huge and ante <= to_big(1e300)) then
+        -- print("scaling increase branch 1 ")
+        local score = to_big(10)
+        local arrows = math.log10(ante)
+
+        -- Map ante logarithmically from 1-308 (for antes 1-1e308) to 1-10000 arrows
+        -- Use an easing function to keep arrows low at first, then ramp up faster near the end
+        local antelog = math.log10(ante)
+        local min_arrows, max_arrows = 1, 100000
+        local min_log, max_log = 1, 308
+
+        local t = (antelog - min_log) / (max_log - min_log)
+        t = math.max(0, math.min(1, t))
+
+        local eased = t^3
+        --i love exponents
+
+        arrows = min_arrows + (max_arrows - min_arrows) * eased
+        
+
+        score = score:arrow(math.ceil(arrows),math.sqrt(ante))
+
+        
+        if (score ~= math.huge) then
+            return score
+        else
+            return get_a_somewhat_large_number()
+        end
+
+    else
+        -- print("scaling increase branch 2")
+
+        return get_a_somewhat_large_number()
+
+    end
 end

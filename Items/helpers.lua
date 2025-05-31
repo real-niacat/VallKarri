@@ -141,6 +141,64 @@ function simple_create(type, area, key)
     area:emplace(card)
 end
 
+function debug_print_antes()
+
+    local ante = 1
+    local i = 1
+    local i2 = 1
+    while ante < 1e300 do
+        local blind_amount = tostring(get_blind_amount(ante) or "nil")
+        print("Ante " .. ante .. ": " .. blind_amount)
+        
+        if (ante > 15) then
+            ante = ante * 1e10
+        else
+            ante = ante + i
+        end
+    end
+
+end
+
+function jokercount()
+    if (G.jokers) then
+        return #G.jokers.cards
+    else
+        return 0
+    end
+end
+
+function totaljokervalues()
+    local total = to_big(0)
+    if (G.jokers) then
+        for i,card in ipairs(G.jokers.cards) do
+
+            if (card.ability.extra) then 
+                for j,entry in pairs(card.ability.extra) do
+                
+                    if type(entry) == "number" or (type(entry) == "table" and entry.tetrate) then
+                        total = total + entry
+                    end
+
+                end 
+            end
+
+        end
+    end
+
+
+    return total
+end
+
+function reptlog(base, lim, num)
+
+    for i = 1, lim do
+        num = math.log(num, base)
+    end
+
+    return num
+
+end
+
 function get_first(area) 
     return select(2,next(area))
 end
@@ -154,6 +212,11 @@ function valk_additions()
     end
 
     return total
+end
+
+function get_a_somewhat_large_number()
+    local largenumber = to_big(10):arrow(10,10)
+    return largenumber:arrow(10000,largenumber)
 end
 
 function scraptake_calculation()
@@ -188,20 +251,25 @@ function get_current_pool(_type, _rarity, _legendary, _append, override_equilibr
 
         local generated = 1
 
-        local rarities = {1, 2, 3, 4, "cry_exotic"}
+        local rarities = {1, 2, 3, "cry_epic", 4, "cry_exotic"}
         local roll = pseudorandom("jokerofequality", 1, 100)
 
-        if (roll <= 75) then
+        if _legendary then
+            _rarity = 4
+        end
+
+        if (roll <= 74) then
             generated = 1
-        elseif (roll <= 95) then
+        elseif (roll <= 94) then
             generated = 2
-        else
+        elseif (roll <= 99) then
             generated = 3 
+        else
+            generated = "cry_epic"
         end
 
         for i,inst in pairs(G.P_CENTERS) do
 
-            
             if (inst.rarity == (_rarity or generated) ) then
                 table.insert(ret, inst.key)
             end
@@ -215,4 +283,10 @@ function get_current_pool(_type, _rarity, _legendary, _append, override_equilibr
     local p, pk = gcpov(_type, _rarity, _legendary, _append, override_equilibrium_effect)
     return p, pk
 
+end
+
+function dvi(value)
+    for i,joker in ipairs(G.jokers.cards) do
+        Cryptid.misprintize(joker, {min=value, max=value}, false, true)
+    end
 end
