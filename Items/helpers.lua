@@ -62,6 +62,16 @@ function table:remove_by_function(t, func)
     end
 end
 
+function table:merge(t_a, t_b)
+    
+    -- add everything from t_b to t_a
+    for i, v in ipairs(t_b) do
+        table.insert(t_a, v)
+    end
+    return t_a
+
+end
+
 function table:contains(table, value)
     for i,j in ipairs(table) do
         if (j == value) then return true end
@@ -92,6 +102,22 @@ function destroy_first_instance(key)
     if #found > 0 then
         (select(2, next(found))):quick_dissolve()
     end
+end
+
+function joker_owned(key) 
+
+    if (G.jokers and G.jokers.cards) then
+
+        for i,card in ipairs(G.jokers.cards) do
+        
+            if (card.config.center.key == key) then return true end
+
+        end
+
+    end
+
+    return false
+
 end
 
 function get_first_instance(key)
@@ -152,4 +178,41 @@ function scraptake_calculation()
 
     calced = calced ^ b
     return calced
+end
+
+local gcpov = get_current_pool
+function get_current_pool(_type, _rarity, _legendary, _append, override_equilibrium_effect)
+    if _type == "Joker" and joker_owned("j_valk_jokerofequality") then
+        -- print("success")
+        local ret = {}
+
+        local generated = 1
+
+        local rarities = {1, 2, 3, 4, "cry_exotic"}
+        local roll = pseudorandom("jokerofequality", 1, 100)
+
+        if (roll <= 75) then
+            generated = 1
+        elseif (roll <= 95) then
+            generated = 2
+        else
+            generated = 3 
+        end
+
+        for i,inst in pairs(G.P_CENTERS) do
+
+            
+            if (inst.rarity == (_rarity or generated) ) then
+                table.insert(ret, inst.key)
+            end
+
+        end
+
+
+        return ret, "Joker"..(_rarity or '')
+
+    end
+    local p, pk = gcpov(_type, _rarity, _legendary, _append, override_equilibrium_effect)
+    return p, pk
+
 end

@@ -153,9 +153,11 @@ SMODS.Joker {
                         local original = names[idx]
                         local new = names[idx-1]
                         G.P_CENTERS[chosen.index].rarity = order[idx-1]
-                        jl.a(original .. " -> " .. new, "1", 1, G.C.PURPLE)
-                        jl.rd(1)
+                        local time = math.max(1 - (mostlyuselessiterationvariable/10), 0.05) 
+                        jl.a(original .. " -> " .. new, tostring(time), 1, G.C.PURPLE)
+                        jl.rd(time)
 
+                        
                     end
                 
                 end
