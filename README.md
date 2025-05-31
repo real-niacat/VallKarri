@@ -1,10 +1,3 @@
 lily's terrible balatro mod
 
-features
-- 12 new jokers
-- 2 consumables
-- 2 new mechanics
-- overscoring:
-prevents "winning too hard" by throwing you forward a few antes if you overscore on the boss blind.
-- merging:
-certain card combinations, when obtained, will forcefully merge into one card. trust me, this is in your favor.
+i don't feel like keeping an accurate counter of the content i add - just download and see for yourself :3
