@@ -108,6 +108,9 @@ SMODS.Joker {
         if context.joker_main then
             local n = 1 + (1 / math.log10(mult))
             -- print(n)
+            if (n == math.huge) then
+                n = 1
+            end
             return {eee_mult = n}
         end
 
