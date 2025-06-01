@@ -175,7 +175,6 @@ SMODS.Rarity {
 }
 
 
-
 assert(SMODS.load_file("Items/helpers.lua"))()
 assert(SMODS.load_file("Items/consumables.lua"))()
 

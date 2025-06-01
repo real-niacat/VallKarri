@@ -15,6 +15,8 @@ function config_reset()
 
         arrow_inc_threshold = 1,
         arrow_exponent = 1.15,
+
+        limit = 1500,
     }
 end
 
@@ -98,9 +100,10 @@ function shrdr_sfx()
 end
 
 local fakeupd = Game.update
+local alltime = 0
 
 function Game:update(dt)
-
+    alltime = alltime + dt
     fakeupd(self, dt)
 
     if (G.GAME.blind) then
@@ -110,6 +113,12 @@ function Game:update(dt)
         else
             G.GAME.blind.overchips = ""
         end
+    end
+
+    if (G.GAME.round_resets.ante and to_big(G.GAME.round_resets.ante) > to_big(ante_config.limit) ) then
+        G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) .. "X"
+
+        G.GAME.round_resets.ante_disp = corrupt_text(G.GAME.round_resets.ante_disp, 0.05)
     end
 
 end
@@ -157,7 +166,7 @@ end
 local gba = get_blind_amount
 function get_blind_amount(ante)
     ante = to_big(ante)
-    if (ante <= to_big(1500)) then
+    if (ante <= to_big(ante_config.limit)) then
         return gba(to_number(ante))
     end
 

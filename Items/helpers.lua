@@ -159,6 +159,21 @@ function debug_print_antes()
 
 end
 
+function corrupt_text(text, amount)
+
+    local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[];:',.<>/?|"
+    -- amount is a 0-1 being a chance to replace each character with a rnd one
+
+    for i = 1, #text do
+        if math.random() < amount then
+            local rand_index = math.random(1, #chars)
+            local random_char = chars:sub(rand_index, rand_index)
+            text = text:sub(1, i-1) .. random_char .. text:sub(i+1)
+        end
+    end
+    return text
+end
+
 function jokercount()
     if (G.jokers) then
         return #G.jokers.cards
@@ -201,6 +216,10 @@ end
 
 function get_first(area) 
     return select(2,next(area))
+end
+
+function run_debug()
+    assert(SMODS.load_file("debug.lua", "vallkarri"))()
 end
 
 function valk_additions()
@@ -277,7 +296,22 @@ function get_current_pool(_type, _rarity, _legendary, _append, override_equilibr
         end
 
 
+        -- print(tostring() .. " vs " .. tostring(table:contains(gcpov(_type, _rarity, _legendary, _append, override_equilibrium_effect), "j_joker")) )
+        --done to test if base joker is in vanilla pool vs my pool
+
+        if (table:contains(ret, "j_joker") and not table:contains(gcpov(_type, _rarity, _legendary, _append, override_equilibrium_effect), "j_joker")) then
+
+            -- print("removing j_joker from pool")
+            for i,inst in ipairs(ret) do
+                if (inst == "j_joker") then
+                    table.remove(ret, i)
+                    break
+                end
+            end
+        end
+
         return ret, "Joker"..(_rarity or '')
+        -- if i ever kill myself i want you to consider this hook of 'get_current_pool' as a potential reason
 
     end
     local p, pk = gcpov(_type, _rarity, _legendary, _append, override_equilibrium_effect)
