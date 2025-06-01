@@ -172,7 +172,7 @@ function totaljokervalues()
     if (G.jokers) then
         for i,card in ipairs(G.jokers.cards) do
 
-            if (card.ability.extra) then 
+            if (card.ability.extra and type(card.ability.extra) == "table") then 
                 for j,entry in pairs(card.ability.extra) do
                 
                     if type(entry) == "number" or (type(entry) == "table" and entry.tetrate) then

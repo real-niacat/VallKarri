@@ -16,7 +16,7 @@ SMODS.Stake {
         name = "Glowing Stake",
         -- colour = "Yellow",
         text = {
-        "{C:attention}Overscoring{} is substantially harsher",
+        "{C:attention}Overscoring{} is substantially more harsh",
         "and starts earlier"
         }
     },
@@ -25,7 +25,29 @@ SMODS.Stake {
     modifiers = function()
         ante_config.base_arrows = 0
         ante_config.ante_exponent = 1.1
-        ante_config.arrow_inc_threshold = 3
         ante_config.base_exponent = 2
+    end
+}
+
+SMODS.Stake {
+    key = "corrupted",
+    applied_stakes = { "valk_glowing" },
+    above_stake = "valk_glowing",
+    prefix_config = { applied_stakes = {mod = false}, above_stake = {mod = false} },
+    pos = { x = 1, y = 0 },
+    atlas = "stakes",
+    loc_txt = {
+        name = "Corrupted Stake",
+        -- colour = "Yellow",
+        text = {
+        "{C:attention}Overscoring{} is {C:red}extremely{} harsh",
+        }
+    },
+    colour = G.C.red,
+    shiny = false,
+    modifiers = function()
+        ante_config.base_arrows = 0
+        ante_config.ante_exponent = 1.4
+        ante_config.base_exponent = 1.3
     end
 }

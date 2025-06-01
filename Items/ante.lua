@@ -7,16 +7,14 @@ ante_config = {
 function config_reset()
     ante_config = {
         base_arrows = 1,
-        base_arrow_inc = function(x) return x+math.sqrt(x) end,
 
         base_exponent = 5,
-        base_exponent_inc = function(x) return x+(2*math.sqrt(x)) end,
 
         ante_base_inc = 1,
         ante_exponent = 1,
-        ante_dollar_influence = 1,
 
-        arrow_inc_threshold = 2,
+        arrow_inc_threshold = 1,
+        arrow_exponent = 1.15,
     }
 end
 
@@ -24,20 +22,17 @@ config_reset()
 
 local easeantecopy = ease_ante
 function ease_ante(x)
+
+
     x = to_big(x)
     if (x < to_big(1)) then
         easeantecopy(x)
         return
     end
 
-    -- if next(SMODS.find_mod('entr')) then
-    if true then
-        if (G.GAME.chips and G.GAME.blind.chips) then
 
-
-            -- print("Valid chips to enable anti-overscoring")
-            -- anteshredder is a mechanic where if you overscore by far too much, the ante will be increased to compensate
-            local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
+    if (G.GAME.chips and G.GAME.blind.chips) then
+        local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
 
 
 
@@ -46,22 +41,26 @@ function ease_ante(x)
 
             local start_ante = G.GAME.round_resets.ante
             local anteChange = 0
+            local scalefactor = to_big(2)
+            
+            local i = 1
 
             if type(G.GAME.blind.chips) == "table" then
-                while winPot > G.GAME.blind.chips:arrow(arrowCount, arrowIter) do
-                    -- print("Must hit N{" .. arrowCount .. "}" .. arrowIter .. ", +1 ante.")
+                while winPot > G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) do
+                    i = i + 1
+                    print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor))
+                    scalefactor = scalefactor:tetrate(2)
                     anteChange = anteChange + ante_config.ante_base_inc
-                    arrowIter = ante_config.base_exponent_inc(arrowIter)
-                    if arrowIter > (arrowCount+ante_config.arrow_inc_threshold) then
+                    arrowIter = arrowIter + 1
+                    if arrowIter > (ante_config.arrow_inc_threshold) then
                         arrowIter = ante_config.base_exponent
-                        arrowCount = ante_config.base_arrow_inc(arrowCount)
+                        arrowCount = arrowCount * ante_config.arrow_exponent
                         anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
                     end
                 end
             end
 
             -- print("+"..anteChange.." ante postjen")
-            anteChange = anteChange * (math.log10(to_big(G.GAME.dollars) > to_big(0) and G.GAME.dollars or 1) * ante_config.ante_dollar_influence) --every digit in your money is more ante scaling
             anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
             
 
@@ -70,81 +69,27 @@ function ease_ante(x)
             -- announce
             -- format: jl.a(txt, duration, size, col, snd, sndpitch, sndvol)
 
-            if to_big(anteChange) > to_big(0) then
+        display_ante_changes(anteChange)
+        easeantecopy(anteChange)
 
-                local realchange = x * (1+anteChange)
-
-                local str = "Overscored! +" .. realchange .. " ante."
-                local timeWait = "1"
-
-                jl.a(str, timeWait, 0.9, G.C.RED) --thank you oh great jenwalter for jenlib
-                -- play_sound(sound,pitch,volume)
-
-                shrdr_sfx()
-
-                easeantecopy(realchange)
-                return
-            end
-        end
-    else 
-        if (G.GAME.chips and G.GAME.blind.chips) then
-
-
-
-            -- print("Valid chips to enable anti-overscoring")
-            -- anteshredder is a mechanic where if you overscore by far too much, the ante will be increased to compensate
-            local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
-
-
-
-            local arrowIter = ante_config.base_exponent --despite what its name says, this is the exponent
-            local arrowCount = ante_config.base_arrows --req starts at beating blind size by ^2
-
-            local start_ante = G.GAME.round_resets.ante
-            local anteChange = 0
-
-            if type(G.GAME.blind.chips) == "table" then
-                while winPot > G.GAME.blind.chips:arrow(arrowCount, arrowIter) do
-                    -- print("Must hit N{" .. arrowCount .. "}" .. arrowIter .. ", +1 ante.")
-                    anteChange = anteChange + ante_config.ante_base_inc
-                    arrowIter = ante_config.base_exponent_inc(arrowIter)
-                    if arrowIter > (arrowCount+ante_config.arrow_inc_threshold) then
-                        arrowIter = ante_config.base_exponent
-                        arrowCount = ante_config.base_arrow_inc(arrowCount)
-                        anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
-                    end
-                end
-            end
-
-            -- print("+"..anteChange.." ante postjen")
-            anteChange = anteChange * (math.log10(to_big(G.GAME.dollars) > to_big(0) and G.GAME.dollars or 1) * ante_config.ante_dollar_influence) --every digit in your money is more ante scaling
-            anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
-            
-
-            anteChange = math.floor(anteChange)
-            --G.GAME.round_resets.ante = G.GAME.round_resets.ante + anteChange
-            -- announce
-            -- format: jl.a(txt, duration, size, col, snd, sndpitch, sndvol)
-
-            if (to_big(anteChange)) > to_big(0) then
-
-                local realchange = x * (1+anteChange)
-
-                local str = "Overscored! +" .. realchange .. " ante."
-                local timeWait = "1"
-
-                jl.a(str, timeWait, 0.9, G.C.RED) --thank you oh great jenwalter for jenlib
-                -- play_sound(sound,pitch,volume)
-
-                shrdr_sfx()
-
-                easeantecopy(realchange)
-                return
-            end
-
-        end
     end
+    
+
     easeantecopy(x)
+end
+
+function display_ante_changes(change)
+
+    local str = "Overscored! +" .. change .. " ante."
+    local timeWait = "1"
+
+    jl.a(str, timeWait, 0.9, G.C.RED) --thank you oh great jenwalter for jenlib
+                -- play_sound(sound,pitch,volume)
+
+    shrdr_sfx()
+
+    
+    return
 end
 
 function shrdr_sfx()
@@ -161,7 +106,7 @@ function Game:update(dt)
     if (G.GAME.blind) then
 
         if (G.GAME.blind.boss) then
-            G.GAME.blind.overchips = "Overscoring at " .. to_big(G.GAME.blind.chips):arrow(ante_config.base_arrows, ante_config.base_exponent) .. " chips."
+            G.GAME.blind.overchips = "Overscoring active."
         else
             G.GAME.blind.overchips = ""
         end
@@ -175,9 +120,9 @@ function create_UIBox_HUD_blind()
     local ret = _create_UIBox_HUD_blind()
 
 
-    if (not G.GAME.blind.boss) then
-        return ret
-    end
+    -- if (not G.GAME.blind.boss) then
+    --     return ret
+    -- end
 
     local node = ret.nodes[2]
     node.nodes[#node.nodes + 1] = {
