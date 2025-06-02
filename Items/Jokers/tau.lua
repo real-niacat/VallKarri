@@ -85,7 +85,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Tauism",
         text = {
-            "Converts the leftmost joker into a {C:cry_ember}Tauic{} joker",
+            "Converts the leftmost joker applicable joker into a {C:cry_ember}Tauic{} joker",
             "{C:inactive,s:0.8}(If this spawned naturally, you have an applicable joker)",
             credit("Scraptake")
         }
@@ -101,13 +101,13 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier) 
 
-        if (#G.jokers.cards > 0) then
-            local joker = select(2,next(G.jokers.cards))
+        for i,joker in ipairs(G.jokers.cards) do
 
             for j,tauic in ipairs(tauics) do
 
                 if (joker.config.center_key == tauic.base) then
                     joker:set_ability(G.P_CENTERS[tauic.tau])
+                    return
                 end
 
             end
