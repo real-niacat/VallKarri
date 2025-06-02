@@ -19,7 +19,7 @@ SMODS.Joker {
     pos = {x=0,y=6},
     soul_pos = {x=1,y=6},
     cost = 15,
-
+    demicoloncompat = true,
     update = function(self, card, front)
         if card.ability and card.ability.extra.state and card.ability.extra.ctr and card.children and card.children.center and card.children.floating_sprite then
             
@@ -37,7 +37,7 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-        if context.end_of_round and not context.individual and not context.repetition and not context.blueprint and G.GAME.blind.boss then
+        if (context.end_of_round and not context.individual and not context.repetition and not context.blueprint and G.GAME.blind.boss) or context.forcetrigger then
 
             if pseudorandom("raxd") > (G.GAME.probabilities.normal / 10) then
                 local big_cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_big_cube")
@@ -80,9 +80,10 @@ SMODS.Joker {
     pos = {x=5, y=1},
     soul_pos = {x=6, y=1},
     cost = 15,
+    demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if (context.setting_blind and #G.GAME.tags > 0) then
+        if (context.setting_blind or context.forcetrigger) and #G.GAME.tags > 0 then
             add_tag(Tag(G.GAME.tags[#G.GAME.tags].key))
             ease_dollars(-card.ability.extra.money)
         end

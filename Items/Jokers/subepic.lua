@@ -39,7 +39,7 @@ SMODS.Joker {
     atlas = "main",
     pos = {x=4, y=6},
     cost = 6,
-
+    demicoloncompat = true,
     loc_vars = function(self,info_queue, card)
         return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
     end,
@@ -49,7 +49,7 @@ SMODS.Joker {
             card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
         end
 
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
             return {x_mult = card.ability.extra.cur}
         end
     end
@@ -74,8 +74,9 @@ SMODS.Joker {
     pos = {x=5, y=2},
     soul_pos = {x=6, y=2},
     cost = 4,
+    demicoloncompat = true,
     calculate = function(self, card, context)
-        if (context.joker_main) then
+        if (context.joker_main) or context.forcetrigger then
             return {chips = card.ability.extra.curchips}
         end
 
@@ -150,10 +151,10 @@ SMODS.Joker {
     pos = {x=5, y=9},
     soul_pos = {x=6,y=9},
     cost = 8,
-
+    demicoloncompat = true,
     calculate = function(self, card, context)
         -- please fucking kill me
-        if (context.joker_main) then
+        if (context.joker_main) or context.forcetrigger then
             local lvl = level(card.ability.extra.xp).level
 
             local operator = op(lvl)

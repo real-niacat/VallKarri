@@ -71,8 +71,9 @@ SMODS.Joker {
     pos = {x=5,y=0},
     soul_pos = {x=6,y=0},
     cost = 20,
+    demicoloncompat = true,
     calculate = function(self, card, context) 
-        if (context.joker_main) then
+        if (context.joker_main) or context.forcetrigger then
             return {x_mult = card.ability.extra.gain * days_since(2019, 2, 14)}
         end
     end

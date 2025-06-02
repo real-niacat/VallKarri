@@ -66,10 +66,10 @@ SMODS.Joker {
     soul_pos = {x=1, y=2},
     cost = 50,
     immutable = true,
-
+    demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if (context.individual and context.cardarea == G.play) then
+        if (context.individual and context.cardarea == G.play) or context.forcetrigger then
             Cryptid.misprintize(context.other_card, {min=card.ability.extra.strong, max=card.ability.extra.strong}, nil, true)
 
 
@@ -102,10 +102,10 @@ SMODS.Joker {
     pos = {x=9,y=1},
     cost = 50,
     immutable = true,
-
+    demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
             local n = 1 + (1 / math.log10(mult))
             -- print(n)
             if (n == math.huge) then

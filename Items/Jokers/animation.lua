@@ -19,8 +19,9 @@ SMODS.Joker {
     soul_pos = {x=6, y=3},
     immutable = true,
     cost = 10,
+    demicoloncompat = true,
     calculate = function(self, card, context)
-        if (context.end_of_round and not context.individual and not context.repetition) then
+        if (context.end_of_round and not context.individual and not context.repetition) or context.forcetrigger then
 
             for i,joker in ipairs(G.jokers.cards) do
                 
@@ -62,9 +63,10 @@ SMODS.Joker {
     soul_pos = {x=6, y=7},
     immutable = true,
     cost = 12,
+    demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if (context.selling_card and context.card.ability and context.card.ability.set ~= "Code") then
+        if (context.selling_card and context.card.ability and context.card.ability.set ~= "Code") or context.forcetrigger then
 
             local codecard = create_card("Code", G.consumeables, nil, nil, nil, nil, nil, "valk_yellow")
             codecard:set_edition("e_negative", true)

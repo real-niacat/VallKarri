@@ -21,9 +21,10 @@ SMODS.Joker {
     soul_pos = {x = 9, y = 0, extra = {x = 8, y = 0}},
     cost = 500,
     immutable = true,
+    demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
             ease_dollars(card.ability.extra.money)
             
             local calced = scraptake_calculation()
@@ -56,9 +57,10 @@ SMODS.Joker {
     cost = 500,
     immutable = true,
     pools = { ["Kitties"] = true },
+    demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
 
             return {
                 mult = card.ability.extra.mult_bonus
@@ -92,9 +94,10 @@ SMODS.Joker {
     pos = {x = 3, y = 6},
     cost = 500,
     immutable = true,
+    demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
 
             return {
                 eee_mult = valk_additions()*card.ability.extra.mult
@@ -128,9 +131,10 @@ SMODS.Joker {
     pos = {x = 3, y = 9},
     cost = 500,
     immutable = true,
+    demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
 
             return {
                 hyper_mult = {math.ceil(jokercount() / card.ability.extra.reqowned), totaljokervalues()}
@@ -233,6 +237,7 @@ SMODS.Joker {
     no_doe = true,
     cost = 500,
     immutable = true,
+    demicoloncompat = true,
     calculate = function(self, card, context)
         if context.cardarea == G.play then
 
@@ -271,7 +276,7 @@ SMODS.Joker {
             end
         end
 
-        if context.joker_main then
+        if context.joker_main or context.forcetrigger then
 
             return {
                 hyper_mult = {card.ability.extra.op, card.ability.extra.ex}
@@ -331,6 +336,7 @@ quilla = {
         end
 
     end,
+
 
     calculate = function(self, card, context)
 
