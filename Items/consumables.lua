@@ -113,10 +113,13 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         G.hand:change_size(card.ability.extra.morecards)
+        SMODS.change_play_limit(card.ability.extra.morecards)
+        SMODS.change_discard_limit(card.ability.extra.morecards)
         G.hand.config.highlighted_limit = G.hand.config.highlighted_limit + card.ability.extra.morecards
 
         local lily = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_valk_dormantlordess", "valk_lordcall")
         lily:add_to_deck()
+        lily.ability.cry_absolute = true
         G.jokers:emplace(lily)
         lily:juice_up(0.3, 0.5)
 

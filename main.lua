@@ -176,6 +176,7 @@ SMODS.Rarity {
 
 
 assert(SMODS.load_file("Items/helpers.lua"))()
+assert(SMODS.load_file("Items/overrides.lua"))()
 assert(SMODS.load_file("Items/consumables.lua"))()
 
 if (vallkarri.config.overscoring) then
@@ -185,6 +186,8 @@ end
 -- assert(SMODS.load_file("Items/Jokers/minesweeper.lua"))()
 -- one day. i will fix minesweeper
 -- today is not that day.
+
+assert(SMODS.load_file("Items/Jokers/animation.lua"))()
 
 assert(SMODS.load_file("Items/Jokers/subepic.lua"))()
 assert(SMODS.load_file("Items/Jokers/epic.lua"))()

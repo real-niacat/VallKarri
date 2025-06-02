@@ -81,6 +81,9 @@ function ease_ante(x)
 end
 
 function display_ante_changes(change)
+    if (change == 0) then
+        return
+    end
 
     local str = "Overscored! +" .. change .. " ante."
     local timeWait = "1"

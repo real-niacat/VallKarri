@@ -124,8 +124,8 @@ SMODS.Joker {
         return {vars = {"{" .. math.ceil(jokercount() / card.ability.extra.reqowned) .. "}", totaljokervalues(), card.ability.extra.reqowned}}
     end,
     rarity = "valk_unsurpassed",
-    atlas = "phold",
-    pos = {x = 0, y = 0},
+    atlas = "main",
+    pos = {x = 3, y = 9},
     cost = 500,
     immutable = true,
     calculate = function(self, card, context)
