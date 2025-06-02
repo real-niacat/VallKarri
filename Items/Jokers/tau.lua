@@ -80,7 +80,7 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=2, y=5},
     -- is_soul = true,
-    soul_rate = 0.01,
+    soul_rate = 0.08,
 
     loc_txt = { 
         name = "Tauism",
