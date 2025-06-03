@@ -5,7 +5,7 @@ vallkarri.config_tab = function() -- the configs will be stored in config.lua an
         nodes = {
             {n = G.UIT.R, config = { padding = 0.05 }, 
                 nodes = {
-                    {n = G.UIT.C, config = { minw = G.ROOM.T.w*0.25, padding = 0.05 }, 
+                    {n = G.UIT.C, config = { minw = G.ROOM.T.w*0.125, padding = 0.05 }, 
                         nodes = {
                             create_toggle{
                                 label = "Enable Overscoring", -- the label that shows up next to the toggle button
@@ -14,9 +14,9 @@ vallkarri.config_tab = function() -- the configs will be stored in config.lua an
                                 ref_table = vallkarri.config, -- the table of which the toggle refrerences to check if it is on or off
                                 ref_value = "overscoring" -- the value from the ref_table that the toggle will change when pressed
                             }
-                        }
+                        },
                     },
-                    {n = G.UIT.C, config = { minw = G.ROOM.T.w*0.25, padding = 0.05 }, 
+                    {n = G.UIT.C, config = { minw = G.ROOM.T.w*0.125, padding = 0.05 }, 
                         nodes = {
                             create_toggle{
                                 label = "Toggle experimental mechanics", -- the label that shows up next to the toggle button
