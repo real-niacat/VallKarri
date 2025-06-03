@@ -130,3 +130,57 @@ SMODS.Consumable {
     pos = {x=0, y=0},
     
 }
+
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "cosmicstring",
+    loc_txt = {
+        name = "Cosmic String",
+        text = {
+            "All hands gain " .. tetrvalue("#1#") .. " Chips",
+            "Plus another " .. tetrvalue("#1#") .. " Chips for every 5 levels on",
+            "{C:attention}Five of a Kind{}, {C:attention}Flush House{}, and {C:attention}Flush Five{}",
+            credit("Nobody!"),
+            concept("arris")
+        }
+    },
+
+    no_doe = true,
+
+    config = { extra = { eechips = 1.09 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.eechips}}
+    end,
+
+    can_use = function(self, card)
+        -- currently only returns true need to make it only work when u have the joker.
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        local levels = 0
+        levels = levels + G.GAME.hands["Five of a Kind"].level
+        levels = levels + G.GAME.hands["Flush House"].level
+        levels = levels + G.GAME.hands["Flush Five"].level
+
+        
+        -- i know the math here is incorrect but
+        -- who's going to correct me on it?
+        local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(math.floor(levels/5)))
+        local str = "^^" .. tostring(value)
+        jl.th("all")
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
+
+        for i,hand in pairs(G.GAME.hands) do
+            if (G.GAME.hands[i].chips) then
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips:tetrate(value)
+            end
+        end
+    end,
+
+        
+    atlas = "phold",
+    pos = {x=0, y=0},
+    
+}
+

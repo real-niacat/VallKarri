@@ -192,6 +192,11 @@ function expomult(txt)
 	return "{X:mult,C:white}^" .. txt .. "{}"
 end
 
+-- chips and mult are identical since it uses x:dark
+function tetrvalue(txt)
+	return "{X:dark_edition,C:white}^^" .. txt .. "{}"
+end
+
 function totaljokervalues()
     local total = to_big(0)
     if (G.jokers) then
