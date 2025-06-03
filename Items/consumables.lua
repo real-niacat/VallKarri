@@ -22,6 +22,8 @@ SMODS.ConsumableType {
 
 
 
+
+
 SMODS.Consumable {
     set = "SpecialCards",
     loc_txt = {

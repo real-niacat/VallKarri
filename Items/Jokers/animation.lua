@@ -117,7 +117,7 @@ SMODS.Joker {
 		then
             card.ability.extra.round_counter = card.ability.extra.round_counter - 1
             if (card.ability.extra.round_counter <= 0) then
-                card.ability.extra.round_counter = math.pow(card.ability.extra.resets, 2)
+                card.ability.extra.round_counter = math.pow(card.ability.extra.resets+1, 2)
                 card.ability.extra.resets = card.ability.extra.resets + 1
 
                 print("creating one of rarity " .. rarities[card.ability.extra.rarity])

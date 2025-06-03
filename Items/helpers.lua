@@ -182,6 +182,16 @@ function jokercount()
     end
 end
 
+-- i take no credit for these functions, theyre just slightly modified
+-- versions of jenlib functions, as i don't like the text color which jenlib uses
+function expochips(txt)
+	return "{X:chips,C:white}^" .. txt .. "{}"
+end
+
+function expomult(txt)
+	return "{X:mult,C:white}^" .. txt .. "{}"
+end
+
 function totaljokervalues()
     local total = to_big(0)
     if (G.jokers) then

@@ -179,6 +179,7 @@ assert(SMODS.load_file("Items/helpers.lua"))()
 assert(SMODS.load_file("Items/overrides.lua"))()
 assert(SMODS.load_file("Items/consumables.lua"))()
 
+
 if (vallkarri.config.overscoring) then
     assert(SMODS.load_file("Items/ante.lua"))()
 end
@@ -203,6 +204,8 @@ assert(SMODS.load_file("Items/tags.lua"))()
 assert(SMODS.load_file("Items/configui.lua"))()
 
 assert(SMODS.load_file("Items/stakes.lua"))()
+
+assert(SMODS.load_file("Items/superplanets.lua"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
 Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
