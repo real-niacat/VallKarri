@@ -80,7 +80,13 @@ SMODS.Joker {
             return {chips = card.ability.extra.curchips}
         end
 
-        if (context.end_of_round and not context.blueprint and not context.individual) then
+        if
+			context.end_of_round
+			and not context.blueprint
+			and not context.individual
+			and not context.repetition
+			and not context.retrigger_joker
+		then
             -- thank you smg9000..... :sob: i might be geeked
             -- i was really tired when i made this
 
