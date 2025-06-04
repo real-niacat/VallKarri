@@ -5,7 +5,7 @@
 --- MOD_AUTHOR: [Lily]
 --- MOD_DESCRIPTION: join the polterworx discord server -lily
 --- BADGE_COLOUR: e5bf3a
---- DEPENDENCIES: [JenLib, Talisman, Cryptid>=0.5.5, incantation]
+--- DEPENDENCIES: [JenLib, Talisman, Cryptid>=0.5.5]
 --- VERSION: 0.0.1
 --- PRIORITY: 2147483647
 
