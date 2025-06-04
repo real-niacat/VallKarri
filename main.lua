@@ -17,6 +17,10 @@
     please don't judge if it's a bit terrible
 ]]--
 
+if not (#SMODS.find_mod("incantation") > 0 or #SMODS.find_mod("overflow") > 0) then
+    error("Vall-Karri cannot load without a consumable-stacking mod. Please install Overflow or Incantation.")
+end
+
 if (not vallkarri) then
     vallkarri = {}
 end
