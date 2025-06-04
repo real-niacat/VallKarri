@@ -1,25 +1,9 @@
---- STEAMODDED HEADER
---- MOD_NAME: Vall-karri
---- MOD_ID: vallkarri
---- PREFIX: valk
---- MOD_AUTHOR: [Lily]
---- MOD_DESCRIPTION: join the polterworx discord server -lily
---- BADGE_COLOUR: e5bf3a
---- DEPENDENCIES: [JenLib, Talisman, Cryptid>=0.5.5]
---- VERSION: 0.0.1
---- PRIORITY: 2147483647
-
-
 --[[
     dev note:
     this mod is honestly a bit of a mess, at least it feels that way
     it is the first mod ive done actual programming for, rather than just making simple jokers
     please don't judge if it's a bit terrible
 ]]--
-
-if not (#SMODS.find_mod("incantation") > 0 or #SMODS.find_mod("overflow") > 0) then
-    error("Vall-Karri cannot load without a consumable-stacking mod. Please install Overflow or Incantation.")
-end
 
 if (not vallkarri) then
     vallkarri = {}

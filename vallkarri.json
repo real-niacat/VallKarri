@@ -1,0 +1,16 @@
+{
+	"id": "vallkarri", // [required] ! Must be unique. "Steamodded", "Lovely" and "Balatro" are disallowed.
+	"name": "Vall-karri", // [required]
+	"author": ["Lily"], // [required]
+	"description": "a nice, silly addon for cryptid", // [required] ! To use more advanced typesetting, specify your description as a localization entry at G.localization.descriptions.Mod[id]
+	"prefix": "valk", // [required] ! Must be unique. This prefix is added to the keys of all objects your mod registers. UNLIKE LEGACY HEADERS, THERE IS NO DEFAULT VALUE.
+	"main_file": "main.lua", // [required] ! This is the entry point of your mod. The specified file (including .lua extension) will be executed when your mod is loaded.
+	"priority": 2147483647, // [default: 0] ! Mods are loaded in order from lowest to highest priority value.
+	"badge_colour": "e5bf3a", // [default: 666665] ! Background colour for your mod badge. Must be a valid hex color with 6 or 8 digits (RRGGBB or RRGGBBAA)
+	"version": "0.0.1", // ! Must follow a version format of (major).(minor).(patch)(rev). rev starting with ~ indicates a beta/pre-release version.
+	"dependencies": [
+		"JenLib", 
+		"Talisman", "Cryptid>=0.5.5", 
+		"incantation | Overflow"
+	], // ! All mods in the list must be installed and loaded (and must fulfill version requirements), else this mod will not load.
+}
