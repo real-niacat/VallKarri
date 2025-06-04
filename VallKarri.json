@@ -1,0 +1,17 @@
+{
+	"id": "vallkarri",
+	"name": "Vall-karri", 
+	"author": ["Lily"], 
+	"description": "a nice, silly addon for cryptid",
+	"prefix": "valk",
+	"main_file": "main.lua",
+	"priority": 2147483647, 
+	"badge_colour": "e5bf3a",
+	"version": "0.0.1", 
+	"dependencies": [
+		"JenLib", 
+		"Talisman",
+		"Cryptid (>=0.5.5)", 
+		"incantation | Overflow"
+	], 
+}

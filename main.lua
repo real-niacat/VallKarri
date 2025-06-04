@@ -1,10 +1,3 @@
---[[
-    dev note:
-    this mod is honestly a bit of a mess, at least it feels that way
-    it is the first mod ive done actual programming for, rather than just making simple jokers
-    please don't judge if it's a bit terrible
-]]--
-
 if (not vallkarri) then
     vallkarri = {}
 end
