@@ -3,7 +3,7 @@ SMODS.ConsumableType {
     collection_rows = {4, 3},
     primary_colour = HEX("1378D6"),
     secondary_colour = HEX("0058A0"),
-    shop_rate = 0.02,
+    shop_rate = 0.002,
 
     loc_txt = {
         collection = "Superplanet Cards",
@@ -17,6 +17,7 @@ SMODS.ConsumableType {
             }
         }
     },
+    default = "c_valk_thornezytkow",
 }
 
 SMODS.Atlas {

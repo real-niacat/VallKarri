@@ -20,7 +20,47 @@ SMODS.ConsumableType {
 }
 
 
+SMODS.Booster {
+    key = "ascended_booster",
+    atlas = "main",
+    pos = {x=4, y=9},
+    discovered = true,
+    loc_txt = {
+        name = "Ascended Booster Pack",
+        text = {
+            "Pick #1# of #2# {C:cry_ascendant}Powerful{} cards",
+        },
+        group_name = "Ascended Booster Pack"
+    },
 
+    draw_hand = false,
+    config = {choose = 1, extra = 3},
+
+    loc_vars = function(self, info_queue, card) 
+        return {vars = {card.ability.choose, card.ability.extra}}
+    end,
+
+    weight = 0.002,
+    cost = 99,
+
+    create_card = function(self, card, i)
+        ease_background_colour(G.C.CRY_ASCENDANT)
+        if (pseudorandom("valk_ascended_pack", 1, 2) == 1) then
+            return create_card("Superplanet", G.pack_cards, nil, nil, nil, nil, nil, "valk_ascended_pack")
+        else
+            local choices = {"c_valk_absolutetau", "c_valk_safe_memoryleak"} --will add freeway when it exists
+            local pick = pseudorandom("valk_ascended_pack", 1, #choices)
+            
+
+            return create_card("Consumable", G.pack_cards, nil, nil, nil, nil, choices[pick], "valk_ascended_pack")
+        end
+
+    end,
+
+    in_pool = function()
+        return G.GAME.round_resets.ante > 36
+    end
+}
 
 
 
@@ -175,7 +215,7 @@ SMODS.Consumable {
         name = "://MEMORYLEAK",
         text = {
             "Make all jokers {C:dark_edition}Absolute{}, multiply their values by {C:attention}#1#{}",
-            "set joker slots to {C:attention}[Jokers]+#2#{} and create an {C:cry_azure}Unsurpassed{} Joker",
+            "set joker slots to {C:attention}[Jokers Owned]+#2#{} and create an {C:cry_azure}Unsurpassed{} Joker",
             credit("Scraptake")
         }
     },
@@ -237,6 +277,46 @@ SMODS.Consumable {
             c.ability.cry_absolute = true
 
         end
+
+        local jkr = create_card("Joker", G.jokers, nil, "valk_unsurpassed", nil, nil, nil, "c_valk_memoryleak")
+        jkr:add_to_deck()
+        G.jokers:emplace(jkr)
+
+    end
+}
+
+SMODS.Consumable {
+    set = "Code",
+    loc_txt = { 
+        name = "://MEMORYPATCH",
+        text = {
+            "Set joker slots to {C:attention}[Jokers Owned]+#1#{} and create an {C:cry_azure}Unsurpassed{} Joker",
+            credit("Scraptake")
+        }
+    },
+    key = "safe_memoryleak",
+    pos = { x = 3, y = 4 },
+    atlas = "main",
+    -- soul_rate = 0.07,
+    soul_rate = 0,
+    hidden = true,
+    -- is_soul = true,
+
+    config = { extra = {inc = 1} },
+
+    loc_vars = function(self, info_queue, card)
+
+        return {vars = { card.ability.extra.inc }}
+        
+    end,
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        
+        G.jokers.config.card_limit = #G.jokers.cards + card.ability.extra.inc
 
         local jkr = create_card("Joker", G.jokers, nil, "valk_unsurpassed", nil, nil, nil, "c_valk_memoryleak")
         jkr:add_to_deck()
