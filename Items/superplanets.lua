@@ -21,7 +21,7 @@ SMODS.ConsumableType {
 
 SMODS.Atlas {
     key = "csm",
-    path = "consumables.png",
+    path = "super_planets.png",
     px = 71,
     py = 95,
 }
@@ -34,7 +34,7 @@ SMODS.Consumable {
         text = {
             "All hands gain " .. expochips("#1#") .. " Chips",
             "Plus another " .. expochips("#1#") .. " Chips for every 5 levels on any hand",
-            credit("Nobody!"),
+            credit("mailingway"),
             concept("arris")
         }
     },
@@ -74,8 +74,8 @@ SMODS.Consumable {
     end,
 
         
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "csm",
+    pos = {x=4, y=0},
     
 }
 
@@ -88,7 +88,7 @@ SMODS.Consumable {
             "All hands gain " .. expomult("#1#") .. " Mult",
             "Plus another " .. expomult("#1#") .. " Mult for every 5 levels on",
             "{C:attention}High Card{}, {C:attention}Pair{}, and {C:attention}Two Pair{}",
-            credit("Nobody!"),
+            credit("mailingway"),
             concept("arris")
         }
     },
@@ -126,8 +126,8 @@ SMODS.Consumable {
     end,
 
         
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "csm",
+    pos = {x=3, y=0},
     
 }
 
@@ -140,14 +140,14 @@ SMODS.Consumable {
             "All hands gain " .. tetrvalue("#1#") .. " Chips",
             "Plus another " .. tetrvalue("#1#") .. " Chips for every 5 levels on",
             "{C:attention}Five of a Kind{}, {C:attention}Flush House{}, and {C:attention}Flush Five{}",
-            credit("Nobody!"),
+            credit("mailingway"),
             concept("arris")
         }
     },
 
     no_doe = true,
 
-    config = { extra = { eechips = 1.09 } },
+    config = { extra = { eechips = 1.1 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.eechips}}
     end,
@@ -179,8 +179,60 @@ SMODS.Consumable {
     end,
 
         
-    atlas = "phold",
+    atlas = "csm",
     pos = {x=0, y=0},
     
 }
 
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "hdb",
+    loc_txt = {
+        name = "HD 209458-B",
+        text = {
+            "All hands gain " .. tetrvalue("#1#") .. " Mult",
+            "Plus another " .. tetrvalue("#1#") .. " Mult for every 5 levels on",
+            "{C:attention}Three of a Kind{}, {C:attention}Straight{}, and {C:attention}Flush{}",
+            credit("mailingway"),
+            concept("arris")
+        }
+    },
+
+    no_doe = true,
+
+    config = { extra = { eechips = 1.1 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.eechips}}
+    end,
+
+    can_use = function(self, card)
+        -- currently only returns true need to make it only work when u have the joker.
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        local levels = 0
+        levels = levels + G.GAME.hands["Three of a Kind"].level
+        levels = levels + G.GAME.hands["Straight"].level
+        levels = levels + G.GAME.hands["Flush"].level
+
+        
+        -- i know the math here is incorrect but
+        -- who's going to correct me on it?
+        local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(math.floor(levels/5)))
+        local str = "^^" .. tostring(value)
+        jl.th("all")
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
+
+        for i,hand in pairs(G.GAME.hands) do
+            if (G.GAME.hands[i].mult) then
+                G.GAME.hands[i].mult = G.GAME.hands[i].mult:tetrate(value)
+            end
+        end
+    end,
+
+        
+    atlas = "csm",
+    pos = {x=1, y=0},
+    
+}

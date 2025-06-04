@@ -189,23 +189,17 @@ end
 -- today is not that day.
 
 assert(SMODS.load_file("Items/Jokers/animation.lua"))()
-
 assert(SMODS.load_file("Items/Jokers/subepic.lua"))()
 assert(SMODS.load_file("Items/Jokers/epic.lua"))()
 assert(SMODS.load_file("Items/Jokers/legendary.lua"))()
 assert(SMODS.load_file("Items/Jokers/exotic.lua"))()
-
 assert(SMODS.load_file("Items/Jokers/tau.lua"))()
-
 assert(SMODS.load_file("Items/Jokers/exoticplus.lua"))()
-
 assert(SMODS.load_file("Items/tags.lua"))()
-
 assert(SMODS.load_file("Items/configui.lua"))()
-
 assert(SMODS.load_file("Items/stakes.lua"))()
-
 assert(SMODS.load_file("Items/superplanets.lua"))()
+assert(SMODS.load_file("Items/crossmod.lua"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
 Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
