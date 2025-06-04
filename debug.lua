@@ -1,1 +1,2 @@
-dvi(to_big(10):arrow(10, 10))
+-- Safely move all cards from G.discard.cards to G.deck.cards
+

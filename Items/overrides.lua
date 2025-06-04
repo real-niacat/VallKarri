@@ -3,12 +3,14 @@ SMODS.Joker {
     loc_txt = {
         name = "VallKarri Logo",
         text = {
-            "Also play Entropy!"
+            "what"
         }
     },
     rarity = "valk_unobtainable",
     atlas = "main",
     pos = {x = 9, y = 2},
+	hidden = true,
+	no_collection = true,
 }
 
 local mainmenu = Game.main_menu
@@ -27,7 +29,7 @@ Game.main_menu = function(change_context)
 	G.title_top:emplace(newcard)
 	newcard.T.w = newcard.T.w * 1.1 * 1.2
 	newcard.T.h = newcard.T.h * 1.1 * 1.2
-	-- newcard.no_ui = true
+	newcard.no_ui = true
 	-- "borrowed" code from cryptid that does the exact same thing
 
 	return ret

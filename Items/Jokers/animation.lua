@@ -82,24 +82,15 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:attention}Orange{}",
         text = {
-            "Create a random {V:1}#1#{} joker in {C:attention}#2#{} rounds",
-            "When joker created, increase rarity and {C:attention}double{} required rounds"
+            "When hand played, return all {C:attention}discarded{} cards back to {C:attention}deck{}"
         }
     },
 
     loc_vars = function(self, info_queue, card )
-        local rarities = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Exotic"}
-        local rarity_colors = {G.C.RARITY[1], G.C.RARITY[2], G.C.RARITY[3], G.C.RARITY["cry_epic"], G.C.RARITY[4], G.C.RARITY["cry_exotic"]}
 
-        return {
-            vars = {
-                rarities[card.ability.extra.rarity], card.ability.extra.round_counter,
-                colours = {rarity_colors[card.ability.extra.rarity]}
-            }
-        }
     end,
     
-    config = { extra = {rarity = 1, round_counter = 2, resets = 1} },
+    config = { extra = {} },
     rarity = "cry_epic",
     atlas = "main",
     pos = {x=5, y=5},
@@ -107,26 +98,10 @@ SMODS.Joker {
     immutable = true,
     cost = 12,
     calculate = function(self, card, context)
-        local rarities = {1,2,3, "cry_epic", 4, "cry_exotic"}
-        if
-			context.end_of_round
-			and not context.blueprint
-			and not context.individual
-			and not context.repetition
-			and not context.retrigger_joker
-		then
-            card.ability.extra.round_counter = card.ability.extra.round_counter - 1
-            if (card.ability.extra.round_counter <= 0) then
-                card.ability.extra.round_counter = math.pow(card.ability.extra.resets+1, 2)
-                card.ability.extra.resets = card.ability.extra.resets + 1
 
-                print("creating one of rarity " .. rarities[card.ability.extra.rarity])
-                local newcard = create_card("Joker", G.jokers, nil, rarities[card.ability.extra.rarity], nil, nil, nil, "valk_animorange")
-                newcard:add_to_deck()
-                G.jokers:emplace(newcard)
-
-                card.ability.extra.rarity = math.min(card.ability.extra.rarity + 1, 6)
-
+        if context.joker_main and not context.individual and not context.repetition then
+            for i,card in ipairs(G.discard.cards) do
+                draw_card(G.discard, G.deck, nil, nil, nil, card)
             end
         end
 
