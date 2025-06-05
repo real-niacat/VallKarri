@@ -27,7 +27,7 @@ function ease_ante(x)
     
     x = to_big(x)
     if (x < to_big(1)) then
-        easeantecopy(x)
+        easeantecopy(tonumber(x))
         return
     end
 
@@ -74,12 +74,12 @@ function ease_ante(x)
             -- format: jl.a(txt, duration, size, col, snd, sndpitch, sndvol)
 
         display_ante_changes(anteChange)
-        easeantecopy(anteChange)
+        easeantecopy(tonumber(anteChange))
 
     end
     
 
-    easeantecopy(x)
+    easeantecopy(tonumber(x))
 end
 
 function display_ante_changes(change)

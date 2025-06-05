@@ -848,7 +848,7 @@ SMODS.Joker {
 
             if (#G.consumeables.cards > 0) then
 
-                G.consumeables.cards[#G.consumeables.cards]:set_edition("e_negative", false)
+                G.consumeables.cards[#G.consumeables.cards]:set_edition("e_base", true)
 
             end
             
