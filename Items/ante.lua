@@ -111,7 +111,13 @@ end
 
 local unlockcopy = check_for_unlock
 function check_for_unlock(args)
-    if (args.ante and type(args.ante) == "table") then
+    if (args.ante and args.type == "ante_up" and type(args.ante) == "table") then
+        if args.ante >= to_big(4) then
+            unlock_achievement('ante_up')
+        end
+        if args.ante >= to_big(8) then
+            unlock_achievement('ante_upper')
+        end
         return
     end
     unlockcopy(args)

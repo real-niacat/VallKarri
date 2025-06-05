@@ -838,19 +838,21 @@ SMODS.Joker {
                         func = function() 
                             local total, checked, center = 0, 0, nil
                             for i = 1, #G.consumeables.cards do
-                                total = total + (G.consumeables.cards[i]:getQty())
+                                total = total + 1
                             end
                             local poll = pseudorandom(pseudoseed('tau_perkeo')) * total
                             for i = 1, #G.consumeables.cards do
-                                checked = checked + (G.consumeables.cards[i]:getQty())
+                                checked = checked + 1
                                 if checked >= poll then
                                     center = G.consumeables.cards[i]
                                     break
                                 end
                             end
                             local copied_card = copy_card(center, nil)
-                            copied_card.ability.qty = 1
-                            copied_card.ability.infinite = nil
+                            if (copied_card.ability.qty) then
+                                copied_card.ability.qty = 1
+                                copied_card.ability.infinite = nil
+                            end
                             copied_card:set_edition({negative = true}, true)
                             copied_card:add_to_deck()
                             G.consumeables:emplace(copied_card) 
@@ -871,11 +873,11 @@ SMODS.Joker {
                     func = function() 
                         local total, checked, center = 0, 0, nil
                         for i = 1, #G.consumeables.cards do
-                            total = total + (G.consumeables.cards[i]:getQty())
+                            total = total + 1
                         end
                         local poll = pseudorandom(pseudoseed('tau_perkeo')) * total
                         for i = 1, #G.consumeables.cards do
-                            checked = checked + (G.consumeables.cards[i]:getQty())
+                            checked = checked + 1
                             if checked >= poll and G.consumeables.cards[i].edition then
                                 center = G.consumeables.cards[i]
                                 break
