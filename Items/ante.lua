@@ -24,15 +24,15 @@ config_reset()
 
 local easeantecopy = ease_ante
 function ease_ante(x)
-
-
+    
     x = to_big(x)
     if (x < to_big(1)) then
         easeantecopy(x)
         return
     end
 
-    check_superwin()
+
+    
 
 
     if (G.GAME.chips and G.GAME.blind.chips) then
@@ -99,11 +99,31 @@ function display_ante_changes(change)
     return
 end
 
+local roundcopy = end_round
+function end_round()
+    G.GAME.win_ante = to_big(G.GAME.win_ante)
+    roundcopy()
+
+    if check_superwin() then
+        return
+    end
+end
+
+local unlockcopy = check_for_unlock
+function check_for_unlock(args)
+    if (args.ante and type(args.ante) == "table") then
+        return
+    end
+    unlockcopy(args)
+end
+
 function check_superwin()
 
-    if (G.GAME.round_resets.ante == math.huge) then
-
+    if (G.GAME.round_resets.ante == math.huge or to_big(G.GAME.round_resets.ante) >= to_big(1e307)) then
+        superwin_game()
+        return true
     end
+    return false
 
 end
 

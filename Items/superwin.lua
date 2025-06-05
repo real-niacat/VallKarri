@@ -1,28 +1,4 @@
 function superwin_game()
-    if (not G.GAME.seeded and not G.GAME.challenge) or SMODS.config.seeded_unlocks then
-        set_joker_win()
-        set_deck_win()
-        
-        check_and_set_high_score('win_streak', G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt+1)
-        check_and_set_high_score('current_streak', G.PROFILES[G.SETTINGS.profile].high_scores.current_streak.amt+1)
-        check_for_unlock({type = 'win_no_hand'})
-        check_for_unlock({type = 'win_no'})
-        check_for_unlock({type = 'win_custom'})
-        check_for_unlock({type = 'win_deck'})
-        check_for_unlock({type = 'win_stake'})
-        check_for_unlock({type = 'win'})
-        inc_career_stat('c_wins', 1)
-    end
-
-    set_profile_progress()
-
-    if G.GAME.challenge then
-        G.PROFILES[G.SETTINGS.profile].challenge_progress.completed[G.GAME.challenge] = true
-        set_challenge_unlock()
-        check_for_unlock({type = 'win_challenge'})
-        G:save_settings()
-    end
-
     G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
         func = (function()

@@ -1,0 +1,4 @@
+[manifest] # this is required for your lovely patches to work
+version = "1.0.0"
+dump_lua = true
+priority = 0
