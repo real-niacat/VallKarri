@@ -101,7 +101,9 @@ end
 
 local roundcopy = end_round
 function end_round()
-    G.GAME.win_ante = to_big(G.GAME.win_ante)
+    if (type(G.GAME.round_resets.ante) == "table") then
+        G.GAME.win_ante = to_big(G.GAME.win_ante)
+    end
     roundcopy()
 
     if check_superwin() then

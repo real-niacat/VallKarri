@@ -809,12 +809,12 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Perkeo{}",
         text = {
-            "Create {C:attention}#1#{} copies of a random consumable when exiting shop",
-            "Remove {C:dark_edition}negative{} from {C:attention}#2#{} random consumable at end of round",
+            "Create {C:attention}#1#{} copies of the leftmost consumable when exiting shop",
+            "Remove {C:dark_edition}negative{} from rightmost consumable at end of round",
             credit("Scraptake")
         }
     },
-    config = { extra = { copies = 2, reverse = 1} },
+    config = { extra = { copies = 2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.copies, card.ability.extra.reverse } }
     end,
@@ -831,65 +831,25 @@ SMODS.Joker {
         if context.ending_shop then
             
             
-            
-            if G.consumeables.cards[1] then
-                for i = 1, card.ability.extra.copies do
-                    G.E_MANAGER:add_event(Event({
-                        func = function() 
-                            local total, checked, center = 0, 0, nil
-                            for i = 1, #G.consumeables.cards do
-                                total = total + 1
-                            end
-                            local poll = pseudorandom(pseudoseed('tau_perkeo')) * total
-                            for i = 1, #G.consumeables.cards do
-                                checked = checked + 1
-                                if checked >= poll then
-                                    center = G.consumeables.cards[i]
-                                    break
-                                end
-                            end
-                            local copied_card = copy_card(center, nil)
-                            if (copied_card.ability.qty) then
-                                copied_card.ability.qty = 1
-                                copied_card.ability.infinite = nil
-                            end
-                            copied_card:set_edition({negative = true}, true)
-                            copied_card:add_to_deck()
-                            G.consumeables:emplace(copied_card) 
-                            return true
-                        end
-                    }))
+            if (#G.consumeables.cards > 0) then
+
+                for i=1,card.ability.extra.copies do
+                    local copy = copy_card(G.consumeables.cards[1])
+                    copy:set_edition("e_negative", true)
+                    G.consumeables:emplace(copy)
                 end
-                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_duplicated_ex')})
-                -- return {calculated = true}
+
             end
+            
 
         end
 
         if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
 
-            if G.consumeables.cards[1] then
-                G.E_MANAGER:add_event(Event({
-                    func = function() 
-                        local total, checked, center = 0, 0, nil
-                        for i = 1, #G.consumeables.cards do
-                            total = total + 1
-                        end
-                        local poll = pseudorandom(pseudoseed('tau_perkeo')) * total
-                        for i = 1, #G.consumeables.cards do
-                            checked = checked + 1
-                            if checked >= poll and G.consumeables.cards[i].edition then
-                                center = G.consumeables.cards[i]
-                                break
-                            end
-                        end
-                        if (center) then 
-                            center:set_edition({negative = false}, true)
-                        end
-                        return true
-                    end
-                }))
-                -- return {calculated = true}
+            if (#G.consumeables.cards > 0) then
+
+                G.consumeables.cards[#G.consumeables.cards]:set_edition("e_negative", false)
+
             end
             
         end
