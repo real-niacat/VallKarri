@@ -163,6 +163,31 @@ SMODS.Consumable {
 
 }
 
+-- SMODS.Joker {
+--     key = "",
+--     loc_txt = {
+--         name = "{C:cry_ember}Tauic {}",
+--         text = {
+--             "",
+--             "",
+--             credit("Scraptake")
+--         }
+--     },
+--     config = { extra = { } },
+--     loc_vars = function(self, info_queue, card)
+--         return { vars = {  } }
+--     end,
+--     rarity = "valk_tauic",
+--     atlas = "tau",
+--     pos = {x=0, y=0},
+--     soul_pos = {x=0, y=1},
+--     cost = 4,
+--     no_doe = true,
+--     calculate = function(self, card, context)
+        
+--     end
+-- }
+
 SMODS.Joker {
     key = "tau_joker",
     loc_txt = {
@@ -503,6 +528,42 @@ SMODS.Joker {
 
     end,
 
+}
+
+SMODS.Joker {
+    key = "tau_half",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Half Joker{}",
+        text = {
+            "At end of round, multiply all {C:attention}joker values{}",
+            "by amount of {C:attention}empty joker slots{}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {  } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=1, y=2},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if
+			context.end_of_round
+			and not context.blueprint
+			and not context.individual
+			and not context.repetition
+			and not context.retrigger_joker then
+
+            local n = G.jokers.config.card_limit - #G.jokers.cards
+            for i,joker in ipairs(G.jokers.cards) do
+                Cryptid.misprintize(joker, {min=n,max=n},false, true )
+            end
+        end
+    end
 }
 
 SMODS.Joker {
