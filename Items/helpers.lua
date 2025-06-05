@@ -31,7 +31,7 @@ function quote(character)
     -- assume character is in quotes because i'm not a fucking idiot
     local quotes = {
         lily = "thank you. that feels much better.",
-        lily2 = "i'm not all that, go ask Quilla",
+        lily2 = "i'm flattered you think i'm powerful",
         illena = "i'm here to help, nothing better to do.",
         quilla = "sorry i can't help you directly, i don't want to hurt anything.",
         quilla2 = "and no, lily isn't lying.",
@@ -43,12 +43,15 @@ function quote(character)
         ovilidoth = "NO QUOTE RIGHT NOW PLEASE",
         dormant = "I'm missing something.",
         dormant2 = "Help me find it and I'll make it worth your time.",
-        scraptake = "good kitty..",
+        scraptake = "good kitty",
         hornet = "silksong tommorow",
         valklua = "Thank you for playing <3",
     }
 
-    -- return " " --disable for now
+
+    if (SMODS.find_mod("entr")) then
+        quotes.lily2 = "ah, i feel stronger here"
+    end
 
     return ('{C:enhanced,s:0.7,E:1}' .. quotes[character] .. '{}')
 

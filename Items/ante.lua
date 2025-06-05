@@ -32,6 +32,8 @@ function ease_ante(x)
         return
     end
 
+    check_superwin()
+
 
     if (G.GAME.chips and G.GAME.blind.chips) then
         local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
@@ -96,6 +98,16 @@ function display_ante_changes(change)
     
     return
 end
+
+function check_superwin()
+
+    if (G.GAME.round_resets.ante == math.huge) then
+
+    end
+
+end
+
+
 
 function shrdr_sfx()
     play_sound("gong", 1.4, 1)

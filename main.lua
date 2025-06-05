@@ -181,6 +181,7 @@ assert(SMODS.load_file("Items/configui.lua"))()
 assert(SMODS.load_file("Items/stakes.lua"))()
 assert(SMODS.load_file("Items/superplanets.lua"))()
 assert(SMODS.load_file("Items/crossmod.lua"))()
+assert(SMODS.load_file("Items/superwin.lua"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
 Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
