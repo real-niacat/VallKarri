@@ -226,7 +226,7 @@ SMODS.Consumable {
     soul_rate = 2,
     -- is_soul = true,
 
-    config = { extra = { valuemult = 1e-10, create_new = true, inc = 1} },
+    config = { extra = { valuemult = 1e-10, create_new = true, inc = 3} },
 
     loc_vars = function(self, info_queue, card)
 
@@ -302,7 +302,7 @@ SMODS.Consumable {
     hidden = true,
     -- is_soul = true,
 
-    config = { extra = {inc = 1} },
+    config = { extra = {inc = 4} },
 
     loc_vars = function(self, info_queue, card)
 

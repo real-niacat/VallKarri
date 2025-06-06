@@ -44,56 +44,7 @@ merge_recipes = {
 
 }
 
-local hookref_atd = Card.add_to_deck
 
--- load other files here
-
--- stop loading other files because thats how code works
-function Card.add_to_deck(self, from_debuff)
-    hookref_atd(self, from_debuff)
-    local allow = true
-    owned_keys = {}
-
-    for i,j in ipairs(G.jokers.cards) do
-        table.insert(owned_keys,j.config.center_key)
-    end
-
-    for i,j in ipairs(G.consumeables.cards) do
-        table.insert(owned_keys,j.config.center_key)
-    end
-
-    table.insert(owned_keys, self.config.center_key)
-    
-    -- print(owned_keys)
-
-    for i,j in ipairs(merge_recipes) do
-        
-        if table:superset(owned_keys, j.input) then
-
-            for k,ingredient in ipairs(j.input) do
-                destroy_first_instance(ingredient)
-            end
-            -- destroy all cards that are part of recipe
-            if table:contains(j.input, self.config.center_key) then
-                self:quick_dissolve()
-            end
-
-            local swj = j.output:find("^j_")
-            local area = swj and G.jokers or G.consumeables
-            local type = swj and "Joker" or "Consumable"
-
-            local output = create_card(type, area, nil, nil, nil, nil, j.output, "valk_fusion")
-            output:add_to_deck()
-            area:emplace(output)
-
-        end
-
-    end
-
-
-
-    
-end
 
 
 
@@ -143,6 +94,16 @@ SMODS.Rarity {
 }
 
 SMODS.Rarity {
+    key = 'supercursed',
+    loc_txt = {
+        name = 'SUPERCURSED'
+    },
+    badge_colour = HEX("000000"),
+    
+    pools = { ["Joker"] = true },
+}
+
+SMODS.Rarity {
     key = 'equip',
     loc_txt = {
         name = 'Equippable..?'
@@ -168,6 +129,7 @@ end
 -- one day. i will fix minesweeper
 -- today is not that day.
 
+assert(SMODS.load_file("Items/Jokers/cursed.lua"))()
 assert(SMODS.load_file("Items/Jokers/animation.lua"))()
 assert(SMODS.load_file("Items/Jokers/subepic.lua"))()
 assert(SMODS.load_file("Items/Jokers/epic.lua"))()

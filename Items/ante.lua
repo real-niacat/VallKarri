@@ -27,7 +27,7 @@ function ease_ante(x)
     
     x = to_big(x)
     if (x < to_big(1)) then
-        easeantecopy(tonumber(x))
+        easeantecopy(to_number(x))
         return
     end
 
@@ -52,7 +52,7 @@ function ease_ante(x)
             if type(G.GAME.blind.chips) == "table" then
                 while winPot > G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) do
                     i = i + 1
-                    print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor))
+                    -- print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor))
                     scalefactor = scalefactor:tetrate(2)
                     anteChange = anteChange + ante_config.ante_base_inc
                     arrowIter = arrowIter + 1
@@ -74,12 +74,12 @@ function ease_ante(x)
             -- format: jl.a(txt, duration, size, col, snd, sndpitch, sndvol)
 
         display_ante_changes(anteChange)
-        easeantecopy(tonumber(anteChange))
+        easeantecopy(to_number(anteChange))
 
     end
     
 
-    easeantecopy(tonumber(x))
+    easeantecopy(to_number(x))
 end
 
 function display_ante_changes(change)
