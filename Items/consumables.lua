@@ -214,8 +214,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "://MEMORYLEAK",
         text = {
-            "Make all jokers {C:dark_edition}Absolute{}, multiply their values by {C:attention}#1#{}",
-            "set joker slots to {C:attention}[Jokers Owned]+#2#{} and create an {C:cry_azure}Unsurpassed{} Joker",
+            "Create an {C:cry_azure}Unsurpassed{} Joker and a {C:black}Supercursed{} joker",
             credit("Scraptake")
         }
     },
@@ -238,49 +237,16 @@ SMODS.Consumable {
         return true
     end,
 
-    update = function(self, card, front)
-        
-        if (card.area == G.pack_cards and card.ability and card.ability.extra and card.ability.extra.create_new) then
-            card.ability.extra.create_new = false
-            card:quick_dissolve()
-            simple_create("Consumable", G.consumeables, "c_valk_memoryleak")
-        end
-
-    end,
-
-    add_to_deck = function(self, card, from_debuff)
-
-        if (#G.jokers.cards > 0 ) then 
-            for i,joker in ipairs(G.jokers.cards) do
-                joker:set_eternal(true)
-            end
-        end
-    end,
-
-    remove_from_deck = function(self, card, from_debuff)
-
-        if (#G.jokers.cards > 0 ) then 
-            for i,joker in ipairs(G.jokers.cards) do
-                joker:set_eternal(false)
-            end
-        end
-
-    end,
-
     use = function(self, card, area, copier)
         
-        G.jokers.config.card_limit = #G.jokers.cards + card.ability.extra.inc
-        for i,c in ipairs(G.jokers.cards) do
 
-            Cryptid.misprintize(c, {min=card.ability.extra.valuemult,max=card.ability.extra.valuemult}, nil, true)
+        local usp = create_card("Joker", G.jokers, nil, "valk_unsurpassed", nil, nil, nil, "c_valk_memoryleak")
+        usp:add_to_deck()
+        G.jokers:emplace(usp)
 
-            c.ability.cry_absolute = true
-
-        end
-
-        local jkr = create_card("Joker", G.jokers, nil, "valk_unsurpassed", nil, nil, nil, "c_valk_memoryleak")
-        jkr:add_to_deck()
-        G.jokers:emplace(jkr)
+        local bad = create_card("Joker", G.jokers, nil, "valk_supercursed", nil, nil, nil, "c_valk_memoryleak")
+        bad:add_to_deck()
+        G.jokers:emplace(bad)
 
     end
 }
@@ -290,7 +256,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "://MEMORYPATCH",
         text = {
-            "Set joker slots to {C:attention}[Jokers Owned]+#1#{} and create an {C:cry_azure}Unsurpassed{} Joker",
+            "Create an {C:cry_azure}Unsurpassed{} Joker",
             credit("Scraptake")
         }
     },
@@ -300,13 +266,14 @@ SMODS.Consumable {
     -- soul_rate = 0.07,
     soul_rate = 0,
     hidden = true,
+    no_collection = true,
     -- is_soul = true,
 
-    config = { extra = {inc = 4} },
+    config = { extra = { } },
 
     loc_vars = function(self, info_queue, card)
 
-        return {vars = { card.ability.extra.inc }}
+        return {vars = { number_format(card.ability.extra.valuemult), card.ability.extra.inc }}
         
     end,
 
@@ -316,11 +283,52 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         
-        G.jokers.config.card_limit = #G.jokers.cards + card.ability.extra.inc
 
-        local jkr = create_card("Joker", G.jokers, nil, "valk_unsurpassed", nil, nil, nil, "c_valk_memoryleak")
-        jkr:add_to_deck()
-        G.jokers:emplace(jkr)
+        local usp = create_card("Joker", G.jokers, nil, "valk_unsurpassed", nil, nil, nil, "c_valk_memoryleak")
+        usp:add_to_deck()
+        G.jokers:emplace(usp)
+
+    end
+}
+
+SMODS.Consumable {
+    set = "Spectral",
+    loc_txt = {
+        name = "Freeway",
+        text = {
+            "Create a random {C:cry_exotic}Exotic{} joker",
+        }
+    },
+    key = "freeway",
+    -- atlas = "main",
+    -- pos = {x=7, y=2},
+    -- soul_pos = {x=8, y=2},
+
+    atlas = "phold", --until resprite
+    pos = {x=0,y=0},
+    soul_rate = 0,
+    hidden = true,
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        
+
+        G.E_MANAGER:add_event(Event({
+			trigger = "after",
+			delay = 0.4,
+			func = function()
+				play_sound("timpani")
+				local c = create_card("Joker", G.jokers, nil, "cry_exotic", nil, nil, nil, "valk_freeway")
+				c:add_to_deck()
+				G.jokers:emplace(c)
+				c:juice_up(0.3, 0.5)
+				return true
+			end,
+		}))
+		delay(0.6)
 
     end
 }

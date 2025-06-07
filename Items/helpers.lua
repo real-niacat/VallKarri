@@ -240,6 +240,10 @@ function run_debug()
     assert(SMODS.load_file("debug.lua", "vallkarri"))()
 end
 
+function hotswap()
+    assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
+end
+
 function valk_additions()
     local total = 0
     for _, entry in pairs(G.P_CENTERS) do
@@ -339,6 +343,41 @@ if (vallkarri.config.risky_stuff) then
 
     end
 
+end
+
+function level_all_hands(source, amount)
+    if amount == nil then 
+        amount = 1
+    end
+
+    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_all_hands'),chips = '...', mult = '...', level=''})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
+        play_sound('tarot1')
+        if source then source:juice_up(0.8, 0.5) end
+        G.TAROT_INTERRUPT_PULSE = true
+        return true end 
+    }))
+
+    update_hand_text({delay = 0}, {mult = '+', StatusText = true})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+        play_sound('tarot1')
+        if source then source:juice_up(0.8, 0.5) end
+        return true end
+    }))
+    update_hand_text({delay = 0}, {chips = '+', StatusText = true})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+        play_sound('tarot1')
+        if source then source:juice_up(0.8, 0.5) end
+        G.TAROT_INTERRUPT_PULSE = nil
+        return true end
+    }))
+    local text = amount > 0 and "+"..amount or amount
+    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level=text})
+    delay(1.3)
+    for k, v in pairs(G.GAME.hands) do
+        level_up_hand(source, k, true, amount)
+    end
+    update_hand_text({delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 end
 
 function dvi(value)
