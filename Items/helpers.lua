@@ -410,3 +410,17 @@ function disable_mult_ui()
     G.HUD:recalculate()
 
 end
+
+function quick_misprintize(card, val, growth, arrows)
+
+    Cryptid.misprintize(card, {min = val, max = val}, nil, true, growth, arrows)
+
+end
+
+function qdvi(val, growth, arrows)
+
+    for i,card in ipairs(G.jokers.cards) do 
+        Cryptid.misprintize(card, {min = val, max = val}, nil, true, growth, arrows)
+    end
+
+end
