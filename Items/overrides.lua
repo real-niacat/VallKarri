@@ -55,6 +55,7 @@ function create_UIBox_HUD(force)
 	end 
 
 	return res
+    -- test tst etetdstestredf
 end
 
 local fakeeval = evaluate_play_final_scoring
