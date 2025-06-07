@@ -345,9 +345,13 @@ if (vallkarri.config.risky_stuff) then
 
 end
 
-function level_all_hands(source, amount)
+function level_all_hands(source, amount, mul)
     if amount == nil then 
         amount = 1
+    end
+
+    if mul == nil then 
+        mul = 1
     end
 
     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_all_hands'),chips = '...', mult = '...', level=''})
@@ -372,10 +376,15 @@ function level_all_hands(source, amount)
         return true end
     }))
     local text = amount > 0 and "+"..amount or amount
+    if mul ~= 1 then 
+        text = "(" .. text .. ")X"..mul
+    end
+
     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level=text})
+
     delay(1.3)
     for k, v in pairs(G.GAME.hands) do
-        level_up_hand(source, k, true, amount)
+        level_up_hand(source, k, true, amount + (v.level * mul))
     end
     update_hand_text({delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 end

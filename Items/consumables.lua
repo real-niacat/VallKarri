@@ -297,15 +297,13 @@ SMODS.Consumable {
         name = "Freeway",
         text = {
             "Create a random {C:cry_exotic}Exotic{} joker",
+            credit("Pangaea"),
         }
     },
     key = "freeway",
-    -- atlas = "main",
-    -- pos = {x=7, y=2},
-    -- soul_pos = {x=8, y=2},
-
-    atlas = "phold", --until resprite
-    pos = {x=0,y=0},
+    atlas = "main",
+    pos = {x=9, y=3, },
+    soul_pos = {x=7, y=3, extra = {x=8, y=3}},
     soul_rate = 0,
     hidden = true,
 

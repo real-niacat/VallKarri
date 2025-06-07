@@ -110,7 +110,7 @@ SMODS.Joker {
         
         if context.other_card and context.other_card.area ~= G.deck then
             context.other_card:quick_dissolve()
-            level_up_hand(card, "all", nil, -1)
+            level_all_hands(card, -1)
         end
 
         if context.playing_card_added then
