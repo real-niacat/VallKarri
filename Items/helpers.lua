@@ -377,7 +377,7 @@ function level_all_hands(source, amount, mul)
     }))
     local text = amount > 0 and "+"..amount or amount
     if mul ~= 0 then 
-        text = "x"..mul
+        text = "x"..(mul+1)
     end
 
     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level=text})

@@ -40,7 +40,16 @@ local hudcopy = create_UIBox_HUD
 function create_UIBox_HUD(force)
 	local res = hudcopy()
 
-	if (G.GAME.nomult or force) then 
+    -- G.HUD:get_UIE_by_ID("chipmult_op").UIT = 0
+    -- G.HUD:get_UIE_by_ID("hand_mult_area").UIT = 0
+    -- G.HUD:get_UIE_by_ID("hand_mult").UIT = 0
+    -- G.HUD:get_UIE_by_ID("flame_mult").UIT = 0
+    -- G.HUD:get_UIE_by_ID("hand_chip_area").config.minw = 4
+    -- G.HUD:get_UIE_by_ID("hand_mult_area").config.minw = 0
+    -- G.HUD:get_UIE_by_ID("hand_mult_area").config.minh = 0
+    -- G.HUD:get_UIE_by_ID("chipmult_op").scale = 0
+
+	if (G.GAME.mult_disabled or force) then 
 
 		res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[2].nodes[1].config.minw = 4
 		res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[2].nodes[2] = {n=G.UIT.C, config={align = "cm"}, nodes={
@@ -130,4 +139,15 @@ function ease_dollars(mod, instant)
     end
 
     edcopy(mod, instant)
+end
+
+local fakeupd = Game.update
+function Game:update(dt)
+    fakeupd(self, dt)
+
+    if (G.GAME.mult_disabled and G.STATE and G.STATE == 1) then
+        -- refresh during blinds
+        G.HUD:get_UIE_by_ID("hand_mult_area").UIT = 0
+    end
+
 end

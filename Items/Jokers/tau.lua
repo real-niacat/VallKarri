@@ -817,6 +817,157 @@ SMODS.Joker {
     end
 }
 
+
+SMODS.Joker {
+    key = "tau_banner",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Banner{}",
+        text = {
+            "{X:chips,C:white}+^#1#{} Chips per discard remaining",
+            "{C:inactive}(Currently {X:chips,C:white}^#2#{C:inactive} Chips)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { per = 2 } },
+    loc_vars = function(self, info_queue, card)
+        local d = 4
+        if G and G.GAME and G.GAME.current_round then
+            d = G.GAME.current_round.discards_left
+        end
+        return { vars = { card.ability.extra.per, 1 + (card.ability.extra.per * d) } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=8, y=2},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+
+            return {echips = 1 + (card.ability.extra.per * G.GAME.current_round.discards_left)}
+
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_summit",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Summit{}",
+        text = {
+            "When {C:red}discarding{}, multiply all hand levels by the {C:attention}square root{}",
+            "of discards remaining",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = {  } },
+    loc_vars = function(self, info_queue, card)
+
+        return { vars = {  } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=2, y=0},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.pre_discard then
+
+            level_all_hands(card, 0, math.sqrt(G.GAME.current_round.discards_left) - 1)
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_marble",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Marble Joker{}",
+        text = {
+            "All scored cards are converted into {C:attention}stone{} cards",
+            "{C:attention}Stone{} cards give {X:chips,C:white}X#1#{} Chips when scored",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { xchip = 4.2 } },
+    loc_vars = function(self, info_queue, card)
+
+        return { vars = { card.ability.extra.xchip } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=3, y=0},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.before then
+
+            for i,c in ipairs(context.scoring_hand) do
+                c:set_ability("m_stone")
+            end
+
+        end
+
+        if context.individual and context.cardarea == G.play then
+            local en = SMODS.get_enhancements(context.other_card)
+            if en and en.m_stone then
+                return {xchips = card.ability.extra.xchip}
+            end
+
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_loyalty",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Loyalty Card{}",
+        text = {
+            "{C:attention}Double{} this jokers {{X:mult,C:white}^Mult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
+            "{C:inactive}(Currently {X:mult,C:white}^#3#{C:inactive} Mult)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { emult = 1}, immutable = { hands = 6, req = 6 } },
+    loc_vars = function(self, info_queue, card)
+
+        return { vars = { card.ability.immutable.req, card.ability.immutable.hands, card.ability.extra.emult } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=7, y=2},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.before and not context.blueprint then
+
+            card.ability.immutable.hands = card.ability.immutable.hands - 1
+            if card.ability.immutable.hands < 1 then
+                card.ability.immutable.hands = card.ability.immutable.req
+                quick_misprintize(card, 2)
+                -- self misprintizing! how could this ever go wrong!
+            end
+
+        end
+
+        if context.joker_main then
+            return {emult = card.ability.extra.emult}
+        end
+
+    end
+}
+
+
 SMODS.Joker {
     key = "tau_canio",
     loc_txt = {
