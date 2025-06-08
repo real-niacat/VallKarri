@@ -13,7 +13,7 @@ SMODS.Joker {
     end,
     
     config = { extra = {change = 1.1} },
-    rarity = "cry_epic",
+    rarity = 3,
     atlas = "main",
     pos = {x=5, y=3},
     soul_pos = {x=6, y=3},
