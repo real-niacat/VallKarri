@@ -18,6 +18,7 @@ SMODS.ConsumableType {
         }
     },
     default = "c_valk_thornezytkow",
+    
 }
 
 SMODS.Atlas {
@@ -77,6 +78,9 @@ SMODS.Consumable {
         
     atlas = "csm",
     pos = {x=4, y=0},
+
+    no_grc = true,
+    no_doe = true,
     
 }
 
@@ -129,7 +133,8 @@ SMODS.Consumable {
         
     atlas = "csm",
     pos = {x=3, y=0},
-    
+    no_grc = true,
+    no_doe = true,
 }
 
 SMODS.Consumable {
@@ -182,7 +187,8 @@ SMODS.Consumable {
         
     atlas = "csm",
     pos = {x=0, y=0},
-    
+    no_grc = true,
+    no_doe = true,
 }
 
 SMODS.Consumable {
@@ -235,5 +241,6 @@ SMODS.Consumable {
         
     atlas = "csm",
     pos = {x=1, y=0},
-    
+    no_grc = true,
+    no_doe = true,
 }

@@ -37,6 +37,8 @@ if SMODS.find_mod("entr") then
             
         atlas = "csm",
         pos = {x=2, y=0},
+        no_grc = true,
+        no_doe = true,
     }
 
     SMODS.Consumable {
@@ -83,5 +85,7 @@ if SMODS.find_mod("entr") then
             
         atlas = "csm",
         pos = {x=5, y=0},
+        no_grc = true,
+        no_doe = true,
     }
 end
