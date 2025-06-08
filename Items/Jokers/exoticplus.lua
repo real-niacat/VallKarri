@@ -120,7 +120,7 @@ SMODS.Joker {
             concept("techwizard72"),
         }
     },
-    config = { extra = { reqowned = 25 } },
+    config = { extra = { reqowned = 10 } },
     loc_vars = function(self, info_queue, card)
 
 
