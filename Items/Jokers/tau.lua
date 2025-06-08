@@ -24,6 +24,10 @@ tauics = {
     {base = "j_rocket", tau = "j_valk_tau_rocket"},
     {base = "j_oops", tau = "j_valk_tau_oops"},
     {base = "j_troubadour", tau = "j_valk_tau_troubadour"},
+    {base = "j_ceremonial", tau = "j_valk_tau_dagger"},
+    {base = "j_credit_card", tau = "j_valk_tau_creditcard"},
+    {base = "j_four_fingers", tau = "j_valk_tau_fingers"},
+    {base = "j_stencil", tau = "j_valk_tau_stencil"},
 }
 
 legendary_tauics = {
@@ -187,6 +191,10 @@ SMODS.Consumable {
         
 --     end
 -- }
+
+
+
+
 
 SMODS.Joker {
     key = "tau_joker",
@@ -657,6 +665,159 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "tau_dagger",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Ceremonial Dagger{}",
+        text = {
+            "When {C:attention}blind{} selected, {C:red,E:1}destroy{} joker to the right and",
+            "added its sell value to this jokers {X:mult,C:white}^Mult{}",
+            "{C:inactive}(Currently {X:mult,C:white}^#1#{C:inactive} Mult)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { mult = 1 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.mult } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=5, y=5},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.setting_blind and #G.jokers.cards then
+
+            local my_pos = nil
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i] == card then my_pos = i; break end
+            end
+            if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
+                    local sliced_card = G.jokers.cards[my_pos+1]
+                    if sliced_card.config.center.rarity == "cry_exotic" then check_for_unlock({type = "what_have_you_done"}) end
+                    sliced_card.getting_sliced = true
+                    G.GAME.joker_buffer = G.GAME.joker_buffer - 1
+                    G.E_MANAGER:add_event(Event({func = function()
+                        G.GAME.joker_buffer = 0
+                        card.ability.extra.mult = card.ability.extra.mult + sliced_card.sell_cost
+                        card:juice_up(0.8, 0.8)
+                        sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
+                        play_sound('slice1', 0.96+math.random()*0.08)
+                    return true end }))
+                    card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_mult', vars = {card.ability.mult+sliced_card.sell_cost}}, colour = G.C.RED, no_juice = true})
+                    return nil, true
+                end
+
+        end
+
+        if context.joker_main then
+            return {emult = card.ability.extra.mult}
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_creditcard",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Credit Card{}",
+        text = {
+            "Refund {C:attention}#1#%{} of all money spent",
+            credit("Lily")
+        }
+    },
+    config = { immutable = {refund = 75} }, --value is pointless, it's always a 3/4 refund
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.immutable.refund } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=9, y=0},
+    cost = 4,
+    no_doe = true,
+}
+
+SMODS.Joker {
+    key = "tau_fingers",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Four Fingers{}",
+        text = {
+            "{C:attention}Flushes{} and {C:attention}Straights{} can be made with {C:attention}3{} cards", --booo hardcoding. whatever. go complain to smods.
+            "Level up all hands by {C:attention}#1#{} when consumable used",
+            "Increases {C:dark_edition,E:1}quadratically{}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { levels = 1, inc = 1} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.levels } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=6, y=6},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.using_consumeable then
+
+            level_all_hands(context.consumeable, card.ability.extra.levels)
+            card.ability.extra.levels = card.ability.extra.levels + card.ability.extra.inc
+            
+        end
+
+    end
+}
+
+SMODS.Joker {
+    key = "tau_stencil",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Joker Stencil{}",
+        text = {
+            "{C:attention}+#1#{} Joker slots, double this value when joker sold",
+            "Gives {X:mult,C:white}Xmult{} equal to total joker slots",
+            "{C:inactive}(Caps at {C:attention}+#2#{C:inactive} Joker Slots){}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { slots = 2 }, immutable = {cap = 1e100} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.slots, card.ability.immutable.cap } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=2, y=5},
+    cost = 4,
+    no_doe = true,
+
+    add_to_deck = function(self ,card, from_debuff)
+        G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.slots
+    end,
+
+    calculate = function(self, card, context)
+        
+        if context.selling_card and context.card and context.card.ability.set == "Joker" then
+            local new = card.ability.extra.slots * 2
+            if new > card.ability.immutable.cap then
+                new = card.ability.extra.slots
+            end
+            G.jokers.config.card_limit = G.jokers.config.card_limit + (new) - card.ability.extra.slots
+            card.ability.extra.slots = new
+            card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Upgraded!"})
+        end
+
+        if (context.joker_main) then
+            return {x_mult = G.jokers.config.card_limit}
+        end
+
+    end
+}
+
+SMODS.Joker {
     key = "tau_canio",
     loc_txt = {
         name = "{C:cry_ember}Tauic Canio{}",
@@ -792,7 +953,7 @@ SMODS.Joker {
             if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
                 G.GAME.blind:disable()
                 play_sound('timpani')
-                card_eval_status_text(self, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
+                card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
             end
 
             G.GAME.blind.chips = to_big(G.GAME.blind.chips):arrow(2, 1 / card.ability.extra.antitetration)

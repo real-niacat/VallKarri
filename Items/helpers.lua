@@ -40,7 +40,7 @@ function quote(character)
         raxd = "NUCLEAR BOMB!??!?!?",
         femtanyl = "we r online. we r online.",
         lilac = "A medium iced cappuccino, p-please.",
-        ovilidoth = "NO QUOTE RIGHT NOW PLEASE",
+        ovilidoth = "",
         dormant = "I'm missing something.",
         dormant2 = "Help me find it and I'll make it worth your time.",
         scraptake = "good kitty",
@@ -133,7 +133,6 @@ end
 
 function Card:quick_dissolve()
 	self.ability.eternal = nil
-	self.ignore_incantation_consumable_in_use = true
 	self.true_dissolve = true
 	self:start_dissolve(nil, nil, nil, nil)
 end
@@ -242,6 +241,7 @@ end
 
 function hotswap()
     assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
+    -- very unsafe, however: this does allow for live updates
 end
 
 function valk_additions()
@@ -351,7 +351,7 @@ function level_all_hands(source, amount, mul)
     end
 
     if mul == nil then 
-        mul = 1
+        mul = 0
     end
 
     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_all_hands'),chips = '...', mult = '...', level=''})
@@ -376,8 +376,8 @@ function level_all_hands(source, amount, mul)
         return true end
     }))
     local text = amount > 0 and "+"..amount or amount
-    if mul ~= 1 then 
-        text = "(" .. text .. ")X"..mul
+    if mul ~= 0 then 
+        text = "x"..mul
     end
 
     update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level=text})

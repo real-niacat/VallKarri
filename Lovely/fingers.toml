@@ -1,0 +1,16 @@
+[manifest]
+version = "1.0.0"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = """=[SMODS _ "src/utils.lua"]"""
+pattern = "return 5"
+position = "before"
+payload = '''
+if next(SMODS.find_card('j_valk_tau_fingers')) then
+    return 3
+end
+'''
+match_indent = true

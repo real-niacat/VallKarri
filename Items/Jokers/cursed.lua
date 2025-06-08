@@ -94,7 +94,7 @@ SMODS.Joker {
     loc_txt = {
         name = "placeholder",
         text = {
-            "When card drawn, {C:red,E:1}destroy it{}",
+            "When card drawn, {C:red,E:1}destroy it{} and de-level all hands",
             "Half levels of all {C:attention}Poker Hands{} when card added to deck",
         }
     },

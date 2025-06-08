@@ -117,3 +117,17 @@ function Card.add_to_deck(self, from_debuff)
 
     
 end
+
+
+local edcopy = ease_dollars
+
+function ease_dollars(mod, instant)
+    if #SMODS.find_card("j_valk_tau_creditcard") > 0 and to_big(mod) < to_big(0) then
+
+        edcopy(mod, instant)
+        edcopy(-(mod*0.75), instant)
+        return
+    end
+
+    edcopy(mod, instant)
+end
