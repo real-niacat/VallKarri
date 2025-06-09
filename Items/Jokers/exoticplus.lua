@@ -40,7 +40,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_azure}The Dormant Lordess",
         text = {
-            "{C:mult}+#1#{} Mult",
+            "{X:mult,C:white}^#1#{} Mult",
             quote("dormant"),
             quote("dormant2"),
             credit("Scraptake (Edit by Lily)")
@@ -63,7 +63,7 @@ SMODS.Joker {
         if context.joker_main or context.forcetrigger then
 
             return {
-                mult = card.ability.extra.mult_bonus
+                emult = card.ability.extra.mult_bonus
             }
         end
     end
@@ -245,6 +245,11 @@ SMODS.Joker {
     immutable = true,
     demicoloncompat = true,
     calculate = function(self, card, context)
+
+        if card.ability.extra.op > 1000 then
+            card.ability.extra.op = 1000
+        end
+
         if context.cardarea == G.play then
 
             if context.individual then
@@ -276,9 +281,6 @@ SMODS.Joker {
             end
             if (nines >= 9) then
                 card.ability.extra.op = card.ability.extra.op + card.ability.extra.opinc
-                if card.ability.extra.op > 1000 then
-                    card.ability.extra.op = 1000
-                end
             end
         end
 
