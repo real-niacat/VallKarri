@@ -8,8 +8,7 @@
 	"priority": 2147483647, 
 	"badge_colour": "e5bf3a",
 	"version": "0.0.2", 
-	"dependencies": [
-		"JenLib", 
+	"dependencies": [ 
 		"Talisman",
 		"Cryptid (>=0.5.5)", 
 	], 

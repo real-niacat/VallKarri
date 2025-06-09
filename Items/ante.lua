@@ -69,9 +69,6 @@ function ease_ante(x)
             
 
             anteChange = math.floor(anteChange)
-            --G.GAME.round_resets.ante = G.GAME.round_resets.ante + anteChange
-            -- announce
-            -- format: jl.a(txt, duration, size, col, snd, sndpitch, sndvol)
 
         display_ante_changes(anteChange)
         easeantecopy(to_number(anteChange))
@@ -90,7 +87,7 @@ function display_ante_changes(change)
     local str = "Overscored! +" .. change .. " ante."
     local timeWait = "1"
 
-    jl.a(str, timeWait, 0.9, G.C.RED) --thank you oh great jenwalter for jenlib
+    basic_text_announce(str, timeWait, 0.9, G.C.RED) --thank you oh great jenwalter for jenlib
                 -- play_sound(sound,pitch,volume)
 
     shrdr_sfx()

@@ -65,7 +65,7 @@ SMODS.Consumable {
         
         local value = to_big(card.ability.extra.echips):pow(to_big(card.ability.extra.echips):pow(math.floor(levels/5)))
         local str = "^" .. tostring(value)
-        jl.th("all")
+        simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
 
         for i,hand in pairs(G.GAME.hands) do
@@ -120,7 +120,7 @@ SMODS.Consumable {
         
         local value = to_big(card.ability.extra.emult):pow(to_big(card.ability.extra.emult):pow(math.floor(levels/5)))
         local str = "^" .. tostring(value)
-        jl.th("all")
+        simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
 
         for i,hand in pairs(G.GAME.hands) do
@@ -174,7 +174,7 @@ SMODS.Consumable {
         -- who's going to correct me on it?
         local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(math.floor(levels/5)))
         local str = "^^" .. tostring(value)
-        jl.th("all")
+        simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
 
         for i,hand in pairs(G.GAME.hands) do
@@ -228,7 +228,7 @@ SMODS.Consumable {
         -- who's going to correct me on it?
         local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(math.floor(levels/5)))
         local str = "^^" .. tostring(value)
-        jl.th("all")
+        simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
 
         for i,hand in pairs(G.GAME.hands) do

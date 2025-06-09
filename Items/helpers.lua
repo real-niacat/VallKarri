@@ -33,8 +33,8 @@ function quote(character)
         lily = "thank you. that feels much better.",
         lily2 = "i'm flattered you think i'm powerful",
         illena = "i'm here to help, nothing better to do.",
-        quilla = "sorry i can't help you directly, i don't want to hurt anything.",
-        quilla2 = "and no, lily isn't lying.",
+        quilla = "is my wife here? ehe",
+        quilla2 = "Lily, i mean Lily. is she here?",
         niko = "sorry im not wearing the twink bowtie :c",
         orivander = "Behold, the absolute force of gravity",
         raxd = "NUCLEAR BOMB!??!?!?",
@@ -53,8 +53,43 @@ function quote(character)
         quotes.lily2 = "ah, i feel stronger here"
     end
 
+    if (#SMODS.find_card("j_valk_lily") > 0) then
+        quotes.quilla = "ahh! there you are!"
+        quotes.quilla2 = "you alright Lily?"
+    end
+
+    if (#SMODS.find_card("j_valk_quilla") > 0) then
+        quotes.lily = "hi! Quilla!"
+        quotes.lily2 = "i'm, trying my best <3"
+    end
+
     return ('{C:enhanced,s:0.7,E:1}' .. quotes[character] .. '{}')
 
+end
+
+-- simplified code from jenlib
+
+function basic_text_announce(txt, duration, size, col, snd, sndpitch, sndvol)
+	G.E_MANAGER:add_event(Event({
+		func = (function()
+			if snd then play_sound(snd, sndpitch, sndvol) end
+			attention_text({
+				scale = size or 1.4, text = txt, hold = duration or 2, colour = col or G.C.WHITE, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
+			})
+		return true
+	end)}))
+end
+
+function quick_hand_text(name, chip, mul, lv, notif, snd, vol, pit, de)
+	update_hand_text({sound = type(snd) == 'string' and snd or type(snd) == 'nil' and 'button', volume = vol or 0.7, pitch = pit or 0.8, delay = de or 0.3}, {handname=name or '????', chips = chip or '?', mult = mul or '?', level=lv or '?', StatusText = notif})
+end
+
+function simple_hand_text(hand, notify)
+	if hand == 'all' or hand == 'allhands' or hand == 'all_hands' then
+		quick_hand_text(localize('k_all_hands'), '...', '...', '', notify)
+	elseif G.GAME.hands[hand] then
+		quick_hand_text(localize(hand, 'poker_hands'), G.GAME.hands[hand].chips, G.GAME.hands[hand].mult, G.GAME.hands[hand].level, notify)
+	end
 end
  
 function table:remove_by_function(t, func)

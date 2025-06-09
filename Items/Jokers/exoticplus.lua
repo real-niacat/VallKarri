@@ -198,9 +198,6 @@ if (vallkarri.config.risky_stuff) then
                             local original = names[idx]
                             local new = names[idx-1]
                             G.P_CENTERS[chosen.index].rarity = order[idx-1]
-                            local time = math.max(1 - (mostlyuselessiterationvariable/10), 0) 
-                            jl.a(original .. " -> " .. new, tostring(time), 1, G.C.PURPLE)
-                            jl.rd(time)
 
                             
                         end
@@ -297,14 +294,15 @@ SMODS.Joker {
     end
 }
 
--- SMODS.Joker {
-quilla = {
+SMODS.Joker {
+-- quilla = {
     key = "quilla",
     loc_txt = {
         name = "Aquilegia \"Quilla\" Felli",
         text = {
-            "Causes random, chaotic effects in your favor.",
-            "{C:inactive,s:0.75}Purely a theory of what could be.{}",
+            "Losing is {C:red,E:1,s:1.2}impossible{}",
+            "",
+            "{C:inactive,s:0.7,E:1}Lily's girlfriend, though she's a bit embarassed about it{}",
             quote("quilla"),
             quote("quilla2"),
             credit("Scraptake")
@@ -324,7 +322,7 @@ quilla = {
     update = function(self, card, front)
         if card.ability and card.ability.extra.state and card.ability.extra.ctr and card.children and card.children.center and card.children.floating_sprite then
             
-            card.ability.extra.ctr = (card.ability.extra.ctr + 1) % 6
+            card.ability.extra.ctr = (card.ability.extra.ctr + 1) % 60
             if (card.ability.extra.ctr == 0) then
                 card.ability.extra.state = card.ability.extra.state + 1
                 if card.ability.extra.state > 4 then
@@ -340,46 +338,48 @@ quilla = {
         local found = SMODS.find_card("j_valk_quilla")
         if (#found > 0) then
             local quilla = (select(2,next(found)))
+            
+            
+
+
             quilla.debuff = false
         end
+
+    end,
+
+    add_to_deck = function(self, card, from_debuff)
+
+        G.GAME.round_resets.ante = 1500
 
     end,
 
 
     calculate = function(self, card, context)
 
-        if (context.other_card) then 
-            if ((not context.other_card.edition)) then
-                context.other_card:set_edition("e_negative", true)
+        if context.before then
+
+            for i=1,#G.hand.highlighted do
+                G.hand:remove_from_highlighted(G.hand.highlighted[1])
             end
+
         end
 
-        G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+        if context.individual and (context.cardarea == G.play) then
+            G.GAME.current_round.discards_left = G.GAME.current_round.discards_left * 2
+            G.GAME.current_round.hands_left = G.GAME.current_round.hands_left * 2
 
-        if context.individual and context.cardarea == G.play then
-            local card2 = create_card('Consumeables', G.consumeables, nil, nil, nil, nil, nil, 'valk_quilla')
-			card2:set_edition("e_negative", true)
-			card2:add_to_deck()
-			G.jokers:emplace(card2)
+            -- local copy = copy_card(context.other_card)
+            -- copy:add_to_deck()
+            -- G.hand:emplace(copy)
 
-            local card3 = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'valk_quilla')
-			card3:set_edition("e_negative", true)
-			card3:add_to_deck()
-			G.consumeables:emplace(card3)
+            -- context.other_card:quick_dissolve()
         end 
 
         if context.joker_main then
-            return {
-                mult = to_big(G.GAME.blind.chips):arrow(66,666)
-            }
+
+            return {mult = G.GAME.blind.chips + G.GAME.chips, chips = G.GAME.blind.chips + G.GAME.chips}
+
         end
 
-
-        
-
     end,
-
-    calc_dollar_bonus = function(self, card)
-        return G.GAME.dollars ^ 2
-    end
 }
