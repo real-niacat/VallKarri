@@ -85,7 +85,10 @@ local decks = {
         if redeeming then mspl(3) end
     end,
     ["Painted Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.handsize_on_sell = 1 end
+        if redeeming then G.GAME.handsize_on_sell = 1
+        elseif context.selling_card and context.card.ability.set == "Joker" and context.card.config.center.rarity ~= 1 then
+            G.hand:change_size(G.GAME.handsize_on_sell)
+        end
     end,
     ["Anaglyph Deck"] = function(redeeming, context)
         if redeeming then G.GAME.doubletag_create = true end

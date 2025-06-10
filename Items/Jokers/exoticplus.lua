@@ -46,7 +46,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { fallback_red = 9, fallback_blue = 5, max = 1000, exponent = 8, mexpo = 0.7 } },
+    config = { extra = { fallback_red = 12, fallback_blue = 7, max = 1000, exponent = 8, mexpo = 0.7 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {"{" .. math.floor((card.ability.extra.fallback_blue + card.ability.extra.fallback_red) ^ card.ability.extra.mexpo) .. "}", ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )} }
     end,
@@ -181,7 +181,9 @@ SMODS.Joker {
 }
 
 
-SMODS.Joker {
+-- SMODS.Joker {
+-- disabled due to not properly changing pools
+local joe = {
     key = "jokerofequality",
     loc_txt = {
         name = "{C:cry_verdant}Joker of Equality",
