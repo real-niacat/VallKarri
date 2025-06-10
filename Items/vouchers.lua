@@ -73,16 +73,10 @@ local decks = {
             -- print("success 1")
             if context.other_card.base.suit == "Spades" then
                 -- print("success 2")
-                SMODS.change_base(context.other_card, context.other_card.base.suit, "14")
+                SMODS.change_base(context.other_card, context.other_card.base.suit, "4")
             elseif context.other_card.base.suit == "Hearts" then
                 -- print("success 3")
-                SMODS.change_base(context.other_card, context.other_card.base.suit, "9")
-            elseif context.other_card.base.suit == "Clubs" then
-                -- print("success 4")
                 SMODS.change_base(context.other_card, context.other_card.base.suit, "7")
-            elseif context.other_card.base.suit == "Diamonds" then
-                -- print("success 5")
-                SMODS.change_base(context.other_card, context.other_card.base.suit, "2")
             end
 
         end 
@@ -110,6 +104,11 @@ local decks = {
 function vallkarri.add_quantum_deck(deckname, func)
     decks[deckname] = func
 end 
+
+-- example:
+-- vallkarri.add_quantum_deck("Red Deck", function(redeeming, context) 
+--    if redeeming then SMODS:change_discard_limit(2) end
+--    end)
 
 
 SMODS.Voucher {

@@ -21,12 +21,6 @@ function days_since(year, month, day)
 
 end
 
-
-
-external_joker_data = {
-    
-}
-
 function quote(character)
     -- assume character is in quotes because i'm not a fucking idiot
     local quotes = {
@@ -51,16 +45,6 @@ function quote(character)
 
     if (SMODS.find_mod("entr")) then
         quotes.lily2 = "ah, i feel stronger here"
-    end
-
-    if (#SMODS.find_card("j_valk_lily") > 0) then
-        quotes.quilla = "ahh! there you are!"
-        quotes.quilla2 = "you alright Lily?"
-    end
-
-    if (#SMODS.find_card("j_valk_quilla") > 0) then
-        quotes.lily = "hi! Quilla!"
-        quotes.lily2 = "i'm, trying my best <3"
     end
 
     return ('{C:enhanced,s:0.7,E:1}' .. quotes[character] .. '{}')
@@ -188,6 +172,21 @@ function joker_owned(key)
 
     return false
 
+end
+
+function quick_card_speak(card, text, wait)
+    card_eval_status_text(card, 'extra', nil, nil, nil, {message = text, delay = wait})
+end
+
+function pause_event(time)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+		timer = 'REAL',
+        delay = time or 1,
+        func = function()
+           return true
+        end
+    }))
 end
 
 function get_first_instance(key)
