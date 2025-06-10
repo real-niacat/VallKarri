@@ -21,7 +21,16 @@ local decks = {
         end
     end,
     ["Magic Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.consumable_after_round = true end
+        if redeeming then G.GAME.consumable_after_round = true
+        elseif context.end_of_round and context.main_eval then
+            
+            local type = pseudorandom("valk_quantum_magicdeck", 1, 2) == 1 and "Spectral" or "Tarot"
+            local c = create_card(type, G.consumeables, nil, nil, nil, nil, nil, "valk_quantum_magicdeck")
+            c:add_to_deck()
+            c:set_edition("e_negative", true)
+            G.consumeables:emplace(c)
+
+        end
     end,
     ["Nebula Deck"] = function(redeeming, context)
         if redeeming then G.GAME.consume_planets = true end
@@ -75,7 +84,7 @@ SMODS.Voucher {
 
     loc_vars = function(self, info_queue, card)
 
-        if G and G.GAME and G.GAME.selected_back and table:contains(decks, G.GAME.selected_back.name) then
+        if G and G.GAME and G.GAME.selected_back and decks[G.GAME.selected_back.name] then
             return {vars = {"applicable", ""}}
         else
             return {vars = {"", "not applicable"}}
