@@ -70,14 +70,18 @@ local decks = {
     ["Checkered Deck"] = function(redeeming, context)
         if redeeming then G.GAME.rankconvert = true
         elseif G.GAME.rankconvert and context.individual and context.other_card and context.other_card.area == G.play then
-
+            -- print("success 1")
             if context.other_card.base.suit == "Spades" then
-                SMODS.change_base(context.other_card, context.other_card.base.suit, "A")
+                -- print("success 2")
+                SMODS.change_base(context.other_card, context.other_card.base.suit, "14")
             elseif context.other_card.base.suit == "Hearts" then
+                -- print("success 3")
                 SMODS.change_base(context.other_card, context.other_card.base.suit, "9")
             elseif context.other_card.base.suit == "Clubs" then
+                -- print("success 4")
                 SMODS.change_base(context.other_card, context.other_card.base.suit, "7")
             elseif context.other_card.base.suit == "Diamonds" then
+                -- print("success 5")
                 SMODS.change_base(context.other_card, context.other_card.base.suit, "2")
             end
 

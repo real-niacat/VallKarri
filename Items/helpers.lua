@@ -351,67 +351,6 @@ function scraptake_calculation()
     return calced
 end
 
-if (vallkarri.config.risky_stuff) then
-
-    local gcpov = get_current_pool
-    function get_current_pool(_type, _rarity, _legendary, _append, override_equilibrium_effect)
-        if _type == "Joker" and joker_owned("j_valk_jokerofequality") then
-            -- print("success")
-            local ret = {}
-
-            local generated = 1
-
-            local rarities = {1, 2, 3, "cry_epic", 4, "cry_exotic"}
-            local roll = pseudorandom("jokerofequality", 1, 100)
-
-            if _legendary then
-                _rarity = 4
-            end
-
-            if (roll <= 74) then
-                generated = 1
-            elseif (roll <= 94) then
-                generated = 2
-            elseif (roll <= 99) then
-                generated = 3 
-            else
-                generated = "cry_epic"
-            end
-
-            for i,inst in pairs(G.P_CENTERS) do
-
-                if (inst.rarity == (_rarity or generated) ) then
-                    table.insert(ret, inst.key)
-                end
-
-            end
-
-
-            -- print(tostring() .. " vs " .. tostring(table:contains(gcpov(_type, _rarity, _legendary, _append, override_equilibrium_effect), "j_joker")) )
-            --done to test if base joker is in vanilla pool vs my pool
-
-            if (table:contains(ret, "j_joker") and not table:contains(gcpov(_type, _rarity, _legendary, _append, override_equilibrium_effect), "j_joker")) then
-
-                -- print("removing j_joker from pool")
-                for i,inst in ipairs(ret) do
-                    if (inst == "j_joker") then
-                        table.remove(ret, i)
-                        break
-                    end
-                end
-            end
-
-            return ret, "Joker"..(_rarity or '')
-            -- if i ever kill myself i want you to consider this hook of 'get_current_pool' as a potential reason
-
-        end
-        local p, pk = gcpov(_type, _rarity, _legendary, _append, override_equilibrium_effect)
-        return p, pk
-
-    end
-
-end
-
 function level_all_hands(source, amount, mul)
     if amount == nil then 
         amount = 1

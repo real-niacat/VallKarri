@@ -151,3 +151,14 @@ function Game:update(dt)
     end
 
 end
+
+local fakestart = Game.start_run
+function Game:start_run(args)
+    fakestart(self, args)
+
+    for i,center in pairs(G.P_CENTERS) do
+        if center.oldrarity then
+            center.rarity = center.oldrarity
+        end
+    end
+end
