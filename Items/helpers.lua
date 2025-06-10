@@ -91,6 +91,32 @@ function simple_hand_text(hand, notify)
 		quick_hand_text(localize(hand, 'poker_hands'), G.GAME.hands[hand].chips, G.GAME.hands[hand].mult, G.GAME.hands[hand].level, notify)
 	end
 end
+
+function mostplayed_name()
+
+    local name = nil
+    local timesplayed = -1
+
+    for i,hand in pairs(G.GAME.hands) do
+        if hand.played > timesplayed then
+            name = i
+            timesplayed = hand.played
+        end
+    end
+
+    return name
+
+end
+
+
+function mspl(amt)
+
+    for i,hand in ipairs(G.GAME.hands) do
+        hand.l_chips = hand.l_chips * amt
+        hand.l_mult = hand.l_mult * amt
+    end
+
+end
  
 function table:remove_by_function(t, func)
     for i = #t, 1, -1 do

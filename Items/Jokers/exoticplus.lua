@@ -356,23 +356,15 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-        if context.before then
-
-            for i=1,#G.hand.highlighted do
-                G.hand:remove_from_highlighted(G.hand.highlighted[1])
-            end
-
-        end
-
         if context.individual and (context.cardarea == G.play) then
             G.GAME.current_round.discards_left = G.GAME.current_round.discards_left * 2
             G.GAME.current_round.hands_left = G.GAME.current_round.hands_left * 2
 
-            -- local copy = copy_card(context.other_card)
-            -- copy:add_to_deck()
-            -- G.hand:emplace(copy)
+            local copy = copy_card(context.other_card)
+            copy:add_to_deck()
+            G.hand:emplace(copy)
 
-            -- context.other_card:quick_dissolve()
+            context.other_card:quick_dissolve()
         end 
 
         if context.joker_main then
