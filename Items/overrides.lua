@@ -159,6 +159,7 @@ function Game:start_run(args)
     for i,center in pairs(G.P_CENTERS) do
         if center.oldrarity then
 
+            -- remove from the old pool
             local pool = G.P_JOKER_RARITY_POOLS[center.rarity]
             for idx = #pool, 1, -1 do
                 if pool[idx] == center.key then
@@ -166,6 +167,8 @@ function Game:start_run(args)
                     break
                 end
             end
+
+            -- readd to it's original pool
             G.P_JOKER_RARITY_POOLS[center.oldrarity][center.key] = center
 
             center.rarity = center.oldrarity

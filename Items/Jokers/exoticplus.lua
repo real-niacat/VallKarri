@@ -235,7 +235,7 @@ SMODS.Joker {
                         local pool = G.P_JOKER_RARITY_POOLS[chosen.cen.rarity]
                         for idx = #pool, 1, -1 do
                             if pool[idx] == chosen.index then
-                                table.remove(pool, idx)
+                                table.remove(G.P_JOKER_RARITY_POOLS[chosen.cen.rarity], idx)
                                 break
                             end
                         end
