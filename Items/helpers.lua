@@ -92,6 +92,14 @@ function simple_hand_text(hand, notify)
 	end
 end
 
+function ratiocalc(a, b, c, d)
+    local larger = math.max(a,b)
+    local smaller = math.min(a,b)
+
+    return ((smaller / larger) ^ c) * d
+
+end
+
 function mostplayed_name()
 
     local name = nil
@@ -110,12 +118,10 @@ end
 
 
 function mspl(amt)
-
-    for i,hand in ipairs(G.GAME.hands) do
-        hand.l_chips = hand.l_chips * amt
-        hand.l_mult = hand.l_mult * amt
+    for i, hand in pairs(G.GAME.hands) do
+        G.GAME.hands[i].l_chips = G.GAME.hands[i].l_chips * amt
+        G.GAME.hands[i].l_mult = G.GAME.hands[i].l_mult * amt
     end
-
 end
  
 function table:remove_by_function(t, func)

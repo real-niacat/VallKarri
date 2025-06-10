@@ -16,13 +16,13 @@ local decks = {
     end,
     ["Black Deck"] = function(redeeming, context)
         if redeeming then G.GAME.refund_hands = true
-        elseif context.before and context.scoring_name and context.scoring_name == mostplayed_name() then
+        elseif G.GAME.refund_hands and context.before and context.scoring_name and context.scoring_name == mostplayed_name() then
             ease_hands_played(0.5)
         end
     end,
     ["Magic Deck"] = function(redeeming, context)
         if redeeming then G.GAME.consumable_after_round = true
-        elseif context.end_of_round and context.main_eval then
+        elseif G.GAME.consumable_after_round and context.end_of_round and context.main_eval then
             
             local type = pseudorandom("valk_quantum_magicdeck", 1, 2) == 1 and "Spectral" or "Tarot"
             local c = create_card(type, G.consumeables, nil, nil, nil, nil, nil, "valk_quantum_magicdeck")
@@ -33,16 +33,55 @@ local decks = {
         end
     end,
     ["Nebula Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.consume_planets = true end
+        if redeeming then G.GAME.consume_planets = true
+        elseif G.GAME.consume_planets and context.end_of_round and context.main_eval then
+
+            for i,consumable in ipairs(G.consumeables.cards) do
+                if consumable.ability and consumable.ability.hand_type then
+                    local amt = Overflow and consumable.ability.immutable.overflow_amount or 1
+                    level_up_hand(consumable, consumable.ability.hand_type, nil, amt)
+                end
+            end
+
+        end
     end,
     ["Ghost Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.reroll_consumables = true end
+        if redeeming then G.GAME.reroll_consumables = true
+        elseif G.GAME.reroll_consumables and context.selling_card and context.card.sell_cost > 0 and context.card.ability.set == "Spectral" then
+            local c = create_card("Spectral", G.consumeables, nil, nil, nil, nil, nil, "valk_quantum_magicdeck")
+            c:add_to_deck()
+            c:set_edition("e_negative", true)
+            G.consumeables:emplace(c)
+            c.sell_cost = 0
+        end
     end,
     ["Abandoned Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.suitconvert = true end
+        if redeeming then G.GAME.suitconvert = true
+        elseif G.GAME.suitconvert and context.individual and context.other_card and context.other_card.area == G.play then
+
+            if context.other_card.base.suit == "Clubs" then
+                SMODS.change_base(context.other_card, "Spades")
+            elseif context.other_card.base.suit == "Diamonds" then
+                SMODS.change_base(context.other_card, "Hearts")
+            end
+
+        end 
     end,
     ["Checkered Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.rankconvert = true end
+        if redeeming then G.GAME.rankconvert = true
+        elseif G.GAME.rankconvert and context.individual and context.other_card and context.other_card.area == G.play then
+
+            if context.other_card.base.suit == "Spades" then
+                SMODS.change_base(context.other_card, context.other_card.base.suit, "A")
+            elseif context.other_card.base.suit == "Hearts" then
+                SMODS.change_base(context.other_card, context.other_card.base.suit, "9")
+            elseif context.other_card.base.suit == "Clubs" then
+                SMODS.change_base(context.other_card, context.other_card.base.suit, "7")
+            elseif context.other_card.base.suit == "Diamonds" then
+                SMODS.change_base(context.other_card, context.other_card.base.suit, "2")
+            end
+
+        end 
     end,
     ["Zodiac Deck"] = function(redeeming, context)
         if redeeming then mspl(3) end
@@ -109,6 +148,8 @@ SMODS.Voucher {
         if decks[deckname] then
             decks[deckname](false, context)
         end
+
+        
          
     end
 

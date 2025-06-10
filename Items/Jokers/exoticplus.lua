@@ -36,6 +36,41 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "libratpondere",
+    loc_txt = {
+        name = "Librat Pondere",
+        text = {
+            "{X:dark_edition,C:white,s:1.3}#1##2#{} Chips & Mult",
+            "{C:inactive}(Operator scales with members in the Vall-Karri discord server)",
+            "{C:inactive}(Index is based on the ratio of Red to Blue team members in the Vall-Karri discord server)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { fallback_red = 9, fallback_blue = 5, max = 1000, exponent = 8, mexpo = 0.7 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {"{" .. math.floor((card.ability.extra.fallback_blue + card.ability.extra.fallback_red) ^ card.ability.extra.mexpo) .. "}", ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )} }
+    end,
+    rarity = "valk_unsurpassed",
+    atlas = "main",
+    pos = {x = 7, y = 5},
+    soul_pos = {x = 9, y = 5, extra = {x = 8, y = 5}},
+    cost = 500,
+    immutable = true,
+    demicoloncompat = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main or context.forcetrigger then
+            
+            local v = {math.floor((card.ability.extra.fallback_blue + card.ability.extra.fallback_red) ^ card.ability.extra.mexpo), ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )}
+            return {
+                hyper_mult = v,
+                hyper_chips = v,
+            }
+        end
+    end
+}
+
+SMODS.Joker {
     key = "dormantlordess",
     loc_txt = {
         name = "{C:cry_azure}The Dormant Lordess",
