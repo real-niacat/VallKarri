@@ -42,14 +42,16 @@ function quote(character)
         valklua = "Thank you for playing <3",
     }
 
-
-    if (SMODS.find_mod("entr")) then
-        quotes.lily2 = "ah, i feel stronger here"
-    end
-
     return ('{C:enhanced,s:0.7,E:1}' .. quotes[character] .. '{}')
 
 end
+
+function chardesc(text)
+
+    return ('{C:inactive,s:0.7,E:1}' .. text .. '{}')
+
+end
+
 
 -- simplified code from jenlib
 

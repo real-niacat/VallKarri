@@ -11,6 +11,7 @@ SMODS.Joker {
     pos = {x = 9, y = 2},
 	hidden = true,
 	no_collection = true,
+    no_doe = true,
 }
 
 local mainmenu = Game.main_menu
