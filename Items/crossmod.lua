@@ -89,3 +89,7 @@ if SMODS.find_mod("entr") then
         no_doe = true,
     }
 end
+
+function vallkarri.add_merge(inputs, out)
+    table:insert(merge_recipes, {input=inputs, output=out})
+end 
