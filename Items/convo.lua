@@ -38,7 +38,7 @@ vallkarri.conversations = {
         {s="j_valk_illena", txt="you're... pure of mind"},
         {s="j_valk_quilla",txt="i try!"},
         {s="j_valk_illena", txt="seriously, how?"},
-        {s="j_valk_quilla",txt="negativity isn't worth it"},
+        {s="j_valk_quilla",txt="ehe, i can't tell you!"},
     }},
 
     {prob = 8, reqs = {"j_valk_illena", "j_valk_lily"}, text = {
@@ -51,7 +51,7 @@ vallkarri.conversations = {
     {prob = 8, reqs = {"j_valk_illena", "j_valk_dormantlordess"}, text = {
         {s="j_valk_illena", txt="where'd your halo go?"},
         {s="j_valk_dormantlordess",txt="i.. don't know..."},
-        {s="j_valk_illena", txt="i'll help you find it"},
+        {s="j_valk_illena", txt="don't worry, i'll help you find it."},
         {s="j_valk_dormantlordess",txt="thank you."},
     }},
 
