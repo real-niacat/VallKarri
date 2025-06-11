@@ -1,9 +1,9 @@
 local decks = {
     ["Red Deck"] = function(redeeming, context)
-        if redeeming then SMODS:change_discard_limit(2) end
+        if redeeming then SMODS.change_discard_limit(2) end
     end,
     ["Blue Deck"] = function(redeeming, context)
-        if redeeming then SMODS:change_play_limit(2) end
+        if redeeming then SMODS.change_play_limit(2) end
     end,
     ["Yellow Deck"] = function(redeeming, context)
         if redeeming then G.GAME.eor_earn = 2
@@ -134,12 +134,26 @@ SMODS.Voucher {
 
     loc_vars = function(self, info_queue, card)
 
-        if G and G.GAME and G.GAME.selected_back and decks[G.GAME.selected_back.name] then
+        -- for i,deck in pairs(decks) do
+        --     local first = i:match("^(%w+)") -- i was told to do this by someone else
+        --     first = first and first:lower() or ""
+        --     info_queue[#info_queue + 1] = {set = "Other", key = first}
+        -- end
+
+
+        
+
+
+        if G and G.GAME and G.GAME.selected_back and G.GAME.selected_back.name then
+            local first = G.GAME.selected_back.name:match("^(%w+)") -- i was told to do this by someone else
+            first = first and first:lower() or ""
+            info_queue[#info_queue + 1] = {set = "Other", key = first}
             return {vars = {"applicable", ""}}
         else
             return {vars = {"", "not applicable"}}
         end
 
+        
     end,
 
     in_pool = function()
