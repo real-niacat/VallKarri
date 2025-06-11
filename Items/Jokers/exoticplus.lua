@@ -187,7 +187,7 @@ local joe = {
                 local order = {1, 2, 3, "cry_epic", 4, "cry_exotic"}
                 local names = {"Common", "Uncommon", "Rare", "Epic", "Legendary", "Exotic"}
                 for i, center in pairs(G.P_CENTERS) do
-                    if center.rarity and table:contains(order, center.rarity) then
+                    if center.rarity and table:vcontains(order, center.rarity) then
                         table.insert(candidates, {index = i, cen = center})
                     end
                 end

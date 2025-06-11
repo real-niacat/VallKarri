@@ -107,7 +107,7 @@ function Card.add_to_deck(self, from_debuff)
                 destroy_first_instance(ingredient)
             end
             -- destroy all cards that are part of recipe
-            if table:contains(j.input, self.config.center_key) then
+            if table:vcontains(j.input, self.config.center_key) then
                 self:quick_dissolve()
             end
 

@@ -157,7 +157,7 @@ SMODS.Voucher {
     end,
 
     in_pool = function()
-        local v = table:contains(decks, G.GAME.selected_back.name)
+        local v = table:vcontains(decks, G.GAME.selected_back.name)
         return v
     end,
 

@@ -128,7 +128,7 @@ function table:merge(t_a, t_b)
 
 end
 
-function table:contains(table, value)
+function table:vcontains(table, value)
     for i,j in ipairs(table) do
         if (j == value) then return true end
     end
@@ -139,7 +139,7 @@ function table:superset(t_a, t_b)
     local valid = true
 
     for i,j in ipairs(t_b) do
-        valid = valid and table:contains(t_a,j)
+        valid = valid and table:vcontains(t_a,j)
     end
     return valid
 end
