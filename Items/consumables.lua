@@ -28,7 +28,7 @@ SMODS.Booster {
     loc_txt = {
         name = "Ascended Booster Pack",
         text = {
-            "Pick #1# of #2# {C:cry_ascendant}Powerful{} cards",
+            "Pick {C:attention}#1#{} of {C:attention}#2#{} {C:cry_ascendant}Powerful{} cards",
         },
         group_name = "Ascended Booster Pack"
     },
@@ -40,7 +40,7 @@ SMODS.Booster {
         return {vars = {card.ability.choose, card.ability.extra}}
     end,
 
-    weight = 0.002,
+    weight = 0.09,
     cost = 99,
 
     create_card = function(self, card, i)

@@ -46,7 +46,27 @@ vallkarri.conversations = {
         {s="j_valk_lily",txt="is it that obvious?"},
         {s="j_valk_illena", txt="i literally read minds..."},
         {s="j_valk_lily",txt="ah right, it's nothing."},
-    }}
+    }},
+
+    {prob = 8, reqs = {"j_valk_illena", "j_valk_dormantlordess"}, text = {
+        {s="j_valk_illena", txt="where'd your halo go?"},
+        {s="j_valk_dormantlordess",txt="i.. don't know..."},
+        {s="j_valk_illena", txt="i'll help you find it"},
+        {s="j_valk_dormantlordess",txt="thank you."},
+    }},
+
+    {prob = 8, reqs = {"j_valk_quilla", "j_valk_femtanyl"}, text = {
+        {s="j_valk_quilla", txt="how do you recover from such injuries?"},
+        {s="j_valk_femtanyl",txt="they stitch me back together!"},
+        {s="j_valk_quilla", txt="seems risky.."},
+        {s="j_valk_femtanyl",txt="i'm still alive!"},
+    }},
+
+    {prob = 8, reqs = {"j_valk_lily", "j_valk_scraptake"}, text = {
+        {s="j_valk_scraptake", txt="heyy soo Lily-"},
+        {s="j_valk_lily",txt="\"hey so\" pack it up, dude"},
+        {s="j_valk_scraptake", txt="alright, damn"},
+    }},
 }
 
 -- Usage:

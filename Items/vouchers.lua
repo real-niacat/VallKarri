@@ -91,7 +91,12 @@ local decks = {
         end
     end,
     ["Anaglyph Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.doubletag_create = true end
+        if redeeming then G.GAME.doubletag_create = true
+        elseif context.setting_blind then
+
+            add_tag(Tag("tag_double"))
+
+        end
     end,
     ["Plasma Deck"] = function(redeeming, context)
         if redeeming then G.GAME.price_mod = -1 end

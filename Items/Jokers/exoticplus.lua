@@ -309,8 +309,6 @@ SMODS.Joker {
         if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
             local search = SMODS.find_card("j_valk_scraptake")
             if (#search > 0) then
-                card_eval_status_text(select(2,next(search)),"extra",nil,nil,nil,{message = "Good kitty!"})
-                card_eval_status_text(card,"extra",nil,nil,nil,{message = "meow!"})
                 card.ability.extra.op = card.ability.extra.op + (card.ability.extra.opinc * 3)
             end
 
@@ -397,7 +395,7 @@ SMODS.Joker {
     add_to_deck = function(self, card, from_debuff)
 
         G.GAME.round_resets.ante = 1500
-
+        card.ability.cry_absolute = true
     end,
 
 
