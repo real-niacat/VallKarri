@@ -4,7 +4,7 @@ SMODS.Joker {
         name = "Scraptake",
         text = {
             "{X:dark_edition,C:white,s:1.3}^^[M]{} Mult",
-            "Earn {C:money}$#1#{} per hand played",
+            "Earn {C:money}$#1#{} at end of round",
             "{C:inactive}(M = Owned jokers from Vall-Karri ^ Enhanced cards in deck)",
             "{C:inactive}(Currently {X:dark_edition,C:white,s:1.3}^^#2#{C:inactive} Mult)",
             quote("scraptake"),
@@ -25,14 +25,17 @@ SMODS.Joker {
     calculate = function(self, card, context)
         
         if context.joker_main or context.forcetrigger then
-            ease_dollars(card.ability.extra.money)
             
             local calced = scraptake_calculation()
             return {
                 ee_mult = calced
             }
         end
-    end
+    end,
+
+    calc_dollar_bonus = function(self, card)
+        return card.ability.extra.money
+    end,
 }
 
 SMODS.Joker {
