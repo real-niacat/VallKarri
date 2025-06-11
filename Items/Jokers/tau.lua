@@ -803,7 +803,7 @@ SMODS.Joker {
         
         if context.selling_card and context.card and context.card.ability.set == "Joker" then
             local new = card.ability.extra.slots * 2
-            if new > card.ability.immutable.cap then
+            if to_big(new) > to_big(card.ability.immutable.cap) then
                 new = card.ability.extra.slots
             end
             G.jokers.config.card_limit = G.jokers.config.card_limit + (new) - card.ability.extra.slots
