@@ -1,7 +1,7 @@
 SMODS.Rarity {
     key = 'selfinsert',
     loc_txt = {
-        name = 'The Obligatory Self-Insert Overpowered Character'
+        name = 'True Lordess of Chaos'
     },
     badge_colour = G.C.CRY_TWILIGHT,
     pools = { ["Joker"] = true },
@@ -30,7 +30,7 @@ SMODS.Rarity {
     loc_txt = {
         name = 'Unsurpassed'
     },
-    badge_colour = HEX("B080FF"),
+    badge_colour = HEX("C64CFF"),
     pools = { ["Joker"] = true },
 }
 
@@ -56,7 +56,7 @@ SMODS.Rarity {
 SMODS.Rarity {
     key = 'equip',
     loc_txt = {
-        name = 'Equippable..?'
+        name = 'Her Lordship\'s Missing Piece'
     },
     badge_colour = HEX("EB4D4D"),
     pools = { ["Joker"] = true },

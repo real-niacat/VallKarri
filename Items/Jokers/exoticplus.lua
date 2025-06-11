@@ -101,7 +101,15 @@ SMODS.Joker {
                 emult = card.ability.extra.mult_bonus
             }
         end
-    end
+    end,
+
+    lore = {
+        "Lily, without the Halo that channels her powers.",
+        "In this state, she's still powerful, but can't control",
+        "the outcome of her powers very much.",
+        "",
+        "As such, she tends to limit herself when stuck without the Halo"
+    }
 }
 
 
@@ -138,43 +146,6 @@ SMODS.Joker {
 
             return {
                 eee_mult = valk_additions()*card.ability.extra.mult
-            }
-        end
-    end
-}
-
-SMODS.Joker {
-    key = "corruptedworld",
-    loc_txt = {
-        name = "{C:cry_azure}Corrupted World",
-        text = {
-            "{X:dark_edition,C:white,s:1.4}#1##2#{} Mult",
-            "Increase operator for every {C:attention}#3#{} jokers owned",
-            "Increase index by the total of all joker values",
-            credit("Scraptake"),
-            concept("techwizard72"),
-        }
-    },
-    config = { extra = { reqowned = 10 } },
-    loc_vars = function(self, info_queue, card)
-
-
-        
-
-        return {vars = {"{" .. math.ceil(jokercount() / card.ability.extra.reqowned) .. "}", totaljokervalues(), card.ability.extra.reqowned}}
-    end,
-    rarity = "valk_unsurpassed",
-    atlas = "main",
-    pos = {x = 3, y = 9},
-    cost = 500,
-    immutable = true,
-    demicoloncompat = true,
-    calculate = function(self, card, context)
-        
-        if context.joker_main or context.forcetrigger then
-
-            return {
-                hyper_mult = {math.ceil(jokercount() / card.ability.extra.reqowned), totaljokervalues()}
             }
         end
     end
@@ -341,10 +312,13 @@ SMODS.Joker {
     lore = {
         "Lily is a Fellinian Entropic Lord, this means",
         "she was exposed to a lot of entropy, and eventually mutating her.",
-        "This allowed her to control entropy around her, similar to reality bending.",
+        "This allowed her to control entropy around her, similar to weak reality bending.",
         "",
         "As a person, Lily tries her best, but is inherently unstable mentally",
-        "due to the effects of entropy on a person's mental health."
+        "due to the effects of entropy on a person's mental health.",
+        "",
+        "Her entropic lord powers allow for heightened senses,",
+        "so it doesn't affect her as much, but she can barely see!"
     }
 }
 
@@ -355,8 +329,6 @@ SMODS.Joker {
         name = "Aquilegia \"Quilla\" Felli",
         text = {
             "Losing is {C:red,E:1,s:1.2}impossible{}",
-            "",
-            "{C:inactive,s:0.7,E:1}Lily's girlfriend, though she's a bit embarassed about it{}",
             quote("quilla"),
             quote("quilla2"),
             credit("Scraptake")
@@ -428,4 +400,16 @@ SMODS.Joker {
         end
 
     end,
+
+    lore = {
+        "Quilla is one of the first Entropic Lords to exist.",
+        "She spent over 600 years in outer space, becoming stronger and",
+        "achieving further peace with herself.",
+        "",
+        "Sometime in the year 2999, she came back to the planet",
+        "and decided to find another Lord to live with.",
+        "After some searching, she found and entered Lily's house,",
+        "which she began living in.",
+        "Over time, they bonded more and more, and eventually began dating."
+    }
 }
