@@ -46,7 +46,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { fallback_red = 12, fallback_blue = 9, max = 1000, exponent = 8, mexpo = 0.7 } },
+    config = { extra = { fallback_red = 14, fallback_blue = 9, max = 1000, exponent = 8, mexpo = 0.7 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {"{" .. math.floor((card.ability.extra.fallback_blue + card.ability.extra.fallback_red) ^ card.ability.extra.mexpo) .. "}", ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )} }
     end,
@@ -336,7 +336,16 @@ SMODS.Joker {
 
     add_to_deck = function(self, card, from_debuff)
         card.ability.cry_absolute = true
-    end
+    end,
+
+    lore = {
+        "Lily is a Fellinian Entropic Lord, this means",
+        "she was exposed to a lot of entropy, and eventually mutating her.",
+        "This allowed her to control entropy around her, similar to reality bending.",
+        "",
+        "As a person, Lily tries her best, but is inherently unstable mentally",
+        "due to the effects of entropy on a person's mental health."
+    }
 }
 
 SMODS.Joker {

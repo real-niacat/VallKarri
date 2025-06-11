@@ -183,3 +183,85 @@ function Game:start_run(args)
     end
 end
 
+glcui = nil
+
+local gcui = generate_card_ui
+function generate_card_ui(_c,full_UI_table,specific_vars,card_type,badges,hide_desc,main_start,main_end,card)
+	local tab = gcui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
+    glcui = tab
+    local center = G.P_CENTERS[_c.key]
+
+    if not center then
+        return tab
+    end
+
+    if not center.displaying_lore then
+        return tab
+    end
+
+    local ex_lang = G.LANGUAGES["en-us"]
+    tab.main = {}
+
+    for i,line in ipairs(center.lore) do
+        -- print(line)
+        tab.main[#tab.main+1] = {{
+            n = 1,
+            config = {
+                scale = 0.315,
+                outline_colour = G.C.UI.OUTLINE_LIGHT,
+                text_drawable = love.graphics.newText(ex_lang.font.FONT, {G.C.UI.TEXT_INACTIVE,line}),
+                colour = G.C.UI.TEXT_INACTIVE,
+                text = line,
+                lang = ex_lang
+            }
+        }}
+    end
+
+    return tab
+end
+
+G.FUNCS.can_learn_more = function(e)
+    if e.config.ref_table:can_learn_more() then 
+        e.config.colour = HEX("e5bf3a")
+        e.config.button = 'learn_more'
+    else
+      e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+      e.config.button = nil
+    end
+end
+
+G.FUNCS.learn_more = function(button)
+    local card = button.config.ref_table
+    card.config.center.displaying_lore = not card.config.center.displaying_lore
+
+    -- print(card.config.center.displaying_lore)
+    
+end
+
+function Card:can_learn_more(context)
+    return true
+end
+
+local fakeusesell = G.UIDEF.use_and_sell_buttons
+function G.UIDEF.use_and_sell_buttons(card)
+    local ref = fakeusesell(card)
+    -- print(ref)
+    -- print(ref.nodes[1])
+
+    if card.config.center.lore then
+
+        ref.nodes[1].nodes[#ref.nodes[1].nodes+1] = {n=G.UIT.C, config={align = "tm"}, nodes={
+        {n=G.UIT.C, config={ref_table = card, align = "cr",padding = 0.1, r=0.08, minw = 1.25, hover = true, shadow = true, colour = G.C.UI.BACKGROUND_INACTIVE, one_press = false, button = 'learn_more', func = 'can_learn_more'}, nodes={
+            {n=G.UIT.B, config = {w=0.1,h=0.6}},
+            {n=G.UIT.C, config={align = "tm"}, nodes={
+            {n=G.UIT.R, config={align = "cm", maxw = 1.25}, nodes={
+                {n=G.UIT.T, config={text = "Toggle lore",colour = G.C.UI.TEXT_LIGHT, scale = 0.4, shadow = true}}
+            }},
+            }}
+        }},
+        }}
+
+    end
+
+    return ref
+end
