@@ -603,17 +603,18 @@ SMODS.Joker {
             G.hand.config.card_limit = G.hand.config.card_limit + card.ability.extra.gain
             -- change_shop_size(center_table.extra)
 
-            if (G.hand.config.card_limit > card.ability.extra.max) then
+            -- oops? why the FUCK
+            if (to_big(G.hand.config.card_limit) > to_big(card.ability.extra.max)) then
                 G.hand.config.card_limit = G.hand.config.card_limit - card.ability.extra.ratio
                 G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.gain
             end
 
-            if (G.consumeables.config.card_limit > card.ability.extra.max) then
+            if (to_big(G.consumeables.config.card_limit) > to_big(card.ability.extra.max)) then
                 G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.ratio
                 G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.gain
             end
 
-            if (G.jokers.config.card_limit > card.ability.extra.max) then
+            if (to_big(G.jokers.config.card_limit) > to_big(card.ability.extra.max)) then
                 G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.ratio
                 change_shop_size(card.ability.extra.gain)
             end
