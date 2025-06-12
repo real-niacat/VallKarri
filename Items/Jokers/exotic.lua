@@ -84,35 +84,3 @@ SMODS.Joker {
     end
 }
 
-SMODS.Joker {
-    key = "raisingthebar",
-    loc_txt = {
-        name = "Raising The Bar",
-        text = {
-            "{X:dark_edition,s:1.3,C:white}^^^1+(1/Log10(Mult){} Mult",
-            credit("Scraptake")
-        }
-    },
-    config = { extra = {  } },
-    loc_vars = function(self, info_queue, card)
-        return {vars = {} }
-    end,
-    rarity = "cry_exotic",
-    atlas = "main",
-    pos = {x=9,y=1},
-    cost = 50,
-    immutable = true,
-    demicoloncompat = true,
-    calculate = function(self, card, context)
-        
-        if context.joker_main or context.forcetrigger then
-            local n = 1 + (1 / math.log10(mult))
-            -- print(n)
-            if (n == math.huge) then
-                n = 1
-            end
-            return {eee_mult = n}
-        end
-
-    end
-}
