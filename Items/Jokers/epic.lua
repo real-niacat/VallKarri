@@ -104,7 +104,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return {vars = {} }
     end,
-    rarity = 4,
+    rarity = "cry_epic",
     atlas = "main",
     pos = {x=9,y=1},
     cost = 50,
