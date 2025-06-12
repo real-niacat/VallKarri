@@ -3,10 +3,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Scraptake",
         text = {
-            "{X:dark_edition,C:white,s:1.3}^^[M]{} Mult",
+            "{X:dark_edition,C:white,s:1.3}^^#2#{} Mult",
             "Earn {C:money}$#1#{} at end of round",
-            "{C:inactive}(M = Owned jokers from Vall-Karri ^ Enhanced cards in deck)",
-            "{C:inactive}(Currently {X:dark_edition,C:white,s:1.3}^^#2#{C:inactive} Mult)",
+            "{C:inactive,s:0.8}(Index = Owned Vall-Karri Jokers ^ Enhanced cards in deck)",
             quote("scraptake"),
             credit("Scraptake")
         }
@@ -49,7 +48,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { fallback_red = 14, fallback_blue = 9, max = 1000, exponent = 8, mexpo = 0.7 } },
+    config = { extra = { fallback_red = 15, fallback_blue = 10, max = 1000, exponent = 8, mexpo = 0.7 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {"{" .. math.floor((card.ability.extra.fallback_blue + card.ability.extra.fallback_red) ^ card.ability.extra.mexpo) .. "}", ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )} }
     end,
