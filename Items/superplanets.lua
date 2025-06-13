@@ -244,3 +244,56 @@ SMODS.Consumable {
     no_grc = true,
     no_doe = true,
 }
+
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "milkyway",
+    loc_txt = {
+        name = "Milky Way",
+        text = {
+            "All hands gain " .. expomult("#1#") .. " Chips & Mult",
+            "Plus another " .. expomult("#1#") .. " Chips & Mult for",
+            "every {C:attention}M Joker{} or {C:attention}Jolly Joker{} owned",
+            credit("mailingway"),
+            concept("arris")
+        }
+    },
+
+    no_doe = true,
+
+    config = { extra = { eeall = 2 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.eeall}}
+    end,
+
+    can_use = function(self, card)
+        -- currently only returns true need to make it only work when u have the joker.
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        local value = to_big(card.ability.extra.eeall)
+
+        for i,joker in pairs(G.jokers.cards) do 
+            if Cryptid.safe_get(joker.config.center, "pools", "M") then
+                value = value:pow(2)
+            end
+        end
+
+        local str = "^^" .. tostring(value)
+        simple_hand_text("all")
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
+
+        for i,hand in pairs(G.GAME.hands) do
+            if (G.GAME.hands[i].mult) then
+                G.GAME.hands[i].mult = G.GAME.hands[i].mult:pow(value)
+            end
+        end
+    end,
+
+        
+    atlas = "csm",
+    pos = {x=6, y=0},
+    no_grc = true,
+    no_doe = true,
+}

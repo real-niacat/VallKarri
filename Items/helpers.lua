@@ -255,11 +255,11 @@ end
 -- i take no credit for these functions, theyre just slightly modified
 -- versions of jenlib functions, as i don't like the text color which jenlib uses
 function expochips(txt)
-	return "{X:chips,C:white}^" .. txt .. "{}"
+	return "{X:dark_edition,C:white}^" .. txt .. "{}"
 end
 
 function expomult(txt)
-	return "{X:mult,C:white}^" .. txt .. "{}"
+	return "{X:dark_edition,C:white}^" .. txt .. "{}"
 end
 
 -- chips and mult are identical since it uses x:dark

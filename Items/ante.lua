@@ -60,8 +60,7 @@ function display_ante_changes(change)
     local str = "Overscored! +" .. change .. " ante."
     local timeWait = "1"
 
-    basic_text_announce(str, timeWait, 0.9, G.C.RED) --thank you oh great jenwalter for jenlib
-                -- play_sound(sound,pitch,volume)
+    basic_text_announce(str, timeWait, 0.9, G.C.RED)
 
     shrdr_sfx()
 
