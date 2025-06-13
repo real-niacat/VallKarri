@@ -312,6 +312,18 @@ function hotswap()
     -- very unsafe, however: this does allow for live updates
 end
 
+function run_max_num_test()
+    local n = to_big(2)
+    local ri = 1
+    while ri < 1e9 do
+        n = n:arrow(math.floor(ri),n)
+        ri = ri * 11
+        print("Safely got to " .. ri .. "-ation, with " .. number_format(n) .. "{" .. math.floor(ri) .. "}" .. number_format(n))
+    end
+
+
+end
+
 function valk_additions()
     local total = 0
     for _, entry in pairs(G.P_CENTERS) do
@@ -322,12 +334,6 @@ function valk_additions()
 
     return total
 end
-
-function get_a_somewhat_large_number()
-    local largenumber = to_big(10):arrow(10,10)
-    return largenumber:arrow(10000,largenumber)
-end
-
 function scraptake_calculation()
     local calced, b = 0, 0
 

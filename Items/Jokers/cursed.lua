@@ -61,7 +61,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "rooter",
     loc_txt = {
-        name = "placeholder",
+        name = "Hexaract",
         text = {
             "All jokers give {X:chips,C:white}^#1#{} Chips when triggered",
         }
@@ -71,8 +71,8 @@ SMODS.Joker {
         return { vars = {card.ability.extra.echips}}
     end,
     rarity = "valk_supercursed",
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "main",
+    pos = {x=9, y=7},
     cost = -1e10,
     immutable = true,
     calculate = function(self, card, context)
@@ -92,9 +92,9 @@ SMODS.Joker {
 SMODS.Joker {
     key = "nocards",
     loc_txt = {
-        name = "placeholder",
+        name = "Joker of None",
         text = {
-            "When card drawn, {C:red,E:1}destroy it{} and de-level all hands",
+            "When card {C:red,E:1}touched{}, {C:red,E:1}destroy it{}",
             "Half levels of all {C:attention}Poker Hands{} when card added to deck",
         }
     },
@@ -103,21 +103,18 @@ SMODS.Joker {
         return { vars = {}}
     end,
     rarity = "valk_supercursed",
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "main",
+    pos = {x=8, y=7},
     cost = -1e10,
     calculate = function(self, card, context)
         
-        if context.other_card and context.other_card.area ~= G.deck then
-            context.other_card:quick_dissolve()
-            level_all_hands(card, -1)
+        if context.other_card and context.other_card.area == G.hand then
+            context.other_card:start_dissolve({G.C.BLACK}, nil, 2 * G.SETTINGS.GAMESPEED)
         end
 
         if context.playing_card_added then
 
-            for i,hand in pairs(G.GAME.hands) do
-                level_up_hand(card, i, nil, -(hand.level/2))
-            end
+            level_all_hands(card, 0, -0.5)
 
         end
 

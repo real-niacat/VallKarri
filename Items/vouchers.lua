@@ -99,19 +99,49 @@ local decks = {
         end
     end,
     ["Plasma Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.price_mod = -1 end
+        if redeeming then G.GAME.price_mod = 1 end
     end,
     ["Erratic Deck"] = function(redeeming, context)
         if redeeming then G.GAME.randomize_card = true end
     end,
 }
 
+function vallkarri.add_quantum_deck(deckname, func)
+    decks[deckname] = func
+end
+
+function vallkarri.get_quantum_decks()
+    return decks
+end
+
+vallkarri.add_quantum_deck("cry-Antimatter", function(redeeming, context)
+    if redeeming then
+        local i = 0.6
+        local time = 1
+        for deckname,func in pairs(vallkarri.get_quantum_decks()) do
+            i = i + 0.05
+            time = math.max(time - 0.08, 0.05)
+            if (deckname ~= "cry-Antimatter") then
+                func(true)
+                basic_text_announce("+ "..deckname, time * G.SETTINGS.GAMESPEED, nil, nil, "gong", i)
+                pause_event(time)
+            end
+        end
+    end
+
+    if context then
+        for deckname,func in pairs(vallkarri.get_quantum_decks()) do
+            if (deckname ~= "cry-Antimatter") then
+                func(false, context)
+            end
+        end
+    end
+end)
+
 -- this is for crossmod compat, if you'd like to add a deck to compatibility with Quantum Particle
 -- simply pass in the name of the deck (capitalization matters) and a function(redeeming, context) which will be called
 -- when redeemed and whenever anything happens
-function vallkarri.add_quantum_deck(deckname, func)
-    decks[deckname] = func
-end 
+
 
 -- example:
 -- vallkarri.add_quantum_deck("Red Deck", function(redeeming, context) 

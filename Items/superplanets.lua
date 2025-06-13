@@ -275,7 +275,7 @@ SMODS.Consumable {
         local value = to_big(card.ability.extra.eeall)
 
         for i,joker in pairs(G.jokers.cards) do 
-            if Cryptid.safe_get(joker.config.center, "pools", "M") then
+            if Cryptid.safe_get(joker.config.center, "pools", "M") or joker.config.center.key == "j_jolly" then
                 value = value:pow(2)
             end
         end

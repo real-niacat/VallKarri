@@ -140,7 +140,8 @@ function ease_dollars(mod, instant)
     end
 
     if G.GAME.price_mod then
-        edcopy(mod + -G.GAME.price_mod, instant)
+        edcopy(mod + G.GAME.price_mod, true)
+        return
     end
 
     edcopy(mod, instant)

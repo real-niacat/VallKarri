@@ -10,7 +10,7 @@ SMODS.Rarity {
 SMODS.Rarity {
     key = 'quillagod',
     loc_txt = {
-        name = '???'
+        name = 'Quilygean'
     },
     badge_colour = G.C.CRY_DAWN,
     pools = { ["Joker"] = true },
