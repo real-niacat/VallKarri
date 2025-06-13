@@ -1,9 +1,16 @@
-local fakeusesell = G.UIDEF.use_and_sell_buttons
-function G.UIDEF.use_and_sell_buttons(card)
-    local ref = fakeusesell(card)
-    print("we run")
+local v = #G.GAME.tags
+for i=1,v do
 
-    ref.nodes = {ref.nodes[1], ref.nodes[1]}
+    local key = G.GAME.tags[1].key
+    if key == "tag_entr_ascendant_cat" or key == "tag_cry_cat" or key == "tag_entr_ascendant_dog" or key == "tag_entr_dog" then
+        G.GAME.tags[1]:remove()
+    end
 
-    return ref
+    if G.GAME.tags[i] then
+        key = G.GAME.tags[i].key
+        if key == "tag_entr_ascendant_cat" or key == "tag_cry_cat" or key == "tag_entr_ascendant_dog" or key == "tag_entr_dog" then
+            G.GAME.tags[i]:remove()
+        end
+    end 
+
 end

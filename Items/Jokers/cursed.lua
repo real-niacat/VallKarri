@@ -1,7 +1,7 @@
 SMODS.Joker {
     key = "killmult",
     loc_txt = {
-        name = "placeholder",
+        name = "Avulsion",
         text = {
             "Permanently disables {C:mult}Mult{} in {C:attention}#1#{} rounds",
             "{C:inactive,s:0.6}(Yes, this does everything you think it does.)",
@@ -13,8 +13,8 @@ SMODS.Joker {
         return { vars = {card.ability.extra.rounds, card.ability.immutable.drama}}
     end,
     rarity = "valk_supercursed",
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "main",
+    pos = {x=9, y=6},
     cost = -1e10,
     demicoloncompat = true,
     calculate = function(self, card, context)
