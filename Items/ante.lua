@@ -34,7 +34,7 @@ function ease_ante(x)
     end
 
     if (G.GAME.disable_ante_gain) then
-        x = to_big(0)
+        x = 0
     end
 
     
@@ -44,48 +44,10 @@ function ease_ante(x)
     -- print(G.GAME.chips and G.GAME.blind.chips)
 
     if (G.GAME.chips and G.GAME.blind.chips) then
-        local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
-
-
-
-        local arrowIter = ante_config.base_exponent --despite what its name says, this is the exponent
-        local arrowCount = ante_config.base_arrows --req starts at beating blind size by ^2
-
-        local start_ante = G.GAME.round_resets.ante
-        local anteChange = 0
-        local scalefactor = to_big(2)
-            
-        local i = 1
-
-        -- print(type(G.GAME.blind.chips))
-
-        if type(G.GAME.blind.chips) == "table" then
-
-            -- print("requires " .. G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) .. " to overscore")
-            -- print("overscored by " .. winPot)
-
-            while winPot > G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) do
-                i = i + 1
-                -- print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor))
-                scalefactor = scalefactor:tetrate(1.5)
-                anteChange = anteChange + ante_config.ante_base_inc
-                arrowIter = arrowIter + 1
-                if arrowIter > (ante_config.arrow_inc_threshold) then
-                    arrowIter = ante_config.base_exponent
-                    arrowCount = arrowCount * ante_config.arrow_exponent
-                    anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
-                end
-            end
-        end
-
-        -- print("+"..anteChange.." ante postjen")
-        anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
-            
-
-        anteChange = math.floor(anteChange)
-
+        
+        local anteChange = get_ante_change()
         display_ante_changes(anteChange)
-        easeantecopy(x + to_number(anteChange))
+        easeantecopy(to_number(x + anteChange))
 
     end
     
@@ -121,6 +83,53 @@ function end_round()
         return
     end
 end
+
+function get_ante_change(theoretical_score)
+
+    local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
+    if theoretical_score then
+        winPot = theoretical_score
+    end 
+
+
+
+    local arrowIter = ante_config.base_exponent --despite what its name says, this is the exponent
+    local arrowCount = ante_config.base_arrows --req starts at beating blind size by ^2
+    local start_ante = G.GAME.round_resets.ante
+    local anteChange = 0
+    local scalefactor = to_big(2)
+            
+    local i = 1
+
+    -- print(type(G.GAME.blind.chips))
+
+    if type(G.GAME.blind.chips) == "table" then
+
+        -- print("requires " .. G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) .. " to overscore")
+        -- print("overscored by " .. winPot)
+
+        while winPot > G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) do
+            i = i + 1
+            -- print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor))
+            scalefactor = scalefactor:tetrate(1.5)
+            anteChange = anteChange + ante_config.ante_base_inc
+            arrowIter = arrowIter + 1
+            if arrowIter > (ante_config.arrow_inc_threshold) then
+                arrowIter = ante_config.base_exponent
+                arrowCount = arrowCount * ante_config.arrow_exponent
+                anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
+            end
+        end
+    end
+
+    -- print("+"..anteChange.." ante postjen")
+    anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
+            
+
+    anteChange = math.floor(anteChange)
+
+end
+
 
 local unlockcopy = check_for_unlock
 function check_for_unlock(args)
