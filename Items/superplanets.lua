@@ -280,7 +280,7 @@ SMODS.Consumable {
             end
         end
 
-        local str = "^^" .. tostring(value)
+        local str = "^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
 
