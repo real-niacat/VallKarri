@@ -806,7 +806,7 @@ SMODS.Joker {
             if to_big(new) > to_big(card.ability.immutable.cap) then
                 new = card.ability.extra.slots
             end
-            G.jokers.config.card_limit = G.jokers.config.card_limit + (new) - card.ability.extra.slots
+            G.jokers.config.card_limit = to_number(G.jokers.config.card_limit + (new) - card.ability.extra.slots)
             card.ability.extra.slots = new
             card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Upgraded!"})
         end
