@@ -30,7 +30,7 @@ function ease_ante(x)
         return
     end
 
-    if (G.GAME.disable_ante_gain) then
+    if (G.GAME.disable_ante_gain and x > to_big(0)) then
         x = 0
     end
 
@@ -44,7 +44,7 @@ function ease_ante(x)
         
         local anteChange = get_ante_change()
         display_ante_changes(anteChange)
-        easeantecopy(to_number(x + anteChange))
+        easeantecopy(to_number(anteChange))
 
     end
     
