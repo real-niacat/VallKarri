@@ -161,6 +161,8 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
 
+    config_reset()
+
     for i,center in pairs(G.P_CENTERS) do
         if center.oldrarity then
 

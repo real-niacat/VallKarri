@@ -24,54 +24,68 @@ config_reset()
 
 local easeantecopy = ease_ante
 function ease_ante(x)
-    
+    -- print("starting")
     x = to_big(x)
+
+
     if (x < to_big(1)) then
         easeantecopy(to_number(x))
         return
     end
 
+    if (G.GAME.disable_ante_gain) then
+        x = to_big(0)
+    end
 
     
 
+
+    
+    -- print(G.GAME.chips and G.GAME.blind.chips)
 
     if (G.GAME.chips and G.GAME.blind.chips) then
         local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
 
 
 
-            local arrowIter = ante_config.base_exponent --despite what its name says, this is the exponent
-            local arrowCount = ante_config.base_arrows --req starts at beating blind size by ^2
+        local arrowIter = ante_config.base_exponent --despite what its name says, this is the exponent
+        local arrowCount = ante_config.base_arrows --req starts at beating blind size by ^2
 
-            local start_ante = G.GAME.round_resets.ante
-            local anteChange = 0
-            local scalefactor = to_big(2)
+        local start_ante = G.GAME.round_resets.ante
+        local anteChange = 0
+        local scalefactor = to_big(2)
             
-            local i = 1
+        local i = 1
 
-            if type(G.GAME.blind.chips) == "table" then
-                while winPot > G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) do
-                    i = i + 1
-                    -- print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor))
-                    scalefactor = scalefactor:tetrate(2)
-                    anteChange = anteChange + ante_config.ante_base_inc
-                    arrowIter = arrowIter + 1
-                    if arrowIter > (ante_config.arrow_inc_threshold) then
-                        arrowIter = ante_config.base_exponent
-                        arrowCount = arrowCount * ante_config.arrow_exponent
-                        anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
-                    end
+        -- print(type(G.GAME.blind.chips))
+
+        if type(G.GAME.blind.chips) == "table" then
+
+            -- print("requires " .. G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) .. " to overscore")
+            -- print("overscored by " .. winPot)
+
+            while winPot > G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) do
+                i = i + 1
+                -- print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor))
+                scalefactor = scalefactor:tetrate(1.5)
+                anteChange = anteChange + ante_config.ante_base_inc
+                arrowIter = arrowIter + 1
+                if arrowIter > (ante_config.arrow_inc_threshold) then
+                    arrowIter = ante_config.base_exponent
+                    arrowCount = arrowCount * ante_config.arrow_exponent
+                    anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
                 end
             end
+        end
 
-            -- print("+"..anteChange.." ante postjen")
-            anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
+        -- print("+"..anteChange.." ante postjen")
+        anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
             
 
-            anteChange = math.floor(anteChange)
+        anteChange = math.floor(anteChange)
 
         display_ante_changes(anteChange)
-        easeantecopy(to_number(anteChange))
+        easeantecopy(x + to_number(anteChange))
 
     end
     
