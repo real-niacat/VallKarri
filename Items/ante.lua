@@ -1,11 +1,8 @@
 -- i'm not making these configurable ingame
 -- sorry!
-ante_config = {
-    
-}
 
 function config_reset()
-    ante_config = {
+    G.GAME.ante_config = {
         base_arrows = 1,
 
         base_exponent = 5,
@@ -20,7 +17,7 @@ function config_reset()
     }
 end
 
-config_reset()
+
 
 local easeantecopy = ease_ante
 function ease_ante(x)
@@ -84,20 +81,24 @@ function end_round()
     end
 end
 
-function get_ante_change(theoretical_score)
+function get_ante_change(theoretical_score, debug)
 
     local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
     if theoretical_score then
-        winPot = theoretical_score
-    end 
+        winPot = to_big(theoretical_score)
+    end
+
+    if not (G.GAME.ante_config) then
+        config_reset()
+    end
 
 
 
-    local arrowIter = ante_config.base_exponent --despite what its name says, this is the exponent
-    local arrowCount = ante_config.base_arrows --req starts at beating blind size by ^2
+    local arrowIter = G.GAME.ante_config.base_exponent --despite what its name says, this is the exponent
+    local arrowCount = G.GAME.ante_config.base_arrows --req starts at beating blind size by ^2
     local start_ante = G.GAME.round_resets.ante
     local anteChange = 0
-    local scalefactor = to_big(2)
+    local scalefactor = to_big(1)
             
     local i = 1
 
@@ -105,29 +106,33 @@ function get_ante_change(theoretical_score)
 
     if type(G.GAME.blind.chips) == "table" then
 
-        -- print("requires " .. G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) .. " to overscore")
-        -- print("overscored by " .. winPot)
+        if debug then
+            print("requires " .. G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) .. " to overscore")
+            print("overscored by " .. winPot)
+        end
 
         while winPot > G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) do
             i = i + 1
-            -- print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor))
-            scalefactor = scalefactor:tetrate(1.5)
-            anteChange = anteChange + ante_config.ante_base_inc
+            if debug then print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor)) end
+            scalefactor = scalefactor:pow(2):mul(2)
+            anteChange = anteChange + G.GAME.ante_config.ante_base_inc
             arrowIter = arrowIter + 1
-            if arrowIter > (ante_config.arrow_inc_threshold) then
-                arrowIter = ante_config.base_exponent
-                arrowCount = arrowCount * ante_config.arrow_exponent
-                anteChange = (anteChange + ante_config.ante_base_inc) ^ 1+(ante_config.ante_exponent/25)
+            if arrowIter > (G.GAME.ante_config.arrow_inc_threshold) then
+                arrowIter = G.GAME.ante_config.base_exponent
+                arrowCount = arrowCount * G.GAME.ante_config.arrow_exponent
+                anteChange = (anteChange + G.GAME.ante_config.ante_base_inc) ^ 1+(G.GAME.ante_config.ante_exponent/25)
             end
         end
     end
 
     -- print("+"..anteChange.." ante postjen")
-    anteChange = anteChange ^ ante_config.ante_exponent --keep you on your toes, ehe
+    anteChange = anteChange ^ G.GAME.ante_config.ante_exponent --keep you on your toes, ehe
             
 
     anteChange = math.floor(anteChange)
 
+
+    return anteChange
 end
 
 
@@ -169,6 +174,8 @@ function Game:update(dt)
     alltime = alltime + dt
     fakeupd(self, dt)
 
+    if not G.GAME.ante_config then return end
+
     if (G.GAME.blind) then
 
         if (G.GAME.blind.boss) then
@@ -178,7 +185,7 @@ function Game:update(dt)
         end
     end
 
-    if (G.GAME.round_resets.ante and to_big(G.GAME.round_resets.ante) > to_big(ante_config.limit) ) then
+    if (G.GAME.round_resets.ante and to_big(G.GAME.round_resets.ante) > to_big(G.GAME.ante_config.limit) ) then
         G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) .. "X"
 
         G.GAME.round_resets.ante_disp = corrupt_text(G.GAME.round_resets.ante_disp, 0.05)
@@ -229,7 +236,7 @@ end
 local gba = get_blind_amount
 function get_blind_amount(ante)
     ante = to_big(ante)
-    if (ante <= to_big(ante_config.limit)) then
+    if (ante <= to_big(G.GAME.ante_config.limit)) then
         return gba(to_number(ante))
     end
 

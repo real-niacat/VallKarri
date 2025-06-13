@@ -23,9 +23,10 @@ SMODS.Stake {
     colour = G.C.YELLOW,
     shiny = true,
     modifiers = function()
-        ante_config.base_arrows = 1
-        ante_config.ante_exponent = 1.1
-        ante_config.base_exponent = 2
+        config_reset()
+        G.GAME.ante_config.base_arrows = 1
+        G.GAME.ante_config.ante_exponent = 1.1
+        G.GAME.ante_config.base_exponent = 2
     end
 }
 
@@ -46,9 +47,10 @@ SMODS.Stake {
     colour = G.C.red,
     shiny = false,
     modifiers = function()
-        ante_config.base_arrows = 1
-        ante_config.ante_exponent = 3
-        ante_config.base_exponent = 1
-        ante_config.arrow_exponent = 1.05
+        config_reset()
+        G.GAME.ante_config.base_arrows = 1
+        G.GAME.ante_config.ante_exponent = 3
+        G.GAME.ante_config.base_exponent = 1
+        G.GAME.ante_config.arrow_exponent = 1.05
     end
 }
