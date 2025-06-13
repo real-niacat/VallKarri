@@ -116,3 +116,44 @@ SMODS.Joker {
     end
 }
 
+SMODS.Joker {
+    key = "cassknows",
+    loc_txt = {
+        name = "Cass None",
+        text = {
+            "Gains {C:mult}+#1#{} Mult and {X:mult,C:white}X#2#{} XMult",
+            "if played hand is {C:attention}None{}",
+            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult and {X:mult,C:white}X#4#{C:inactive} XMult)"
+        }
+    },
+    config = { extra = {gm = 10, gx = 0.2, m = 0, x = 1} },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.gm,
+            card.ability.extra.gx,
+            card.ability.extra.m,
+            card.ability.extra.x
+        }}
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = {x=7, y=6},
+    soul_pos = {x=8, y=6},
+    cost = 20,
+    calculate = function(self, card, context)
+
+        if context.before and context.scoring_name == "cry_None" then
+            card.ability.extra.m = card.ability.extra.m + card.ability.extra.gm
+            card.ability.extra.x = card.ability.extra.x + card.ability.extra.gx
+            return {message = "Upgraded!"}
+        end
+
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.m,
+                xmult = card.ability.extra.x
+            }
+        end
+
+    end
+}

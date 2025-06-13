@@ -340,7 +340,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
 
     end,
-    rarity = "valk_unobtainable",
+    rarity = "valk_quillagod",
     atlas = "main",
     pos = {x=0,y=3},
     soul_pos = {x=1, y=3},
