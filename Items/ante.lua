@@ -236,7 +236,7 @@ end
 local gba = get_blind_amount
 function get_blind_amount(ante)
     ante = to_big(ante)
-    if ante <= (G.GAME.ante_config and to_big(G.GAME.ante_config.limit) or 1500) then --use 1500 as fallback, config is only generated when run starts
+    if ante <= (G.GAME.ante_config and to_big(G.GAME.ante_config.limit) or to_big(1500)) then --use 1500 as fallback, config is only generated when run starts
         return gba(to_number(ante))
     end
 
