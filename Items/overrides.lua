@@ -267,8 +267,37 @@ function G.UIDEF.use_and_sell_buttons(card)
     return ref
 end
 
+SMODS.calculation_keys[#SMODS.calculation_keys+1] = "multe"
+SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
+
 local calceff = SMODS.calculate_individual_effect
 function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+
+    -- print(scored_card)
+    -- print(key) 
+    -- print(amount)
+    
+    if key == "multe" and amount ~= 1 then
+        play_sound("talisman_emult", 1) 
+        if effect.card then juice_card(effect.card) end
+        mult = mod_mult(amount ^ mult)
+        update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
+        if not effect.remove_default_message then
+            card_eval_status_text(scored_card, 'jokers', nil, percent, nil, {message = amount.."^"..localize("k_mult"), colour =  G.C.EDITION, edition = true})
+        end
+        return true
+    end
+
+    if key == "chipse" and amount ~= 1 then 
+        play_sound("talisman_echips", 1)
+        if effect.card then juice_card(effect.card) end
+        hand_chips = mod_chips(amount ^ hand_chips)
+        update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
+        if not effect.remove_default_message then
+            card_eval_status_text(scored_card, 'jokers', nil, percent, nil, {message = amount.."^"..localize("k_chips"), colour =  G.C.EDITION, edition = true})
+        end
+        return true
+    end
 
     calceff(effect, scored_card, key, amount, from_edition)
 
@@ -283,5 +312,7 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         end
 
     end
+
+    
 
 end

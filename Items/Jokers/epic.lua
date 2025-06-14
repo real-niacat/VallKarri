@@ -144,3 +144,32 @@ SMODS.Joker {
     cost = 18,
     immutable = true,
 }
+
+SMODS.Joker {
+    key = "inverted_variable",
+    loc_txt = {
+        name = "Inverting Variable",
+        text = {
+            "{X:dark_edition,C:white}#1#^{} Mult",
+            credit("Nobody!")
+        }
+    },
+    config = { extra = { multe = 1.2 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.multe} }
+    end,
+    rarity = "cry_epic",
+    atlas = "phold",
+    pos = {x=0,y=0},
+    cost = 18,
+    immutable = true,
+    calculate = function(self, card, context)
+        if context.joker_main then 
+
+            return {
+                multe = card.ability.extra.multe
+            }
+
+        end
+    end
+}
