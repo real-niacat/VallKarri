@@ -32,7 +32,7 @@ SMODS.Back {
     atlas = "main",
     calculate = function(center, back, context)
 
-        if context.after then
+        if context.joker_main then
             
             for i,joker in ipairs(G.jokers.cards) do
 

@@ -21,7 +21,7 @@ SMODS.Joker {
     cost = 10,
     demicoloncompat = true,
     calculate = function(self, card, context)
-        if (context.end_of_round and not context.individual and not context.repetition) or context.forcetrigger then
+        if (context.end_of_round and context.main_eval) then
 
             for i,joker in ipairs(G.jokers.cards) do
                 
