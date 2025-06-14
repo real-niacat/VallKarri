@@ -18,39 +18,30 @@ SMODS.Back {
     end
 }
 
--- SMODS.Back {
---     key = "overstuffed",
---     loc_txt = {
---         name = "Overstuffed Deck",
---         text = {
---             "When first hand drawn, draw the",
---             "{C:attention}best{} poker hand possible.",
---             "Cards drawn this way",
---             "are given the {C:attention}Light{} enhancement"
---         }
---     },
---     pos = {x=7, y=7},
---     atlas = "main",
---     calculate = function(center, back, context)
+SMODS.Back {
+    key = "encore",
+    loc_txt = {
+        name = "Encore Deck",
+        text = {
+            "After hand scores,",
+            "all joker {C:attention}end-of-round{}",
+            "effects are triggered",
+        }
+    },
+    pos = {x=7, y=8},
+    atlas = "main",
+    calculate = function(center, back, context)
 
---         if context.first_hand_drawn then
+        if context.after then
             
---             local ordered = {}
---             for name,hand in pairs(G.GAME.hands) do
---                 ordered[hand.order] = hand
---                 ordered[hand.order].handname = name
---             end
+            for i,joker in ipairs(G.jokers.cards) do
 
---             local i = 1
---             local found = false
---             while not found do
---                 found = get_handtype(ordered[i].name)
---                 i = i + 1
---             end
+                local res = eval_card(joker, {end_of_round = true, main_eval = true})
+                card_eval_status_text(joker, "extra", nil, nil, nil, res)
 
---             draw_to_hand(found)
+            end
 
---         end
+        end
 
---     end
--- }
+    end
+}
