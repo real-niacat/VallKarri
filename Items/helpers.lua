@@ -437,3 +437,57 @@ function qdvi(val, growth, arrows)
     end
 
 end
+
+function find_index(card, list)
+
+    for i,c in ipairs(list) do
+        if c == card then
+            return i
+        end
+    end
+    return false
+
+end
+
+function draw_to_hand(cardlist) 
+    for i,card in ipairs(cardlist) do
+        draw_card(card.area, G.hand, nil, nil, nil, card)
+    end
+end
+
+function get_handtype(handtype)
+
+    local a, b, c, d, e = G.FUNCS.get_poker_hand_info(G.deck.cards)
+
+    local selected_hand = handtype
+
+    local intentional_length = 0
+    
+    if not (G.GAME.hands[selected_hand]) then
+        return false
+    end
+
+    for _,ca in ipairs(G.GAME.hands[selected_hand].example) do
+
+        if ca[2] then
+            intentional_length = intentional_length + 1
+        end
+
+    end
+
+    if c[selected_hand] and #c[selected_hand] > 0 then
+        local valid_cards = {}
+        for i,card in ipairs(c[selected_hand][1]) do
+            if i > intentional_length then
+                break
+            end
+            table.insert(valid_cards, card)
+            
+
+        end
+        return valid_cards
+    else
+        return false
+    end
+
+end
