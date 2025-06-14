@@ -237,20 +237,15 @@ SMODS.Joker {
     loc_txt = {
         name = "Lily Felli",
         text = {
-            "{X:inactive,C:mult,s:1.9}#1#I{C:mult,s:1.9} Mult",
-            "Increase {C:attention}[N]{} by {C:attention}#5#{} if played hand contains {C:attention}9{} scored {C:attention}9s{}.",
-            "{C:inactive,s:0.6}Limited at N=1000",
-            "Increase {C:attention}[I]{} by {C:attention}#4#{} per 9 scored.",
-            "{C:inactive,s:0.9}Currently #2##3#{}",
+            "",
             quote("lily"),
             quote("lily2"),
             credit("Scraptake")
         }
     },
-    config = { extra = { op = 1, ex = 1, inc = 0.09, opinc = 1 } },
+    config = { extra = {  } },
     loc_vars = function(self, info_queue, card)
-        local string = "{N}"
-        return {vars = {string, "{" .. card.ability.extra.op .. "}", card.ability.extra.ex, card.ability.extra.inc, card.ability.extra.opinc} }
+        
     end,
     rarity = "valk_selfinsert",
     atlas = "main",
@@ -263,48 +258,8 @@ SMODS.Joker {
     demicoloncompat = true,
     calculate = function(self, card, context)
 
-        if card.ability.extra.op > 1000 then
-            card.ability.extra.op = 1000
-        end
-
-        if context.cardarea == G.play then
-
-            if context.individual then
-
-                if context.other_card:get_id() == 9 then
-                    card.ability.extra.ex = card.ability.extra.ex + card.ability.extra.inc
-                end
         
-            end
-
-        end
-
-        if context.end_of_round and not context.repetition and not context.individual and not context.blueprint then
-            local search = SMODS.find_card("j_valk_scraptake")
-            if (#search > 0) then
-                card.ability.extra.op = card.ability.extra.op + (card.ability.extra.opinc * 3)
-            end
-
-        end
-
-        if context.cardarea == G.jokers and context.before and not context.blueprint then
-            local nines = 0
-            for k, v in ipairs(context.scoring_hand) do
-                if (v:get_id() == 9) then
-                    nines = nines + 1
-                end
-            end
-            if (nines >= 9) then
-                card.ability.extra.op = card.ability.extra.op + card.ability.extra.opinc
-            end
-        end
-
-        if context.joker_main or context.forcetrigger then
-
-            return {
-                hyper_mult = {card.ability.extra.op, card.ability.extra.ex}
-            }
-        end
+        
     end,
 
     add_to_deck = function(self, card, from_debuff)
