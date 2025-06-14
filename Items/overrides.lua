@@ -266,3 +266,22 @@ function G.UIDEF.use_and_sell_buttons(card)
 
     return ref
 end
+
+local calceff = SMODS.calculate_individual_effect
+function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+
+    calceff(effect, scored_card, key, amount, from_edition)
+
+    if next(SMODS.find_card("j_valk_cascade")) then
+
+        if key == "xchips" or key == "x_chips" or key == "Xchip_mod" then
+            play_sound('timpani')
+            G.GAME.blind.chips = G.GAME.blind.chips / amount
+            G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+            G.HUD_blind:recalculate()
+            G.hand_text_area.blind_chips:juice_up()
+        end
+
+    end
+
+end

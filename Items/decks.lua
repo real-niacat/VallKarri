@@ -12,7 +12,7 @@ SMODS.Back {
     apply = function()
         config_reset()
         G.GAME.disable_ante_gain = true
-        G.GAME.ante_config.base_exponent = 1.2
+        G.GAME.ante_config.base_exponent = 1.4
         G.GAME.ante_config.arrow_exponent = 1.05
         G.GAME.ante_config.ante_exponent = 2
     end

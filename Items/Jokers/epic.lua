@@ -123,3 +123,24 @@ SMODS.Joker {
 
     end
 }
+
+SMODS.Joker {
+    key = "cascade",
+    loc_txt = {
+        name = "Cascading Chain",
+        text = {
+            "When {X:blue,C:white}XChips{} triggered,",
+            "Divide blind size by triggered amount",
+            credit("Nobody!")
+        }
+    },
+    config = { extra = {  } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {} }
+    end,
+    rarity = "cry_epic",
+    atlas = "phold",
+    pos = {x=0,y=0},
+    cost = 18,
+    immutable = true,
+}
