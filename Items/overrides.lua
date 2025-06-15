@@ -371,3 +371,15 @@ function SMODS.create_mod_badges(obj, badges)
 
 
 end
+
+if #SMODS.find_mod("entr") > 0 then
+
+    local originalentropy = Entropy.CanEeSpawn
+    function Entropy.CanEeSpawn()
+        if G and G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante < 512 then
+            return false
+        end
+        return originalentropy()
+    end
+
+end
