@@ -278,7 +278,6 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
     -- print(amount)
     
     if key == "multe" and amount ~= 1 then
-        play_sound("talisman_emult", 1) 
         if effect.card then juice_card(effect.card) end
         mult = mod_mult(amount ^ mult)
         update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
@@ -289,7 +288,6 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
     end
 
     if key == "chipse" and amount ~= 1 then 
-        play_sound("talisman_echips", 1)
         if effect.card then juice_card(effect.card) end
         hand_chips = mod_chips(amount ^ hand_chips)
         update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
