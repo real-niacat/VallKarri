@@ -249,12 +249,12 @@ function get_blind_amount(ante)
         -- Use an easing function to keep arrows low at first, then ramp up faster near the end
         local antelog = math.log10(ante)
         local min_arrows, max_arrows = 1, 100000
-        local min_log, max_log = 1, 308
+        local min_log, max_log = 1, 300
 
         local t = (antelog - min_log) / (max_log - min_log)
         t = math.max(0, math.min(1, t))
 
-        local eased = t^3
+        local eased = t^2
         --i love exponents
 
         arrows = min_arrows + (max_arrows - min_arrows) * eased
@@ -266,13 +266,13 @@ function get_blind_amount(ante)
         if (score ~= math.huge) then
             return score
         else
-            return get_a_somewhat_large_number()
+            return math.huge
         end
 
     else
         -- print("scaling increase branch 2")
 
-        return get_a_somewhat_large_number()
+        return math.huge
 
     end
 end

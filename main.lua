@@ -32,7 +32,6 @@ SMODS.Atlas {
 }
 
 maxArrow = 1e5
--- lovely patch is used if pwx is installed - as this should override since it's a larger limit anyway lol
 
 
 merge_recipes = {
@@ -43,6 +42,26 @@ merge_recipes = {
     {input = {"c_valk_tauism", "c_soul", "c_wraith" }, output = "c_valk_absolutetau"}
 
 }
+
+valk_badgetypes = {
+    ingredient = {
+        text = "Ingredient",
+        color = G.C.WHITE,
+        text_color = G.C.BLACK
+    },
+    lore = {
+        text = "Has Lore",
+        color = G.C.CRY_TWILIGHT,
+        text_color = G.C.WHITE,
+    }
+}
+
+valk_badgecards = {
+    -- format:
+-- {card=
+}
+
+
 
 
 assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()

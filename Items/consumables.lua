@@ -40,7 +40,7 @@ SMODS.Booster {
         return {vars = {card.ability.choose, card.ability.extra}}
     end,
 
-    weight = 0.09,
+    weight = 0.9,
     cost = 99,
 
     create_card = function(self, card, i)
@@ -48,7 +48,7 @@ SMODS.Booster {
         if (pseudorandom("valk_ascended_pack", 1, 2) == 1) then
             return create_card("Superplanet", G.pack_cards, nil, nil, nil, nil, nil, "valk_ascended_pack")
         else
-            local choices = {"c_valk_absolutetau", "c_valk_safe_memoryleak"} --will add freeway when it exists
+            local choices = {"c_valk_absolutetau", "c_valk_safe_memoryleak", "c_valk_freeway"} --will add freeway when it exists
             local pick = pseudorandom("valk_ascended_pack", 1, #choices)
             
 
@@ -58,13 +58,14 @@ SMODS.Booster {
     end,
 
     in_pool = function()
-        return G.GAME.round_resets.ante > 36
+        return G.GAME.round_resets.ante > 4
     end
 }
 
 
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local gwell = {
     set = "SpecialCards",
     loc_txt = {
         name = "Gravity Well",

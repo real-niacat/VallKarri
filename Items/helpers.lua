@@ -455,6 +455,28 @@ function draw_to_hand(cardlist)
     end
 end
 
+function reload_badges()
+    valk_badgecards = {}
+
+    local ingredients = {}
+
+    for i,j in ipairs(merge_recipes) do
+        for k,card in ipairs(j.input) do
+            ingredients[#ingredients+1] = card
+        end
+    end
+
+    for key,card in pairs(G.P_CENTERS) do
+        if card.lore then
+            valk_badgecards[#valk_badgecards+1] = {card = key, badge = valk_badgetypes.lore}
+        end
+
+        if table:vcontains(ingredients, key) then
+            valk_badgecards[#valk_badgecards+1] = {card = key, badge = valk_badgetypes.ingredient}
+        end
+    end
+end
+
 function get_handtype(handtype)
 
     local a, b, c, d, e = G.FUNCS.get_poker_hand_info(G.deck.cards)

@@ -1,4 +1,5 @@
-SMODS.Joker {
+-- SMODS.Joker {
+local orivander = {
     key = "orivander",
     loc_txt = {
         name = "Orivander",
