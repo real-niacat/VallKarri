@@ -187,8 +187,11 @@ SMODS.Voucher {
     end,
 
     in_pool = function()
-        local v = table:vcontains(decks, G.GAME.selected_back.name)
-        return v
+        local deckname = G.GAME.selected_back.name
+        if decks[deckname] then
+            return true
+        end
+        return false
     end,
 
     redeem = function(self, card)
