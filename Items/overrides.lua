@@ -272,10 +272,6 @@ SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
 
 local calceff = SMODS.calculate_individual_effect
 function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
-
-    -- print(scored_card)
-    -- print(key) 
-    -- print(amount)
     
     if key == "multe" and amount ~= 1 then
         if effect.card then juice_card(effect.card) end
@@ -312,6 +308,17 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
     end
 
     
+
+end
+
+local fakeevalstatus = card_eval_status_text
+
+function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
+    if G.GAME.mult_disabled and extra and (extra.mult_mod or extra.Xmult_mod or extra.Emult_mod or extra.EEmult_mod or extra.EEEmult_mod or extra.hypermult_mod) then
+        return
+    end
+
+    fakeevalstatus(card, eval_type, amt, percent, dir, extra)
 
 end
 
