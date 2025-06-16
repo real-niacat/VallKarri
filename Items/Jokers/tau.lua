@@ -201,7 +201,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Joker{}",
         text = {
-            "{X:mult,C:white}^#1#{} Mult for every Tauic card",
+            "{X:dark_edition,C:white}^#1#{} Mult for every Tauic card",
             "{C:inactive}Includes this card{}",
             credit("Scraptake")
         }
@@ -275,7 +275,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Sin Joker{}",
         text = {
-            "{X:chips,C:white}^#1#{} Chips for every card with a suit scored, in hand or in deck",
+            "{X:dark_edition,C:white}^#1#{} Chips for every card with a suit scored, in hand or in deck",
             credit("Scraptake")
         }
     },
@@ -453,7 +453,7 @@ SMODS.Joker {
         text = {
             "Earn {C:money}$#1#{} at end of round",
             "Increases by {C:money}$#2#{} when planet card used",
-            "Increases the increase by {C:money}$#3#{} when planet card used",
+            "Scales {C:dark_edition,E:1}Quadratically{}",
             credit("Scraptake")
         }
     },
@@ -671,8 +671,8 @@ SMODS.Joker {
         name = "{C:cry_ember}Tauic Ceremonial Dagger{}",
         text = {
             "When {C:attention}blind{} selected, {C:red,E:1}destroy{} joker to the right and",
-            "added its sell value to this jokers {X:mult,C:white}^Mult{}",
-            "{C:inactive}(Currently {X:mult,C:white}^#1#{C:inactive} Mult)",
+            "added its sell value to this jokers {X:dark_edition,C:white}^Mult{}",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#1#{C:inactive} Mult)",
             credit("Scraptake")
         }
     },
@@ -747,7 +747,7 @@ SMODS.Joker {
         text = {
             "{C:attention}Flushes{} and {C:attention}Straights{} can be made with {C:attention}3{} cards", --booo hardcoding. whatever. go complain to smods.
             "Level up all hands by {C:attention}#1#{} when consumable used",
-            "Increases {C:dark_edition,E:1}quadratically{}",
+            "Increases {C:dark_edition,E:1}Quadratically{}",
             credit("Scraptake")
         }
     },
@@ -824,8 +824,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Banner{}",
         text = {
-            "{X:chips,C:white}+^#1#{} Chips per discard remaining",
-            "{C:inactive}(Currently {X:chips,C:white}^#2#{C:inactive} Chips)",
+            "{X:dark_edition,C:white}+^#1#{} Chips per discard remaining",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Chips)",
             credit("Scraptake")
         }
     },
@@ -932,8 +932,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Loyalty Card{}",
         text = {
-            "{C:attention}Double{} this jokers {{X:mult,C:white}^Mult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
-            "{C:inactive}(Currently {X:mult,C:white}^#3#{C:inactive} Mult)",
+            "{C:attention}Double{} this jokers {{X:dark_edition,C:white}^Mult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Mult)",
             credit("Scraptake")
         }
     },
@@ -1009,8 +1009,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Triboulet{}",
         text = {
-            "{X:mult,C:white}^#1#{} Mult when any face card or Ace is scored",
-            "Increases by {X:mult,C:white}+^#2#{} when any face card or Ace is scored",
+            "{X:dark_edition,C:white}^#1#{} Mult when any face card or Ace is scored",
+            "Increases by {X:dark_edition,C:white}+^#2#{} when any face card or Ace is scored",
             credit("Scraptake")
         }
     },
@@ -1041,9 +1041,9 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Yorick{}",
         text = {
-            "{X:mult,C:white}^#1#{} Mult",
-            "Increases by {X:mult,C:white}+^#2#{} when any card discarded",
-            "Scales {C:attention}Quadratically{}",
+            "{X:dark_edition,C:white}^#1#{} Mult",
+            "Increases by {X:dark_edition,C:white}+^#2#{} when any card discarded",
+            "Scales {C:dark_edition,E:1}Quadratically{}",
             credit("Scraptake")
         }
     },
@@ -1122,7 +1122,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Perkeo{}",
         text = {
-            "Create {C:attention}#1#{} copies of the leftmost consumable when exiting shop",
+            "Create {C:attention}#1#{} {C:dark_edition}negative{} copies of the leftmost consumable when exiting shop",
             "Remove {C:dark_edition}negative{} from rightmost consumable at end of round",
             credit("Scraptake")
         }

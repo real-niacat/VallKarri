@@ -49,9 +49,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Illena Vera",
         text = {
-            "Multiply playing card values by {C:red}X#1#{} when scored.",
-            "Multiply all joker values by {C:red}X#2#{} when any playing card scored.",
-            "{C:inactive}Does not include Illena Vera{}",
+            "Multiply playing card values by {X:mult,C:white}X#1#{} when scored.",
+            "Multiply all joker values by {X:mult,C:white}X#2#{} when any playing card scored.",
+            "{C:inactive}(Does not include Illena Vera){}",
             quote("illena"),
             credit("Scraptake")
         }

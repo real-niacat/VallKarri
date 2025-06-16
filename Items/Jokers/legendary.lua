@@ -86,12 +86,12 @@ SMODS.Joker {
         name = "Lilac Lilybean",
         text = {
             "Creates a random {C:attention}food joker{} at end of round.",
-            "Earn {C:money}$#1#{} when boss blind defeated.",
+            "Multiply food joker sell value by {C:attention}X#1#{} when boss blind defeated.",
             quote("lilac"),
             credit("Scraptake")
         }
     },
-    config = { extra = {money = 54.01} },
+    config = { extra = {money = 5.4} },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.money}}
     end,
@@ -109,7 +109,21 @@ SMODS.Joker {
             G.jokers:emplace(c)
 
             if (G.GAME.blind.boss) then
-                ease_dollars(card.ability.extra.money)
+                
+                for _i,joker in pairs(G.jokers.cards) do
+                
+                    local res = Cryptid.safe_get(joker.config.center, "pools", "Food")
+                    for _j,pooljoker in pairs(G.P_CENTER_POOLS.Food) do
+                        res = res or (pooljoker.key == joker.key)
+                        -- print(pooljoker.key)
+                    end
+
+                    if res then
+                        joker.sell_cost = joker.sell_cost * card.ability.extra.money
+                    end
+            
+                end
+
             end
 
         end
@@ -126,7 +140,7 @@ SMODS.Joker {
             "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult and {X:mult,C:white}X#4#{C:inactive} XMult)"
         }
     },
-    config = { extra = {gm = 10, gx = 0.2, m = 0, x = 1} },
+    config = { extra = {gm = 10, gx = 0.2, m = 10, x = 1} },
     loc_vars = function(self, info_queue, card)
         return {vars = {
             card.ability.extra.gm,

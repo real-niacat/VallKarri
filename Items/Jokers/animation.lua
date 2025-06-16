@@ -3,7 +3,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:blue}Blue{}",
         text = {
-            "{C:attention}X#1#{} to values of all {C:attention}food jokers{}",
+            "Increase the values of all {C:attention}food jokers{} by {C:attention}X#1#{}",
             "at end of round",
         }
     },

@@ -53,6 +53,11 @@ valk_badgetypes = {
         text = "Has Lore",
         color = G.C.CRY_TWILIGHT,
         text_color = G.C.WHITE,
+    },
+    immutable = {
+        text = "Unchangable Values",
+        color = G.C.ORANGE,
+        text_color = G.C.WHITE
     }
 }
 

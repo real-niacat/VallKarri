@@ -474,6 +474,10 @@ function reload_badges()
         if table:vcontains(ingredients, key) then
             valk_badgecards[#valk_badgecards+1] = {card = key, badge = valk_badgetypes.ingredient}
         end
+
+        if card.immutable then
+            valk_badgecards[#valk_badgecards+1] = {card = key, badge = valk_badgetypes.immutable}
+        end
     end
 end
 

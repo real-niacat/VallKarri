@@ -4,7 +4,6 @@ SMODS.Joker {
         name = "{C:red}Suck It{}",
         text = {
             "Creates itself when removed",
-            "Makes itself {C:purple}eternal{} when created",
             "{C:inactive}Suck it.{}",
         }
     },
@@ -12,12 +11,8 @@ SMODS.Joker {
     rarity = 1,
     atlas = "main",
     pos = {x=4, y=5},
-    cost = 1,
+    cost = 0,
     pools = { ["Meme"] = true },
-
-    add_to_deck = function(self, card, from_debuff)
-        card:set_eternal(true)
-    end,
 
     remove_from_deck = function(self, card, from_debuff)
         simple_create("Joker", G.jokers, "j_valk_suckit")
@@ -62,12 +57,12 @@ SMODS.Joker {
         text = {
             "{C:chips}+#1#{} chips",
             "Increases by {C:attention}#2#{} at end of round",
-            "Increases the increase by {C:attention}#3#{} at end of round."
+            "Scales {C:dark_edition,E:1}quadratically{}"
         }
     },
     config = { extra = { curchips = 1, inc = 1, incsq = 1} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.curchips, card.ability.extra.inc, card.ability.extra.incsq } }
+        return { vars = { card.ability.extra.curchips, card.ability.extra.inc} }
     end,
     rarity = 3,
     atlas = "main",

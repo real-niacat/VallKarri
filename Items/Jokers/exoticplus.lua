@@ -48,7 +48,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { fallback_red = 15, fallback_blue = 10, max = 1000, exponent = 8, mexpo = 0.7 } },
+    config = { extra = { fallback_red = 17, fallback_blue = 12, max = 1000, exponent = 8, mexpo = 0.6 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {"{" .. math.floor((card.ability.extra.fallback_blue + card.ability.extra.fallback_red) ^ card.ability.extra.mexpo) .. "}", ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )} }
     end,
@@ -77,7 +77,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_azure}The Dormant Lordess",
         text = {
-            "{X:mult,C:white}^#1#{} Mult",
+            "{X:dark_edition,C:white}^#1#{} Mult",
             quote("dormant"),
             quote("dormant2"),
             credit("Scraptake (Edit by Lily)")
