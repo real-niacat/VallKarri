@@ -3,8 +3,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Niko Gray",
         text = {
-            "When blind selected, {C:red}debuff{} a random joker.",
-            "This joker's values will be {C:attention}doubled{} and {C:red}un-debuffed{} upon cashing out.",
+            "When blind selected, {C:red}debuff{} leftmost joker and {C:attention}double{} its values",
+            "Remove {C:red}debuff{} from all jokers at end of round",
             quote("niko"),
             credit("Scraptake")
         }
@@ -19,31 +19,21 @@ SMODS.Joker {
     pos = {x=0,y=4},
     soul_pos = {x=1,y=4},
     cost = 20,
+    blueprint_compat = true,
     calculate = function(self, card, context)
 
         if (context.setting_blind) then 
             
-            local allowed = {}
-            for i,c in ipairs(G.jokers.cards) do
-                if (c.config.center_key ~= "j_valk_niko") then
-                    table.insert(allowed, c)
-                end
-            end
-            local jkr = allowed[math.random(#allowed)]
-
-            if (jkr) then
-                card.ability.extra.saved_joker = jkr -- to save
-                jkr.debuff = true
-                Cryptid.misprintize(jkr, {min=2, max=2}, nil, true) --multiply values by 2
+            if G.jokers.cards[1] and G.jokers.cards[1].config.center.key ~= "j_valk_niko" then
+                G.jokers.cards[1].debuff = true
+                Cryptid.manipulate(G.jokers.cards[1], {type = "X", value = 2}) --oh no! hardcoding!
             end
 
         end
 
-        if (context.starting_shop) then
-            local jkr = card.ability.extra.saved_joker
-            if (jkr) then
-                jkr.debuff = false
-                card.ability.extra.saved_joker = nil
+        if (context.end_of_round and context.main_eval) then
+            for i,joker in ipairs(G.jokers.cards) do
+                joker.debuff = false
             end
         end
 
