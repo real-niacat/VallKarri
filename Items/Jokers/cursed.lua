@@ -66,7 +66,7 @@ SMODS.Joker {
             "All jokers give {X:dark_edition,C:white}^#1#{} Chips when triggered",
         }
     },
-    config = { extra = { echips = 0.006 } },
+    config = { extra = { echips = 0.666 } },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.echips}}
     end,
@@ -125,3 +125,73 @@ SMODS.Joker {
         card:set_eternal(true)
     end,
 }
+
+-- local function is_allowed(key)
+--     return G.P_CENTERS[key] and not key:find("j_valk")
+-- end
+
+-- SMODS.Joker {
+--     key = "goddamnit",
+--     loc_txt = {
+--         name = "I Am Not Releasing This Card It Is Just For Testing",
+--         text = {
+--             "Inherits the effect of {C:attention,s:1.5,E:1}every{} modded joker",
+--         }
+--     },
+--     config = { extra = {}, immutable = {} },
+--     loc_vars = function(self, info_queue, card)
+--         return { vars = {}}
+--     end,
+--     rarity = "valk_supercursed",
+--     atlas = "phold",
+--     pos = {x=0, y=0},
+--     cost = 0,
+--     calculate = function(self, card, context)
+--         local f = "remove_from_deck"
+--         for i,center in pairs(G.P_CENTERS) do
+--             if G.P_CENTERS[i][f] and is_allowed(i) then
+--                 print("running on " .. i .. " for calculate")
+--                 G.P_CENTERS[i][f](self, card, context)
+--             end
+--         end
+        
+--     end,
+
+--     add_to_deck = function(self, card, from_debuff)
+
+--         local f = "add_to_deck"
+--         for i,center in pairs(G.P_CENTERS) do
+--             if G.P_CENTERS[i][f] and is_allowed(i) then
+                
+--                 if G.P_CENTERS[i].config and G.P_CENTERS[i].config.extra and type(G.P_CENTERS[i].config.extr) == "table" then
+--                     for name,entry in pairs(G.P_CENTERS[i].config.extra) do
+--                         if not card.ability.extra[name] then
+--                             card.ability.extra[name] = entry
+--                         end
+--                     end
+--                 end
+
+--                 if G.P_CENTERS[i].config and G.P_CENTERS[i].config.immutable then
+--                     for name,entry in pairs(G.P_CENTERS[i].config.immutable) do
+--                         if not card.ability.immutable[name] then
+--                             card.ability.immutable[name] = entry
+--                         end
+--                     end
+--                 end
+
+--                 print("running on " .. i .. " for add to deck")
+--                 G.P_CENTERS[i][f](self, card, from_debuff)
+--             end
+--         end
+--     end,
+
+--     remove_from_deck = function(self, card, from_debuff)
+--         local f = "remove_from_deck"
+--         for i,center in pairs(G.P_CENTERS) do
+--             if G.P_CENTERS[i][f] and is_allowed(i) then
+--                 print("running on " .. i .. " for remove from deck")
+--                 G.P_CENTERS[i][f](self, card, from_debuff)
+--             end
+--         end
+--     end
+-- }
