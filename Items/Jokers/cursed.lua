@@ -41,21 +41,20 @@ SMODS.Joker {
             card:quick_dissolve()
         end
 
+        if context.selling_self then
+
+            G.GAME.dollars = 0
+            for i=1,card.ability.immutable.drama do
+                ease_dollars(-1)
+            end
+        end
+
     end,
 
     add_to_deck = function(self, card, from_debuff)
         if from_debuff then return end
         card:set_eternal(true)
     end,
-
-    remove_from_deck = function(self, card, from_debuff)
-        if from_debuff then return end
-
-        G.GAME.dollars = 0
-        for i=1,card.ability.immutable.drama do
-            ease_dollars(-1)
-        end
-    end
 }
 
 SMODS.Joker {
