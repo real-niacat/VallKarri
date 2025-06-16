@@ -269,6 +269,7 @@ end
 
 SMODS.calculation_keys[#SMODS.calculation_keys+1] = "multe"
 SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
+-- MUST HAVE THIS, WILL NOT WORK WITHOUT ADDING NEW CALC KEYS
 
 local calceff = SMODS.calculate_individual_effect
 function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)

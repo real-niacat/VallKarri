@@ -87,7 +87,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.mult_bonus} }
     end,
-    rarity = "valk_unsurpassed",
+    rarity = "valk_unobtainable",
     atlas = "main",
     pos = {x = 3, y = 0},
     soul_pos = {x = 4, y = 0, extra = {x = 4, y = 1}},
@@ -237,15 +237,27 @@ SMODS.Joker {
     loc_txt = {
         name = "Lily Felli",
         text = {
-            "",
+            "{X:dark_edition,C:white}#1##2#{} Mult",
+            "When a {C:attention}Light{} card is scored, increase this joker's operator by {C:attention}#3#{}",
+            "Scored {C:attention}9s{} of {C:spades}spades{} are turned into {C:attention}Light{} cards",
+            "Scored {C:spades}non-spade{} {C:attention}9s{} are turned into spades",
+            "Scored {C:attention}non-9s{} are turned into {C:attention}9s{}",
             quote("lily"),
             quote("lily2"),
             credit("Scraptake")
         }
     },
-    config = { extra = {  } },
+    config = { extra = { op = 1, ind = 2, opinc = 1 } },
     loc_vars = function(self, info_queue, card)
-        
+        info_queue[#info_queue+1] = G.P_CENTERS.m_cry_light
+
+        return {
+            vars = {
+                "{" .. card.ability.extra.op .. "}",
+                card.ability.extra.ind,
+                card.ability.extra.opinc
+            }
+        }
     end,
     rarity = "valk_selfinsert",
     atlas = "main",
@@ -258,7 +270,35 @@ SMODS.Joker {
     demicoloncompat = true,
     calculate = function(self, card, context)
 
+        if context.joker_main or context.forcetrigger then
+
+            return {
+                hyper_mult = {card.ability.extra.op, card.ability.extra.ind}
+            }
+
+        end
+
+        if context.individual and context.cardarea == G.play then
+
+            local enh = SMODS.get_enhancements(context.other_card)
+            if enh and enh.m_cry_light then
+                card.ability.extra.op = card.ability.extra.op + 1
+                context.other_card:juice_up()
+                card:juice_up()
+                quick_card_speak(card, "Upgraded!")
+            end
+
+            if context.other_card.base.id ~= 9 then
+                SMODS.change_base(context.other_card, context.other_card.base.suit, "9")
+            elseif context.other_card.base.suit ~= "Spades" then
+                SMODS.change_base(context.other_card, "Spades")
+            else
+                context.other_card:set_ability("m_cry_light")
+            end
+
         
+
+        end
         
     end,
 
