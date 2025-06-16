@@ -86,7 +86,8 @@ SMODS.Joker {
         name = "Lilac Lilybean",
         text = {
             "Creates a random {C:attention}food joker{} at end of round.",
-            "Multiply food joker sell value by {C:attention}X#1#{} when boss blind defeated.",
+            "When boss blind defeated, Increase ",
+            "{C:attention}sell value{} of all food jokers by {C:attention}X#1#{}.",
             quote("lilac"),
             credit("Scraptake")
         }

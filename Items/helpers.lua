@@ -3,7 +3,8 @@ function credit(artist)
 end
 
 function concept(creator)
-	return ('{C:dark_edition,s:0.6,E:2}Idea by : ' .. creator .. '{}')
+	-- return ('{C:dark_edition,s:0.6,E:2}Idea by : ' .. creator .. '{}')
+    return ""
 end
 
 short_sprites = {
@@ -15,7 +16,7 @@ short_sprites = {
 function days_since(year, month, day)
 
     local now = os.date("*t")
-    local then_time = os.time{year=year, month=month, day=day, hour=0}
+    local then_time = os.time({year=year, month=month, day=day, hour=0})
     local diff = os.difftime(os.time(now), then_time)
     return math.floor(diff / (60 * 60 * 24))
 
