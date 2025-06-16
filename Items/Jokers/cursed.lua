@@ -8,7 +8,7 @@ SMODS.Joker {
             "{C:red,E:1}Dramatically{} set money to {C:money}-$#2#{} when removed",
         }
     },
-    config = { extra = { rounds = 5 }, immutable = {drama = 66} },
+    config = { extra = { rounds = 7 }, immutable = {drama = 66} },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.rounds, card.ability.immutable.drama}}
     end,
@@ -62,10 +62,10 @@ SMODS.Joker {
     loc_txt = {
         name = "Hexaract",
         text = {
-            "All jokers give {X:dark_edition,C:white}^#1#{} Chips when triggered",
+            "All jokers give {X:dark_edition,C:white}^#1#{} Chips & Mult",
         }
     },
-    config = { extra = { echips = 0.666 } },
+    config = { extra = { echips = 1 - (1/6) } },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.echips}}
     end,
@@ -76,10 +76,20 @@ SMODS.Joker {
     immutable = true,
     calculate = function(self, card, context)
         
-        if context.post_trigger and hand_chips then
-            hand_chips = hand_chips:pow(card.ability.extra.echips)
-            card_eval_status_text(card, "extra", nil, nil, nil, { message = "^" .. card.ability.extra.echips .. " Chips" })
-        end
+        if context.other_joker and context.other_joker.ability.set == "Joker" then
+			if not Talisman.config_file.disable_anims then
+				G.E_MANAGER:add_event(Event({
+					func = function()
+						context.other_joker:juice_up(0.5, 0.5)
+						return true
+					end,
+				}))
+			end
+			return {
+				emult = card.ability.extra.echips,
+                echips = card.ability.extra.echips,
+			}
+		end
 
     end,
 
@@ -93,8 +103,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Joker of None",
         text = {
-            "When card {C:red,E:1}touched{}, {C:red,E:1}destroy it{}",
-            "Half levels of all {C:attention}Poker Hands{} when card added to deck",
+            "When this joker obtained, convert all hand levels to levels for {C:attention}None{}",
+            "Playing cards {C:attention}in-hand{} are {C:red,E:1}destroyed{} when selected or hand played",
+            "{C:attention}None{} is levelled up when any {C:planet}planet{} card used"
         }
     },
     config = { extra = {}, immutable = {} },
@@ -111,10 +122,8 @@ SMODS.Joker {
             context.other_card:start_dissolve({G.C.BLACK}, nil, 2 * G.SETTINGS.GAMESPEED)
         end
 
-        if context.playing_card_added then
-
-            level_all_hands(card, 0, -0.5)
-
+        if context.using_consumeable and context.consumeable.ability.set == "Planet" then
+            level_up_hand(card, "cry_None")
         end
 
     end,
@@ -122,6 +131,14 @@ SMODS.Joker {
     add_to_deck = function(self, card, from_debuff)
         if from_debuff then return end
         card:set_eternal(true)
+
+        local levelsum = 0
+        for name,hand in pairs(G.GAME.hands) do
+            levelsum = levelsum + (hand.level-1)
+            level_up_hand(card, name, false, (-hand.level)+1)
+        end
+
+        level_up_hand(card, "cry_None", false, levelsum/2)
     end,
 }
 
