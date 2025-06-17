@@ -254,7 +254,7 @@ function get_blind_amount(ante)
         local t = (antelog - min_log) / (max_log - min_log)
         t = math.max(0, math.min(1, t))
 
-        local eased = t^2
+        local eased = t^4
         --i love exponents
 
         arrows = min_arrows + (max_arrows - min_arrows) * eased

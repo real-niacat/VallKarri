@@ -170,6 +170,7 @@ SMODS.Consumable {
     pos = { x = 2, y = 1 },
     soul_pos = {x = 3, y = 1},
     atlas = "main",
+    no_doe = true,
     -- soul_rate = 0.00001, --0.001%
 
     loc_vars = function(self, info_queue, card)
@@ -253,7 +254,7 @@ SMODS.Consumable {
     pos = { x = 3, y = 4 },
     atlas = "main",
     -- soul_rate = 0.07,
-    soul_rate = 2,
+    soul_rate = 0.7,
     -- is_soul = true,
 
     config = { extra = { valuemult = 1e-10, create_new = true, inc = 3} },
