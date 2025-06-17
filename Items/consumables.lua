@@ -40,7 +40,7 @@ SMODS.Booster {
         return {vars = {card.ability.choose, card.ability.extra}}
     end,
 
-    weight = 0.9,
+    weight = 0.333,
     cost = 99,
 
     create_card = function(self, card, i)
@@ -56,10 +56,40 @@ SMODS.Booster {
         end
 
     end,
+}
 
-    in_pool = function()
-        return G.GAME.round_resets.ante > 4
-    end
+SMODS.Booster {
+    key = "deckfixing",
+    atlas = "phold",
+    pos = {x=0, y=0},
+    discovered = true,
+    loc_txt = {
+        name = "Deck Fixing Pack",
+        text = {
+            "Pick {C:attention}#1#{} of {C:attention}#2#{} {C:attention}deck-fixing{} cards to use immedietely",
+        },
+        group_name = "Deck Fixing Pack"
+    },
+
+    draw_hand = true,
+    config = {choose = 1, extra = 3},
+
+    loc_vars = function(self, info_queue, card) 
+        return {vars = {card.ability.choose, card.ability.extra}}
+    end,
+
+    weight = 1.2,
+    cost = 9,
+
+    create_card = function(self, card, i)
+        ease_background_colour(G.C.ORANGE)
+        local choices = {"c_death", "c_hanged_man", "c_cryptid", "c_strength", "c_cry_ctrl_v"} --will add freeway when it exists
+        local pick = pseudorandom("valk_deckfixing_pack", 1, #choices)
+            
+
+        return create_card("Consumable", G.pack_cards, nil, nil, nil, nil, choices[pick], "valk_deckfixing_pack")
+
+    end,
 }
 
 
