@@ -162,6 +162,14 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
 
+    G.GAME.tau_increase = 2
+    G.GAME.base_tau_replace = 100
+    G.GAME.tau_replace = G.GAME.base_tau_replace
+    G.GAME.need_tauist = true
+    load_tauics()
+    --1 in 100 to replace when you have tauist
+    -- keeping these settings so that i can make a deck focused around tauics later on
+
     for i,center in pairs(G.P_CENTERS) do
         if center.oldrarity then
 
@@ -390,4 +398,27 @@ if #SMODS.find_mod("entr") > 0 then
         return originalentropy()
     end
 
+end
+
+
+local fakecreate = create_card
+function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+    local out = fakecreate(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+
+    if out.config.center.tau and ((G.GAME.need_tauist and (#SMODS.find_card("j_valk_tauist") > 0)) or not G.GAME.need_tauist) then
+
+        local roll = pseudorandom("valk_roll_tauic", 1, G.GAME.tau_replace)
+        if roll <= 1 then
+            out:set_ability(out.config.center.tau)
+            out:juice_up()
+            play_sound("explosion_release1", 1, 3)
+            G.GAME.tau_replace = G.GAME.base_tau_replace
+        else
+            G.GAME.tau_replace = G.GAME.tau_replace - 1
+        end
+
+    end
+
+
+    return out
 end

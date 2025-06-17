@@ -1,34 +1,17 @@
-tauics = {
-    {base = "j_joker",  tau = "j_valk_tau_joker"},
-    {base = "j_lusty_joker",  tau = "j_valk_tau_sins"},
-    {base = "j_greedy_joker",  tau = "j_valk_tau_sins"},
-    {base = "j_wrathful_joker",  tau = "j_valk_tau_sins"},
-    {base = "j_gluttenous_joker",  tau = "j_valk_tau_sins"},
+function load_tauics()
 
-    {base = "j_jolly_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_zany_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_mad_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_crazy_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_droll_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_sly_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_wily_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_clever_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_devious_joker",  tau = "j_valk_tau_emotion"},
-    {base = "j_crafty_joker",  tau = "j_valk_tau_emotion"},
-    -- localthunk PLEASE stop FUCKING WITH ME
-    -- ITS SPELLED GLUTTONOUS
-    {base = "j_chaos",  tau = "j_valk_tau_clown"},
-    {base = "j_mime", tau = "j_valk_tau_mime"},
-    {base = "j_obelisk", tau = "j_valk_tau_obelisk"},
-    {base = "j_cartomancer", tau = "j_valk_tau_cartomancer"},
-    {base = "j_rocket", tau = "j_valk_tau_rocket"},
-    {base = "j_oops", tau = "j_valk_tau_oops"},
-    {base = "j_troubadour", tau = "j_valk_tau_troubadour"},
-    {base = "j_ceremonial", tau = "j_valk_tau_dagger"},
-    {base = "j_credit_card", tau = "j_valk_tau_creditcard"},
-    {base = "j_four_fingers", tau = "j_valk_tau_fingers"},
-    {base = "j_stencil", tau = "j_valk_tau_stencil"},
-}
+    for key,card in pairs(G.P_CENTERS) do
+
+        if card.bases then
+            for i,base in ipairs(card.bases) do
+                -- print(base)
+                G.P_CENTERS[base].tau = key
+            end
+        end
+
+    end
+
+end
 
 legendary_tauics = {
     {base = "j_canio", tau = "j_valk_tau_canio"},
@@ -39,19 +22,10 @@ legendary_tauics = {
 }
 
 function tauic_check()
-    if (#G.jokers.cards > 0) then
-        local jkr = select(2,next(G.jokers.cards))
-
-        for j,tauic in ipairs(tauics) do
-
-            if (jkr.config.center_key == tauic.base) then
-                return true
-            end
-
+    for i,joker in ipairs(G.jokers.cards) do
+        if joker.config.center.tau then
+            return true
         end
-
-        
-
     end
 
     return false
@@ -59,71 +33,44 @@ end
 
 function tauic_owned()
 
-    if (#G.jokers.cards > 0) then
+    for i,joker in ipairs(G.jokers.cards) do
 
-        for i,joker in ipairs(G.jokers.cards) do
-
-            for j,tauic in ipairs(tauics) do
-        
-                if (joker.config.center_key == tauic.base) then
-                    return true
-                end
-
-           end 
-
-        end
+        if joker.config.center.key:find("tau_") then
+            return true 
+        end 
 
     end
+
+    return false
 end
 
-SMODS.Consumable {
-    set = "Spectral",
-    key = "tauism",
-
-    cost = 15,
-    atlas = "main",
-    pos = {x=2, y=5},
-    -- is_soul = true,
-    soul_rate = 0.12,
-
-    loc_txt = { 
-        name = "Tauism",
+SMODS.Joker {
+    key = "tauist",
+    loc_txt = {
+        name = "Tauist",
         text = {
-            "Converts the leftmost joker applicable joker into a {C:cry_ember}Tauic{} joker",
-            "{C:inactive,s:0.8}(If this spawned naturally, you have an applicable joker)",
+            "{C:attention}Jokers{} may be replaced by their {C:cry_ember}Tauic{} variants",
+            "{C:inactive}Chance increases when it fails, resets when it succeeds{}",
+            "{C:inactive}(Currently a {C:green}#1#%{C:inactive} chance to replace)",
             credit("Scraptake")
         }
     },
-
-    can_use = function(self, card)
-        return tauic_check()
-    end,
-
-    in_pool = function()
-        return tauic_owned()
-    end,
-
-    use = function(self, card, area, copier) 
-
-        for i,joker in ipairs(G.jokers.cards) do
-
-            for j,tauic in ipairs(tauics) do
-
-                if (joker.config.center_key == tauic.base) then
-                    joker:set_ability(G.P_CENTERS[tauic.tau])
-                    return
-                end
-
-            end
-
-            
-
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+        local c = 100
+        if G.GAME and G.GAME.tau_replace then
+            c = G.GAME.tau_replace
         end
-
+        return { vars = { 100 * (1 / c) } }
+    end,
+    rarity = 3,
+    atlas = "phold",
+    pos = {x=0, y=0},
+    soul_pos = {x=0, y=1},
+    cost = 12,
+    calculate = function(self, card, context)
+        
     end
-
-
-
 }
 
 SMODS.Consumable {
@@ -197,6 +144,7 @@ SMODS.Consumable {
 
 
 SMODS.Joker {
+    bases = {"j_joker"},
     key = "tau_joker",
     loc_txt = {
         name = "{C:cry_ember}Tauic Joker{}",
@@ -224,6 +172,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_chaos"},
     key = "tau_clown",
     loc_txt = {
         name = "{C:cry_ember}Tauic Chaos the Clown{}",
@@ -271,6 +220,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_lusty_joker", "j_greedy_joker", "j_wrathful_joker", "j_gluttenous_joker"},
     key = "tau_sins",
     loc_txt = {
         name = "{C:cry_ember}Tauic Sin Joker{}",
@@ -299,6 +249,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_rocket"},
     key = "tau_rocket",
     loc_txt = {
         name = "{C:cry_ember}Tauic Rocket{}",
@@ -340,6 +291,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_mime"},
     key = "tau_mime",
     loc_txt = {
         name = "{C:cry_ember}Tauic Mime{}",
@@ -375,6 +327,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_obelisk"},
     key = "tau_obelisk",
     loc_txt = {
         name = "{C:cry_ember}Tauic Obelisk{}",
@@ -416,6 +369,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_cartomancer"},
     key = "tau_cartomancer",
     loc_txt = {
         name = "{C:cry_ember}Tauic Cartomancer{}",
@@ -447,6 +401,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_satellite"},
     key = "tau_satellite",
     loc_txt = {
         name = "{C:cry_ember}Tauic Satellite{}",
@@ -495,6 +450,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_oops"},
     key = "tau_oops",
     loc_txt = {
         name = "{C:cry_ember}Oops! All six point two eights!{}",
@@ -539,6 +495,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_half"},
     key = "tau_half",
     loc_txt = {
         name = "{C:cry_ember}Tauic Half Joker{}",
@@ -575,6 +532,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_troubadour"},
     key = "tau_troubadour",
     loc_txt = {
         name = "{C:cry_ember}Tauic Troubadour{}",
@@ -625,6 +583,8 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_jolly", "j_zany", "j_mad", "j_crazy" ,"j_droll",
+            "j_sly", "j_wily", "j_clever", "j_devious", "j_crafty"},
     key = "tau_emotion",
     loc_txt = {
         name = "{C:cry_ember}Tauic Emotional Joker{}",
@@ -666,6 +626,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_ceremonial"},
     key = "tau_dagger",
     loc_txt = {
         name = "{C:cry_ember}Tauic Ceremonial Dagger{}",
@@ -720,6 +681,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_credit_card"},
     key = "tau_creditcard",
     loc_txt = {
         name = "{C:cry_ember}Tauic Credit Card{}",
@@ -741,6 +703,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_four_fingers"},
     key = "tau_fingers",
     loc_txt = {
         name = "{C:cry_ember}Tauic Four Fingers{}",
@@ -774,6 +737,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_stencil"},
     key = "tau_stencil",
     loc_txt = {
         name = "{C:cry_ember}Tauic Joker Stencil{}",
@@ -820,6 +784,7 @@ SMODS.Joker {
 
 
 SMODS.Joker {
+    bases = {"j_banner"},
     key = "tau_banner",
     loc_txt = {
         name = "{C:cry_ember}Tauic Banner{}",
@@ -855,6 +820,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_mystic_summit"},
     key = "tau_summit",
     loc_txt = {
         name = "{C:cry_ember}Tauic Summit{}",
@@ -886,6 +852,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_marble"},
     key = "tau_marble",
     loc_txt = {
         name = "{C:cry_ember}Tauic Marble Joker{}",
@@ -928,6 +895,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_loyalty_card"},
     key = "tau_loyalty",
     loc_txt = {
         name = "{C:cry_ember}Tauic Loyalty Card{}",
