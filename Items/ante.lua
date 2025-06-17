@@ -245,8 +245,6 @@ function get_blind_amount(ante)
         local score = to_big(10)
         local arrows = math.log10(ante)
 
-        -- Map ante logarithmically from 1-308 (for antes 1-1e308) to 1-10000 arrows
-        -- Use an easing function to keep arrows low at first, then ramp up faster near the end
         local antelog = math.log10(ante)
         local min_arrows, max_arrows = 1, 100000
         local min_log, max_log = 1, 300

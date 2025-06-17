@@ -51,6 +51,39 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "streetlight",
+    loc_txt = {
+        name = "Streetlight",
+        text = {
+            "Gains {X:mult,C:white}X#1#{} Mult when {C:attention}Light{} card scored",
+            "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
+        }
+    },
+    config = { extra = {cur = 1, gain = 0.2} },
+    rarity = 2,
+    atlas = "main",
+    pos = {x=5, y=8},
+    cost = 6,
+    demicoloncompat = true,
+    loc_vars = function(self,info_queue, card)
+        return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
+    end,
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_cry_light") then
+
+            card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
+            quick_card_speak(card, "Upgraded!")
+
+        end
+
+        if context.joker_main then
+            return {xmult = card.ability.extra.cur}
+        end
+    end
+}
+
+SMODS.Joker {
     key = "bags",
     loc_txt = {
         name = "Bags",
