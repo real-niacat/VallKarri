@@ -2,6 +2,7 @@ assert(SMODS.load_file("Items/helpers.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/overrides.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/consumables.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/rarity_definitions.lua", "vallkarri"))()
+-- assert(SMODS.load_file("Items/metaprogression.lua", "vallkarri"))()
 
 
 if (vallkarri.config.overscoring) then

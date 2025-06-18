@@ -98,6 +98,8 @@ function get_ante_change(theoretical_score, debug)
     local start_ante = G.GAME.round_resets.ante
     local anteChange = 0
     local scalefactor = to_big(1)
+
+    -- 
             
     local i = 1
 
@@ -173,18 +175,16 @@ function Game:update(dt)
     alltime = alltime + dt
     fakeupd(self, dt)
 
-    if not G.GAME.ante_config then return end
-
-    if (G.GAME.blind) then
+    if (G.GAME.blind and G.GAME.ante_config) then
 
         if (G.GAME.blind.boss) then
-            G.GAME.blind.overchips = "Overscoring active."
+            G.GAME.blind.overchips = "Overscoring at " .. tostring(G.GAME.blind.chips:arrow(math.floor(G.GAME.ante_config.base_arrows), to_big(G.GAME.ante_config.base_exponent)))
         else
             G.GAME.blind.overchips = ""
         end
     end
 
-    if (G.GAME.round_resets.ante and to_big(G.GAME.round_resets.ante) > to_big(G.GAME.ante_config.limit) ) then
+    if (G.GAME.ante_config and G.GAME.round_resets.ante and to_big(G.GAME.round_resets.ante) > to_big(G.GAME.ante_config.limit) ) then
         G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) .. "X"
 
         G.GAME.round_resets.ante_disp = corrupt_text(G.GAME.round_resets.ante_disp, 0.05)

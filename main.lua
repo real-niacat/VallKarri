@@ -31,6 +31,13 @@ SMODS.Atlas {
     py = 95,
 }
 
+SMODS.Atlas {
+    key = "modicon",
+    path = "valk_icon.png",
+    px = 34,
+    py = 34,
+}:register()
+
 maxArrow = 1e5
 
 

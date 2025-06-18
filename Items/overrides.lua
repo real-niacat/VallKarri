@@ -167,6 +167,10 @@ function Game:start_run(args)
     G.GAME.tau_replace = G.GAME.base_tau_replace
     G.GAME.need_tauist = true
     load_tauics()
+    if not G.GAME.ante_config then
+        config_reset()
+    end
+
     --1 in 100 to replace when you have tauist
     -- keeping these settings so that i can make a deck focused around tauics later on
 

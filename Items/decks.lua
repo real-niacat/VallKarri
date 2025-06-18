@@ -58,9 +58,48 @@ SMODS.Back {
     },
 
     config = { rate = 2, inc = 0.5 },
-    pos = {x=7, y=8},
+    pos = {x=7, y=9},
     atlas = "main",
     apply = function(self)
         G.GAME.tauic_deck = true
+    end
+}
+
+SMODS.Back {
+    key = "pitiful",
+    loc_txt = {
+        name = "Pitiful Deck",
+        text = {
+            "Start with an {C:purple}Eternal{} {C:attention}Pity Prize{}",
+            "{C:attention}+1{} Booster slot",
+            "{C:inactive}(Lily's favorite <3){}"
+        }
+    },
+    pos = {x=7, y=7},
+    atlas = "main",
+    apply = function()
+
+        G.E_MANAGER:add_event(Event({
+			func = function()
+				if G.jokers then
+                    local card = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_pity_prize", "valk_pitiful_deck")
+					card:add_to_deck()
+					card:start_materialize()
+                    card.ability.eternal = true
+					G.jokers:emplace(card)
+					return true
+				end
+			end,
+		}))
+
+        G.E_MANAGER:add_event(Event({
+			func = function()
+				if true then
+                    SMODS.change_booster_limit(1)
+					return true
+				end
+			end,
+		}))
+        
     end
 }
