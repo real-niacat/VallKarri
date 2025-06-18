@@ -45,3 +45,22 @@ SMODS.Back {
 
     end
 }
+
+SMODS.Back {
+    key = "tauic",
+    loc_txt = {
+        name = "Tauic Deck",
+        text = {
+            "{C:cry_ember}Tauic{} jokers do not need {C:attention}Tauist{} to spawn",
+            "and spawn {C:attention}2x{} more often.",
+            "{C:attention}0.5x{} {C:cry_ember}Tauic{} Joker chance increase"
+        }
+    },
+
+    config = { rate = 2, inc = 0.5 },
+    pos = {x=7, y=8},
+    atlas = "main",
+    apply = function(self)
+        G.GAME.tauic_deck = true
+    end
+}

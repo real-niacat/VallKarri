@@ -170,6 +170,13 @@ function Game:start_run(args)
     --1 in 100 to replace when you have tauist
     -- keeping these settings so that i can make a deck focused around tauics later on
 
+    if G.GAME.tauic_deck then
+        G.GAME.need_tauist = false
+        G.GAME.base_tau_replace = G.GAME.base_tau_replace / 2
+        G.GAME.tau_replace = G.GAME.base_tau_replace 
+        G.GAME.tau_increase = G.GAME.tau_increase / 2
+    end
+
     for i,center in pairs(G.P_CENTERS) do
         if center.oldrarity then
 
