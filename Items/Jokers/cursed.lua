@@ -104,7 +104,7 @@ SMODS.Joker {
         name = "Joker of None",
         text = {
             "When this joker obtained, convert all hand levels to levels for {C:attention}None{}",
-            "Playing cards {C:attention}in-hand{} are {C:red,E:1}destroyed{} when selected or hand played",
+            "Playing cards are {C:red,E:1}destroyed{} when scored",
             "{C:attention}None{} is levelled up when any {C:planet}planet{} card used"
         }
     },
@@ -118,7 +118,7 @@ SMODS.Joker {
     cost = -1e10,
     calculate = function(self, card, context)
         
-        if context.other_card and context.other_card.area == G.hand then
+        if context.individual and context.other_card and context.cardarea == G.play then
             context.other_card:start_dissolve({G.C.BLACK}, nil, 2 * G.SETTINGS.GAMESPEED)
         end
 
@@ -135,7 +135,8 @@ SMODS.Joker {
         local levelsum = 0
         for name,hand in pairs(G.GAME.hands) do
             levelsum = levelsum + (hand.level-1)
-            level_up_hand(card, name, false, (-hand.level)+1)
+            level_up_hand(card, name, false, -hand.level)
+            -- reach level 0 but dont count the extra level in the conversion
         end
 
         level_up_hand(card, "cry_None", false, levelsum/2)
