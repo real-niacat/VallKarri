@@ -13,8 +13,28 @@ local function refresh_metaprog()
     end
 end
 
+function vallkarri.update_meta_text()
+    return {
+        level = number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl),
+        xp = number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp),
+        req = tostring(G.PROFILES[G.SETTINGS.profile].valk_max_xp),
+    }
+end
+
+local updhook = Game.update
+function Game:update(dt)
+    updhook(self, dt)
+    vallkarri.update_meta_text()
+
+    if G and G.GAME then
+        G.GAME.vallkarri = {text_display = vallkarri.update_meta_text()}
+    end
+end
+
 function create_UIBox_metaprog()
     local text_scale = 0.3
+    vallkarri.update_meta_text()
+    G.GAME.vallkarri = {text_display = vallkarri.update_meta_text()}
     return {
         n = G.UIT.ROOT,
         config = { align = "cm", padding = 0.03, colour = G.C.UI.TRANSPARENT_DARK },
@@ -32,15 +52,15 @@ function create_UIBox_metaprog()
                                 config = { align = "tl", padding = 0.01, maxw = 2 },
                                 nodes = {
                                     { n = G.UIT.T, config = { text = "Level ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.PROFILES[G.SETTINGS.profile], ref_value = "valk_cur_lvl", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } } }
+                                    { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "level", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } } }
                             },
                             {
                                 n = G.UIT.R,
                                 config = { align = "cl", padding = 0.01, maxw = 2 },
                                 nodes = {
-                                    { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.PROFILES[G.SETTINGS.profile], ref_value = "valk_cur_xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
+                                    { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
                                     { n = G.UIT.T, config = { text = " / ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.PROFILES[G.SETTINGS.profile], ref_value = "valk_max_xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } } },
+                                    { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "req", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } } },
 
                             }
                         }
