@@ -75,7 +75,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Lilac Lilybean",
         text = {
-            "Creates a random {C:attention}food joker{} at end of round.",
+            "Creates a random {C:dark_edition}negative{} {C:attention}food joker{} at end of round.",
             "When boss blind defeated, Increase ",
             "{C:attention}sell value{} of all food jokers by {C:attention}X#1#{}.",
             quote("lilac"),
@@ -97,6 +97,7 @@ SMODS.Joker {
 
             local c = create_card("Food", G.jokers, nil, nil, nil, nil, nil, "valk_lilac")
             c:add_to_deck()
+            c:set_edition("e_negative", true)
             G.jokers:emplace(c)
 
             if (G.GAME.blind.boss) then
