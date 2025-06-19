@@ -1,3 +1,18 @@
+
+local function refresh_metaprog()
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_big(1)
+    end
+
+    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
+    end
+
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
+    end
+end
+
 function create_UIBox_metaprog()
     local text_scale = 0.3
     return {
@@ -67,19 +82,6 @@ function Game:start_run(args)
 
 end
 
-local function refresh_metaprog()
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "Infinity" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_big(1)
-    end
-
-    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" then
-        G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-    end
-
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
-    end
-end
 
 -- format: {amt = n, op = "+"}
 -- defaults to + if no operator given
