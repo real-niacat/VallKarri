@@ -44,17 +44,7 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
 
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "Infinity" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_big(1)
-    end
-
-    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" then
-        G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-    end
-
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
-    end
+    refresh_metaprog()
 
 
 
@@ -75,6 +65,20 @@ function Game:start_run(args)
     end
 
 
+end
+
+local function refresh_metaprog()
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_big(1)
+    end
+
+    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
+    end
+
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
+    end
 end
 
 -- format: {amt = n, op = "+"}
@@ -121,6 +125,7 @@ function vallkarri.mod_level(amount)
 end
 
 function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
+    refresh_metaprog()
     if not operator then
         operator = "+"
     end
@@ -200,6 +205,7 @@ end
 
 local levelhandhook = level_up_hand
 function level_up_hand(card, hand, instant, amount)
+    refresh_metaprog()
     levelhandhook(card, hand, instant, amount)
 
     if to_big(amount) > to_big(0) then
@@ -212,6 +218,7 @@ end
 local evalplayscorehook = evaluate_play_final_scoring
 
 function evaluate_play_final_scoring(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
+    refresh_metaprog()
     mult = mult + ((G.PROFILES[G.SETTINGS.profile].valk_cur_lvl - 1)*0.1)
     
     evalplayscorehook(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
@@ -222,5 +229,6 @@ end
 
 local blindamounthook = get_blind_amount
 function get_blind_amount(ante)
+    refresh_metaprog()
     return blindamounthook(ante) * (1 + (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl-1) * 0.025)
 end
