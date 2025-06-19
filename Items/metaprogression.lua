@@ -202,7 +202,7 @@ local levelhandhook = level_up_hand
 function level_up_hand(card, hand, instant, amount)
     levelhandhook(card, hand, instant, amount)
 
-    if amount > 0 then
+    if to_big(amount) > to_big(0) then
         vallkarri.mod_xp(amount, nil, nil, card)
     end
     
