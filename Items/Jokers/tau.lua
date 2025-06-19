@@ -64,9 +64,9 @@ SMODS.Joker {
         return { vars = { 100 * (1 / c) } }
     end,
     rarity = 3,
-    atlas = "phold",
-    pos = {x=0, y=0},
-    soul_pos = {x=0, y=1},
+    atlas = "main",
+    pos = {x=8, y=4},
+    soul_pos = {x=8, y=8, extra = {x=9, y=4}},
     cost = 12,
     calculate = function(self, card, context)
         
