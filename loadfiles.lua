@@ -2,7 +2,6 @@ assert(SMODS.load_file("Items/helpers.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/overrides.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/consumables.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/rarity_definitions.lua", "vallkarri"))()
--- assert(SMODS.load_file("Items/metaprogression.lua", "vallkarri"))()
 
 
 if (vallkarri.config.overscoring) then
@@ -31,3 +30,5 @@ assert(SMODS.load_file("Items/superplanets.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/crossmod.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/superwin.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/convo.lua", "vallkarri"))()
+
+assert(SMODS.load_file("Items/metaprogression.lua", "vallkarri"))()

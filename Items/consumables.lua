@@ -61,7 +61,7 @@ SMODS.Booster {
 SMODS.Booster {
     key = "deckfixing",
     atlas = "phold",
-    pos = {x=0, y=0},
+    pos = {x=7, y=2},
     discovered = true,
     loc_txt = {
         name = "Deck Fixing Pack",

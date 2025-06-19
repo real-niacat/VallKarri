@@ -313,7 +313,7 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         return true
     end
 
-    calceff(effect, scored_card, key, amount, from_edition)
+    
 
     if next(SMODS.find_card("j_valk_cascade")) then
 
@@ -327,7 +327,7 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
 
     end
 
-    
+    return calceff(effect, scored_card, key, amount, from_edition)
 
 end
 

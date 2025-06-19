@@ -1,4 +1,5 @@
 function create_UIBox_metaprog()
+    local text_scale = 0.3
     return {
         n = G.UIT.ROOT,
         config = { align = "cm", padding = 0.03, colour = G.C.UI.TRANSPARENT_DARK },
@@ -9,54 +10,217 @@ function create_UIBox_metaprog()
                 nodes = {
                     {
                         n = G.UIT.R,
-                        config = { align = "cm", colour = G.C.DYN_UI.BOSS_DARK, r = 0.1, minh = 0.25, padding = 0.08 },
+                        config = { align = "tl", colour = G.C.DYN_UI.BOSS_DARK, r = 0.1, minh = 0.25, minw = 3, padding = 0.08 },
                         nodes = {
-                            { n = G.UIT.R, config = { align = "cm", minh = 0.3 }, nodes = {} },
                             {
                                 n = G.UIT.R,
-                                config = { align = "cm", id = 'row_xp', minw = 10, minh = 0.25 },
+                                config = { align = "tl", padding = 0.01, maxw = 2 },
                                 nodes = {
-                                    {
-                                        n = G.UIT.R,
-                                        config = { w = 3.65, h = 0, id = 'row_xp_bottom' },
-                                        nodes = {
-                                            {n=G.UIT.C, config={align = "cm", padding = 0.05, r = 0.1, minw = 8}, nodes={}}
-                                        },
-                                        progress_bar = {
-                                            max = G.PROFILES[G.SETTINGS.profile].valk_max_xp,
-                                            ref_table = G.PROFILES[G.SETTINGS.profile],
-                                            ref_value = 'valk_cur_xp',
-                                            empty_col = G.C.BLACK,
-                                            filled_col = G.C.BLUE
-                                        }
-                                    },
-                                }
+                                    { n = G.UIT.T, config = { text = "Level ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
+                                    { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.PROFILES[G.SETTINGS.profile], ref_value = "valk_cur_lvl", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } } }
                             },
+                            {
+                                n = G.UIT.R,
+                                config = { align = "cl", padding = 0.01, maxw = 2 },
+                                nodes = {
+                                    { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.PROFILES[G.SETTINGS.profile], ref_value = "valk_cur_xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
+                                    { n = G.UIT.T, config = { text = " / ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
+                                    { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.PROFILES[G.SETTINGS.profile], ref_value = "valk_max_xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } } },
+
+                            }
                         }
-                    }
+                    },
+
+
                 }
-            }
+            },
+
+
         }
     }
 end
+
 local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
 
-    if not G.PROFILES[G.SETTINGS.profile].valk_max_xp then
-        G.PROFILES[G.SETTINGS.profile].valk_max_xp = 100
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_big(1)
     end
 
-    if not G.PROFILES[G.SETTINGS.profile].valk_cur_xp then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
+    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
     end
 
-    if not G.PROFILES[G.SETTINGS.profile].valk_cur_lvl then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
     end
+
+
 
     self.HUD_META = UIBox {
         definition = create_UIBox_metaprog(),
-        config = { align = ('cli'), offset = { x = 4.55, y = -6 }, major = G.ROOM_ATTACH }
+        config = { align = ('cli'), offset = { x = 19, y = -2.25 }, major = G.ROOM_ATTACH }
     }
+
+    -- DO ON-START STUFF HERE
+    local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
+    G.GAME.dollars = G.GAME.dollars + add_money
+
+    local add_levels = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 50)
+    for name,hand in pairs(G.GAME.hands) do
+        G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
+        G.GAME.hands[name].chips = G.GAME.hands[name].chips + (G.GAME.hands[name].l_chips * add_levels)
+        G.GAME.hands[name].mult = G.GAME.hands[name].mult + (G.GAME.hands[name].l_mult * add_levels)
+    end
+
+
+end
+
+-- format: {amt = n, op = "+"}
+-- defaults to + if no operator given
+vallkarri.xp_modifiers = {
+
+}
+
+vallkarri.level_cap = 35000
+
+function vallkarri.debug_reset_lvl(areyousure)
+    if areyousure == "y" .. tostring(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) then -- this is fucking dumb, but i don't want to lose my save by mistake
+        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
+        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
+        G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
+    end
+end
+
+-- gets the xp required for the specified level
+function vallkarri.xp_required(level)
+    level = to_big(level)
+    local arrows = 0
+
+    local nlv = to_number(level)
+    if nlv > 100 then arrows = 1 end 
+    if nlv > 1000 then arrows = 2 end
+    if nlv > 10000 then arrows = 3 end
+    if nlv > 20000 then arrows = 4 end
+    if nlv > 35000 then arrows = 5 end
+    
+
+    return 100 * to_big(level):arrow(math.floor(arrows), level)
+end
+
+function vallkarri.mod_level(amount)
+    G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl + amount
+
+    if G.PROFILES[G.SETTINGS.profile].valk_cur_lvl > to_big(vallkarri.level_cap) then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_big(vallkarri.level_cap)
+    else
+        G.HUD_META:get_UIE_by_ID("curlvl_text"):juice_up()
+    end
+    G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
+end
+
+function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
+    if not operator then
+        operator = "+"
+    end
+
+    if not level_multiplier then
+        level_multiplier = 1
+    end
+
+
+
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            if operator == "+" then
+                G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp + mod
+            end
+
+            if operator == "*" then
+                G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp * mod
+            end
+
+            if operator == "^" then
+                G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp ^ mod
+            end
+
+            if operator == "^^" then
+                G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp:tetrate(mod)
+            end
+            -- i'm not allowing beyond tetration, sorry.
+
+            G.HUD_META:get_UIE_by_ID("curxp_text"):juice_up()
+
+            while G.PROFILES[G.SETTINGS.profile].valk_cur_xp >= G.PROFILES[G.SETTINGS.profile].valk_max_xp do
+                vallkarri.mod_level(level_multiplier)
+                G.HUD_META:get_UIE_by_ID("maxxp_text"):juice_up()
+            end
+
+            if relevant_card then
+                relevant_card:juice_up()
+            end
+
+            return true
+        end,
+    }))
+end
+
+local caevsttx = card_eval_status_text
+function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
+    caevsttx(card, eval_type, amt, percent, dir, extra)
+
+    local ind = find_index(card, G.play.cards)
+    if ind then
+        vallkarri.mod_xp(ind, nil, nil, card)
+    end
+end
+
+
+local easemoneyhook = ease_dollars
+function ease_dollars(mod, x)
+
+    local add_money_per = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 100) * 0.2
+
+    easemoneyhook(mod+add_money_per, x)
+
+    if to_big(mod) < to_big(0) then
+        vallkarri.mod_xp(math.min(-mod, G.PROFILES[G.SETTINGS.profile].valk_max_xp * 0.1))
+    end
+end
+
+local easeantehook = ease_ante
+function ease_ante(x)
+    easeantehook(x)
+
+    if to_big(x) > to_big(0) then
+        vallkarri.mod_xp(5)
+    end 
+end
+
+local levelhandhook = level_up_hand
+function level_up_hand(card, hand, instant, amount)
+    levelhandhook(card, hand, instant, amount)
+
+    if amount > 0 then
+        vallkarri.mod_xp(amount, nil, nil, card)
+    end
+    
+
+end
+
+local evalplayscorehook = evaluate_play_final_scoring
+
+function evaluate_play_final_scoring(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
+    mult = mult + ((G.PROFILES[G.SETTINGS.profile].valk_cur_lvl - 1)*0.1)
+    
+    evalplayscorehook(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
+
+    
+
+end
+
+local blindamounthook = get_blind_amount
+function get_blind_amount(ante)
+    return blindamounthook(ante) * (1 + (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl-1) * 0.025)
 end
