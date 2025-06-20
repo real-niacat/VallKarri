@@ -75,7 +75,7 @@ SMODS.Back {
             "{C:inactive}(Lily's favorite <3){}"
         }
     },
-    pos = {x=7, y=7},
+    pos = {x=9, y=9},
     atlas = "main",
     apply = function()
 

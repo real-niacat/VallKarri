@@ -97,7 +97,7 @@ return {
                 name = "Erratic Deck",
                 text = {
                     "Scored cards are converted into a {C:attention}random card{}",
-                    "from your deck"
+                    "in hand"
                 }
             },
 

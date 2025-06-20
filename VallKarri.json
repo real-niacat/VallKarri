@@ -7,8 +7,8 @@
 	"main_file": "main.lua",
 	"priority": 2147483647, 
 	"badge_colour": "e5bf3a",
-	"version": "0.5.0", 
+	"version": "0.6.0", 
 	"dependencies": [ 
-		"Cryptid (>=0.5.5)", 
+		"Cryptid (>=0.5.9)", 
 	], 
 }

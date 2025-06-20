@@ -936,6 +936,107 @@ SMODS.Joker {
     end
 }
 
+SMODS.Joker {
+    bases = {"j_egg"},
+    key = "tau_egg",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Egg{}",
+        text = {
+            "Gains {X:dark_edition,C:white}^#1#{} of {C:attention}sell value{} at end of round",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { evalue = 1.5 } },
+    loc_vars = function(self, info_queue, card)
+
+        return { vars = { card.ability.extra.evalue } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=0, y=10},
+    cost = 6,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.end_of_round and context.main_eval then
+            quick_card_speak(card, "Upgraded!")
+            card.sell_cost = math.ceil(card.sell_cost ^ card.ability.extra.evalue)
+        end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_even_steven", "j_odd_todd"},
+    key = "tau_brothers",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Number Brothers{}",
+        text = {
+            "All scored number cards give {X:mult,C:white}XMult{}",
+            "equal to their rank",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=8, y=4},
+    cost = 6,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.individual and context.cardarea == G.play and context.other_card.base.id <= 10 then
+            return {
+                xmult = context.other_card.base.id
+            }
+        end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_blue_joker"},
+    key = "tau_blue",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Blue Joker{}",
+        text = {
+            "{X:dark_edition,C:white}+^#1#{} Chips for each",
+            "remaining card in {C:attention}deck{}",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Chips)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { per = 0.15 } },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.per,
+                card.ability.extra.per * #G.deck.cards
+            }
+        }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=7, y=10},
+    cost = 6,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+            return {
+                echips = card.ability.extra.per * #G.deck.cards
+            }
+        end
+
+    end
+}
+
 
 SMODS.Joker {
     key = "tau_canio",

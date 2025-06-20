@@ -518,3 +518,65 @@ function get_handtype(handtype)
     end
 
 end
+
+function do_while_flipped(cards, func) --mostly borrowed from entropy, thank you ruby <3
+    if not Talisman.config_file.disable_anims then
+        for i, _ in ipairs(cards) do
+            local card = cards[i]
+            if card then
+                G.E_MANAGER:add_event(
+                    Event(
+                        {
+                            trigger = "after",
+                            delay = 0.1,
+                            func = function()
+                                if card.flip then
+                                    card:flip()
+                                end
+                                return true
+                            end
+                        }
+                    )
+                )
+            end
+        end
+    end
+    for i, _ in ipairs(cards) do
+        local card = cards[i]
+        if card then
+            G.E_MANAGER:add_event(
+                Event(
+                    {
+                        trigger = "after",
+                        delay = 0.15,
+                        func = function()
+                            func(card, cards, i)
+                            return true
+                        end
+                    }
+                )
+            )
+        end
+    end
+    if not Talisman.config_file.disable_anims then
+        for i, _ in ipairs(cards) do
+            local card = cards[i]
+            if card then
+                G.E_MANAGER:add_event(
+                    Event(
+                        {
+                            trigger = "after",
+                            delay = 0.1,
+                            func = function()
+                                if card.flip then
+                                    card:flip()
+                                end
+                                return true
+                            end
+                        }
+                    )
+                )
+            end
+        end
+    end
+end

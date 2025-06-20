@@ -131,7 +131,7 @@ SMODS.Joker {
         text = {
             "When {X:blue,C:white}XChips{} triggered,",
             "Divide blind size by triggered amount",
-            credit("Nobody!")
+            credit("Scraptake")
         }
     },
     config = { extra = {  } },
@@ -139,8 +139,8 @@ SMODS.Joker {
         return {vars = {} }
     end,
     rarity = "cry_epic",
-    atlas = "phold",
-    pos = {x=0,y=0},
+    atlas = "main",
+    pos = {x=0,y=10},
     cost = 18,
     immutable = true,
 }

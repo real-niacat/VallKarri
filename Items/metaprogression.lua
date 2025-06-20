@@ -140,16 +140,17 @@ end
 function vallkarri.xp_required(level)
     level = to_big(level)
     local arrows = 0
+    local exp = 1
 
     local nlv = to_number(level)
     if nlv > 100 then arrows = 1 end 
     if nlv > 1000 then arrows = 2 end
-    if nlv > 10000 then arrows = 3 end
-    if nlv > 20000 then arrows = 4 end
-    if nlv > 35000 then arrows = 5 end
+    if nlv > 10000 then exp = 3 end
+    if nlv > 20000 then exp = 6 end
+    if nlv > 35000 then exp = 24 end
     
 
-    return 100 * to_big(level):arrow(math.floor(arrows), level)
+    return 100 * to_big(level):arrow(math.floor(arrows), level ^ exp)
 end
 
 function vallkarri.mod_level(amount)
@@ -243,7 +244,7 @@ function ease_ante(x)
     easeantehook(x)
 
     if to_big(x) > to_big(0) then
-        vallkarri.mod_xp(5)
+        vallkarri.mod_xp(5*x)
     end 
 end
 
@@ -274,5 +275,5 @@ end
 local blindamounthook = get_blind_amount
 function get_blind_amount(ante)
     refresh_metaprog()
-    return blindamounthook(ante) * (1 + (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl-1) * 0.025)
+    return blindamounthook(ante) * (1 + (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl-1) * 0.02 * ante)
 end

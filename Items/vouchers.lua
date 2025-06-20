@@ -102,7 +102,13 @@ local decks = {
         if redeeming then G.GAME.price_mod = 1 end
     end,
     ["Erratic Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.randomize_card = true end
+        if redeeming then G.GAME.randomize_card = true
+        elseif G.GAME.randomize_card and context.individual and context.cardarea == G.play and #G.hand.cards > 0 then
+            copy_card(
+                G.hand.cards[pseudorandom("valk_erratic_quantum", 1, #G.hand.cards)],
+                context.other_card
+            )
+        end
     end,
 }
 
