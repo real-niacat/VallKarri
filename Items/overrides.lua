@@ -167,7 +167,7 @@ function Game:start_run(args)
     G.GAME.tau_replace = G.GAME.base_tau_replace
     G.GAME.need_tauist = true
     load_tauics()
-    if not G.GAME.ante_config and config_reset ~= nil then
+    if not G.GAME.ante_config and config_reset then
         config_reset()
     end
 
