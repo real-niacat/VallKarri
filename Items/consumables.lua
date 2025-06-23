@@ -542,8 +542,9 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
+        local first_card = G.hand.highlighted[1]
         do_while_flipped(G.hand.highlighted, function(ca)
-            copy_card(G.hand.highlighted[1], ca)
+            copy_card(first_card, ca)
             ca:set_ability("m_steel")
             G.hand:remove_from_highlighted(ca)
         end)
