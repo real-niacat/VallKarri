@@ -40,6 +40,7 @@ SMODS.Joker {
     atlas = "main",
     pos = {x=4, y=6},
     cost = 6,
+    pools = { ["Meme"] = true },
     demicoloncompat = true,
     loc_vars = function(self,info_queue, card)
         return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
