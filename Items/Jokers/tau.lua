@@ -50,6 +50,7 @@ SMODS.Joker {
         name = "Tauist",
         text = {
             "{C:attention}Jokers{} may be replaced by their {C:cry_ember}Tauic{} variants",
+            "Spawn chance {C:attention}increases{} when {C:attention}Joker{} sold",
             "{C:inactive}Chance increases when it fails, resets when it succeeds{}",
             "{C:inactive}(Currently a {C:green}#1#%{C:inactive} chance to replace)",
             credit("Scraptake")
@@ -57,19 +58,22 @@ SMODS.Joker {
     },
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
-        local c = 100
+        local c = 0
         if G.GAME and G.GAME.tau_replace then
-            c = G.GAME.tau_replace
+            c = 100 * (1 / G.GAME.tau_replace)
         end
-        return { vars = { 100 * (1 / c) } }
+        return { vars = { c } }
     end,
     rarity = 3,
     atlas = "main",
     pos = {x=8, y=4},
     soul_pos = {x=8, y=8, extra = {x=9, y=4}},
     cost = 12,
+
     calculate = function(self, card, context)
-        
+        if context.selling_card and context.other_card.ability.set == "Joker" then
+            G.GAME.tau_replace = G.GAME.tau_replace * 0.95
+        end
     end
 }
 

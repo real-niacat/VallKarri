@@ -15,7 +15,13 @@ SMODS.Joker {
     pools = { ["Meme"] = true },
 
     remove_from_deck = function(self, card, from_debuff)
-        simple_create("Joker", G.jokers, "j_valk_suckit")
+        -- simple_create("Joker", G.jokers, "j_valk_suckit")
+        if G.jokers then
+            local new = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_valk_suckit", "suckit")
+            new.sell_cost = 0
+            new:add_to_deck()
+            G.jokers:emplace(new)
+        end
     end
 }
 
