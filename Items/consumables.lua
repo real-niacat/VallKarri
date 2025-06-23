@@ -48,19 +48,19 @@ SMODS.Booster {
         ease_background_colour(G.C.CRY_ASCENDANT)
         local r = pseudorandom("valk_ascended_pack", 1, 3)
         if (r == 1) then
-            return create_card("Superplanet", G.pack_cards, nil, nil, nil, nil, nil, "valk_ascended_pack")
+            return create_card("Superplanet", G.pack_cards, nil, nil, true, nil, nil, "valk_ascended_pack")
         elseif r == 2 then
             local choices = {"c_valk_absolutetau", "c_valk_memoryleak", "c_valk_freeway"} --will add freeway when it exists
             local pick = pseudorandom("valk_ascended_pack", 1, #choices)
             
 
-            return create_card("Consumable", G.pack_cards, nil, nil, nil, nil, choices[pick], "valk_ascended_pack")
+            return create_card("Consumable", G.pack_cards, nil, nil, true, nil, choices[pick], "valk_ascended_pack")
         elseif r == 3 then
             local choices = {"c_valk_perfected_gem", "c_valk_socket", "c_valk_binding_energy", "c_valk_halo_fragment"} --will add freeway when it exists
             local pick = pseudorandom("valk_ascended_pack", 1, #choices)
             
 
-            return create_card("Consumable", G.pack_cards, nil, nil, nil, nil, choices[pick], "valk_ascended_pack")
+            return create_card("Consumable", G.pack_cards, nil, nil, true, nil, choices[pick], "valk_ascended_pack")
         end
 
     end,
@@ -95,7 +95,7 @@ SMODS.Booster {
         local pick = pseudorandom("valk_deckfixing_pack", 1, #choices)
             
 
-        return create_card("Consumable", G.pack_cards, nil, nil, nil, nil, choices[pick], "valk_deckfixing_pack")
+        return create_card("Consumable", G.pack_cards, nil, nil, true, nil, choices[pick], "valk_deckfixing_pack")
 
     end,
 }

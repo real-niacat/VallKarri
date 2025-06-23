@@ -12,6 +12,7 @@ end
 -- one day. i will fix minesweeper
 -- today is not that day.
 
+assert(SMODS.load_file("Items/hands.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/cursed.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/animation.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/subepic.lua", "vallkarri"))()
