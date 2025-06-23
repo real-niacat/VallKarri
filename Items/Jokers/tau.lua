@@ -71,8 +71,8 @@ SMODS.Joker {
     cost = 12,
 
     calculate = function(self, card, context)
-        if context.selling_card and context.other_card.ability.set == "Joker" then
-            G.GAME.tau_replace = G.GAME.tau_replace * 0.95
+        if context.selling_card and context.card.ability.set == "Joker" then
+            G.GAME.tau_replace = math.max(1, G.GAME.tau_replace * 0.9)
         end
     end
 }
