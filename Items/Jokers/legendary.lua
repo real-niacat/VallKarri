@@ -181,6 +181,7 @@ SMODS.Joker {
     pos = {x=0, y=8},
     soul_pos = {x=1, y=8},
     cost = 20,
+    blueprint_compat = true,
     calculate = function(self, card, context)
 
         if context.end_of_round and context.main_eval then
