@@ -93,7 +93,7 @@ SMODS.Joker {
     rarity = "valk_unobtainable",
     atlas = "main",
     pos = {x = 3, y = 0},
-    soul_pos = {x = 4, y = 0, extra = {x = 4, y = 1}},
+    soul_pos = {x = 4, y = 1, extra = {x = 4, y = 0}},
     cost = 500,
     immutable = true,
     pools = { ["Kitties"] = true },
