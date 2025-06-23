@@ -203,7 +203,7 @@ function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
                 G.HUD_META:get_UIE_by_ID("maxxp_text"):juice_up()
             end
 
-            if relevant_card then
+            if relevant_card and relevant_card.juice_up then
                 relevant_card:juice_up()
             end
 
