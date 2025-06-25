@@ -1017,10 +1017,14 @@ SMODS.Joker {
     },
     config = { extra = { per = 0.15 } },
     loc_vars = function(self, info_queue, card)
+        local n = 52
+        if G.deck then
+            n = #G.deck.cards
+        end
         return {
             vars = {
                 card.ability.extra.per,
-                card.ability.extra.per * #G.deck.cards
+                card.ability.extra.per * n
             }
         }
     end,

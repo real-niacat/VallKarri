@@ -393,7 +393,17 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         simple_create("Consumable", G.consumeables, card.config.center.key)
-    end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(1)
+        end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(-1)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -416,7 +426,17 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         simple_create("Consumable", G.consumeables, card.config.center.key)
-    end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(1)
+        end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(-1)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -439,7 +459,17 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         simple_create("Consumable", G.consumeables, card.config.center.key)
-    end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(1)
+        end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(-1)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -462,7 +492,17 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         simple_create("Consumable", G.consumeables, card.config.center.key)
-    end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(1)
+        end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(-1)
+        end
+    end,
 }
 
 SMODS.Consumable {
@@ -485,7 +525,17 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         simple_create("Consumable", G.consumeables, card.config.center.key)
-    end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(1)
+        end
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            G.consumeables:change_size(-1)
+        end
+    end,
 }
 
 -- SMODS.Consumable {

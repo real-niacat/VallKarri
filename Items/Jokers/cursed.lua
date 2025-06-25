@@ -16,6 +16,7 @@ SMODS.Joker {
     atlas = "main",
     pos = {x=9, y=6},
     cost = -1e10,
+    immutable = true,
     demicoloncompat = true,
     calculate = function(self, card, context)
         

@@ -162,6 +162,8 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
 
+    vallkarri.spawn_multipliers = {}
+
     G.GAME.tau_increase = 2
     G.GAME.base_tau_replace = 100
     G.GAME.tau_replace = G.GAME.base_tau_replace
@@ -403,10 +405,7 @@ if #SMODS.find_mod("entr") > 0 then
 
     local originalentropy = Entropy.CanEeSpawn
     function Entropy.CanEeSpawn()
-        if G and G.GAME and G.GAME.round_resets and G.GAME.round_resets.ante < 512 then
-            return false
-        end
-        return originalentropy()
+        return false
     end
 
 end
@@ -414,6 +413,11 @@ end
 
 local fakecreate = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+    if G.GAME.exotic_replace and pseudorandom("valk_exotic_replace", 1, 100) <= G.GAME.exotic_replace then
+        _rarity = "cry_exotic"
+    end
+
+
     local out = fakecreate(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 
     if out.config.center.tau and ((G.GAME.need_tauist and (#SMODS.find_card("j_valk_tauist") > 0)) or not G.GAME.need_tauist) then
@@ -431,5 +435,39 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
     end
 
 
+    if vallkarri.spawn_multipliers[out.config.center.key] then
+        Cryptid.manipulate(out, {value = vallkarri.spawn_multipliers[out.config.center.key]})
+    end
+
+    if (out.ability.set == "Code") and G.GAME.code_multiuses then
+		if out.ability.cry_multiuse then
+			out.ability.cry_multiuse = math.ceil((out.ability.cry_multiuse + G.GAME.code_multiuses))
+		else
+			out.ability.cry_multiuse = G.GAME.code_multiuses + 1
+		end
+	end
+
+    if (G.GAME.hidden_override and out.ability.set == "Spectral" and not out.config.center.hidden and pseudorandom("valk_hidden_override", 1, 100) <= G.GAME.hidden_override) then
+        local choices = {"c_soul", "c_cry_pointer", "c_cry_gateway", "c_black_hole"}
+        out:set_ability(choices[pseudorandom("valk_hidden_override2", 1, #choices)])
+    end
+
     return out
+end
+
+local useconsumablehook = Card.use_consumeable
+function Card:use_consumeable(area, copier)
+    useconsumablehook(self, area, copier)
+
+    if self.ability.set == "Code" and G.GAME.punish_code_usage then
+        level_all_hands(self, -1)
+    end
+end
+
+local addtaghook = add_tag
+
+function add_tag(_tag)
+    if not (G.GAME.ban_tags) then
+        addtaghook(_tag)
+    end
 end

@@ -1,7 +1,7 @@
 SMODS.Rarity {
     key = 'selfinsert',
     loc_txt = {
-        name = 'True Lordess of Chaos'
+        name = 'The Mod Creator'
     },
     badge_colour = G.C.CRY_TWILIGHT,
     pools = { ["Joker"] = true },

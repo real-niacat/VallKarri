@@ -103,6 +103,39 @@ function mostplayed_name()
 
 end
 
+function self_annihilate(card)
+    -- this makes sense
+
+    G.GAME.cry_banished_keys[card.config.center.key] = true
+    card:quick_dissolve()
+end
+
+function random_suit()
+    local n = {"Spades", "Hearts", "Clubs", "Diamonds"}
+    return n[pseudorandom("valk_random_suit", 1, #n)]
+end
+
+function random_rank()
+    local n = {"2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"}
+    return n[pseudorandom("valk_random_rank", 1, #n)]
+end
+
+function random_enhancement()
+    local choices = {}
+    for i,e in ipairs(G.P_CENTER_POOLS.Enhanced) do
+        choices[#choices+1] = e.key
+    end
+    return choices[pseudorandom("valk_random_enhance", 1, #choices)]
+end
+
+function random_edition()
+    local choices = {}
+    for i,e in ipairs(G.P_CENTER_POOLS.Edition) do
+        choices[#choices+1] = e.key
+    end
+    return choices[pseudorandom("valk_random_edition", 1, #choices)]
+end
+
 
 function mspl(amt)
     for i, hand in pairs(G.GAME.hands) do

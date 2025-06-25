@@ -1,4 +1,4 @@
-if SMODS.find_mod("entr") then
+if #SMODS.find_mod("entr") > 0 then
     SMODS.Consumable {
         set = "Superplanet",
         key = "lmcx",

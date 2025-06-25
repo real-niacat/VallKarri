@@ -3,19 +3,19 @@ lily's terrible balatro mod!
 **Adds:**
 
   - Overscoring
-Overscoring is there to make sure that you dont get _too_ powerful, make sure you stay on its good side...
+Overscoring is there to make sure that you dont get _too_ powerful, scoring too high on the boss blind sends you forward extra Antes
 
   - Metaprogression
-Metaprogression gives you generous rewards and also cranks up the difficulty over the course of multiple runs, allowing you to feel each run building upon the last...
+Metaprogression gives you generous rewards but also cranks up the difficulty over the course of multiple runs, making each run build upon the last.
 
   - Tauic Jokers
-Ever thought that the normal vanilla jokers weren't spicy enough? Well now you can convert them into powerful but twisted versions of themselves with wonderous upgrades to go with...
+Ever thought that the normal vanilla jokers weren't cool enough? Well now you can convert them into powerful versions of themselves, called Tauic variants.
 
   - Unsurpassed and Supercursed Jokers
 Hefty upsides with hefty downsides, everything has a price. Now to figure out a way to lock those troublesome downsides away...
 
   - The Ever Evolving Quantum Particle
-An ever changing particle, tailored for your deck...
+An ever changing particle, always complimenting the buff given by your deck.
 
   - Superplanets
 Rare but powerful, superplanet cards encompass entire galaxies, and similarly to their large area, they bless you with hand levels untold.
