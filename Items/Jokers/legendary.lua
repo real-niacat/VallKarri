@@ -271,8 +271,14 @@ SMODS.Joker {
     calculate = function(self, card, context)
 
         if context.before and not context.blueprint then
-            Cryptid.manipulate(G.jokers.cards[pseudorandom("valk_sinep", 1, #G.jokers.cards)],
+            local chosen = G.jokers.cards[pseudorandom("valk_sinep", 1, #G.jokers.cards)]
+            if not Card.no(chosen, "immutable", true) then
+				Cryptid.with_deck_effects(chosen, function(cards)
+					Cryptid.manipulate(chosen,
                         {value = math.map(pseudorandom("valk_sinep"), 0, 1, card.ability.extra.min, card.ability.extra.max)})
+				end)
+			end
+            
         end
 
     end,

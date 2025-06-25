@@ -127,8 +127,7 @@ function get_ante_change(theoretical_score, debug)
     end
 
     -- print("+"..anteChange.." ante postjen")
-    anteChange = anteChange ^ G.GAME.ante_config.ante_exponent --keep you on your toes, ehe
-            
+    anteChange = anteChange ^ (G.GAME.ante_config.ante_exponent ^ math.log10(G.GAME.round_resets.ante) ) --keep you on your toes, ehe
 
     anteChange = math.floor(anteChange)
 

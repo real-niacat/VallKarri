@@ -3,16 +3,14 @@ SMODS.Joker {
     loc_txt = {
         name = "Scraptake",
         text = {
-            "{X:dark_edition,C:white,s:1.3}^^#2#{} Mult",
-            "Earn {C:money}$#1#{} at end of round",
-            "{C:inactive,s:0.8}(Index = Owned Vall-Karri Jokers ^ Enhanced cards in deck)",
+            "Gain {C:money}$1{} for every {C:blue}chip{} {C:attention}overscored{} at end of round",
             quote("scraptake"),
             credit("Scraptake")
         }
     },
-    config = { extra = { money = 15 } },
+    config = { extra = {  } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.money, scraptake_calculation()} }
+        return {vars = {} }
     end,
     rarity = "valk_unsurpassed",
     atlas = "main",
@@ -22,18 +20,11 @@ SMODS.Joker {
     immutable = true,
     demicoloncompat = true,
     calculate = function(self, card, context)
-        
-        if context.joker_main or context.forcetrigger then
-            
-            local calced = scraptake_calculation()
-            return {
-                ee_mult = calced
-            }
-        end
+
     end,
 
     calc_dollar_bonus = function(self, card)
-        return card.ability.extra.money
+        return G.GAME.chips - G.GAME.blind.chips
     end,
 }
 
@@ -48,7 +39,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { fallback_red = 21, fallback_blue = 19, max = 100, exponent = 8 } },
+    config = { extra = { fallback_red = 31, fallback_blue = 38, max = 5, exponent = 8 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {"{" .. math.floor(ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )) .. "}", (card.ability.extra.fallback_blue + card.ability.extra.fallback_red), } }
     end,
