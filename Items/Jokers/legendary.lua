@@ -246,3 +246,34 @@ SMODS.Joker {
         end
     end
 }
+
+SMODS.Joker {
+    key = "sinep",
+    loc_txt = {
+        name = "Sin E.P. Scarlett",
+        text = {
+            "When {C:blue}hand{} played, multiply a random {C:attention}jokers{}",
+            "values by a random number between {C:attention}X#1#{} and {C:attention}X#2#{}",
+            credit("mailingway")
+        }
+    },
+    config = { extra = {min = 1.1, max = 6.9} },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.min, card.ability.extra.max}}
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = {x=0, y=12},
+    soul_pos = {x=1, y=12},
+    cost = 20,
+    blueprint_compat = false,
+    immutable = true,
+    calculate = function(self, card, context)
+
+        if context.before and not context.blueprint then
+            Cryptid.manipulate(G.jokers.cards[pseudorandom("valk_sinep", 1, #G.jokers.cards)],
+                        {value = math.map(pseudorandom("valk_sinep"), 0, 1, card.ability.extra.min, card.ability.extra.max)})
+        end
+
+    end,
+}

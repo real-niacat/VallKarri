@@ -138,6 +138,11 @@ function random_edition()
     return choices[pseudorandom("valk_random_edition", 1, #choices)]
 end
 
+function math.map(v, imi, ima, omi, oma)
+
+    return (v-imi) * (oma - omi) / (ima - imi) + omi
+
+end
 
 function mspl(amt)
     for i, hand in pairs(G.GAME.hands) do
