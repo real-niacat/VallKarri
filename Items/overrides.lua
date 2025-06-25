@@ -417,6 +417,14 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
         _rarity = "cry_exotic"
     end
 
+    if _type == "Tarot" and G.GAME.tarot_planet_replacement and pseudorandom("valk_tarot_replace", 1, 100) <= G.GAME.tarot_planet_replacement then
+        _type = "Planet"
+    end
+
+    if _type == "Spectral" and G.GAME.spectral_planet_replacement and pseudorandom("valk_spectral_replace", 1, 100) <= G.GAME.spectral_planet_replacement then
+        _type = "Planet"
+    end
+
 
     local out = fakecreate(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 

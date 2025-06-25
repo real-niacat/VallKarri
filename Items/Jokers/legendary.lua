@@ -193,3 +193,56 @@ SMODS.Joker {
 
     end
 }
+
+SMODS.Joker {
+    key = "kathleen",
+    loc_txt = {
+        name = "Kathleen Rosetail",
+        text = {
+            "{C:planet}Planet{} cards may replace {C:spectral}spectral{} and {C:tarot}tarot{} cards",
+            "When {C:attention}blind{} selected, add {C:attention}#1#{} editioned",
+            "{C:attention}CCD{} {C:planet}planet{} cards to {C:attention}deck{}",
+            credit("mailingway")
+        }
+    },
+    config = { extra = {cards = 5} },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.cards}}
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = {x=0, y=11},
+    soul_pos = {x=1, y=11},
+    cost = 20,
+    blueprint_compat = true,
+    immutable = true,
+    calculate = function(self, card, context)
+
+        if context.setting_blind then
+            for i=1,card.ability.extra.cards do
+                local _card = create_card("Base", G.play, nil, nil, nil, nil, nil, "valk_kathleen")
+                SMODS.change_base(_card, random_suit(), random_rank())
+                _card:set_edition(random_edition(), true)
+                _card:set_ability(G.P_CENTER_POOLS.Planet[pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
+                _card:add_to_deck()
+                G.deck:emplace(_card)
+                table.insert(G.playing_cards, _card)
+                
+            end
+
+        end
+
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if from_debuff then return end
+        G.GAME.tarot_planet_replacement = 15
+        G.GAME.spectral_planet_replacement = 15
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if from_debuff then return end
+        if #SMODS.find_card("j_valk_kathleen") < 1 then
+            G.GAME.tarot_planet_replacement = 0
+            G.GAME.spectral_planet_replacement = 0
+        end
+    end
+}

@@ -131,7 +131,9 @@ end
 function random_edition()
     local choices = {}
     for i,e in ipairs(G.P_CENTER_POOLS.Edition) do
-        choices[#choices+1] = e.key
+        if e.key ~= "e_negative" then
+            choices[#choices+1] = e.key
+        end
     end
     return choices[pseudorandom("valk_random_edition", 1, #choices)]
 end

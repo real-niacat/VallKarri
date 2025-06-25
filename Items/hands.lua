@@ -33,10 +33,10 @@ SMODS.PokerHand {
         for i,card in ipairs(hand) do
             -- print(card.base.id)
             
-            if not cardsbyrank[card.base.id] then
+            if card.base.id and not cardsbyrank[card.base.id] then
                 -- print("a")
                 cardsbyrank[card.base.id] = {card}
-            else
+            elseif cardsbyrank[card.base.id] then
                 -- print("b")
                 cardsbyrank[card.base.id][#cardsbyrank[card.base.id]+1] = card
             end
