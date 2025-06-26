@@ -186,7 +186,7 @@ function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
                     relevant_card:juice_up()
                 end
 
-                local t = DynaText()
+                -- local t = DynaText()
 
 
 
