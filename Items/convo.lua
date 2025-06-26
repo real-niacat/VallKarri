@@ -20,6 +20,7 @@ function SMODS.calculate_card_areas(_type, context, return_table, args)
                 quick_card_speak(get_first_instance(message.s), message.txt, G.SETTINGS.GAMESPEED * calculated_time)
                 pause_event(0.75)
             end
+            return
 
         end
 

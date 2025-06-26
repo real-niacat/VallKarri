@@ -281,9 +281,14 @@ function evaluate_play_final_scoring(text, disp_text, poker_hands, scoring_hand,
 end
 
 local blindamounthook = get_blind_amount
+
+function get_old_blind_amount(ante)
+    return blindamounthook(ante)
+end
 function get_blind_amount(ante)
     refresh_metaprog()
-    return blindamounthook(ante) * (1 + (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl - 1) * 0.02 * ante)
+    return blindamounthook(ante) * (1+(0.02 * ante))^(1+(0.2*G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
+    -- 
 end
 local vouchers_enabled = false
 

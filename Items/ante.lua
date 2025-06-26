@@ -185,8 +185,6 @@ function Game:update(dt)
 
     if (G.GAME.ante_config and G.GAME.round_resets.ante and to_big(G.GAME.round_resets.ante) > to_big(G.GAME.ante_config.limit) ) then
         G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) .. "X"
-
-        G.GAME.round_resets.ante_disp = corrupt_text(G.GAME.round_resets.ante_disp, 0.05)
     end
 
 end

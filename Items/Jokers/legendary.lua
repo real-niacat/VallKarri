@@ -215,6 +215,7 @@ SMODS.Joker {
     soul_pos = {x=1, y=11},
     cost = 20,
     blueprint_compat = true,
+    pools = { ["Kitties"] = true },
     immutable = true,
     calculate = function(self, card, context)
 
