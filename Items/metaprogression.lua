@@ -319,7 +319,7 @@ function get_blind_amount(ante)
     return blindamounthook(ante) * ((1+(0.02 * ante))^(1+(0.2*(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl^0.825))))
     -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
-local vouchers_enabled = false
+local vouchers_enabled = true
 
 if vouchers_enabled then
 
