@@ -1,4 +1,4 @@
 return {
     overscoring = true,
-    risky_stuff = true,
+    metaprogression = true,
 }

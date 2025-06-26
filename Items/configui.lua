@@ -19,11 +19,11 @@ vallkarri.config_tab = function() -- the configs will be stored in config.lua an
                     {n = G.UIT.C, config = { minw = G.ROOM.T.w*0.125, padding = 0.05 }, 
                         nodes = {
                             create_toggle{
-                                label = "Toggle experimental mechanics", -- the label that shows up next to the toggle button
-                                info = {"Enables some mechanics that can and will cause bugs", "You are free to report bugs, but they may not be resolved"}, -- the text that will show below the toggle option
+                                label = "Toggle meta-progression", -- the label that shows up next to the toggle button
+                                info = {"Enables the levelling system", "Gives benefits, but increases blind size based on level"}, -- the text that will show below the toggle option
                                 active_colour = G.C.GREEN, -- the color of the toggle when it is on
                                 ref_table = vallkarri.config, -- the table of which the toggle refrerences to check if it is on or off
-                                ref_value = "risky_stuff" -- the value from the ref_table that the toggle will change when pressed
+                                ref_value = "metaprogression" -- the value from the ref_table that the toggle will change when pressed
                             }
                         }
                     },

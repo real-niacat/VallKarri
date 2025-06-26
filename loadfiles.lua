@@ -4,8 +4,12 @@ assert(SMODS.load_file("Items/consumables.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/rarity_definitions.lua", "vallkarri"))()
 
 
-if (vallkarri.config.overscoring) then
+if vallkarri.config.overscoring then
     assert(SMODS.load_file("Items/ante.lua", "vallkarri"))()
+end
+
+if vallkarri.config.metaprogression then
+    assert(SMODS.load_file("Items/metaprogression.lua", "vallkarri"))()
 end
 
 -- assert(SMODS.load_file("Items/Jokers/minesweeper.lua", "vallkarri"))()
@@ -22,6 +26,7 @@ assert(SMODS.load_file("Items/Jokers/exotic.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/tau.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/L_jokers.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/exoticplus.lua", "vallkarri"))()
+-- assert(SMODS.load_file("Items/editions.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/cataclysm.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/tags.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/decks.lua", "vallkarri"))()
@@ -33,4 +38,3 @@ assert(SMODS.load_file("Items/crossmod.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/superwin.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/convo.lua", "vallkarri"))()
 
-assert(SMODS.load_file("Items/metaprogression.lua", "vallkarri"))()
