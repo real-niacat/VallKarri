@@ -300,6 +300,29 @@ function level_up_hand(card, hand, instant, amount)
     end
 end
 
+local calceff = SMODS.calculate_individual_effect
+function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+    
+    local count = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.2) * 0.025
+    -- 2.5% buff to all scoring effects for every 50 levels
+    -- print("effect")
+    -- print(effect)
+    -- print("amount")
+    -- print(amount)
+    if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
+        amount = amount * 1+count
+    end
+
+    for n,obj in pairs(effect) do
+        if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
+            effect[n] = effect[n] * 1+count
+        end 
+    end
+
+    return calceff(effect, scored_card, key, amount, from_edition)
+
+end
+
 -- local evalplayscorehook = evaluate_play_final_scoring
 
 -- function evaluate_play_final_scoring(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
@@ -325,8 +348,8 @@ if vouchers_enabled then
 
     SMODS.Voucher {
         key = "alphaboosterator",
-        atlas = "phold",
-        pos = {x=0, y=0},
+        atlas = "main",
+        pos = {x=2, y=7},
         loc_txt = {
             name = "Alpha XP Boosterator",
             text = {
@@ -359,8 +382,8 @@ if vouchers_enabled then
 
     SMODS.Voucher {
         key = "betaboosterator",
-        atlas = "phold",
-        pos = {x=0, y=0},
+        atlas = "main",
+        pos = {x=3, y=7},
         loc_txt = {
             name = "Beta XP Boosterator",
             text = {
@@ -392,8 +415,8 @@ if vouchers_enabled then
 
     SMODS.Voucher {
         key = "gammaboosterator",
-        atlas = "phold",
-        pos = {x=0, y=0},
+        atlas = "main",
+        pos = {x=4, y=7},
         loc_txt = {
             name = "Gamma XP Boosterator",
             text = {
@@ -438,25 +461,3 @@ if vouchers_enabled then
 
 end
 
-local calceff = SMODS.calculate_individual_effect
-function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
-    
-    local count = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.2) * 0.025
-    -- 2.5% buff to all scoring effects for every 50 levels
-    -- print("effect")
-    -- print(effect)
-    -- print("amount")
-    -- print(amount)
-    if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
-        amount = amount * 1+count
-    end
-
-    for n,obj in pairs(effect) do
-        if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
-            effect[n] = effect[n] * 1+count
-        end 
-    end
-
-    return calceff(effect, scored_card, key, amount, from_edition)
-
-end
