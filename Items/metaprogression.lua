@@ -62,12 +62,12 @@ function create_UIBox_metaprog()
                                 config = { align = "tl", padding = 0.01, maxw = 2 },
                                 nodes = {
                                     { n = G.UIT.T, config = { text = "Level ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "curlvl_text", text = number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl), colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } } }
-                                -- { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "level", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } } }
+                                    { n = G.UIT.T, config = { id = "curlvl_text", text = number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl), colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                }
                             },
                             {
                                 n = G.UIT.R,
-                                config = { align = "cl", padding = 0.01, maxw = 2 },
+                                config = { align = "cl", padding = 0.01, maxw = 2.7 },
                                 nodes = {
                                     { n = G.UIT.T, config = { id = "curxp_text", text = number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp), colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     -- { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
@@ -89,6 +89,25 @@ function create_UIBox_metaprog()
     }
 end
 
+function create_UIBox_useless_bullshit()
+    local text_scale = 0.3
+    return {
+        n = G.UIT.ROOT,
+        config = { align = "cm", padding = 0.03, colour = {0,0,0,0} },
+        nodes = {
+            {
+                n = G.UIT.R,
+                config = { align = "cm", padding = 0.05, colour = {0,0,0,0}, r = 0.1 },
+                nodes = {
+                    { n = G.UIT.T, config = { id = "xp_change", text = "+0 XP", colour = G.C.UI.TEXT_LIGHT, scale = text_scale/1.2, shadow = true, prev_value = "nil" } },
+                }
+            },
+
+
+        }
+    }
+end
+
 local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
@@ -101,6 +120,11 @@ function Game:start_run(args)
     self.HUD_META = UIBox {
         definition = create_UIBox_metaprog(),
         config = { align = ('cli'), offset = { x = 19, y = -2.25 }, major = G.ROOM_ATTACH }
+    }
+
+    self.HUD_XP_CHANGE = UIBox {
+        definition = create_UIBox_useless_bullshit(),
+        config = { align = ('cli'), offset = { x = 19.1, y = -1.65 }, major = G.ROOM_ATTACH }
     }
 
     -- DO ON-START STUFF HERE
@@ -182,11 +206,15 @@ function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
 
                 G.HUD_META:get_UIE_by_ID("curxp_text"):juice_up()
 
+                local str = "+" .. number_format(mod) .. " XP"
+                G.HUD_XP_CHANGE:get_UIE_by_ID("xp_change").config.text = str
+                G.HUD_XP_CHANGE:recalculate()
+
+                G.HUD_XP_CHANGE:get_UIE_by_ID("xp_change"):juice_up()
+
                 if relevant_card and relevant_card.juice_up then
                     relevant_card:juice_up()
                 end
-
-                -- local t = DynaText()
 
 
 
