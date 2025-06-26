@@ -186,6 +186,8 @@ function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
                     relevant_card:juice_up()
                 end
 
+                local t = DynaText()
+
 
 
                 return true
@@ -286,7 +288,7 @@ function get_old_blind_amount(ante)
 end
 function get_blind_amount(ante)
     refresh_metaprog()
-    return blindamounthook(ante) * (1+(0.02 * ante))^(1+(0.2*G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
+    return blindamounthook(ante) * ((1+(0.02 * ante))^(1+(0.2*(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl^0.825))))
     -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
 local vouchers_enabled = false
