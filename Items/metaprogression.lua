@@ -292,6 +292,7 @@ end
 local vouchers_enabled = false
 
 if vouchers_enabled then
+
     SMODS.Voucher {
         key = "alphaboosterator",
         atlas = "phold",
@@ -299,45 +300,12 @@ if vouchers_enabled then
         loc_txt = {
             name = "Alpha XP Boosterator",
             text = {
-                "{C:dark_edition}+#1#{} to all XP gain",
-                -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators trigger in the order they were obtained)",
-            }
-        },
-
-        config = {extra = {xp = 99}},
-
-        loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.xp}}
-        end,
-
-        in_pool = function()
-            return G.GAME.round_resets.ante < 1500*(2^0)
-        end,
-
-        redeem = function(self, card)
-            vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
-                return n+card.ability.extra.xp
-            end
-        end,
-        
-
-
-    }
-
-    SMODS.Voucher {
-        key = "betaboosterator",
-        atlas = "phold",
-        pos = {x=0, y=0},
-        loc_txt = {
-            name = "Beta XP Boosterator",
-            text = {
                 "{X:dark_edition,C:white}X#1#{} to all XP gain",
                 -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators trigger in the order they were obtained)",
+                "{C:inactive}(XP Boosterators apply in the order they were obtained)",
             }
         },
-
+        no_doe = true,
         config = {extra = {xp = 9}},
 
         loc_vars = function(self, info_queue, card)
@@ -345,7 +313,7 @@ if vouchers_enabled then
         end,
 
         in_pool = function()
-            return G.GAME.round_resets.ante < 1500*(2^1)
+            return G.GAME.round_resets.ante > 1500*(2^1)
         end,
 
         redeem = function(self, card)
@@ -366,25 +334,25 @@ if vouchers_enabled then
         loc_txt = {
             name = "Beta XP Boosterator",
             text = {
-                "{X:dark_edition,C:white}X#1#{} to all XP gain",
+                "{X:dark_edition,C:white}^#1#{} to all XP gain",
                 -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators trigger in the order they were obtained)",
+                "{C:inactive}(XP Boosterators apply in the order they were obtained)",
             }
         },
-
-        config = {extra = {xp = 9}},
+        no_doe = true,
+        config = {extra = {xp = 1.9}},
 
         loc_vars = function(self, info_queue, card)
             return {vars = {card.ability.extra.xp}}
         end,
 
         in_pool = function()
-            return G.GAME.round_resets.ante < 1500*(2^1)
+            return G.GAME.round_resets.ante > 1500*(2^2)
         end,
 
         redeem = function(self, card)
             vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
-                return n*card.ability.extra.xp
+                return n^card.ability.extra.xp
             end
         end,
         
@@ -399,53 +367,22 @@ if vouchers_enabled then
         loc_txt = {
             name = "Gamma XP Boosterator",
             text = {
-                "{X:dark_edition,C:white}^#1#{} to all XP gain",
-                -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators trigger in the order they were obtained)",
-            }
-        },
-
-        config = {extra = {xp = 1.9}},
-
-        loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.xp}}
-        end,
-
-        in_pool = function()
-            return G.GAME.round_resets.ante < 1500*(2^2)
-        end,
-
-        redeem = function(self, card)
-            vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
-                return n^card.ability.extra.xp
-            end
-        end,
-        
-
-
-    }
-
-    SMODS.Voucher {
-        key = "deltaboosterator",
-        atlas = "phold",
-        pos = {x=0, y=0},
-        loc_txt = {
-            name = "Delta XP Boosterator",
-            text = {
                 "{X:dark_edition,C:white}^^#1#{} to all XP gain",
+                "Effect is re-applied when {C:attention}blind{} defeated",
+                "When {C:attention}boss blind{} defeated, {X:dark_edition,C:white}+^^#2#{} XP Gain",
                 -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators trigger in the order they were obtained)",
+                "{C:inactive}(XP Boosterators apply in the order they were obtained)",
             }
         },
-
-        config = {extra = {xp = 1.09}},
+        no_doe = true,
+        config = {extra = {xp = 1.09, gain = 0.09}},
 
         loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.xp}}
+            return {vars = {card.ability.extra.xp, card.ability.extra.gain}}
         end,
 
         in_pool = function()
-            return G.GAME.round_resets.ante < 1500*(2^3)
+            return G.GAME.round_resets.ante > 1500*(2^3)
         end,
 
         redeem = function(self, card)
@@ -453,43 +390,22 @@ if vouchers_enabled then
                 return to_big(n):tetrate(card.ability.extra.xp)
             end
         end,
-        
 
-
-    }
-
-    SMODS.Voucher {
-        key = "epsilonboosterator",
-        atlas = "phold",
-        pos = {x=0, y=0},
-        loc_txt = {
-            name = "Epsilon XP Boosterator",
-            text = {
-                "{X:dark_edition,C:white}^^#1#{} to all XP gain",
-                -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators trigger in the order they were obtained)",
-            }
-        },
-
-        config = {extra = {xp = 9.99}},
-
-        loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.xp}}
-        end,
-
-        in_pool = function()
-            return G.GAME.round_resets.ante < 1500*(2^4)
-        end,
-
-        redeem = function(self, card)
-            vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
-                return to_big(n):tetrate(card.ability.extra.xp)
+        calculate = function(self, card, context)
+            if context.end_of_round and context.main_eval then
+                vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
+                    return to_big(n):tetrate(card.ability.extra.xp)
+                end
+                if G.GAME.blind.boss then
+                    card.ability.extra.xp = card.ability.extra.xp + card.ability.extra.gain
+                end
             end
-        end,
+        end
         
 
 
     }
+
 end
 
 local calceff = SMODS.calculate_individual_effect
