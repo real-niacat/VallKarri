@@ -107,7 +107,7 @@ function Game:start_run(args)
     local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
     G.GAME.dollars = G.GAME.dollars + add_money
 
-    local add_levels = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 50)
+    local add_levels = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 2)
     for name, hand in pairs(G.GAME.hands) do
         G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
         G.GAME.hands[name].chips = G.GAME.hands[name].chips + (G.GAME.hands[name].l_chips * add_levels)
@@ -270,15 +270,14 @@ function level_up_hand(card, hand, instant, amount)
     end
 end
 
-local evalplayscorehook = evaluate_play_final_scoring
+-- local evalplayscorehook = evaluate_play_final_scoring
 
-function evaluate_play_final_scoring(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent,
-                                     percent_delta)
-    refresh_metaprog()
-    mult = mult + ((G.PROFILES[G.SETTINGS.profile].valk_cur_lvl - 1) * 0.1)
+-- function evaluate_play_final_scoring(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
+--     refresh_metaprog()
+--     mult = mult + ((G.PROFILES[G.SETTINGS.profile].valk_cur_lvl - 1) * 0.1)
 
-    evalplayscorehook(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
-end
+--     evalplayscorehook(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
+-- end
 
 local blindamounthook = get_blind_amount
 
@@ -288,7 +287,7 @@ end
 function get_blind_amount(ante)
     refresh_metaprog()
     return blindamounthook(ante) * (1+(0.02 * ante))^(1+(0.2*G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
-    -- 
+    -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
 local vouchers_enabled = false
 
@@ -491,4 +490,27 @@ if vouchers_enabled then
 
 
     }
+end
+
+local calceff = SMODS.calculate_individual_effect
+function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+    
+    local count = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.2) * 0.025
+    -- 2.5% buff to all scoring effects for every 50 levels
+    -- print("effect")
+    -- print(effect)
+    -- print("amount")
+    -- print(amount)
+    if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
+        amount = amount * 1+count
+    end
+
+    for n,obj in pairs(effect) do
+        if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
+            effect[n] = effect[n] * 1+count
+        end 
+    end
+
+    return calceff(effect, scored_card, key, amount, from_edition)
+
 end
