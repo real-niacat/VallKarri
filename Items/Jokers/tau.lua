@@ -1205,6 +1205,7 @@ SMODS.Joker {
     cost = 4,
     no_doe = true,
     blueprint_compat = true,
+    immutable = true,
     calculate = function(self, card, context)
         
 
