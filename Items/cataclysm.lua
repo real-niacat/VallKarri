@@ -9,6 +9,17 @@ function Game:start_run(args)
 
 end
 
+local lc = loc_colour
+function loc_colour(_c, _default)
+	if not G.ARGS.LOC_COLOURS then
+		lc()
+	end
+	G.ARGS.LOC_COLOURS.valk_cataclysm = HEX("50202A")
+	return lc(_c, _default)
+end
+
+G.C.VALK_CATACLYSM = HEX("50202A")
+
 SMODS.Atlas {
     key = "cata",
     path = "cataclysm.png",
@@ -816,4 +827,61 @@ SMODS.Consumable {
 
         G.GAME.cry_banished_keys[capable[pseudorandom("valk_unbanish",1,#capable)]] = false
     end
+}
+
+SMODS.Booster {
+    key = "revelations",
+    atlas = "cata",
+    pos = {x=0, y=3},
+    display_size = {w=83, h=103},
+    discovered = true,
+    loc_txt = {
+        name = "Pack of Revelations",
+        text = {
+            "Pick {C:attention}#1#{} of up to {C:attention}#2#{} {C:valk_cataclysm}Cataclysm{} cards",
+            "to use immedietely"
+        },
+        group_name = "Pack of Revelations"
+    },
+
+    draw_hand = false,
+    config = {choose = 1, extra = 3},
+
+    loc_vars = function(self, info_queue, card) 
+        return {vars = {card.ability.choose, card.ability.extra}}
+    end,
+
+    weight = 0.999,
+    cost = 18,
+
+    create_card = function(self, card, i)
+        ease_background_colour(G.C.VALK_CATACLYSM)
+        return create_card("Cataclysm", G.pack_cards, nil, nil, true, nil, nil, "valk_pack_of_revelations")
+
+
+    end,
+
+    in_pool = function()
+        return #SMODS.find_card("v_valk_seventrumpets") > 0
+    end
+}
+
+SMODS.Voucher {
+    key = "seventrumpets",
+    atlas = "main",
+    pos = {x=2, y=8},
+    loc_txt = {
+        name = "Seven Trumpets",
+        text = {
+            "The {C:valk_cataclysm}Pack of Revelations{} can now appear in the shop",
+        }
+    },
+
+    in_pool = function()
+        return G.GAME.round_resets.ante > 8
+    end,
+
+    
+
+
 }

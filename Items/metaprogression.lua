@@ -107,6 +107,7 @@ function create_UIBox_useless_bullshit()
         }
     }
 end
+local xp_change = false
 
 local fakestart = Game.start_run
 function Game:start_run(args)
@@ -122,10 +123,12 @@ function Game:start_run(args)
         config = { align = ('cli'), offset = { x = 19, y = -2.25 }, major = G.ROOM_ATTACH }
     }
 
-    self.HUD_XP_CHANGE = UIBox {
-        definition = create_UIBox_useless_bullshit(),
-        config = { align = ('cli'), offset = { x = 19.1, y = -1.65 }, major = G.ROOM_ATTACH }
-    }
+    if xp_change then
+        self.HUD_XP_CHANGE = UIBox {
+            definition = create_UIBox_useless_bullshit(),
+            config = { align = ('cli'), offset = { x = 19.1, y = -1.65 }, major = G.ROOM_ATTACH }
+        }
+    end
 
     -- DO ON-START STUFF HERE
     local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
@@ -206,11 +209,13 @@ function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
 
                 G.HUD_META:get_UIE_by_ID("curxp_text"):juice_up()
 
-                local str = "+" .. number_format(mod) .. " XP"
-                G.HUD_XP_CHANGE:get_UIE_by_ID("xp_change").config.text = str
-                G.HUD_XP_CHANGE:recalculate()
+                if xp_change then
+                    local str = "+" .. number_format(mod) .. " XP"
+                    G.HUD_XP_CHANGE:get_UIE_by_ID("xp_change").config.text = str
+                    G.HUD_XP_CHANGE:recalculate()
 
-                G.HUD_XP_CHANGE:get_UIE_by_ID("xp_change"):juice_up()
+                    G.HUD_XP_CHANGE:get_UIE_by_ID("xp_change"):juice_up()
+                end
 
                 if relevant_card and relevant_card.juice_up then
                     relevant_card:juice_up()
