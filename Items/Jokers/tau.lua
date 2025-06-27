@@ -298,7 +298,6 @@ SMODS.Joker {
         name = "{C:cry_ember}Tauic Mime{}",
         text = {
             "Retrigger all cards {C:attention}#1#{} times",
-            "{C:inactive}Does not include held-in-hand effects{}",
             credit("Scraptake")
         }
     },
@@ -315,7 +314,7 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-		if context.repetition and context.cardarea == G.play then
+		if context.repetition and context.cardarea == G.play or context.cardarea == G.hand then
             -- print("p.card")
 			return {
 				message = localize("k_again_ex"),
