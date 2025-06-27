@@ -314,7 +314,7 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-		if context.repetition and context.cardarea == G.play or context.cardarea == G.hand then
+		if context.repetition and context.cardarea == G.play or (context.cardarea == G.hand and context.card_effects and (next(context.card_effects[1]) or #context.card_effects > 1)) then
             -- print("p.card")
 			return {
 				message = localize("k_again_ex"),
