@@ -332,13 +332,13 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Obelisk{}",
         text = {
-            "Gains {X:mult,C:white}X#1#{} Mult per scored card if",
+            "Gains {X:dark_edition,C:white}^#1#{} Mult per scored card if",
             "played hand is not your most played {C:attention}poker hand{}",
-            "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
             credit("Scraptake")
         }
     },
-    config = { extra = { gain = 1, current = 1 } },
+    config = { extra = { gain = 0.2, current = 1 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.gain, card.ability.extra.current}}
     end,
@@ -362,7 +362,7 @@ SMODS.Joker {
         end
 
         if (context.joker_main) then
-            return {x_mult = card.ability.extra.current}
+            return {emult = card.ability.extra.current}
         end
 
     end
