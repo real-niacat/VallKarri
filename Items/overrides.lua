@@ -413,7 +413,7 @@ end
 
 local fakecreate = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
-    if G.GAME.exotic_replace and pseudorandom("valk_exotic_replace", 1, 100) <= G.GAME.exotic_replace then
+    if G.GAME.exotic_replace and pseudorandom("valk_exotic_replace", 1, 100) <= G.GAME.exotic_replace and not forced_key and _type == "Joker" then
         _rarity = "cry_exotic"
     end
 
