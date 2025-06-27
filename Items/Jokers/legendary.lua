@@ -307,7 +307,6 @@ SMODS.Joker {
     soul_pos = {x=3, y=12},
     cost = 20,
     blueprint_compat = false,
-    immutable = true,
     calculate = function(self, card, context)
 
         if context.using_consumeable then
