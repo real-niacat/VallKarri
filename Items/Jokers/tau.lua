@@ -35,7 +35,7 @@ function tauic_owned()
 
     for i,joker in ipairs(G.jokers.cards) do
 
-        if joker.config.center.key:find("tau_") then
+        if joker.config.center.rarity == "valk_tauic" then
             return true 
         end 
 
