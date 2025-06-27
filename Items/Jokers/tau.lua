@@ -297,11 +297,11 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Mime{}",
         text = {
-            "Retrigger all cards {C:attention}#1#{} times",
+            "Retrigger all playing cards {C:attention}#1#{} times",
             credit("Scraptake")
         }
     },
-    config = { extra = { triggers = 5 } },
+    config = { extra = { triggers = 3 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.triggers}}
     end,
@@ -427,9 +427,7 @@ SMODS.Joker {
 
         if (context.using_consumeable) then
 
-            local con = context.consumeable
-
-            if (con.ability.set == "Planet") then 
+            if (context.consumeable.ability.set == "Planet") then 
             
                 card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.inc
                 card.ability.extra.inc = card.ability.extra.inc + card.ability.extra.incsq
@@ -516,12 +514,7 @@ SMODS.Joker {
     cost = 4,
     no_doe = true,
     calculate = function(self, card, context)
-        if
-			context.end_of_round
-			and not context.blueprint
-			and not context.individual
-			and not context.repetition
-			and not context.retrigger_joker then
+        if context.end_of_round and context.main_eval then
 
             local n = G.jokers.config.card_limit - #G.jokers.cards
             for i,joker in ipairs(G.jokers.cards) do
@@ -589,11 +582,11 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Emotional Joker{}",
         text = {
-            "{X:dark_edition,C:white}+^#1#{} Chips & Mult per {C:attention}poker hand{} contained in played hand",
+            "{X:dark_edition,C:white}^#1#{} Chips & Mult per {C:attention}poker hand{} contained in played hand",
             credit("Scraptake")
         }
     },
-    config = { extra = { gain = 1} },
+    config = { extra = { gain = 2} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain } }
     end,
@@ -618,7 +611,8 @@ SMODS.Joker {
 
 
             if (context.joker_main) then
-                return {e_mult = 1 + (card.ability.extra.gain * count), e_chips = 1 + (card.ability.extra.gain * count)}
+                local amount = 2 ^ count
+                return {e_mult = amount, e_chips = amount}
             end
         end
 
