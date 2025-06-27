@@ -1081,7 +1081,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { gain = 0.02, cur = 1} },
+    config = { extra = { gain = 0.05, cur = 1} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cur, card.ability.extra.gain } }
     end,
