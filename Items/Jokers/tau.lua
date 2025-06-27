@@ -1076,8 +1076,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Triboulet{}",
         text = {
-            "{X:dark_edition,C:white}^#1#{} Mult when any face card or Ace is scored",
-            "Increases by {X:dark_edition,C:white}+^#2#{} when any face card or Ace is scored",
+            "{X:dark_edition,C:white}^^#1#{} Mult when any face card or Ace is scored",
+            "Increases by {X:dark_edition,C:white}+^^#2#{} when any face card or Ace is scored",
             credit("Scraptake")
         }
     },
@@ -1096,7 +1096,7 @@ SMODS.Joker {
         if (context.individual and context.cardarea == G.play and context.other_card:get_id() >= 11) then
 
             card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
-            return {e_mult = card.ability.extra.cur}
+            return {eemult = card.ability.extra.cur}
 
         end
 
@@ -1114,7 +1114,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { gainsq = 0.02, gain = 0.02, cur = 1} },
+    config = { extra = { gainsq = 0.05, gain = 0.05, cur = 1} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cur, card.ability.extra.gain } }
     end,
@@ -1148,13 +1148,13 @@ SMODS.Joker {
         text = {
             "Disables effect of every {C:attention}Boss Blind{}",
             "{X:dark_edition,C:white}^^(1 / #1#){} blind size",
-            "{C:inactive}(Ineffective at large blind sizes)",
+            "{C:attention}+#2#{} to denominator when {C:attention}blind{} selected",
             credit("Scraptake")
         }
     },
-    config = { extra = { antitetration = 50} },
+    config = { extra = { antitetration = 50, inc = 10} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.antitetration } }
+        return { vars = { card.ability.extra.antitetration, card.ability.extra.inc } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -1167,7 +1167,7 @@ SMODS.Joker {
         
 
         if context.setting_blind then
-            
+            card.ability.extra.antitetration = card.ability.extra.antitetration + card.ability.extra.inc
 
             if G.GAME.blind and G.GAME.blind.boss and not G.GAME.blind.disabled then
                 G.GAME.blind:disable()
