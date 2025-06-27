@@ -284,3 +284,55 @@ SMODS.Joker {
 
     end,
 }
+
+SMODS.Joker {
+    key = "tasal",
+    loc_txt = {
+        name = "TASAL",
+        text = {
+            "{C:attention}+#1#{} Card selection limit and Hand size",
+            "{X:gold,C:white}X#2#{} Ascension scaling per level of {C:attention}Sol{}",
+            "When {C:planet}planet{} card used, increase power of {C:attention}Ascended{} hands",
+            credit("Grahkon")
+        }
+    },
+    config = { extra = {csl = 3, scaling = 4} },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS.c_cry_sunplanet
+        return {vars = {card.ability.extra.csl, card.ability.extra.scaling + 1}}
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = {x=2, y=12},
+    soul_pos = {x=3, y=12},
+    cost = 20,
+    blueprint_compat = false,
+    immutable = true,
+    calculate = function(self, card, context)
+
+        if context.using_consumeable then
+            if context.consumeable.ability.set == "Planet" then
+                level_ascended_hands(1, card)
+            end
+            if context.consumeable.config.center.key == "c_cry_sunplanet" then
+                level_ascended_hands(card.ability.extra.scaling, card)
+            end
+        end
+        
+    end,
+
+    add_to_deck = function(self, card, from_debuff )
+        if not from_debuff then
+            G.hand:change_size(card.ability.extra.csl)
+            SMODS.change_play_limit(card.ability.extra.csl)
+            SMODS.change_discard_limit(card.ability.extra.csl)
+        end
+    end,
+    remove_from_deck = function(self, card, from_debuff )
+        if not from_debuff then
+            G.hand:change_size(-card.ability.extra.csl)
+            SMODS.change_play_limit(-card.ability.extra.csl)
+            SMODS.change_discard_limit(-card.ability.extra.csl)
+        end
+    end,
+}
