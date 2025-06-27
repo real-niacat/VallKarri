@@ -211,9 +211,6 @@ SMODS.Joker {
 
             ease_hands_played(card.ability.extra.bonus * card.ability.extra.current)
             ease_discard(card.ability.extra.bonus * card.ability.extra.current)
-
-            G.GAME.current_round.hands_left = G.GAME.current_round.hands_left + (card.ability.extra.bonus * card.ability.extra.current) 
-            G.GAME.current_round.discards_left = G.GAME.current_round.discards_left + (card.ability.extra.bonus * card.ability.extra.current)
             card.ability.extra.current = 0
         end
 
