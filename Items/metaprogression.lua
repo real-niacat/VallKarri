@@ -171,6 +171,7 @@ function vallkarri.xp_required(level)
     local nlv = to_number(level)
     if nlv > 100 then arrows = 1 end
     if nlv > 1000 then arrows = 2 end
+    if nlv > 100000 then arrows = 3 end --intentional, didn't double press 0.
     if nlv > 10000 then exp = 3 end
     if nlv > 20000 then exp = 6 end
     if nlv > 35000 then exp = 24 end
