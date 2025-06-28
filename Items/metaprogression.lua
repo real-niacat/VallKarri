@@ -152,7 +152,7 @@ vallkarri.run_xp_modifiers = {
 
 }
 
-vallkarri.level_cap = 35000
+vallkarri.level_cap = 1e300 --have fun :)
 
 function vallkarri.debug_reset_lvl(areyousure)
     if areyousure == "y" .. tostring(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) then -- this is fucking dumb, but i don't want to lose my save by mistake
