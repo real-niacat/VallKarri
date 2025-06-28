@@ -134,7 +134,7 @@ function Game:start_run(args)
     local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
     G.GAME.dollars = G.GAME.dollars + add_money
 
-    local add_levels = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 2)
+    local add_levels = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.5)
     for name, hand in pairs(G.GAME.hands) do
         G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
         G.GAME.hands[name].chips = G.GAME.hands[name].chips + (G.GAME.hands[name].l_chips * add_levels)
@@ -310,28 +310,28 @@ function level_up_hand(card, hand, instant, amount)
     end
 end
 
-local calceff = SMODS.calculate_individual_effect
-function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+-- local calceff = SMODS.calculate_individual_effect
+-- function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
     
-    local count = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.2) * 0.025
-    -- 2.5% buff to all scoring effects for every 50 levels
-    -- print("effect")
-    -- print(effect)
-    -- print("amount")
-    -- print(amount)
-    if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
-        amount = amount * 1+count
-    end
+--     local count = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.2) * 0.025
+--     -- 2.5% buff to all scoring effects for every 50 levels
+--     -- print("effect")
+--     -- print(effect)
+--     -- print("amount")
+--     -- print(amount)
+--     if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
+--         amount = amount * 1+count
+--     end
 
-    for n,obj in pairs(effect) do
-        if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
-            effect[n] = effect[n] * 1+count
-        end 
-    end
+--     for n,obj in pairs(effect) do
+--         if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
+--             effect[n] = effect[n] * 1+count
+--         end 
+--     end
 
-    return calceff(effect, scored_card, key, amount, from_edition)
+--     return calceff(effect, scored_card, key, amount, from_edition)
 
-end
+-- end
 
 -- local evalplayscorehook = evaluate_play_final_scoring
 

@@ -371,3 +371,72 @@ SMODS.Joker {
     end
 }
 
+SMODS.Joker {
+    bases = {"j_8_ball"},
+    key = "tau_8_ball",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic 8 Ball{}",
+        text = {
+            "When an {C:attention}8{} is scored, create a random {C:attention}tarot{} card",
+            "with {C:attention}X#1#{} values",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { vmult = 8 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.vmult } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=0, y=5},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and context.other_card.base.id == 8 and #G.consumeables.cards < G.consumeables.config.card_limit then
+            local tarot = create_card("Tarot", G.consumeables, nil, nil, nil, nil, nil, "valk_tau_8ball")
+            tarot:add_to_deck()
+            G.consumeables:emplace(tarot)
+            Cryptid.manipulate(tarot, {value = card.ability.extra.vmult})
+        end
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_smiley"},
+    key = "tau_smiley",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Smiley Face{}",
+        text = {
+            "{C:attention}Non-face{} cards are converted into a random {C:attention}face{} card when {C:attention}scored{}",
+            "{C:attention}Face{} cards give {X:dark_edition,C:white}^#1#{} Mult",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { emult = 1.55 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.emult } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=6, y=15},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            
+            if not context.other_card:is_face() then
+                local faces = {"Jack", "King", "Queen"}
+                SMODS.change_base(context.other_card, nil, faces[pseudorandom("valk_tau_smiley", 1, #faces)])
+            else    
+                return {
+                    emult = card.ability.extra.emult,
+                    card = card
+                }
+            end
+
+        end
+    end
+}
+
