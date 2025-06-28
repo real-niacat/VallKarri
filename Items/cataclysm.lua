@@ -4,6 +4,7 @@ function Game:start_run(args)
 
     for name,center in pairs(G.P_CENTER_POOLS.Cataclysm) do
         G.P_CENTER_POOLS.Cataclysm[name].no_grc = true
+        G.P_CENTER_POOLS.Cataclysm[name].no_doe = true
         G.P_CENTER_POOLS.Cataclysm[name].cost = 16
     end
 
