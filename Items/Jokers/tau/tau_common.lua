@@ -440,3 +440,96 @@ SMODS.Joker {
     end
 }
 
+SMODS.Joker {
+    bases = {"j_gros_michel"},
+    key = "tau_gros_michel",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Gros Michel{}",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult",
+            "{C:green}#2# in #3#{} chance to convert into {C:cry_ember}Tauic Cavendish{} at end of round",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { xmult = 15, outof = 15 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xmult, G.GAME.probabilities.normal, card.ability.extra.outof } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=7, y=6},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+
+        if context.end_of_round and context.main_eval and pseudorandom("valk_tau_michel", 1, card.ability.extra.outof) <= G.GAME.probabilities.normal then
+            card:set_ability("j_valk_tau_cavendish")
+        end
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_cavendish"},
+    key = "tau_cavendish",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Cavendish{}",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Mult",
+            "{C:green}#2# in #3#{} chance to",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { emult = 3.33, outof = 1000 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.emult, G.GAME.probabilities.normal, card.ability.extra.outof } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=5, y=11},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                emult = card.ability.extra.emult
+            }
+        end
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_delayed_grat"},
+    key = "tau_delayed_grat",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Delayed Gratification{}",
+        text = {
+            "At end of round, multiply your money by remaining {C:red}discards{}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.emult, G.GAME.probabilities.normal, card.ability.extra.outof } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=4, y=3},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval then
+            local mult = math.max(1, G.GAME.current_round.discards_left)
+            ease_dollars(G.GAME.dollars*(mult-1))
+
+        end
+    end
+}
+
