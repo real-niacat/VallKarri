@@ -179,7 +179,7 @@ function vallkarri.xp_required(level)
     return 100 * to_big(level):arrow(math.floor(arrows), (level^0.5) ^ exp)
 end
 
-function vallkarri.mod_level(amount)
+function vallkarri.mod_level(amount, from_xp)
     G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl + amount
 
     if G.PROFILES[G.SETTINGS.profile].valk_cur_lvl > to_big(vallkarri.level_cap) then
@@ -189,6 +189,10 @@ function vallkarri.mod_level(amount)
         G.HUD_META:get_UIE_by_ID("maxxp_text"):juice_up()
     end
     G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
+
+    if not from_xp then
+        short_update_meta()
+    end
 end
 
 function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
@@ -261,7 +265,7 @@ function vallkarri.animationless_mod_xp(mod, operator, level_multiplier)
 
 
     while G.PROFILES[G.SETTINGS.profile].valk_cur_xp >= G.PROFILES[G.SETTINGS.profile].valk_max_xp do
-        vallkarri.mod_level(level_multiplier)
+        vallkarri.mod_level(level_multiplier, true)
     end
 end
 

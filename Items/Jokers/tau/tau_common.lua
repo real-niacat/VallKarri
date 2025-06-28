@@ -1,0 +1,373 @@
+SMODS.Joker {
+    bases = {"j_joker"},
+    key = "tau_joker",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Joker{}",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Mult for every Tauic card",
+            "{C:inactive}Includes this card{}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { mult = 1.4444} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.mult } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=0, y=1},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if (context.other_joker and context.other_joker.config.center.rarity == "valk_tauic") then
+            return {e_mult = card.ability.extra.mult}
+        end
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_chaos"},
+    key = "tau_clown",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Chaos the Clown{}",
+        text = {
+            "{C:attention}#1#{} free {C:green}rerolls{} in shop",
+            "When blind selected, gain {C:attention}#2#{} {C:blue}hand{} and {C:red}discard{} per {C:green}reroll{} in last shop",
+            "{C:inactive}Currently +#3# hands and discards{}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { rerolls = 2, bonus = 1, current = 0} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.rerolls, card.ability.extra.bonus, card.ability.extra.current } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=1, y=1},
+    cost = 4,
+    no_doe = true,
+
+    add_to_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(card.ability.extra.rerolls)
+    end,
+
+    remove_from_deck = function(self, card, from_debuff)
+        SMODS.change_free_rerolls(-card.ability.extra.rerolls)
+    end,
+
+    calculate = function(self, card, context)
+        if (context.setting_blind) then
+
+            ease_hands_played(card.ability.extra.bonus * card.ability.extra.current)
+            ease_discard(card.ability.extra.bonus * card.ability.extra.current)
+            card.ability.extra.current = 0
+        end
+
+        if (context.reroll_shop) then
+            card.ability.extra.current = card.ability.extra.current + 1
+        end
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_lusty_joker", "j_greedy_joker", "j_wrathful_joker", "j_gluttenous_joker"},
+    key = "tau_sins",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Sin Joker{}",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Chips for every card with a suit scored, in hand or in deck",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { chips = 1.03} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.chips } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=2, y=1},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if (context.individual and context.other_card and not context.end_of_round) then
+            if (context.other_card:is_suit("Spades") or context.other_card:is_suit("Hearts") or context.other_card:is_suit("Clubs") or context.other_card:is_suit("Diamonds")) then
+                return {e_chips = card.ability.extra.chips}
+            end
+        end
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_blue_joker"},
+    key = "tau_blue",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Blue Joker{}",
+        text = {
+            "{X:dark_edition,C:white}+^#1#{} Chips for each",
+            "remaining card in {C:attention}deck{}",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Chips)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { per = 0.15 } },
+    loc_vars = function(self, info_queue, card)
+        local n = 52
+        if G.deck then
+            n = #G.deck.cards
+        end
+        return {
+            vars = {
+                card.ability.extra.per,
+                card.ability.extra.per * n
+            }
+        }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=7, y=10},
+    cost = 6,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+            return {
+                echips = card.ability.extra.per * #G.deck.cards
+            }
+        end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_even_steven", "j_odd_todd"},
+    key = "tau_brothers",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Number Brothers{}",
+        text = {
+            "All scored number cards give {X:mult,C:white}XMult{}",
+            "equal to their rank",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=8, y=4},
+    cost = 6,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.individual and context.cardarea == G.play and context.other_card.base.id <= 10 then
+            return {
+                xmult = context.other_card.base.id
+            }
+        end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_egg"},
+    key = "tau_egg",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Egg{}",
+        text = {
+            "Gains {X:dark_edition,C:white}^#1#{} of {C:attention}sell value{} at end of round",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { evalue = 1.5 } },
+    loc_vars = function(self, info_queue, card)
+
+        return { vars = { card.ability.extra.evalue } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=0, y=10},
+    cost = 6,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.end_of_round and context.main_eval then
+            quick_card_speak(card, "Upgraded!")
+            card.sell_cost = math.ceil(card.sell_cost ^ card.ability.extra.evalue)
+        end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_mystic_summit"},
+    key = "tau_summit",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Summit{}",
+        text = {
+            "When {C:red}discarding{}, multiply all hand levels by the {C:attention}square root{}",
+            "of discards remaining",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = {  } },
+    loc_vars = function(self, info_queue, card)
+
+        return { vars = {  } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=2, y=0},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.pre_discard then
+
+            level_all_hands(card, 0, math.sqrt(G.GAME.current_round.discards_left) - 1)
+        end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_banner"},
+    key = "tau_banner",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Banner{}",
+        text = {
+            "{X:dark_edition,C:white}+^#1#{} Chips per discard remaining",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Chips)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { per = 2 } },
+    loc_vars = function(self, info_queue, card)
+        local d = 4
+        if G and G.GAME and G.GAME.current_round then
+            d = G.GAME.current_round.discards_left
+        end
+        return { vars = { card.ability.extra.per, 1 + (card.ability.extra.per * d) } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=8, y=2},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main then
+
+            return {echips = 1 + (card.ability.extra.per * G.GAME.current_round.discards_left)}
+
+        end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_credit_card"},
+    key = "tau_creditcard",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Credit Card{}",
+        text = {
+            "Refund {C:attention}#1#%{} of all money spent",
+            credit("Lily")
+        }
+    },
+    config = { immutable = {refund = 75} }, --value is pointless, it's always a 3/4 refund
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.immutable.refund } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=9, y=0},
+    cost = 4,
+    no_doe = true,
+}
+
+SMODS.Joker {
+    bases = {"j_jolly", "j_zany", "j_mad", "j_crazy" ,"j_droll",
+            "j_sly", "j_wily", "j_clever", "j_devious", "j_crafty"},
+    key = "tau_emotion",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Emotional Joker{}",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Chips & Mult per {C:attention}poker hand{} contained in played hand",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { gain = 2} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gain } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=1, y=0},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        
+        if (context.poker_hands) then
+            local count = 0
+            
+            for i,hand in pairs(context.poker_hands) do
+                
+                if (hand and next(hand) ~= nil) then
+                    -- print(hand)
+                    count = count + 1
+                end
+            end
+
+
+            if (context.joker_main) then
+                local amount = 2 ^ count
+                return {e_mult = amount, e_chips = amount}
+            end
+        end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_half"},
+    key = "tau_half",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Half Joker{}",
+        text = {
+            "At end of round, multiply all {C:attention}joker values{}",
+            "by amount of {C:attention}empty joker slots{}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {  } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=1, y=2},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval then
+
+            local n = G.jokers.config.card_limit - #G.jokers.cards
+            for i,joker in ipairs(G.jokers.cards) do
+                Cryptid.misprintize(joker, {min=n,max=n},false, true )
+            end
+        end
+    end
+}
+
