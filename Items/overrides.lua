@@ -419,6 +419,10 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
         _rarity = "cry_exotic"
     end
 
+    if G.GAME.prestigious_replace and pseudorandom("valk_prestigious_replace", 1, 100) <= G.GAME.prestigious_replace and not forced_key and _type == "Joker" then
+        _rarity = "valk_prestigious"
+    end
+
     if _type == "Tarot" and G.GAME.tarot_planet_replacement and pseudorandom("valk_tarot_replace", 1, 100) <= G.GAME.tarot_planet_replacement then
         _type = "Planet"
     end

@@ -41,6 +41,7 @@ function quote(character)
         scraptake = "good kitty",
         hornet = "silksong tommorow",
         valklua = "Thank you for playing <3",
+        phicer = "Who would've known I'd be cursed to see these cards again?"
     }
 
     return ('{C:enhanced,s:0.7,E:1}' .. quotes[character] .. '{}')

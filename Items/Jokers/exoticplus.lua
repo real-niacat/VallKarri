@@ -1,4 +1,82 @@
 SMODS.Joker {
+    key = "vallkarrilua",
+    loc_txt = {
+        name = "{C:cry_azure}Vall-Karri.lua",
+        text = {
+            "{X:dark_edition,C:white}^^#1#{} Mult for every piece of content that {B:1,E:2,C:white}Vall-karri{} adds",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
+            quote("valklua"),
+            credit("Scraptake"),
+            concept("Arris"),
+        }
+    },
+    config = { extra = { mult = 1 } },
+    loc_vars = function(self, info_queue, card)
+        local total = valk_additions()
+
+        
+
+        return {vars = {card.ability.extra.mult, total*card.ability.extra.mult, colours = {HEX("e5bf3a")}}  }
+    end,
+    rarity = "valk_prestigious",
+    atlas = "main",
+    pos = {x = 3, y = 6},
+    cost = 500,
+    demicoloncompat = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main or context.forcetrigger then
+
+            return {
+                ee_mult = valk_additions()*card.ability.extra.mult
+            }
+        end
+    end
+}
+
+SMODS.Joker {
+    key = "phicer",
+    loc_txt = {
+        name = "Phicer Rekiniov",
+        text = {
+            "{X:dark_edition,C:white}#1##2#{} Chips",
+            "{C:inactive,s:0.7}Where N is the length of the OmegaNum array, plus one{}",
+            quote("phicer"),
+            credit("Nerxiana"),
+        }
+    },
+    config = { extra = { nchips = 2 } },
+    loc_vars = function(self, info_queue, card)
+
+        
+
+        return {vars = {"{n}", card.ability.extra.nchips}}
+    end,
+    rarity = "valk_prestigious",
+    atlas = "main",
+    pos = {x = 2, y = 13},
+    soul_pos = {x = 3, y = 13},
+    cost = 500,
+    immutable = true,
+    demicoloncompat = true,
+    calculate = function(self, card, context)
+        
+        if context.joker_main or context.forcetrigger then
+            local base = #hand_chips.array + 1
+
+            if hand_chips < to_big(10):tetrate(5) then
+                base = 2
+            end
+
+            return {
+                hyper_chips = {base, card.ability.extra.nchips}
+            }
+
+        end
+    end
+}
+
+SMODS.Joker {
     key = "scraptake",
     loc_txt = {
         name = "Scraptake",
@@ -106,45 +184,6 @@ SMODS.Joker {
         "",
         "As such, she tends to limit herself when stuck without the Halo"
     }
-}
-
-
-
-SMODS.Joker {
-    key = "vallkarrilua",
-    loc_txt = {
-        name = "{C:cry_azure}Vall-Karri.lua",
-        text = {
-            "{X:dark_edition,C:white}^^^#1#{} Mult for every piece of content that {B:1,E:2,C:white}Vall-karri{} adds",
-            "{C:inactive}(Currently {X:dark_edition,C:white}^^^#2#{C:inactive} Mult){}",
-            quote("valklua"),
-            credit("Scraptake"),
-            concept("Arris"),
-        }
-    },
-    config = { extra = { mult = 1 } },
-    loc_vars = function(self, info_queue, card)
-        local total = valk_additions()
-
-        
-
-        return {vars = {card.ability.extra.mult, total*card.ability.extra.mult, colours = {HEX("e5bf3a")}}  }
-    end,
-    rarity = "valk_unsurpassed",
-    atlas = "main",
-    pos = {x = 3, y = 6},
-    cost = 500,
-    immutable = true,
-    demicoloncompat = true,
-    calculate = function(self, card, context)
-        
-        if context.joker_main or context.forcetrigger then
-
-            return {
-                eee_mult = valk_additions()*card.ability.extra.mult
-            }
-        end
-    end
 }
 
 SMODS.Joker {
