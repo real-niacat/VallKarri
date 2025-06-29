@@ -48,8 +48,6 @@ SMODS.ConsumableType {
 }
 
 -- SMODS.Consumable {
-    no_doe = true,
-    no_grc = true,
 --     set = "Cataclysm",
 --     key = "",
 --     loc_txt = { 
