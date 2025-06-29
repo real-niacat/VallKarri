@@ -59,28 +59,7 @@ merge_recipes = {
 
 }
 
-valk_badgetypes = {
-    ingredient = {
-        text = "Ingredient",
-        color = G.C.WHITE,
-        text_color = G.C.BLACK
-    },
-    lore = {
-        text = "Has Lore",
-        color = G.C.BLUE,
-        text_color = G.C.WHITE,
-    },
-    immutable = {
-        text = "Immutable",
-        color = G.C.ORANGE,
-        text_color = G.C.WHITE
-    }
-}
 
-valk_badgecards = {
-    -- format:
--- {card=
-}
 
 vallkarri.spawn_multipliers = {
 
