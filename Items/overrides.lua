@@ -414,7 +414,7 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
     end
 
 
-    if G.GAME.vallkarri.spawn_multipliers[out.config.center.key] then
+    if G.GAME.vallkarri and G.GAME.vallkarri.spawn_multipliers and G.GAME.vallkarri.spawn_multipliers[out.config.center.key] then
         Cryptid.manipulate(out, {value = G.GAME.vallkarri.spawn_multipliers[out.config.center.key]})
     end
 
