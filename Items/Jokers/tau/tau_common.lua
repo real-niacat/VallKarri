@@ -211,7 +211,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Summit{}",
         text = {
-            "When {C:red}discarding{}, multiply all hand levels by the {C:attention}square root{}",
+            "When {C:red}discarding{}, multiply all hand levels by the amount",
             "of discards remaining",
             credit("Scraptake")
         }
@@ -231,7 +231,7 @@ SMODS.Joker {
         
         if context.pre_discard then
 
-            level_all_hands(card, 0, math.sqrt(G.GAME.current_round.discards_left) - 1)
+            level_all_hands(card, 0, G.GAME.current_round.discards_left)
         end
 
     end
