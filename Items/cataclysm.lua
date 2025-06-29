@@ -793,8 +793,6 @@ SMODS.Consumable {
 }
 
 -- SMODS.Consumable {
-    no_doe = true,
-    no_grc = true,
 --     set = "Cataclysm",
 --     key = "torrentuous",
 --     loc_txt = { 
