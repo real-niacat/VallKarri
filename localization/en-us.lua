@@ -100,6 +100,12 @@ return {
                     "in hand"
                 }
             },
+            cryantimatter = {
+                name = "Antimatter Deck",
+                text = {
+                    "Applies all {C:attention}Quantum Particle{} effects"
+                }
+            }
 
         }
     }

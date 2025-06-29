@@ -186,8 +186,13 @@ SMODS.Voucher {
 
 
         if G and G.GAME and G.GAME.selected_back and G.GAME.selected_back.name then
-            local first = G.GAME.selected_back.name:match("^(%w+)") -- i was told to do this by someone else
+            local first = G.GAME.selected_back.name
+            if not string.find(first, "cry") then
+                first = first:match("^(%w+)")
+            end
             first = first and first:lower() or ""
+            first = first:gsub("-", "") --remove hyphen from name
+            -- print(first)
             info_queue[#info_queue + 1] = {set = "Other", key = first}
             return {vars = {"applicable", ""}}
         else
