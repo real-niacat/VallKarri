@@ -12,7 +12,12 @@ local decks = {
         end
     end,
     ["Green Deck"] = function(redeeming, context)
-        if redeeming then G.GAME.modifiers.money_per_discard = G.GAME.modifiers.money_per_discard + 1 end
+        if redeeming then
+            if not G.GAME.modifiers.money_per_discard then
+                G.GAME.modifiers.money_per_discard = 0 
+            end
+            G.GAME.modifiers.money_per_discard = G.GAME.modifiers.money_per_discard + 1
+        end
     end,
     ["Black Deck"] = function(redeeming, context)
         if redeeming then G.GAME.refund_hands = true

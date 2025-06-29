@@ -73,7 +73,18 @@ SMODS.Joker {
             }
 
         end
-    end
+    end,
+
+    lore = {
+        "Phicer Rekiniov is a magical casino owner, who's",
+        "garnered a somewhat cult-like following over time.",
+        "",
+        "She is capable of doing highly-complex magic, but prefers to",
+        "use simpler magic for things like summoning workers.",
+        "",
+        "Though, if needed she can summon weaker versions of",
+        "monsters like dragons, wyrms or angel-like entities."
+    }
 }
 
 SMODS.Joker {
@@ -112,8 +123,8 @@ SMODS.Joker {
         name = "Librat Pondere",
         text = {
             "{X:dark_edition,C:white,s:1.3}#1##2#{} Chips & Mult",
-            "{C:inactive}(Index scales with members in the Vall-Karri discord server)",
-            "{C:inactive}(Operator is based on the ratio of Red to Blue team members in the Vall-Karri discord server)",
+            "{C:inactive,s:0.7}(Index scales with members in the Vall-Karri discord server)",
+            "{C:inactive,s:0.7}(Operator is based on the ratio of Red to Blue team members in the Vall-Karri discord server)",
             credit("Scraptake")
         }
     },
