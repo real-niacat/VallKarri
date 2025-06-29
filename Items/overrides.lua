@@ -164,6 +164,9 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
 
+    if not G.GAME.vallkarri then
+        G.GAME.vallkarri = {}
+    end
     G.GAME.vallkarri.spawn_multipliers = {}
 
     G.GAME.tau_increase = 2
