@@ -28,3 +28,14 @@ function Game:update(dt)
         end
     end
 end
+
+local lc = loc_colour
+function loc_colour(_c, _default)
+	if not G.ARGS.LOC_COLOURS then
+		lc()
+	end
+    for name,colors in pairs(vallkarri.custom_colours) do
+        G.ARGS.LOC_COLOURS[string.lower(name)] = G.C[name]
+    end
+	return lc(_c, _default)
+end

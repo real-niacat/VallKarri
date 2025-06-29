@@ -222,3 +222,78 @@ SMODS.Voucher {
 
 }
 
+SMODS.Voucher {
+    key = "legendary_perkup",
+    atlas = "phold",
+    pos = {x=0, y=0},
+    loc_txt = {
+        name = "Legendary PERK-UP!",
+        text = {
+            "{C:attention}Jokers{} have a {C:green}5%{} chance to be replaced by",
+            "a {C:legendary}legendary{} joker when created",
+        }
+    },
+
+    cost = 28,
+
+    loc_vars = function(self, info_queue, card)
+        
+    end,
+
+    in_pool = function()
+        return (G.GAME.round_resets.ante <= 16)
+    end,
+
+    redeem = function(self, card)
+        G.GAME.legendary_replace = 5
+    end,
+}
+
+SMODS.Voucher {
+    key = "exotic_perkup",
+    atlas = "phold",
+    pos = {x=0, y=0},
+    loc_txt = {
+        name = "Exotic PERK-UP!",
+        text = {
+            "{C:attention}Jokers{} have a {C:green}2%{} chance to be replaced by",
+            "a {C:cry_exotic}exotic{} joker when created",
+        }
+    },
+
+    cost = 28,
+
+    loc_vars = function(self, info_queue, card)
+        
+    end,
+
+    redeem = function(self, card)
+        G.GAME.exotic_replace = 2
+    end,
+    requires = {"v_valk_legendary_perkup"},
+}
+
+SMODS.Voucher {
+    key = "prestige_up",
+    atlas = "phold",
+    pos = {x=0, y=0},
+    loc_txt = {
+        name = "PRESTIGE-UP!",
+        text = {
+            "{C:attention}Jokers{} have a {C:green}1%{} chance to be replaced by",
+            "a {C:valk_prestigious}prestigious{} joker when created",
+        }
+    },
+
+    cost = 28,
+
+    loc_vars = function(self, info_queue, card)
+        
+    end,
+
+    redeem = function(self, card)
+        G.GAME.prestigious_replace = 1
+    end,
+    requires = {"v_valk_exotic_perkup"},
+}
+

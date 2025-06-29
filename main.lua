@@ -50,12 +50,12 @@ merge_recipes = {
     {input = {"c_valk_perfected_gem", "c_valk_socket"}, output = "c_valk_socketed_gem"},
     {input = {"c_valk_socketed_gem", "c_valk_halo_fragment", "c_valk_binding_energy"}, output = "j_valk_keystonefragment"},
     -- {input = {"c_", "c_", "c_valk_binding_energy"}, output = "c_valk"},
-    {input = {"c_death", "c_hanged_man", "c_valk_binding_energy"}, output = "c_valk_iron_maiden"},
-    {input = {"c_hierophant", "c_judgement", "c_valk_binding_energy"}, output = "c_valk_the_pope"},
-    {input = {"c_emperor", "c_sun", "c_valk_binding_energy"}, output = "c_valk_the_knight"},
-    {input = {"c_justice", "c_fool", "c_valk_binding_energy"}, output = "c_valk_the_killer"},
-    {input = {"c_judgement", "c_strength", "c_valk_binding_energy"}, output = "c_valk_gods_finger"},
-    {input = {"c_wheel_of_fortune", "c_temperance", "c_valk_binding_energy"}, output = "c_valk_gameshow"},
+    {input = {"c_death", "c_hanged_man"}, output = "c_valk_iron_maiden"},
+    {input = {"c_hierophant", "c_judgement"}, output = "c_valk_the_pope"},
+    {input = {"c_emperor", "c_sun"}, output = "c_valk_the_knight"},
+    {input = {"c_justice", "c_fool"}, output = "c_valk_the_killer"},
+    {input = {"c_judgement", "c_strength"}, output = "c_valk_gods_finger"},
+    {input = {"c_wheel_of_fortune", "c_temperance"}, output = "c_valk_gameshow"},
 
 }
 
