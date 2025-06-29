@@ -164,7 +164,7 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
 
-    vallkarri.spawn_multipliers = {}
+    G.GAME.vallkarri.spawn_multipliers = {}
 
     G.GAME.tau_increase = 2
     G.GAME.base_tau_replace = 100
@@ -411,8 +411,8 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
     end
 
 
-    if vallkarri.spawn_multipliers[out.config.center.key] then
-        Cryptid.manipulate(out, {value = vallkarri.spawn_multipliers[out.config.center.key]})
+    if G.GAME.vallkarri.spawn_multipliers[out.config.center.key] then
+        Cryptid.manipulate(out, {value = G.GAME.vallkarri.spawn_multipliers[out.config.center.key]})
     end
 
     if (out.ability.set == "Code") and G.GAME.code_multiuses then

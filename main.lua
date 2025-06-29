@@ -61,13 +61,6 @@ merge_recipes = {
 
 
 
-vallkarri.spawn_multipliers = {
-
-}
-
-
-
-
 assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
