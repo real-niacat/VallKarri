@@ -155,7 +155,7 @@ SMODS.Joker {
         }
     },
     config = { extra = {zulu = math.pi/10} },
-    rarity = 2,
+    rarity = "cry_epic",
     atlas = "main",
     pos = {x=4, y=0},
     cost = math.ceil(1000*math.pi),
