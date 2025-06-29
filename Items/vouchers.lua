@@ -241,7 +241,7 @@ SMODS.Voucher {
     end,
 
     in_pool = function()
-        return (G.GAME.round_resets.ante <= 16)
+        return (G.GAME.round_resets.ante >= 9)
     end,
 
     redeem = function(self, card)
