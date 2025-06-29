@@ -251,8 +251,8 @@ SMODS.Voucher {
 
 SMODS.Voucher {
     key = "exotic_perkup",
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "main",
+    pos = {x=14, y=6},
     loc_txt = {
         name = "Exotic PERK-UP!",
         text = {
@@ -275,8 +275,8 @@ SMODS.Voucher {
 
 SMODS.Voucher {
     key = "prestige_up",
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "main",
+    pos = {x=14, y=7},
     loc_txt = {
         name = "PRESTIGE-UP!",
         text = {
