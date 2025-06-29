@@ -867,6 +867,60 @@ SMODS.Booster {
     end
 }
 
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "nevada",
+    loc_txt = {
+        name = "Nevada",
+        text = {
+            "All hands gain {X:dark_edition,C:white}^^^^#1#{} Chips & Mult for",
+            "each {C:red}banished{} {C:valk_cataclysm}cataclysm{} card",
+            credit("Pangaea"),
+        }
+    },
+
+    no_doe = true,
+
+    config = { extra = { eechips = 1.1 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.eechips}}
+    end,
+
+    can_use = function(self, card)
+        -- currently only returns true need to make it only work when u have the joker.
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        local levels = 0
+        for name,center in pairs(G.GAME.cry_banished_keys) do
+            if G.P_CENTERS[name].set == "Cataclysm" then
+                levels = levels + 1
+            end
+        end
+
+        
+        -- i know the math here is incorrect but
+        -- who's going to correct me on it?
+        local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(levels))
+        local str = "^^^^" .. tostring(value)
+        simple_hand_text("all")
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
+
+        for i,hand in pairs(G.GAME.hands) do
+            if (G.GAME.hands[i].chips) then
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips:arrow(4,value)
+            end
+        end
+    end,
+
+        
+    atlas = "csm",
+    pos = {x=9, y=2},
+    no_grc = true,
+    no_doe = true,
+}
+
 SMODS.Voucher {
     key = "seventrumpets",
     atlas = "main",

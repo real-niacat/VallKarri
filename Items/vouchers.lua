@@ -224,8 +224,8 @@ SMODS.Voucher {
 
 SMODS.Voucher {
     key = "legendary_perkup",
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "main",
+    pos = {x=14, y=5},
     loc_txt = {
         name = "Legendary PERK-UP!",
         text = {
