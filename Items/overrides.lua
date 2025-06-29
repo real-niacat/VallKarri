@@ -299,12 +299,12 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
     
     if G.GAME.zulu then
         if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
-            amount = amount ^ G.GAME.zulu
+            amount = (1+amount) ^ G.GAME.zulu
         end
 
         for n,obj in pairs(effect) do
             if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
-                effect[n] = effect[n] ^ G.GAME.zulu
+                effect[n] = (1+effect[n]) ^ G.GAME.zulu
             end 
         end
     end
