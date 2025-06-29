@@ -297,6 +297,18 @@ SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
 local calceff = SMODS.calculate_individual_effect
 function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
     
+    if G.GAME.zulu then
+        if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
+            amount = amount ^ G.GAME.zulu
+        end
+
+        for n,obj in pairs(effect) do
+            if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
+                effect[n] = effect[n] ^ G.GAME.zulu
+            end 
+        end
+    end
+
     if key == "multe" and amount ~= 1 then
         if effect.card then juice_card(effect.card) end
         mult = mod_mult(amount ^ mult)

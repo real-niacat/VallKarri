@@ -3,8 +3,6 @@ function Game:start_run(args)
     fakestart(self, args)
 
     for name,center in pairs(G.P_CENTER_POOLS.Cataclysm) do
-        G.P_CENTER_POOLS.Cataclysm[name].no_grc = true
-        G.P_CENTER_POOLS.Cataclysm[name].no_doe = true
         G.P_CENTER_POOLS.Cataclysm[name].cost = 16
     end
 
@@ -50,6 +48,8 @@ SMODS.ConsumableType {
 }
 
 -- SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
 --     set = "Cataclysm",
 --     key = "",
 --     loc_txt = { 
@@ -81,6 +81,8 @@ SMODS.ConsumableType {
 -- }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "deluge",
     loc_txt = { 
@@ -118,6 +120,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "doomsday",
     loc_txt = { 
@@ -163,6 +167,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "paroxysm",
     loc_txt = { 
@@ -202,6 +208,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "invasion",
     loc_txt = { 
@@ -235,6 +243,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "absolution",
     loc_txt = { 
@@ -271,6 +281,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "plague",
     loc_txt = { 
@@ -316,6 +328,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "disaster",
     loc_txt = { 
@@ -351,6 +365,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "collision",
     loc_txt = { 
@@ -397,6 +413,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "takeover",
     loc_txt = { 
@@ -434,6 +452,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "maleficence",
     loc_txt = { 
@@ -474,6 +494,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "bigrip",
     loc_txt = { 
@@ -512,6 +534,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "bigcrunch",
     loc_txt = { 
@@ -555,6 +579,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "bigchill",
     loc_txt = { 
@@ -598,6 +624,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "bigslurp",
     loc_txt = { 
@@ -641,6 +669,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "occulture",
     loc_txt = { 
@@ -682,6 +712,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "postexistence",
     loc_txt = { 
@@ -723,6 +755,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "stagnancy",
     loc_txt = { 
@@ -761,6 +795,8 @@ SMODS.Consumable {
 }
 
 -- SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
 --     set = "Cataclysm",
 --     key = "torrentuous",
 --     loc_txt = { 
@@ -792,6 +828,8 @@ SMODS.Consumable {
 -- }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "phoenix",
     loc_txt = { 
