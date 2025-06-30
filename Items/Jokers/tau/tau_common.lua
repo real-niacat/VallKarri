@@ -533,3 +533,40 @@ SMODS.Joker {
     end
 }
 
+SMODS.Joker {
+    bases = {"j_misprint"},
+    key = "tau_misprint",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Misprint{}",
+        text = {
+            "{X:dark_edition,C:white}#1##2#{}#3#",
+            credit("Scraptake")
+        }
+    },
+    immutable = true,
+    config = { extra = {min = 105, max = 113 } },
+    loc_vars = function(self, info_queue, card)
+        local text = corrupt_text("^^1.", 0.2)
+        local text1 = corrupt_text("xxx", 1, "01234567890123456789012345678901234567890123456789!@#$%^&*()-_=+[];:',.<>/?|")
+        local text2 = corrupt_text(" Mult", 0.2)
+        return { vars = { text, text1, text2 } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=6, y=3},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local temp_Mult = pseudorandom('tau misprint',card.ability.extra.min, card.ability.extra.max)/100
+            return {
+                EEmult_mod = temp_Mult,
+				message =  '^^' .. number_format(temp_Mult) .. ' Mult',
+				colour = { 0.8, 0.45, 0.85, 1 },
+                
+            }
+        end
+    end
+}
+
