@@ -4,6 +4,7 @@ SMODS.PokerHand {
     chips = 860,
     l_mult = 20,
     l_chips = 260,
+    visible = false,
     example = {
         {"S_9"},
         {"H_9"},
