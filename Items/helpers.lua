@@ -196,24 +196,6 @@ function mspl(amt)
         G.GAME.hands[i].l_mult = G.GAME.hands[i].l_mult * amt
     end
 end
- 
-function table:remove_by_function(t, func)
-    for i = #t, 1, -1 do
-        if func(t[i]) then
-            table.remove(t, i)
-        end
-    end
-end
-
-function table:merge(t_a, t_b)
-    
-    -- add everything from t_b to t_a
-    for i, v in ipairs(t_b) do
-        table.insert(t_a, v)
-    end
-    return t_a
-
-end
 
 function table:vcontains(table, value)
     for i,j in ipairs(table) do
@@ -229,15 +211,6 @@ function table:superset(t_a, t_b)
         valid = valid and table:vcontains(t_a,j)
     end
     return valid
-end
-
-function table:random_element(table)
-    local keys = {}
-    for key in pairs(table) do
-        table.insert(keys, key)
-    end
-    local random_key = keys[math.random(#keys)]
-    return table[random_key]
 end
 
 function destroy_first_instance(key)

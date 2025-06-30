@@ -14,11 +14,7 @@ if vallkarri.config.metaprogression then
     assert(SMODS.load_file("Items/metaprogression.lua", "vallkarri"))()
 end
 
--- assert(SMODS.load_file("Items/Jokers/minesweeper.lua", "vallkarri"))()
--- one day. i will fix minesweeper
--- today is not that day.
-
-assert(SMODS.load_file("Items/hands.lua", "vallkarri"))()
+-- assert(SMODS.load_file("Items/hands.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/cursed.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/animation.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/subepic.lua", "vallkarri"))()
@@ -31,7 +27,6 @@ assert(SMODS.load_file("Items/Jokers/tau/tau_uncommon.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/tau/tau_rare.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/tau/tau_legendary.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/exoticplus.lua", "vallkarri"))()
--- assert(SMODS.load_file("Items/editions.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/cataclysm.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/tags.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/decks.lua", "vallkarri"))()
@@ -42,4 +37,3 @@ assert(SMODS.load_file("Items/superplanets.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/crossmod.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/superwin.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/convo.lua", "vallkarri"))()
-

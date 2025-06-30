@@ -1,30 +1,38 @@
 local fakecalc = SMODS.calculate_card_areas
 function SMODS.calculate_card_areas(_type, context, return_table, args)
-    fakecalc(_type, context, return_table, args)
+    
 
     if not (context.end_of_round and context.main_eval) then
-        return
+        return fakecalc(_type, context, return_table, args)
     end
 
+    local valid = {}
     for i,convo in ipairs(vallkarri.conversations) do
 
-        local valid = true
+        local subvalid = true
         for j,key in ipairs(convo.reqs) do
-            valid = valid and joker_owned(key)
+            subvalid = subvalid and joker_owned(key)
         end
 
-        if valid and pseudorandom("valk_conversation", 1, convo.prob) == 1 then
-            
+        if subvalid then
+            valid[#valid+1] = convo
+        end
+
+    end
+
+    if #valid > 0 then
+        local convo = valid[pseudorandom("valk_convo", 1, #valid)]
+        if pseudorandom("valk_conversation", 1, convo.prob) == 1 then
             for j,message in ipairs(convo.text) do
                 local calculated_time = 0.5 + (#message.txt/40)
                 quick_card_speak(get_first_instance(message.s), message.txt, G.SETTINGS.GAMESPEED * calculated_time)
                 pause_event(0.75)
             end
-            return
 
         end
-
     end
+
+    return fakecalc(_type, context, return_table, args)
 end
 
 vallkarri.conversations = {

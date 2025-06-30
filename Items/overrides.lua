@@ -175,7 +175,9 @@ function Game:start_run(args)
     G.GAME.base_tau_replace = 100
     G.GAME.tau_replace = G.GAME.base_tau_replace
     G.GAME.need_tauist = true
-    load_tauics()
+    if load_tauics then
+       load_tauics() 
+    end
     if not G.GAME.ante_config and config_reset then
         config_reset()
     end
@@ -352,17 +354,6 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
 
 end
 
-local fakeevalstatus = card_eval_status_text
-
-function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
-    if G.GAME.mult_disabled and extra and (extra.mult_mod or extra.Xmult_mod or extra.Emult_mod or extra.EEmult_mod or extra.EEEmult_mod or extra.hypermult_mod) then
-        return
-    end
-
-    fakeevalstatus(card, eval_type, amt, percent, dir, extra)
-
-end
-
 
 
 if #SMODS.find_mod("entr") > 0 then
@@ -438,11 +429,13 @@ end
 
 local useconsumablehook = Card.use_consumeable
 function Card:use_consumeable(area, copier)
-    useconsumablehook(self, area, copier)
+    
 
     if self.ability.set == "Code" and G.GAME.punish_code_usage then
         level_all_hands(self, -1)
     end
+
+    return useconsumablehook(self, area, copier)
 end
 
 local addtaghook = add_tag
