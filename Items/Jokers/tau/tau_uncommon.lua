@@ -472,3 +472,39 @@ SMODS.Joker {
 
     end
 }
+
+SMODS.Joker {
+    bases = {"j_steel_joker"},
+    key = "tau_steel_joker",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Steel Joker{}",
+        text = {
+            "{X:dark_edition,C:white}+^#1#{} Mult for each {C:attention}Steel card{} in deck",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { gain = 0.15 } },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS.m_steel
+
+
+        return {vars = {card.ability.extra.gain, 1+(card.ability.extra.gain*enhanced_in_deck("m_steel"))}}
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=7, y=3},
+    cost = 4,
+    no_doe = true,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+
+		if context.joker_main then
+            return {
+                emult = 1+(card.ability.extra.gain*enhanced_in_deck("m_steel"))
+            }
+        end
+
+    end
+}

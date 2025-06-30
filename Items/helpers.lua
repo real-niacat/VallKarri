@@ -542,6 +542,20 @@ function draw_to_hand(cardlist)
     end
 end
 
+function enhanced_in_deck(enhancement)
+    if not G.playing_cards then
+        return 0
+    end
+    local count = 0
+    for i,card in ipairs(G.playing_cards) do
+        if SMODS.has_enhancement(card, enhancement) then
+            count = count + 1
+        end
+    end
+
+    return count
+end
+
 function get_handtype(handtype)
 
     local a, b, c, d, e = G.FUNCS.get_poker_hand_info(G.deck.cards)
