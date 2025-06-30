@@ -122,6 +122,10 @@ SMODS.Joker {
         end
 
     end,
+
+    add_to_deck = function(self, card, from_debuff)
+        card:set_eternal(true)
+    end
 }
 
 -- local function is_allowed(key)
