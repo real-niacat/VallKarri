@@ -13,7 +13,7 @@ function config_reset()
         arrow_inc_threshold = 1,
         arrow_exponent = 1.15,
 
-        limit = 1500,
+        limit = 64,
     }
 end
 
