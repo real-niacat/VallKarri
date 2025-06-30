@@ -315,9 +315,9 @@ function debug_print_antes()
 
 end
 
-function corrupt_text(text, amount)
+function corrupt_text(text, amount, available_chars)
 
-    local chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[];:',.<>/?|"
+    local chars = (available_chars or "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[];:',.<>/?|")
     -- amount is a 0-1 being a chance to replace each character with a rnd one
 
     for i = 1, #text do
