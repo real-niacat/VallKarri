@@ -637,3 +637,34 @@ SMODS.Joker {
         end
     end
 }
+
+SMODS.Joker {
+    bases = {"j_ride_the_bus"},
+    key = "tau_ride_the_bus",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Ride the Bus{}",
+        text = {
+            "Non {C:attention}face{} cards give",
+            "{X:dark_edition,C:white}^#1#{} Mult",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = {powmult = 1.25 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {card.ability.extra.powmult} }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    blueprint_compat = true
+    pos = {x=0, y=0},
+    soul_pos = {x=1, y=6},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if (context.individual and context.cardarea == G.play) then
+            if not context.other_card:is_face() then
+                return {emult = card.ability.extra.powmult }
+            end
+        end
+    end
+}
