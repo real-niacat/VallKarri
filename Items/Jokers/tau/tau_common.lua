@@ -645,3 +645,41 @@ SMODS.Joker {
         end
     end
 }
+
+
+SMODS.Joker {
+    bases = {"j_ice_cream"},
+    key = "tau_ice_cream",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Ice Cream{}",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Chips",
+            "{X:dark_edition,C:white}+^#2#{} per hand played",
+            credit("Scraptake")
+        }
+    },
+    immutable = true,
+    config = { extra = {cur = 1, gain = 0.25 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {card.ability.extra.cur, card.ability.extra.gain} }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=4, y=10},
+    cost = 4,
+    no_doe = true,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+        if context.after and context.main_eval then
+            card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
+            quick_card_speak(card, "Upgraded!")
+        end
+
+        if context.joker_main then
+            return {
+                echips = card.ability.extra.cur
+            }
+        end
+    end
+}
