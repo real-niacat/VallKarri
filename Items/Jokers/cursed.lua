@@ -63,7 +63,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Hexaract",
         text = {
-            "All jokers give {X:dark_edition,C:white}^#1#{} Chips & Mult",
+            "All Jokers give {X:dark_edition,C:white}^#1#{} Chips & Mult",
         }
     },
     config = { extra = { echips = 1 - (1/6) } },

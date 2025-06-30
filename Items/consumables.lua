@@ -254,7 +254,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "://MEMORYLEAK",
         text = {
-            "Create an {C:valk_unsurpassed}Unsurpassed{} Joker and a {C:black}Supercursed{} joker",
+            "Create an {C:valk_unsurpassed}Unsurpassed{} Joker and a {C:black}Supercursed{} Joker",
             credit("Scraptake")
         }
     },

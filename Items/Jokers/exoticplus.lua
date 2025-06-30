@@ -87,6 +87,88 @@ SMODS.Joker {
     }
 }
 
+if MoreFluff then
+    SMODS.Atlas {
+        key = "triangle",
+        path = "triangle_walk_lowered.png",
+        px = 71,
+        py = 95,
+    }
+
+    SMODS.Joker {
+        key = "triangle",
+        loc_txt = {
+            name = "Triangle",
+            text = {
+                "When blind selected, create {C:attention}#1#{} negative {C:colourcard}colour{} cards",
+                "All {C:colourcard}colour{} cards gain {C:attention}+#2#{} rounds when {C:attention}3{} scored",
+                credit("notmario"),
+            }
+        },
+        config = { extra = { rounds = 3, cards = 3 }, immutable = {buffer = 0} },
+        loc_vars = function(self, info_queue, card)
+
+            
+
+            return {vars = {card.ability.extra.cards, card.ability.extra.rounds}}
+        end,
+        rarity = "valk_prestigious",
+        atlas = "triangle",
+        pos = {x = 12, y = 4},
+        soul_pos = {x = 0, y = 0},
+        cost = 500,
+        immutable = true,
+        demicoloncompat = true,
+        calculate = function(self, card, context)
+            
+            if context.setting_blind then
+                for i=1,card.ability.extra.cards do
+                    local colour = create_card("Colour", G.consumeables, nil, nil, nil, nil, nil, "valk_triangle")
+                    colour:add_to_deck()
+                    colour:set_edition("e_negative")
+                    G.consumeables:emplace(colour)
+                end
+            end
+
+            if context.individual and context.cardarea == G.play and context.other_card:get_id() == 3 then
+
+                for i=1,card.ability.extra.rounds do
+                    G.E_MANAGER:add_event(Event({
+                        trigger = "after",
+                        func = function()
+                            colour_end_of_round_effects()
+                        end
+                    }))
+                    
+                end
+
+            end
+
+        end,
+
+        update = function(self, card, front)
+            card.ability.immutable.buffer = card.ability.immutable.buffer + 1
+            if card.ability.immutable.buffer >= 2 then 
+                card.ability.immutable.buffer = 0
+                local pos = card.children.floating_sprite.sprite_pos
+                local new = {x=pos.x+1, y=pos.y}
+                if new.x > 12 then
+                    new.x = 0
+                    new.y = new.y + 1
+                end
+                if new.x >= 12 and new.y >= 4 then
+                    new.x = 0
+                    new.y = 0
+                end
+                -- print(new)
+
+                card.children.floating_sprite:set_sprite_pos(new)
+
+            end
+        end,
+    }
+end
+
 SMODS.Joker {
     key = "scraptake",
     loc_txt = {
@@ -289,9 +371,10 @@ SMODS.Joker {
 -- quilla = {
     key = "quilla",
     loc_txt = {
-        name = "Aquilegia \"Quilla\" Felli",
+        name = "Quilla",
         text = {
-            "Losing is {C:red,E:1,s:1.2}impossible{}",
+            "{X:dark_edition,C:white}#1#[Blind Size]{} Chips & Mult",
+            "{X:blue,C:white}X2{} Hands remaining when triggered",
             quote("quilla"),
             quote("quilla2"),
             credit("Scraptake")
@@ -299,7 +382,7 @@ SMODS.Joker {
     },
     config = { extra = { state = 1, ctr = 0 } },
     loc_vars = function(self, info_queue, card)
-
+        return {vars = {"{999}"}}
     end,
     rarity = "valk_quillagod",
     atlas = "main",
@@ -345,20 +428,9 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-        if context.individual and (context.cardarea == G.play) then
-            G.GAME.current_round.discards_left = G.GAME.current_round.discards_left * 2
-            G.GAME.current_round.hands_left = G.GAME.current_round.hands_left * 2
-
-            local copy = copy_card(context.other_card)
-            copy:add_to_deck()
-            G.hand:emplace(copy)
-
-            context.other_card:quick_dissolve()
-        end 
-
         if context.joker_main then
-
-            return {mult = G.GAME.blind.chips + G.GAME.chips, chips = G.GAME.blind.chips + G.GAME.chips}
+            G.GAME.current_round.hands_left = G.GAME.current_round.hands_left * 2
+            return {hyper_mult = {999, G.GAME.blind.chips + G.GAME.chips}, hyper_chips = {999, G.GAME.blind.chips + G.GAME.chips}}
 
         end
 

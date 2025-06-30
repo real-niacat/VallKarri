@@ -129,8 +129,15 @@ function get_ante_change(theoretical_score, debug)
     -- print("+"..anteChange.." ante postjen")
     anteChange = anteChange ^ (G.GAME.ante_config.ante_exponent ^ math.log10(G.GAME.round_resets.ante) ) --keep you on your toes, ehe
 
-    anteChange = math.floor(anteChange)
+    
 
+    local arrow_diff = #to_big(G.GAME.chips).array - #to_big(G.GAME.blind.chips).array
+    if arrow_diff ~= 0 then
+        anteChange = anteChange ^ ((arrow_diff ^ 0.73) / 10)
+    end
+    
+    anteChange = math.floor(anteChange) 
+    -- you are lucky i decided to round down
 
     return anteChange
 end
@@ -244,12 +251,12 @@ function get_blind_amount(ante)
 
         local antelog = math.log10(ante)
         local min_arrows, max_arrows = 1, 100000
-        local min_log, max_log = 1, 300
+        local min_log, max_log = 1, 125
 
         local t = (antelog - min_log) / (max_log - min_log)
         t = math.max(0, math.min(1, t))
 
-        local eased = t^4
+        local eased = t^3
         --i love exponents
 
         arrows = min_arrows + (max_arrows - min_arrows) * eased
