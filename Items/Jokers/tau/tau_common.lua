@@ -316,6 +316,7 @@ SMODS.Joker {
     soul_pos = {x=1, y=0},
     cost = 4,
     no_doe = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         
         if (context.poker_hands) then
@@ -392,6 +393,7 @@ SMODS.Joker {
     soul_pos = {x=0, y=5},
     cost = 4,
     no_doe = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and context.other_card.base.id == 8 and #G.consumeables.cards < G.consumeables.config.card_limit then
             local tarot = create_card("Tarot", G.consumeables, nil, nil, nil, nil, nil, "valk_tau_8ball")
@@ -423,6 +425,7 @@ SMODS.Joker {
     soul_pos = {x=6, y=15},
     cost = 4,
     no_doe = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             
@@ -461,6 +464,7 @@ SMODS.Joker {
     soul_pos = {x=7, y=6},
     cost = 4,
     no_doe = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         if context.joker_main then
             return {
@@ -495,6 +499,7 @@ SMODS.Joker {
     soul_pos = {x=5, y=11},
     cost = 4,
     no_doe = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         if context.joker_main then
             return {
@@ -525,7 +530,7 @@ SMODS.Joker {
     cost = 4,
     no_doe = true,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval then
+        if context.end_of_round and context.main_eval and not context.blueprint then
             local mult = math.max(1, G.GAME.current_round.discards_left)
             ease_dollars(G.GAME.dollars*(mult-1))
 
@@ -553,6 +558,7 @@ SMODS.Joker {
     soul_pos = {x=9, y=6},
     cost = 4,
     no_doe = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         if context.repetition and context.cardarea == G.play and context.other_card == G.play.cards[1] then
             return {
@@ -588,6 +594,7 @@ SMODS.Joker {
     soul_pos = {x=6, y=3},
     cost = 4,
     no_doe = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         if context.joker_main then
             local temp_Mult = pseudorandom('tau misprint',card.ability.extra.min, card.ability.extra.max)/100
@@ -624,6 +631,7 @@ SMODS.Joker {
     soul_pos = {x=2, y=13},
     cost = 4,
     no_doe = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         if (context.individual and context.cardarea == G.play) then
             local first_face = nil
