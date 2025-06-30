@@ -144,3 +144,31 @@ SMODS.Joker {
     cost = 18,
     immutable = true,
 }
+
+SMODS.Joker {
+    key = "zulu",
+    loc_txt = {
+        name = "{C:valk_prestigious,s:2}Zulu",
+        text = {
+            "{X:mult,C:white}X1{} Melt",
+            "{C:valk_prestigious,s:3}+#1# Zulu"
+        }
+    },
+    config = { extra = {zulu = math.pi/10} },
+    rarity = "cry_epic",
+    atlas = "main",
+    pos = {x=4, y=0},
+    cost = math.ceil(1000*math.pi),
+    pools = { ["Meme"] = true },
+    demicoloncompat = true,
+    loc_vars = function(self,info_queue, card)
+        return {vars = {card.ability.extra.zulu}}
+    end,
+
+    calculate = function(self, card, context)
+        if context.joker_main or context.forcetrigger then
+            G.GAME.zulu = (G.GAME.zulu and G.GAME.zulu+card.ability.extra.zulu) or (1+card.ability.extra.zulu)
+            return {xmult = 1}
+        end
+    end
+}

@@ -164,7 +164,10 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
 
-    vallkarri.spawn_multipliers = {}
+    if not G.GAME.vallkarri then
+        G.GAME.vallkarri = {}
+    end
+    G.GAME.vallkarri.spawn_multipliers = {}
 
     G.GAME.tau_increase = 2
     G.GAME.base_tau_replace = 100
@@ -297,6 +300,18 @@ SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
 local calceff = SMODS.calculate_individual_effect
 function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
     
+    if G.GAME.zulu then
+        if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
+            amount = (1+amount) ^ G.GAME.zulu
+        end
+
+        for n,obj in pairs(effect) do
+            if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
+                effect[n] = (1+effect[n]) ^ G.GAME.zulu
+            end 
+        end
+    end
+
     if key == "multe" and amount ~= 1 then
         if effect.card then juice_card(effect.card) end
         mult = mod_mult(amount ^ mult)
@@ -346,62 +361,7 @@ function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
 
 end
 
-local fakemodbadge = SMODS.create_mod_badges
-function SMODS.create_mod_badges(obj, badges)
-    reload_badges()
-    fakemodbadge(obj, badges)
-    if obj then
-        -- print(obj)
-        -- print("wow the object exists")
-        for i,entry in ipairs(valk_badgecards) do
 
-            if entry.card == obj.key then
-                -- print("has a badge we care about")
-            -- slightly modified code from pwx
-                badges[#badges + 1] = {
-                    n = G.UIT.R,
-                    config = { align = "cm" },
-                    nodes = {
-                        {
-                            n = G.UIT.R,
-                            config = {
-                                align = "cm",
-                                colour = entry.badge.color,
-                                r = 0.1,
-                                minw = 2,
-                                minh = 0.36,
-                                emboss = 0.05,
-                                padding = 0.027,
-                            },
-                            nodes = {
-                                { n = G.UIT.B, config = { h = 0.1, w = 0.03 } },
-                                {
-                                    n = G.UIT.O,
-                                    config = {
-                                        object = DynaText({
-                                            string = entry.badge.text,
-                                            colours = { entry.badge.text_color or G.C.WHITE },
-                                            silent = true,
-                                            float = true,
-                                            shadow = true,
-                                            offset_y = -0.03,
-                                            spacing = 1,
-                                            scale = 0.33 * 0.9,
-                                        }),
-                                    },
-                                },
-                                { n = G.UIT.B, config = { h = 0.1, w = 0.03 } },
-                            },
-                        },
-                    },
-                }
-
-            end
-        end
-    end
-
-
-end
 
 if #SMODS.find_mod("entr") > 0 then
 
@@ -415,8 +375,17 @@ end
 
 local fakecreate = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
+    if G.GAME.legendary_replace and pseudorandom("valk_legendary_replace", 1, 100) <= G.GAME.legendary_replace and not forced_key and _type == "Joker" then
+        _rarity = 4
+        legendary = true
+    end
+
     if G.GAME.exotic_replace and pseudorandom("valk_exotic_replace", 1, 100) <= G.GAME.exotic_replace and not forced_key and _type == "Joker" then
         _rarity = "cry_exotic"
+    end
+
+    if G.GAME.prestigious_replace and pseudorandom("valk_prestigious_replace", 1, 100) <= G.GAME.prestigious_replace and not forced_key and _type == "Joker" then
+        _rarity = "valk_prestigious"
     end
 
     if _type == "Tarot" and G.GAME.tarot_planet_replacement and pseudorandom("valk_tarot_replace", 1, 100) <= G.GAME.tarot_planet_replacement then
@@ -445,8 +414,8 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
     end
 
 
-    if vallkarri.spawn_multipliers[out.config.center.key] then
-        Cryptid.manipulate(out, {value = vallkarri.spawn_multipliers[out.config.center.key]})
+    if G.GAME.vallkarri and G.GAME.vallkarri.spawn_multipliers and G.GAME.vallkarri.spawn_multipliers[out.config.center.key] then
+        Cryptid.manipulate(out, {value = G.GAME.vallkarri.spawn_multipliers[out.config.center.key]})
     end
 
     if (out.ability.set == "Code") and G.GAME.code_multiuses then

@@ -41,6 +41,7 @@ function quote(character)
         scraptake = "good kitty",
         hornet = "silksong tommorow",
         valklua = "Thank you for playing <3",
+        phicer = "Who would've known I'd be cursed to see these cards again?"
     }
 
     return ('{C:enhanced,s:0.7,E:1}' .. quotes[character] .. '{}')
@@ -538,32 +539,6 @@ end
 function draw_to_hand(cardlist) 
     for i,card in ipairs(cardlist) do
         draw_card(card.area, G.hand, nil, nil, nil, card)
-    end
-end
-
-function reload_badges()
-    valk_badgecards = {}
-
-    local ingredients = {}
-
-    for i,j in ipairs(merge_recipes) do
-        for k,card in ipairs(j.input) do
-            ingredients[#ingredients+1] = card
-        end
-    end
-
-    for key,card in pairs(G.P_CENTERS) do
-        if card.lore then
-            valk_badgecards[#valk_badgecards+1] = {card = key, badge = valk_badgetypes.lore}
-        end
-
-        if table:vcontains(ingredients, key) then
-            valk_badgecards[#valk_badgecards+1] = {card = key, badge = valk_badgetypes.ingredient}
-        end
-
-        if card.immutable then
-            valk_badgecards[#valk_badgecards+1] = {card = key, badge = valk_badgetypes.immutable}
-        end
     end
 end
 

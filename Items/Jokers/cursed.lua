@@ -104,9 +104,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Joker of None",
         text = {
-            "When this joker obtained, convert all hand levels to levels for {C:attention}None{}",
             "Playing cards are {C:red,E:1}destroyed{} when scored",
-            "{C:attention}None{} is levelled up when any {C:planet}planet{} card used"
         }
     },
     config = { extra = {}, immutable = {} },
@@ -123,24 +121,6 @@ SMODS.Joker {
             context.other_card:start_dissolve({G.C.BLACK}, nil, 2 * G.SETTINGS.GAMESPEED)
         end
 
-        if context.using_consumeable and context.consumeable.ability.set == "Planet" then
-            level_up_hand(card, "cry_None")
-        end
-
-    end,
-
-    add_to_deck = function(self, card, from_debuff)
-        if from_debuff then return end
-        card:set_eternal(true)
-
-        local levelsum = 0
-        for name,hand in pairs(G.GAME.hands) do
-            levelsum = levelsum + (hand.level-1)
-            level_up_hand(card, name, false, -hand.level)
-            -- reach level 0 but dont count the extra level in the conversion
-        end
-
-        level_up_hand(card, "cry_None", false, levelsum/2)
     end,
 }
 

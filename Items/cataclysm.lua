@@ -3,8 +3,6 @@ function Game:start_run(args)
     fakestart(self, args)
 
     for name,center in pairs(G.P_CENTER_POOLS.Cataclysm) do
-        G.P_CENTER_POOLS.Cataclysm[name].no_grc = true
-        G.P_CENTER_POOLS.Cataclysm[name].no_doe = true
         G.P_CENTER_POOLS.Cataclysm[name].cost = 16
     end
 
@@ -81,6 +79,8 @@ SMODS.ConsumableType {
 -- }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "deluge",
     loc_txt = { 
@@ -118,6 +118,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "doomsday",
     loc_txt = { 
@@ -163,6 +165,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "paroxysm",
     loc_txt = { 
@@ -193,15 +197,17 @@ SMODS.Consumable {
         for i,joker in ipairs(G.jokers.cards) do
             joker:set_debuff(true)
 
-            if not vallkarri.spawn_multipliers[joker.config.center.key] then
-                vallkarri.spawn_multipliers[joker.config.center.key] = 1
+            if not G.GAME.vallkarri.spawn_multipliers[joker.config.center.key] then
+                G.GAME.vallkarri.spawn_multipliers[joker.config.center.key] = 1
             end
-            vallkarri.spawn_multipliers[joker.config.center.key] = vallkarri.spawn_multipliers[joker.config.center.key] * 4
+            G.GAME.vallkarri.spawn_multipliers[joker.config.center.key] = G.GAME.vallkarri.spawn_multipliers[joker.config.center.key] * 4
         end
     end
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "invasion",
     loc_txt = { 
@@ -235,6 +241,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "absolution",
     loc_txt = { 
@@ -271,6 +279,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "plague",
     loc_txt = { 
@@ -316,6 +326,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "disaster",
     loc_txt = { 
@@ -351,6 +363,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "collision",
     loc_txt = { 
@@ -387,16 +401,18 @@ SMODS.Consumable {
         end
 
         for i,center in ipairs(G.P_CENTER_POOLS.Tarot) do
-            if not vallkarri.spawn_multipliers[center.key] then
-                vallkarri.spawn_multipliers[center.key] = 1
+            if not G.GAME.vallkarri.spawn_multipliers[center.key] then
+                G.GAME.vallkarri.spawn_multipliers[center.key] = 1
             end
-            vallkarri.spawn_multipliers[center.key] = vallkarri.spawn_multipliers[center.key] * card.ability.extra.vm
+            G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] * card.ability.extra.vm
         end
 
     end
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "takeover",
     loc_txt = { 
@@ -434,6 +450,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "maleficence",
     loc_txt = { 
@@ -474,6 +492,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "bigrip",
     loc_txt = { 
@@ -512,6 +532,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "bigcrunch",
     loc_txt = { 
@@ -545,16 +567,18 @@ SMODS.Consumable {
         end
 
         for i,center in ipairs(G.P_CENTER_POOLS.Tarot) do
-            if not vallkarri.spawn_multipliers[center.key] then
-                vallkarri.spawn_multipliers[center.key] = 1
+            if not G.GAME.vallkarri.spawn_multipliers[center.key] then
+                G.GAME.vallkarri.spawn_multipliers[center.key] = 1
             end
-            vallkarri.spawn_multipliers[center.key] = vallkarri.spawn_multipliers[center.key] * card.ability.extra.mult
+            G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] * card.ability.extra.mult
         end
 
     end
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "bigchill",
     loc_txt = { 
@@ -598,6 +622,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "bigslurp",
     loc_txt = { 
@@ -641,6 +667,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "occulture",
     loc_txt = { 
@@ -672,16 +700,18 @@ SMODS.Consumable {
         G.GAME.ban_tags = true
 
         for i,center in ipairs(G.P_CENTER_POOLS.Spectral) do
-            if not vallkarri.spawn_multipliers[center.key] then
-                vallkarri.spawn_multipliers[center.key] = 1
+            if not G.GAME.vallkarri.spawn_multipliers[center.key] then
+                G.GAME.vallkarri.spawn_multipliers[center.key] = 1
             end
-            vallkarri.spawn_multipliers[center.key] = vallkarri.spawn_multipliers[center.key] * card.ability.extra.mult
+            G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] * card.ability.extra.mult
         end
 
     end
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "postexistence",
     loc_txt = { 
@@ -723,6 +753,8 @@ SMODS.Consumable {
 }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "stagnancy",
     loc_txt = { 
@@ -792,6 +824,8 @@ SMODS.Consumable {
 -- }
 
 SMODS.Consumable {
+    no_doe = true,
+    no_grc = true,
     set = "Cataclysm",
     key = "phoenix",
     loc_txt = { 
@@ -865,6 +899,60 @@ SMODS.Booster {
     in_pool = function()
         return #SMODS.find_card("v_valk_seventrumpets") > 0
     end
+}
+
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "nevada",
+    loc_txt = {
+        name = "Nevada",
+        text = {
+            "All hands gain {X:dark_edition,C:white}^^^^#1#{} Chips & Mult for",
+            "each {C:red}banished{} {C:valk_cataclysm}cataclysm{} card",
+            credit("Pangaea"),
+        }
+    },
+
+    no_doe = true,
+
+    config = { extra = { eechips = 1.1 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.eechips}}
+    end,
+
+    can_use = function(self, card)
+        -- currently only returns true need to make it only work when u have the joker.
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        local levels = 0
+        for name,center in pairs(G.GAME.cry_banished_keys) do
+            if G.P_CENTERS[name].set == "Cataclysm" then
+                levels = levels + 1
+            end
+        end
+
+        
+        -- i know the math here is incorrect but
+        -- who's going to correct me on it?
+        local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(levels))
+        local str = "^^^^" .. tostring(value)
+        simple_hand_text("all")
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
+
+        for i,hand in pairs(G.GAME.hands) do
+            if (G.GAME.hands[i].chips) then
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips:arrow(4,value)
+            end
+        end
+    end,
+
+        
+    atlas = "csm",
+    pos = {x=9, y=2},
+    no_grc = true,
+    no_doe = true,
 }
 
 SMODS.Voucher {

@@ -2,6 +2,8 @@ assert(SMODS.load_file("Items/helpers.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/overrides.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/consumables.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/rarity_definitions.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/colour_definitions.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/badges.lua", "vallkarri"))()
 
 
 if vallkarri.config.overscoring then
@@ -28,7 +30,6 @@ assert(SMODS.load_file("Items/Jokers/tau/tau_common.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/tau/tau_uncommon.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/tau/tau_rare.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/tau/tau_legendary.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/Jokers/L_jokers.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/exoticplus.lua", "vallkarri"))()
 -- assert(SMODS.load_file("Items/editions.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/cataclysm.lua", "vallkarri"))()
