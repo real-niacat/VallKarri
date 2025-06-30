@@ -111,7 +111,7 @@ local xp_change = false
 
 local fakestart = Game.start_run
 function Game:start_run(args)
-    print(args)
+    -- print(args)
     fakestart(self, args)
     
     refresh_metaprog()

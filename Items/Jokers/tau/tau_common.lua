@@ -534,6 +534,37 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    bases = {"j_hanging_chad"},
+    key = "tau_hanging_chad",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Hanging Chad{}",
+        text = {
+            "Retrigger the {C:attention}first{} played card {C:attention}once{} for each card played",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { } }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=9, y=6},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if context.repetition and context.cardarea == G.play and context.other_card == G.play.cards[1] then
+            return {
+                repetitions = #G.play.cards,
+                message = localize("k_again_ex"),
+				card = card,
+            }
+        end
+    end
+}
+
+SMODS.Joker {
     bases = {"j_misprint"},
     key = "tau_misprint",
     loc_txt = {

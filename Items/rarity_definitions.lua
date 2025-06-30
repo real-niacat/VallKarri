@@ -39,7 +39,7 @@ SMODS.Rarity {
     loc_txt = {
         name = 'Unsurpassed'
     },
-    badge_colour = HEX("C64CFF"),
+    badge_colour = G.C.VALK_UNSURPASSED,
     pools = { ["Joker"] = true },
 }
 

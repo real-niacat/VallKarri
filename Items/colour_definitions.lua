@@ -1,5 +1,6 @@
 vallkarri.custom_colours = {
-    VALK_PRESTIGIOUS = {HEX("60f542"), HEX("5efaff")}
+    VALK_PRESTIGIOUS = {HEX("60f542"), HEX("5efaff")},
+	VALK_UNSURPASSED = {HEX("DB67FF"), HEX("56FFE3")}
 }
 
 local updhook = Game.update
@@ -39,3 +40,5 @@ function loc_colour(_c, _default)
     end
 	return lc(_c, _default)
 end
+
+-- ^^0.01 for each played card
