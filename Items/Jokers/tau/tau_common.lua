@@ -570,3 +570,39 @@ SMODS.Joker {
     end
 }
 
+
+SMODS.Joker {
+    bases = {"j_photograph"},
+    key = "tau_photograph",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Photograph{}",
+        text = {
+            "The first scored {C:attention}face{} card gives",
+            "{X:dark_edition,C:white}^^1+([CardsPlayed]/100){} Mult",
+            credit("Scraptake")
+        }
+    },
+    immutable = true,
+    config = { extra = {min = 105, max = 113 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {} }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=2, y=13},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if (context.individual and context.cardarea == G.play) then
+            local first_face = nil
+            for i = 1, #context.scoring_hand do
+                if context.scoring_hand[i]:is_face() then first_face = context.scoring_hand[i]; break end
+            end
+            if context.other_card == first_face then
+                photo_mult = 1 + ((#G.play.cards)/100)
+                return {eemult = photo_mult}
+            end
+        end
+    end
+}
