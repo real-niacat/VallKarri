@@ -167,7 +167,9 @@ function Game:start_run(args)
     if not G.GAME.vallkarri then
         G.GAME.vallkarri = {}
     end
-    G.GAME.vallkarri.spawn_multipliers = {}
+    if not G.GAME.vallkarri.spawn_multipliers then
+        G.GAME.vallkarri.spawn_multipliers = {}
+    end
 
     G.GAME.tau_increase = 2
     G.GAME.base_tau_replace = 100

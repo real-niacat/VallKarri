@@ -111,6 +111,7 @@ local xp_change = false
 
 local fakestart = Game.start_run
 function Game:start_run(args)
+    print(args)
     fakestart(self, args)
     
     refresh_metaprog()
@@ -130,15 +131,17 @@ function Game:start_run(args)
         }
     end
 
-    -- DO ON-START STUFF HERE
-    local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
-    G.GAME.dollars = G.GAME.dollars + add_money
+    if not args.savetext then 
+        -- DO ON-START STUFF HERE
+        local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
+        G.GAME.dollars = G.GAME.dollars + add_money
 
-    local add_levels = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.5)
-    for name, hand in pairs(G.GAME.hands) do
-        G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
-        G.GAME.hands[name].chips = G.GAME.hands[name].chips + (G.GAME.hands[name].l_chips * add_levels)
-        G.GAME.hands[name].mult = G.GAME.hands[name].mult + (G.GAME.hands[name].l_mult * add_levels)
+        local add_levels = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.5)
+        for name, hand in pairs(G.GAME.hands) do
+            G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
+            G.GAME.hands[name].chips = G.GAME.hands[name].chips + (G.GAME.hands[name].l_chips * add_levels)
+            G.GAME.hands[name].mult = G.GAME.hands[name].mult + (G.GAME.hands[name].l_mult * add_levels)
+        end
     end
 end
 
