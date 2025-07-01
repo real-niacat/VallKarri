@@ -59,6 +59,7 @@ SMODS.Joker {
     cost = 500,
     immutable = true,
     demicoloncompat = true,
+    blueprint_compat = true,
     calculate = function(self, card, context)
         
         if context.joker_main or context.forcetrigger then
@@ -120,7 +121,6 @@ if MoreFluff then
         immutable = true,
         demicoloncompat = true,
         calculate = function(self, card, context)
-            
             if context.setting_blind then
                 for i=1,card.ability.extra.cards do
                     local colour = create_card("Colour", G.consumeables, nil, nil, nil, nil, nil, "valk_triangle")
@@ -133,12 +133,7 @@ if MoreFluff then
             if context.individual and context.cardarea == G.play and context.other_card:get_id() == 3 then
 
                 for i=1,card.ability.extra.rounds do
-                    G.E_MANAGER:add_event(Event({
-                        trigger = "after",
-                        func = function()
-                            colour_end_of_round_effects()
-                        end
-                    }))
+                    colour_end_of_round_effects()
                     
                 end
 
