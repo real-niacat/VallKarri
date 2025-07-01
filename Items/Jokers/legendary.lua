@@ -75,9 +75,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Lilac Lilybean",
         text = {
-            "Creates a random {C:dark_edition}Negative{} {C:attention}food Joker{} at end of round.",
+            "Creates a random {C:dark_edition}Negative{} {C:attention}Food Joker{} at end of round.",
             "When boss blind defeated, Increase ",
-            "{C:attention}sell value{} of all food Jokers by {C:attention}X#1#{}.",
+            "{C:attention}sell value{} of all Food Jokers by {C:attention}X#1#{}.",
             quote("lilac"),
             credit("Scraptake")
         }
