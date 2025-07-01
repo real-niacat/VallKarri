@@ -655,7 +655,7 @@ SMODS.Joker {
     end,
     rarity = "valk_tauic",
     atlas = "tau",
-    blueprint_compat = true
+    blueprint_compat = true,
     pos = {x=0, y=0},
     soul_pos = {x=1, y=6},
     cost = 4,
