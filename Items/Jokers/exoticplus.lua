@@ -100,7 +100,7 @@ if MoreFluff then
         loc_txt = {
             name = "Triangle",
             text = {
-                "When blind selected, create {C:attention}#1#{} negative {C:colourcard}colour{} cards",
+                "When blind selected, create {C:attention}#1#{} Negative {C:colourcard}colour{} cards",
                 "All {C:colourcard}colour{} cards gain {C:attention}+#2#{} rounds when {C:attention}3{} scored",
                 credit("notmario"),
             }

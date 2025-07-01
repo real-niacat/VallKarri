@@ -53,7 +53,7 @@ SMODS.Tag {
 		name = "Negative Eternal Tag",
 		text = {
 			"Next base edition shop joker",
-			"will be {C:attention}free, {C:dark_edition}negative{}",
+			"will be {C:attention}free, {C:dark_edition}Negative{}",
 			"and {C:purple}eternal{}"
 		}
 	},

@@ -151,8 +151,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Perkeo{}",
         text = {
-            "Create {C:attention}#1#{} {C:dark_edition}negative{} copies of the leftmost consumable when exiting shop",
-            "Remove {C:dark_edition}negative{} from rightmost consumable at end of round",
+            "Create {C:attention}#1#{} {C:dark_edition}Negative{} copies of the leftmost consumable when exiting shop",
+            "Remove {C:dark_edition}Negative{} from rightmost consumable at end of round",
             credit("Scraptake")
         }
     },

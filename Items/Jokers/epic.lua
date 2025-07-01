@@ -3,8 +3,8 @@ SMODS.Joker {
     loc_txt = {
         name = "raxdflipnote",
         text = {
-            "When boss blind is defeated, create a {C:dark_edition,T:e_negative}negative{} {C:attention}Big Cube{}",
-            "{C:green}#1# in 10{} chance to spawn a {C:edition}non-negative{} {C:attention}Cube{}",
+            "When boss blind is defeated, create a {C:dark_edition,T:e_negative}Negative{} {C:attention}Big Cube{}",
+            "{C:green}#1# in 10{} chance to spawn a {C:edition}non-Negative{} {C:attention}Cube{}",
             "{C:inactive}(Must have room for Cube){}",
             quote("raxd"),
             credit("Scraptake")

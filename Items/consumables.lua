@@ -652,7 +652,7 @@ SMODS.Consumable {
         text = {
             "Select up to {C:attention}#1#{} cards,",
             "{C:red}destroy{} all selected cards and create a ",
-            "{C:dark_edition}negative{} {C:rare}rare{} {C:attention}joker{} for each card destroyed"
+            "{C:dark_edition}Negative{} {C:rare}rare{} {C:attention}joker{} for each card destroyed"
         }
     },
     config = { extra = { cards = 3 } },
@@ -696,7 +696,7 @@ SMODS.Consumable {
     loc_txt = {
         name = "The Killer",
         text = {
-            "Create {C:attention}#1#{} negative consumable for every {C:attention}#2#{}",
+            "Create {C:attention}#1#{} Negative consumable for every {C:attention}#2#{}",
             "{C:tarot}tarot{} cards used in run",
             "{C:inactive}(Currently #3#){}"
         }
