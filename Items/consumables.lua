@@ -29,7 +29,7 @@ SMODS.Booster {
         name = "Ascended Booster Pack",
         text = {
             "Pick {C:attention}#1#{} of up to {C:attention}#2#{} {C:cry_ascendant}Powerful{} cards",
-            "to use immedietely or take"
+            "to use immediately or take"
         },
         group_name = "Ascended Booster Pack"
     },
@@ -74,7 +74,7 @@ SMODS.Booster {
     loc_txt = {
         name = "Deck Fixing Pack",
         text = {
-            "Pick {C:attention}#1#{} of {C:attention}#2#{} {C:attention}deck-fixing{} cards to use immedietely",
+            "Pick {C:attention}#1#{} of {C:attention}#2#{} {C:attention}deck-fixing{} cards to use immediately",
         },
         group_name = "Deck Fixing Pack"
     },

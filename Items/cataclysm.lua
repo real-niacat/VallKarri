@@ -883,7 +883,7 @@ SMODS.Booster {
         name = "Pack of Revelations",
         text = {
             "Pick {C:attention}#1#{} of up to {C:attention}#2#{} {C:valk_cataclysm}Cataclysm{} cards",
-            "to use immedietely"
+            "to use immediately"
         },
         group_name = "Pack of Revelations"
     },
