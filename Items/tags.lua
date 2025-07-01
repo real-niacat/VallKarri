@@ -22,7 +22,7 @@ SMODS.Tag {
     loc_txt = {
 		name = "Catter Tag",
 		text = {
-			"Next shop will have a {C:attention}Kitty{} joker"
+			"Next shop will have a {C:attention}Kitty Joker{}"
 		}
 	},
     min_ante = 12,
@@ -52,7 +52,7 @@ SMODS.Tag {
     loc_txt = {
 		name = "Negative Eternal Tag",
 		text = {
-			"Next base edition shop joker",
+			"Next base edition shop Joker",
 			"will be {C:attention}free, {C:dark_edition}Negative{}",
 			"and {C:purple}eternal{}"
 		}
