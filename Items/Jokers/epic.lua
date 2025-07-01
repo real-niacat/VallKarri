@@ -96,7 +96,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Raising The Bar",
         text = {
-            "{X:dark_edition,C:white}^1+(1/Log10(Mult){} Mult",
+            "{X:dark_edition,C:white}^1+(1/Log10(Mult)){} Mult",
             credit("Scraptake")
         }
     },
@@ -151,7 +151,7 @@ SMODS.Joker {
         name = "{C:valk_prestigious,s:2}Zulu",
         text = {
             "{X:mult,C:white}X1{} Melt",
-            "{C:valk_prestigious,s:3}+#1# Zulu"
+            "{C:valk_prestigious,s:3,f:5}+π/10{C:valk_prestigious,s:3} Zulu"
         }
     },
     config = { extra = {zulu = math.pi/10} },
