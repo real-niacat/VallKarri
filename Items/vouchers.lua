@@ -240,7 +240,7 @@ SMODS.Voucher {
         name = "Legendary PERK-UP!",
         text = {
             "{C:attention}Jokers{} have a {C:green}5%{} chance to be replaced by",
-            "a {C:legendary}legendary{} joker when created",
+            "a {C:legendary}legendary{} Joker when created",
         }
     },
 
@@ -267,7 +267,7 @@ SMODS.Voucher {
         name = "Exotic PERK-UP!",
         text = {
             "{C:attention}Jokers{} have a {C:green}2%{} chance to be replaced by",
-            "a {C:cry_exotic}exotic{} joker when created",
+            "a {C:cry_exotic}exotic{} Joker when created",
         }
     },
 
@@ -291,7 +291,7 @@ SMODS.Voucher {
         name = "PRESTIGE-UP!",
         text = {
             "{C:attention}Jokers{} have a {C:green}1%{} chance to be replaced by",
-            "a {C:valk_prestigious}prestigious{} joker when created",
+            "a {C:valk_prestigious}prestigious{} Joker when created",
         }
     },
 

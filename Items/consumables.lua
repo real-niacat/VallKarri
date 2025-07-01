@@ -213,8 +213,8 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Luck",
         text = {
-            "Select up to {C:attention}#1#{} jokers, multiply all",
-            "values on selected jokers by between {C:attention}X#2#{} and {C:attention}X#3#{}",
+            "Select up to {C:attention}#1#{} Jokers, multiply all",
+            "values on selected Jokers by between {C:attention}X#2#{} and {C:attention}X#3#{}",
             credit("Scraptake"),
         }
     },
@@ -336,7 +336,7 @@ SMODS.Consumable {
     loc_txt = {
         name = "Freeway",
         text = {
-            "Create a random {C:cry_exotic}Exotic{} joker",
+            "Create a random {C:cry_exotic}Exotic{} Joker",
             credit("Pangaea"),
         }
     },
@@ -652,7 +652,7 @@ SMODS.Consumable {
         text = {
             "Select up to {C:attention}#1#{} cards,",
             "{C:red}destroy{} all selected cards and create a ",
-            "{C:dark_edition}Negative{} {C:rare}rare{} {C:attention}joker{} for each card destroyed"
+            "{C:dark_edition}Negative{} {C:rare}rare{} {C:attention}Joker{} for each card destroyed"
         }
     },
     config = { extra = { cards = 3 } },
@@ -766,7 +766,7 @@ SMODS.Consumable {
     loc_txt = {
         name = "Gameshow",
         text = {
-            "Each joker has a {C:green}#1# in [Sell Value]{} chance to",
+            "Each Joker has a {C:green}#1# in [Sell Value]{} chance to",
             "multiply all its values by its {C:money}Sell Value{}"
         }
     },

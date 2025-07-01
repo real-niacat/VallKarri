@@ -346,8 +346,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Half Joker{}",
         text = {
-            "At end of round, multiply all {C:attention}joker values{}",
-            "by amount of {C:attention}empty joker slots{}",
+            "At end of round, multiply all {C:attention}Joker values{}",
+            "by amount of {C:attention}empty Joker slots{}",
             credit("Scraptake")
         }
     },

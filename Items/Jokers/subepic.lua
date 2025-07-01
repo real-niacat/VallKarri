@@ -223,9 +223,9 @@ SMODS.Joker {
             "Prevents death at the cost of {C:attention}#1#{} Joker slot",
             "Return lost Joker slot after {C:attention}#2#{} round(s)",
             "Increase round timer by {C:attention}#3#{} and earn {C:money}$#4#{} when death is prevented",
-            "{C:inactive}Dying again or removing this joker while the timer {}",
-            "{C:inactive}is active will result in not recovering a joker slot{}",
-            "{C:inactive}(Does not work below 3 joker slots){}",
+            "{C:inactive}Dying again or removing this Joker while the timer {}",
+            "{C:inactive}is active will result in not recovering a Joker slot{}",
+            "{C:inactive}(Does not work below 3 Joker slots){}",
             
             quote("femtanyl"),
             credit("Scraptake")

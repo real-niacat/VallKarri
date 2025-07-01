@@ -127,7 +127,7 @@ SMODS.Consumable {
         text = {
             "{C:attention}X#1#{} Joker values at end of round for the next {C:attention}#2#{} rounds",
             "Once this has hit {C:attention}0{} rounds,",
-            "use this card to increase all joker values by {C:attention}X#3#{}",
+            "use this card to increase all Joker values by {C:attention}X#3#{}",
             credit("Pangaea"),
         }
     },
@@ -172,8 +172,8 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Paroxysm",
         text = {
-            "{C:red}Debuff{} all owned jokers. All future instances",
-            "of those jokers will have {C:attention}X#1#{} values",
+            "{C:red}Debuff{} all owned Jokers. All future instances",
+            "of those Jokers will have {C:attention}X#1#{} values",
             credit("Pangaea"),
         }
     },
@@ -248,8 +248,8 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Absolution",
         text = {
-            "Turn all owned jokers into one random {C:attention}joker{},",
-            "then apply {C:purple}eternal{} to all jokers",
+            "Turn all owned Jokers into one random {C:attention}Joker{},",
+            "then apply {C:purple}eternal{} to all Jokers",
             credit("Pangaea"),
         }
     },
@@ -461,7 +461,7 @@ SMODS.Consumable {
         name = "Maleficence",
         text = {
             "Destroy all {C:attention}M Jokers{}, then",
-            "apply {C:attention}Jolly{} to all jokers",
+            "apply {C:attention}Jolly{} to all Jokers",
             credit("Pangaea"),
         }
     },
@@ -636,8 +636,8 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Big Slurp",
         text = {
-            "{C:red}Banish{} all owned {C:attention}jokers{}, then create",
-            "a {C:rare}rare{} {C:attention}joker{} for each banished {C:attention}joker{}",
+            "{C:red}Banish{} all owned {C:attention}Jokers{}, then create",
+            "a {C:rare}rare{} {C:attention}Joker{} for each banished {C:attention}Joker{}",
             credit("Pangaea"),
         }
     },
@@ -770,9 +770,9 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Stagnancy",
         text = {
-            "All owned jokers are made {C:purple}eternal{}",
+            "All owned Jokers are made {C:purple}eternal{}",
             "Jokers have a {C:green}5%{} chance to be",
-            "replaced by an {C:cry_exotic}exotic{} joker",
+            "replaced by an {C:cry_exotic}exotic{} Joker",
             credit("Pangaea"),
         }
     },

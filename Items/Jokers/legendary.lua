@@ -3,8 +3,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Niko Gray",
         text = {
-            "When blind selected, {C:red}debuff{} leftmost joker and {C:attention}double{} its values",
-            "Remove {C:red}debuff{} from all jokers at end of round",
+            "When blind selected, {C:red}debuff{} leftmost Joker and {C:attention}double{} its values",
+            "Remove {C:red}debuff{} from all Jokers at end of round",
             quote("niko"),
             credit("Scraptake")
         }
@@ -75,9 +75,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Lilac Lilybean",
         text = {
-            "Creates a random {C:dark_edition}Negative{} {C:attention}food joker{} at end of round.",
+            "Creates a random {C:dark_edition}Negative{} {C:attention}food Joker{} at end of round.",
             "When boss blind defeated, Increase ",
-            "{C:attention}sell value{} of all food jokers by {C:attention}X#1#{}.",
+            "{C:attention}sell value{} of all food Jokers by {C:attention}X#1#{}.",
             quote("lilac"),
             credit("Scraptake")
         }
@@ -253,7 +253,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Sin E.P. Scarlett",
         text = {
-            "When {C:blue}hand{} played, multiply a random {C:attention}jokers{}",
+            "When {C:blue}hand{} played, multiply a random {C:attention}Jokers{}",
             "values by a random number between {C:attention}X#1#{} and {C:attention}X#2#{}",
             credit("mailingway")
         }

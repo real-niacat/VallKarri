@@ -77,7 +77,7 @@ return {
             painted = {
                 name = "Painted Deck",
                 text = {
-                    "{C:attention}+1{} Hand Size when a {C:common}non-common{} joker is sold"
+                    "{C:attention}+1{} Hand Size when a {C:common}non-common{} Joker is sold"
                 }
             },
             anaglyph = {

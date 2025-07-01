@@ -47,7 +47,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Loyalty Card{}",
         text = {
-            "{C:attention}Double{} this jokers {{X:dark_edition,C:white}^Mult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
+            "{C:attention}Double{} this Jokers {{X:dark_edition,C:white}^Mult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Mult)",
             credit("Scraptake")
         }
@@ -133,8 +133,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Joker Stencil{}",
         text = {
-            "{C:attention}+#1#{} Joker slots, double this value when joker sold",
-            "Gives {X:mult,C:white}Xmult{} equal to total joker slots",
+            "{C:attention}+#1#{} Joker slots, double this value when Joker sold",
+            "Gives {X:mult,C:white}Xmult{} equal to total Joker slots",
             "{C:inactive}(Caps at {C:attention}+#2#{C:inactive} Joker Slots){}",
             credit("Scraptake")
         }
@@ -213,8 +213,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Ceremonial Dagger{}",
         text = {
-            "When {C:attention}blind{} selected, {C:red,E:1}destroy{} joker to the right and",
-            "added its sell value to this jokers {X:dark_edition,C:white}^Mult{}",
+            "When {C:attention}blind{} selected, {C:red,E:1}destroy{} Joker to the right and",
+            "added its sell value to this Jokers {X:dark_edition,C:white}^Mult{}",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#1#{C:inactive} Mult)",
             credit("Scraptake")
         }
@@ -270,8 +270,8 @@ SMODS.Joker {
         text = {
             "{C:attention}+#1#{} hand size when card scored",
             "Convert hand size beyond {C:attention}#2#{} to consumable slots at a {C:attention}#3# : 1{} ratio",
-            "Convert consumable slots beyond {C:attention}#2#{} to joker slots at a {C:attention}#3# : 1{} ratio",
-            "Convert joker slots beyond {C:attention}#2#{} to shop slots at a {C:attention}#3# : 1{} ratio",
+            "Convert consumable slots beyond {C:attention}#2#{} to Joker slots at a {C:attention}#3# : 1{} ratio",
+            "Convert Joker slots beyond {C:attention}#2#{} to shop slots at a {C:attention}#3# : 1{} ratio",
             credit("Scraptake")
         }
     },

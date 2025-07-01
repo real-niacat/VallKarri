@@ -51,7 +51,7 @@ SMODS.Back {
     loc_txt = {
         name = "Tauic Deck",
         text = {
-            "{C:cry_ember}Tauic{} jokers do not need {C:attention}Tauist{} to spawn",
+            "{C:cry_ember}Tauic{} Jokers do not need {C:attention}Tauist{} to spawn",
             "and spawn {C:attention}2x{} more often.",
             "{C:attention}0.5x{} {C:cry_ember}Tauic{} Joker chance increase"
         }
