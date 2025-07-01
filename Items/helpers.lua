@@ -40,6 +40,7 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
     return result_main
 end
 
+table.insert(SMODS.calculation_keys, 'taubp_extras')
 function quote(character)
     -- assume character is in quotes because i'm not a fucking idiot
     local quotes = {
