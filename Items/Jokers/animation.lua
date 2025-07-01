@@ -47,8 +47,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:money}Yellow{}",
         text = {
-            "Create a {C:dark_edition}negative{} {C:cry_code}code card{} when any",
-            "{C:cry_code}non-code{} card is sold"
+            "Create a {C:dark_edition}Negative{} {C:cry_code}Code Card{} when any",
+            "non-{C:cry_code}Code Card{} is sold"
         }
     },
 
