@@ -472,7 +472,8 @@ SMODS.Consumable {
     config = { extra = { } },
 
     loc_vars = function(self, info_queue, card)
-
+        -- info_queue[#info_queue+1] = G.P_CENTERS.j_jolly
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_cry_m
         return {vars = { }}
         
     end,
