@@ -133,7 +133,7 @@ function get_ante_change(theoretical_score, debug)
 
     local arrow_diff = #to_big(G.GAME.chips).array - #to_big(G.GAME.blind.chips).array
     if arrow_diff ~= 0 then
-        anteChange = anteChange ^ ((arrow_diff ^ 0.73) / 10)
+        anteChange = anteChange ^ ((arrow_diff ^ 0.75) / 10)
     end
     
     anteChange = math.floor(anteChange) 
