@@ -865,7 +865,7 @@ SMODS.Consumable {
         local capable = {}
 
         for name,center in pairs(G.GAME.cry_banished_keys) do
-            if G.P_CENTERS[name].set == "Cataclysm" then
+            if G.P_CNETERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
                 capable[#capable+1] = name
             end
         end
