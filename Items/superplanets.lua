@@ -1,6 +1,6 @@
 SMODS.ConsumableType {
     key = "Superplanet",
-    collection_rows = {4, 3},
+    collection_rows = {4, 4},
     primary_colour = HEX("1378D6"),
     secondary_colour = HEX("0058A0"),
     shop_rate = 0.002,

@@ -220,12 +220,12 @@ SMODS.Joker {
     loc_txt = {
         name = "Femtanyl",
         text = {
-            "Prevents death at the cost of {C:attention}#1#{} joker slot",
-            "Return lost joker slot after {C:attention}#2#{} round(s)",
+            "Prevents death at the cost of {C:attention}#1#{} Joker slot",
+            "Return lost Joker slot after {C:attention}#2#{} round(s)",
             "Increase round timer by {C:attention}#3#{} and earn {C:money}$#4#{} when death is prevented",
-            "{C:inactive}Dying again or removing this joker while the timer is active{}",
-            "{C:inactive}will result in not recovering a joker slot{}",
-            "{C:inactive}Does not prevent death if you end up below 3 joker slots{}",
+            "{C:inactive}Dying again or removing this joker while the timer {}",
+            "{C:inactive}is active will result in not recovering a joker slot{}",
+            "{C:inactive}(Does not work below 3 joker slots){}",
             
             quote("femtanyl"),
             credit("Scraptake")
