@@ -14,7 +14,7 @@ if vallkarri.config.metaprogression then
     assert(SMODS.load_file("Items/metaprogression.lua", "vallkarri"))()
 end
 
--- assert(SMODS.load_file("Items/hands.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/hands.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/cursed.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/animation.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/subepic.lua", "vallkarri"))()
@@ -37,3 +37,4 @@ assert(SMODS.load_file("Items/cataclysm.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/crossmod.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/superwin.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/convo.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/planetoids.lua", "vallkarri"))()

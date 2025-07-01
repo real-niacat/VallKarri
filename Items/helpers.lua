@@ -54,6 +54,13 @@ function chardesc(text)
 
 end
 
+function times_used(key)
+    for name,card in pairs(G.GAME.consumeable_usage) do
+        if name == key then return card.count end
+    end
+    return 0
+end
+
 
 -- simplified code from jenlib
 
