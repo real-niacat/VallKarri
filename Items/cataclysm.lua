@@ -401,6 +401,9 @@ SMODS.Consumable {
         end
 
         for i,center in ipairs(G.P_CENTER_POOLS.Tarot) do
+            if not G.GAME.vallkarri.spawn_multipliers then
+                G.GAME.vallkarri.spawn_multipliers = {}
+            end
             if not G.GAME.vallkarri.spawn_multipliers[center.key] then
                 G.GAME.vallkarri.spawn_multipliers[center.key] = 1
             end
@@ -567,6 +570,9 @@ SMODS.Consumable {
         end
 
         for i,center in ipairs(G.P_CENTER_POOLS.Tarot) do
+            if not G.GAME.vallkarri.spawn_multipliers then
+                G.GAME.vallkarri.spawn_multipliers = {}
+            end
             if not G.GAME.vallkarri.spawn_multipliers[center.key] then
                 G.GAME.vallkarri.spawn_multipliers[center.key] = 1
             end
@@ -700,6 +706,9 @@ SMODS.Consumable {
         G.GAME.ban_tags = true
 
         for i,center in ipairs(G.P_CENTER_POOLS.Spectral) do
+            if not G.GAME.vallkarri.spawn_multipliers then
+                G.GAME.vallkarri.spawn_multipliers = {}
+            end
             if not G.GAME.vallkarri.spawn_multipliers[center.key] then
                 G.GAME.vallkarri.spawn_multipliers[center.key] = 1
             end
