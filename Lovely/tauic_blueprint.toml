@@ -59,7 +59,7 @@ payload = '''if (self.ability.name == "j_valk_tau_blueprint") then
                 }
             end
             return {
-                bp_extras = taubp_extras
+                taubp_extras = taubp_extras
             }
         end
     end

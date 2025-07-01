@@ -22,6 +22,24 @@ function days_since(year, month, day)
 
 end
 
+local old_indiv_effect = SMODS.calculate_individual_effect
+function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+    local result_main = old_indiv_effect(effect, scored_card, key, amount, from_edition)
+
+    if (key == 'taubp_extras') and amount and (#amount > 0) then
+        local result = nil
+        for i = 1, #amount do
+            local part = SMODS.calculate_effect(amount[i], scored_card)
+            if part == true then
+                result = true
+            end
+        end
+        return result
+    end
+
+    return result_main
+end
+
 function quote(character)
     -- assume character is in quotes because i'm not a fucking idiot
     local quotes = {
