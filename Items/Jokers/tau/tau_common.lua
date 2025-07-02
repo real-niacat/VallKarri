@@ -231,7 +231,7 @@ SMODS.Joker {
         
         if context.pre_discard then
 
-            level_all_hands(card, 0, G.GAME.current_round.discards_left)
+            level_all_hands(card, 0, to_number(G.GAME.current_round.discards_left))
         end
 
     end
