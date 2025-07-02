@@ -158,6 +158,11 @@ function Game:update(dt)
         G.HUD:get_UIE_by_ID("hand_mult_area").UIT = 0
     end
 
+    if G.PROFILES and G.SETTINGS.profile and G.PROFILES[G.SETTINGS.profile] then
+        G.PROFILES[G.SETTINGS.profile].cry_gameset = "madness"
+        G.PROFILES[G.SETTINGS.profile].cry_intro_complete = true
+    end
+
 end
 
 local fakestart = Game.start_run
