@@ -20,7 +20,7 @@ SMODS.Joker {
     no_doe = true,
     calculate = function(self, card, context)
         
-        if (context.remove_playing_cards) then
+        if context.remove_playing_cards and not context.blueprint then
 
             card.ability.extra.cur = card.ability.extra.cur + (card.ability.extra.gain * #context.removed)
 
