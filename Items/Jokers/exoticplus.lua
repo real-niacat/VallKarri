@@ -40,7 +40,7 @@ SMODS.Joker {
         name = "Phicer Rekiniov",
         text = {
             "{X:dark_edition,C:white}#1##2#{} Chips",
-            "{C:inactive,s:0.7}Where N is the length of the OmegaNum array, plus one{}",
+            "Increase operator by {C:attention}1{} for each copy of this card owned",
             quote("phicer"),
             credit("Nerxiana"),
         }
@@ -49,8 +49,8 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
 
         
-
-        return {vars = {"{n}", card.ability.extra.nchips}}
+        local op = 1+(#SMODS.find_card("j_valk_phicer"))
+        return {vars = {"{"..op.."}", card.ability.extra.nchips}}
     end,
     rarity = "valk_prestigious",
     atlas = "main",
@@ -63,17 +63,11 @@ SMODS.Joker {
     calculate = function(self, card, context)
         
         if context.joker_main or context.forcetrigger then
-            local base = #hand_chips.array + 1
-
-            if hand_chips < to_big(10):tetrate(5) then
-                base = 2
-            end
-
             return {
-                hyper_chips = {base, card.ability.extra.nchips}
+                hyper_chips = {1+(#SMODS.find_card("j_valk_phicer")), card.ability.extra.nchips}
             }
-
         end
+
     end,
 
     lore = {
@@ -169,7 +163,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Scraptake",
         text = {
-            "Gain {C:money}$1{} for every {C:blue}chip{} {C:attention}overscored{} at end of round",
+            "Lose all money when hand played",
+            "Earn {C:attention}Log2(Overscore){} dollars at end of round",
+            "{C:inactive}(Capped at blind size){}",
             quote("scraptake"),
             credit("Scraptake")
         }
@@ -185,12 +181,9 @@ SMODS.Joker {
     cost = 500,
     immutable = true,
     demicoloncompat = true,
-    calculate = function(self, card, context)
-
-    end,
 
     calc_dollar_bonus = function(self, card)
-        return G.GAME.chips - G.GAME.blind.chips
+        return math.min(math.log(G.GAME.chips - G.GAME.blind.chips, 2), G.GAME.blind.chips)
     end,
 }
 
@@ -205,7 +198,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { fallback_red = 34, fallback_blue = 41, max = 10, exponent = 5 } },
+    config = { extra = { fallback_red = 38, fallback_blue = 48, max = 10, exponent = 5 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {"{" .. math.ceil(ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )) .. "}", (card.ability.extra.fallback_blue + card.ability.extra.fallback_red), } }
     end,
@@ -362,8 +355,8 @@ SMODS.Joker {
     }
 }
 
-SMODS.Joker {
--- quilla = {
+-- SMODS.Joker {
+quilla = {
     key = "quilla",
     loc_txt = {
         name = "Quilla",
