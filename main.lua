@@ -60,8 +60,9 @@ merge_recipes = {
 }
 
 
-
-assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
+if not next(SMODS.find_mod("cryptposting")) then 
+    assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
+end
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
 Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)

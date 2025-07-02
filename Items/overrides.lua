@@ -304,6 +304,14 @@ SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
 local calceff = SMODS.calculate_individual_effect
 function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
     
+    if scored_card.ability.valk_marked_for_death then
+        if G.GAME.current_round.hands_left ~= 1 then
+            ease_hands_played(-(G.GAME.current_round.hands_left-1))
+        end
+        ease_discard(-4)
+        return false
+    end
+
     if G.GAME.zulu then
         if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
             amount = (1+amount) ^ G.GAME.zulu

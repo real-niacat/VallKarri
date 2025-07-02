@@ -103,3 +103,18 @@ SMODS.Back {
         
     end
 }
+
+SMODS.Back {
+    key = "sunbeam",
+    loc_txt = {
+        name = "Sunbeam Deck",
+        text = {
+            "Start with {C:attention,T:v_valk_legendary_perkup}Legendary PERK-UP{},",
+            "{C:attention,T:v_valk_exotic_perkup}Exotic PERK-UP{}, and ",
+            "{C:attention,T:v_valk_prestige_up}PRESTIGE-UP{}",
+        }
+    },
+    config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exotic_perkup", "v_valk_prestige_up" } },
+    pos = {x=0, y=0},
+    atlas = "phold",
+}

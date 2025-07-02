@@ -162,6 +162,7 @@ function vallkarri.debug_reset_lvl(areyousure)
         G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
         G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
         G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
+        short_update_meta()
     end
 end
 
@@ -171,14 +172,13 @@ function vallkarri.xp_required(level)
     local arrows = 0
     local exp = 1
 
-    local nlv = to_number(level)
-    if nlv > 100 then arrows = 1 end
-    if nlv > 1000 then arrows = 2 end
-    if nlv > 100000 then arrows = 3 end --intentional, didn't double press 0.
-    if nlv > 10000 then exp = 3 end
-    if nlv > 20000 then exp = 6 end
-    if nlv > 35000 then exp = 24 end
+    local nlv = (level) -- shorthand. dumb i know
+    arrows = nlv:tetrate(0.1)
+    exp = math.log(nlv, 2)
 
+    if (level < to_big(1000)) and (arrows > to_big(1)) then
+        arrows = 1    
+    end
 
     return 100 * to_big(level):arrow(math.floor(arrows), (level^0.5) ^ exp)
 end

@@ -121,6 +121,8 @@ SMODS.Joker {
         end
     end
 }
+-- abcdefg
+--    defg
 
 SMODS.Joker {
     key = "cassknows",
