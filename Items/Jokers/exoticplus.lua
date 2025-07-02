@@ -7,7 +7,6 @@ SMODS.Joker {
             "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
             quote("valklua"),
             credit("Scraptake"),
-            concept("Arris"),
         }
     },
     config = { extra = { mult = 1 } },
@@ -164,7 +163,7 @@ SMODS.Joker {
         name = "Scraptake",
         text = {
             "Lose all money when hand played",
-            "Earn {C:attention}Log2(Overscore){} dollars at end of round",
+            "Earn {C:money}Log1.1(Overscore){} dollars at end of round",
             "{C:inactive}(Capped at blind size){}",
             quote("scraptake"),
             credit("Scraptake")
@@ -182,8 +181,14 @@ SMODS.Joker {
     immutable = true,
     demicoloncompat = true,
 
+    calculate = function(self, card, context)
+        if context.before then
+            ease_dollars(-G.GAME.dollars)
+        end
+    end,
+
     calc_dollar_bonus = function(self, card)
-        return math.min(math.log(G.GAME.chips - G.GAME.blind.chips, 2), G.GAME.blind.chips)
+        return math.min(math.log(G.GAME.chips - G.GAME.blind.chips, 1.1), G.GAME.blind.chips)
     end,
 }
 
