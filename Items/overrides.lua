@@ -309,7 +309,7 @@ SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
 local calceff = SMODS.calculate_individual_effect
 function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
     
-    if scored_card.ability.valk_marked_for_death then
+    if scored_card and scored_card.ability and scored_card.ability.valk_marked_for_death then
         if G.GAME.current_round.hands_left ~= 1 then
             ease_hands_played(-(G.GAME.current_round.hands_left-1))
         end

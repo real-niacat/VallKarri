@@ -292,3 +292,75 @@ SMODS.Joker {
 }
 -- watcher does NOT always look stupid 
 
+SMODS.Joker {
+    key = "periapt_beer",
+    loc_txt = {
+        name = "Periapt Beer",
+        text = {
+            "Create a {C:tarot}Charm Tag{} and {C:attention}The Fool{} when sold"
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+    end,
+    atlas = "main",
+    pos = {x = 5, y = 11},
+    cost = 6,
+    rarity = 2,
+    calculate = function(self, card, context)
+        if context.selling_self then
+            add_tag(Tag("tag_charm"))
+            local fool = SMODS.create_card({key = "c_fool"})
+            fool:add_to_deck()
+            G.consumeables:emplace(fool)
+        end
+    end,
+}
+
+SMODS.Joker {
+    key = "stellar_yogurt",
+    loc_txt = {
+        name = "Stellar Yogurt",
+        text = {
+            "Create a {C:planet}Meteor Tag{} and {C:attention}The Fool{} when sold"
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+    end,
+    atlas = "main",
+    pos = {x = 6, y = 11},
+    cost = 6,
+    rarity = 2,
+    calculate = function(self, card, context)
+        if context.selling_self then
+            add_tag(Tag("tag_meteor"))
+            local fool = SMODS.create_card({key = "c_fool"})
+            fool:add_to_deck()
+            G.consumeables:emplace(fool)
+        end
+    end,
+}
+
+SMODS.Joker {
+    key = "hexed_spirit",
+    loc_txt = {
+        name = "Hexed Spirit",
+        text = {
+            "Create two {C:spectral}Ethereal Tags{} when sold"
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+    end,
+    atlas = "main",
+    pos = {x = 7, y = 11},
+    cost = 6,
+    rarity = 2,
+    calculate = function(self, card, context)
+        if context.selling_self then
+            add_tag(Tag("tag_ethereal"))
+            add_tag(Tag("tag_ethereal"))
+        end
+    end,
+}
