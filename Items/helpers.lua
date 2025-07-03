@@ -262,6 +262,10 @@ function joker_owned(key)
 
 end
 
+function immutable_chance_roll(source, percent_chance)
+    return pseudorandom(source)*100 <= percent_chance
+end
+
 function quick_card_speak(card, text, wait)
     card_eval_status_text(card, 'extra', nil, nil, nil, {message = text, delay = wait})
 end
