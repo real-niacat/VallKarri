@@ -1,3 +1,12 @@
+SMODS.Atlas {
+    key = "bli",
+    path = "blinds.png",
+    px = 34,
+    py = 34,
+    atlas_table = 'ANIMATION_ATLAS',
+    frames = 21,
+}
+
 SMODS.Blind {
     key = "fanningflames",
     loc_txt = {
@@ -9,6 +18,8 @@ SMODS.Blind {
             "Must play at least 4 cards"
         }
     },
+    atlas = "bli",
+    pos = {y = 0, x = 0},
     boss = {min = 32, max = 0},
     boss_colour = HEX("EB7632"),
     dollars = 0,
