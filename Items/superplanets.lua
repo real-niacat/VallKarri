@@ -297,3 +297,42 @@ SMODS.Consumable {
     no_grc = true,
     no_doe = true,
 }
+
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "eulogia",
+    loc_txt = {
+        name = "{f:6}εὐλογία{}",
+        text = {
+            "Level up all hands {C:attention}once{}",
+            "Then multiply all hand levels by {C:attention}#1#{}",
+            "Double this value for each {C:attention,f:6}#2#{} used in run",
+            credit("mailingway"),
+        }
+    },
+
+    no_doe = true,
+
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            2 ^ to_big(times_used(self.key)),
+            localize{type = "name_text", set = self.set, key = self.key}
+        }}
+    end,
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        level_all_hands(card, 1)
+        level_all_hands(card, nil, (2 ^ times_used(self.key))-1)
+    end,
+
+        
+    atlas = "csm",
+    pos = {x=7, y=0},
+    no_grc = true,
+    no_doe = true,
+}

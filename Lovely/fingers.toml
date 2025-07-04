@@ -12,5 +12,8 @@ payload = '''
 if next(SMODS.find_card('j_valk_tau_fingers')) then
     return 3
 end
+if G.GAME.strush_override then
+    return G.GAME.strush_override
+end
 '''
 match_indent = true
