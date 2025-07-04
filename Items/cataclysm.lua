@@ -236,6 +236,7 @@ SMODS.Consumable {
         self_annihilate(card)
 
         ease_discard(-card.ability.extra.change)
+        G.GAME.round_resets.discards = G.GAME.round_resets.discards - 20 
         G.consumeables:change_size(card.ability.extra.change)
     end
 }
