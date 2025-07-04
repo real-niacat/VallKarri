@@ -716,6 +716,9 @@ SMODS.Booster {
         
 
     end,
+    in_pool = function()
+        return G.GAME.round_resets.ante >= 4
+    end
 }
 
 SMODS.Booster {
@@ -751,4 +754,7 @@ SMODS.Booster {
         
 
     end,
+    in_pool = function()
+        return G.GAME.round_resets.ante >= 4
+    end
 }
