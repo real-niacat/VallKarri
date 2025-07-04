@@ -167,3 +167,34 @@ SMODS.Joker {
     end
 
 }
+
+SMODS.Consumable {
+    set = "Planet",
+    key = "etheirys",
+    loc_txt = {
+        name = "Etheirys",
+        text = {
+            "(lvl.#1#) Level up",
+            "{C:attention}#2#{}",
+            "{C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
+        }
+    },
+    config = { extra = {handtype = "valk_fullmansion"}},
+    loc_vars = function(self, info_queue, card)
+        return { vars = {
+            G.GAME.hands[card.ability.extra.handtype].level,
+            localize(card.ability.extra.handtype, 'poker_hands'),
+            G.GAME.hands[card.ability.extra.handtype].l_mult,
+            G.GAME.hands[card.ability.extra.handtype].l_chips,
+        }}
+    end,
+    atlas = "main",
+    pos = {x=4, y=8},
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, copier)
+        level_up_hand(card, card.ability.extra.handtype, nil, 1)
+    end,
+}

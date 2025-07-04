@@ -183,6 +183,11 @@ function vallkarri.xp_required(level)
     return 100 * to_big(level):arrow(math.floor(arrows), (level^0.5) ^ exp)
 end
 
+function vallkarri.set_xp(exp)
+    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(exp) --obligatory to_big so that end users can eval this safely
+    short_update_meta()
+end
+
 function vallkarri.mod_level(amount, from_xp)
     G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl + amount
 
