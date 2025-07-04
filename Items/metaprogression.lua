@@ -290,7 +290,7 @@ end
 
 local easemoneyhook = ease_dollars
 function ease_dollars(mod, x)
-    local add_money_per = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 100) * 0.2
+    local add_money_per = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 2) * 0.02
 
     easemoneyhook(mod + add_money_per, x)
 
