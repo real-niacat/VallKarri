@@ -53,7 +53,7 @@ function create_UIBox_HUD(force)
     -- G.HUD:get_UIE_by_ID("chipmult_op").scale = 0
 
 	if (G.GAME.mult_disabled or force) then 
-
+        -- THIS DOESNT MAKE SENSE BUT IT WORKS :)
 		res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[2].nodes[1].config.minw = 4
 		res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[2].nodes[2] = {n=G.UIT.C, config={align = "cm"}, nodes={
 			{n=G.UIT.T, config={id = "chipmult_op", text = "", lang = G.LANGUAGES['en-us'], scale = 0, colour = G.C.WHITE, shadow = true}},
@@ -66,8 +66,14 @@ function create_UIBox_HUD(force)
 		}}
 	end 
 
+    res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[4] = {n=G.UIT.R, config={align = "cm", minh = 0.5}, nodes={{n=G.UIT.C, config={align = "cm"}, nodes={
+			{n=G.UIT.T, config={id = "bufftext", ref_table = G.GAME, ref_value = "buff_text", scale = 0.3, colour = G.C.WHITE, shadow = true}},
+		}}}}
+
 	return res
     -- test tst etetdstestredf
+
+    -- IFUCKING HATE UI
 end
 
 local fakeeval = evaluate_play_final_scoring
@@ -170,6 +176,7 @@ end
 local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
+    G.GAME.buff_text = ""
 
     if not G.GAME.vallkarri then
         G.GAME.vallkarri = {}
@@ -219,6 +226,77 @@ function Game:start_run(args)
 
         end
     end
+end
+
+local uhthook = update_hand_text
+function update_hand_text(config, vals)
+    uhthook(config, vals)
+
+    local kvps = {
+        m_bonus = {title = "EXTRA", colour = G.C.CHIPS},
+        m_mult = {title = "MULTI", colour = G.C.MULT},
+        m_gold = {title = "GILDED", colour = G.C.MONEY},
+        m_lucky = {title = "CHANCE", colour = G.C.GREEN},
+        m_glass = {title = "SHATTERED", colour = G.C.WHITE},
+        m_steel = {title = "FORGED", colour = G.C.GREY},
+        m_stone = {title = "CRACKED", colour = darken(G.C.GREY, 10)},
+        m_cry_echo = {title = "ECHOING", colour = G.C.PURPLE},
+        m_cry_abstract = {title = "ABSTRACTED", colour = G.C.CRY_ASCENDANT},
+    }
+
+    local enhancements = {}
+    for i,card in ipairs(G.hand.highlighted) do
+        for key,enhancement in pairs(SMODS.get_enhancements(card)) do
+            enhancements[#enhancements+1] = key
+        end
+    end
+    if not (#enhancements > 0) then
+        G.GAME.buff_text = ""
+        return
+    end
+
+    local counts = {}
+    for i,enh in ipairs(enhancements) do
+
+        if kvps[enh] then
+            if not counts[enh] then
+                counts[enh] = 1
+            else
+                counts[enh] = counts[enh]+1
+            end
+        end
+    end
+
+    -- string is build like +NAME+2xNAME+3xNAME
+    -- not in order of number
+    local str = ""
+    local colour = nil
+    for name,count in pairs(counts) do
+        if count > 1 then
+            str = str .. " + " .. count .. "x" .. kvps[name].title
+        else
+            str = str .. " + " .. kvps[name].title
+        end
+    end
+
+    for name,vals in pairs(kvps) do
+        if counts[name] then
+            colour = vals.colour
+        end
+    end
+
+    G.E_MANAGER:add_event(Event({--Hello LocalThunk
+        trigger = 'before',
+        blockable = not config.immediate,
+        delay = config.delay or 0.8,
+        func = function()
+            G.GAME.buff_text = str
+            G.HUD:get_UIE_by_ID("bufftext"):juice_up()
+            G.HUD:get_UIE_by_ID("bufftext").config.colour = colour
+            return true 
+
+        end
+    }))
 end
 
 glcui = nil
