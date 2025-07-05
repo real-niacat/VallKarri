@@ -274,7 +274,7 @@ function update_hand_text(config, vals)
     G.GAME.applied_buffs = {}
     for name,count in pairs(counts) do
         if count > 5 then
-            str = str .. " + " .. count-5 .. "x" .. kvps[name].title
+            str = str .. " + " .. count-4 .. "x" .. kvps[name].title
             G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
         elseif count == 5 then
             str = str .. " + " .. kvps[name].title
