@@ -230,6 +230,7 @@ end
 
 local uhthook = update_hand_text
 function update_hand_text(config, vals)
+-- function disabledfunc(config,vals)
     uhthook(config, vals)
 
     local kvps = {
@@ -271,11 +272,14 @@ function update_hand_text(config, vals)
     -- not in order of number
     local str = ""
     local colour = nil
+    G.GAME.applied_buffs = {}
     for name,count in pairs(counts) do
-        if count > 1 then
-            str = str .. " + " .. count .. "x" .. kvps[name].title
-        else
+        if count > 5 then
+            str = str .. " + " .. count-5 .. "x" .. kvps[name].title
+            G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
+        else if count == 5 then
             str = str .. " + " .. kvps[name].title
+            G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
         end
     end
 
