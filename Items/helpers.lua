@@ -657,3 +657,23 @@ function do_while_flipped(cards, func) --mostly borrowed from entropy, thank you
         end
     end
 end
+
+function fix_decimal_hand_levels()
+
+    if not (G and G.GAME and G.GAME.hands) then
+        return
+    end
+    for name,hand in pairs(G.GAME.hands) do
+        local lvl = G.GAME.hands[name].level
+        if not (type(lvl) == "number" and math.floor(lvl) == lvl) then
+            lvl = to_number(math.ceil(lvl))
+        end
+
+        local diff = G.GAME.hands[name].level - lvl
+        G.GAME.hands[name].chips = G.GAME.hands[name].chips + (G.GAME.hands[name].l_chips * diff)
+        G.GAME.hands[name].mult = G.GAME.hands[name].mult + (G.GAME.hands[name].l_mult * diff)
+        G.GAME.hands[name].level = lvl
+
+    end
+
+end

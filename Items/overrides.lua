@@ -163,6 +163,8 @@ function Game:update(dt)
         G.PROFILES[G.SETTINGS.profile].cry_intro_complete = true
     end
 
+    fix_decimal_hand_levels()
+
 end
 
 local fakestart = Game.start_run
