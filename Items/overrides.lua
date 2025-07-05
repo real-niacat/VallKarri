@@ -206,33 +206,7 @@ function Game:start_run(args)
         G.GAME.tau_increase = G.GAME.tau_increase / 2
     end
 
-    for i,center in pairs(G.P_CENTERS) do
-        if center.oldrarity then
-
-            -- remove from the old pool
-            local pool = G.P_JOKER_RARITY_POOLS[center.rarity]
-            for idx = #pool, 1, -1 do
-                if pool[idx] == center.key then
-                    table.remove(pool, idx)
-                    break
-                end
-            end
-
-            -- readd to it's original pool
-            G.P_JOKER_RARITY_POOLS[center.oldrarity][center.key] = center
-
-            center.rarity = center.oldrarity
-
-
-        end
-    end
-end
-
-local uhthook = update_hand_text
-function update_hand_text(config, vals)
-    uhthook(config, vals)
-
-    local kvps = {
+    G.GAME.existing_buffs = {
         m_bonus = {title = "EXTRA", colour = G.C.CHIPS},
         m_mult = {title = "MULTI", colour = G.C.MULT},
         m_gold = {title = "GILDED", colour = G.C.MONEY},
@@ -243,6 +217,11 @@ function update_hand_text(config, vals)
         m_cry_echo = {title = "ECHOING", colour = G.C.PURPLE},
         m_cry_abstract = {title = "ABSTRACTED", colour = G.C.CRY_ASCENDANT},
     }
+end
+
+local uhthook = update_hand_text
+function update_hand_text(config, vals)
+    uhthook(config, vals)
 
     local enhancements = {}
     for i,card in ipairs(G.hand.highlighted) do
@@ -258,7 +237,7 @@ function update_hand_text(config, vals)
     local counts = {}
     for i,enh in ipairs(enhancements) do
 
-        if kvps[enh] then
+        if G.GAME.existing_buffs[enh] then
             if not counts[enh] then
                 counts[enh] = 1
             else
@@ -274,15 +253,15 @@ function update_hand_text(config, vals)
     G.GAME.applied_buffs = {}
     for name,count in pairs(counts) do
         if count > 5 then
-            str = str .. " + " .. count-4 .. "x" .. kvps[name].title
+            str = str .. " + " .. count-4 .. "x" .. G.GAME.existing_buffs[name].title
             G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
         elseif count == 5 then
-            str = str .. " + " .. kvps[name].title
+            str = str .. " + " .. G.GAME.existing_buffs[name].title
             G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
         end
     end
 
-    for name,vals in pairs(kvps) do
+    for name,vals in pairs(G.GAME.existing_buffs) do
         if counts[name] then
             colour = vals.colour
         end
