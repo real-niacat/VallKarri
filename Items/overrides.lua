@@ -230,7 +230,6 @@ end
 
 local uhthook = update_hand_text
 function update_hand_text(config, vals)
--- function disabledfunc(config,vals)
     uhthook(config, vals)
 
     local kvps = {
@@ -277,7 +276,7 @@ function update_hand_text(config, vals)
         if count > 5 then
             str = str .. " + " .. count-5 .. "x" .. kvps[name].title
             G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
-        else if count == 5 then
+        elseif count == 5 then
             str = str .. " + " .. kvps[name].title
             G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
         end
@@ -298,7 +297,6 @@ function update_hand_text(config, vals)
             G.HUD:get_UIE_by_ID("bufftext"):juice_up()
             G.HUD:get_UIE_by_ID("bufftext").config.colour = colour
             return true 
-
         end
     }))
 end
