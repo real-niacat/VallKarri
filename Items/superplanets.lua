@@ -34,8 +34,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Thorne-Zytkow Object",
         text = {
-            "All hands gain " .. expochips("#1#") .. " Chips",
-            "Plus another " .. expochips("#1#") .. " Chips for every 5 levels on any hand",
+            "All hands gain " .. expochips("#1#") .. " Chips,",
+            "plus another " .. expochips("#1#") .. " Chips for every 5 levels on any hand",
             credit("mailingway"),
             concept("arris")
         }
@@ -90,8 +90,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Planck Star",
         text = {
-            "All hands gain " .. expomult("#1#") .. " Mult",
-            "Plus another " .. expomult("#1#") .. " Mult for every 5 levels on",
+            "All hands gain " .. expomult("#1#") .. " Mult,",
+            "plus another " .. expomult("#1#") .. " Mult for every 5 levels on",
             "{C:attention}High Card{}, {C:attention}Pair{}, and {C:attention}Two Pair{}",
             credit("mailingway"),
             concept("arris")
@@ -143,8 +143,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Cosmic String",
         text = {
-            "All hands gain " .. tetrvalue("#1#") .. " Chips",
-            "Plus another " .. tetrvalue("#1#") .. " Chips for every 5 levels on",
+            "All hands gain " .. tetrvalue("#1#") .. " Chips,",
+            "plus another " .. tetrvalue("#1#") .. " Chips for every 5 levels on",
             "{C:attention}Five of a Kind{}, {C:attention}Flush House{}, and {C:attention}Flush Five{}",
             credit("mailingway"),
             concept("arris")
@@ -197,8 +197,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "HD 209458-B",
         text = {
-            "All hands gain " .. tetrvalue("#1#") .. " Mult",
-            "Plus another " .. tetrvalue("#1#") .. " Mult for every 5 levels on",
+            "All hands gain " .. tetrvalue("#1#") .. " Mult,",
+            "plus another " .. tetrvalue("#1#") .. " Mult for every 5 levels on",
             "{C:attention}Three of a Kind{}, {C:attention}Straight{}, and {C:attention}Flush{}",
             credit("mailingway"),
             concept("arris")
@@ -251,8 +251,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Milky Way",
         text = {
-            "All hands gain " .. expomult("#1#") .. " Chips & Mult",
-            "Plus another " .. expomult("#1#") .. " Chips & Mult for",
+            "All hands gain " .. expomult("#1#") .. " Chips & Mult,",
+            "plus another " .. expomult("#1#") .. " Chips & Mult for",
             "every {C:attention}M Joker{} or {C:attention}Jolly Joker{} owned",
             credit("mailingway"),
             concept("arris")
@@ -285,8 +285,9 @@ SMODS.Consumable {
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
 
         for i,hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].mult) then
+            if (G.GAME.hands[i].mult and G.GAME.hands[i].chips) then
                 G.GAME.hands[i].mult = G.GAME.hands[i].mult:pow(value)
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips:pow(value)
             end
         end
     end,
@@ -304,8 +305,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "{f:6}εὐλογία{}",
         text = {
-            "Level up all hands {C:attention}once{}",
-            "Then multiply all hand levels by {C:attention}#1#{}",
+            "Level up all hands {C:attention}once{},",
+            "then multiply all hand levels by {C:attention}#1#{}.",
             "Double this value for each {C:attention,f:6}#2#{} used in run",
             credit("mailingway"),
         }

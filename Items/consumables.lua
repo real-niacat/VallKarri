@@ -72,11 +72,11 @@ SMODS.Booster {
     pos = {x=7, y=2},
     discovered = true,
     loc_txt = {
-        name = "Deck Fixing Pack",
+        name = "Deck-Fixing Pack",
         text = {
             "Pick {C:attention}#1#{} of {C:attention}#2#{} {C:attention}deck-fixing{} cards to use immediately",
         },
-        group_name = "Deck Fixing Pack"
+        group_name = "Deck-Fixing Pack"
     },
 
     draw_hand = true,
@@ -254,7 +254,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "://MEMORYLEAK",
         text = {
-            "Create an {C:valk_unsurpassed}Unsurpassed{} Joker and a {C:black}Supercursed{} Joker",
+            "Create an {C:valk_unsurpassed}Unsurpassed{} Joker and a {C:black}SUPERCURSED{} Joker",
             credit("Scraptake")
         }
     },
@@ -380,6 +380,7 @@ SMODS.Consumable {
         name = "Perfected Gem",
         text = {
             "Useless alone, part of a bigger picture.",
+            "Can {C:attention}combine{} with other cards",
             credit("Scraptake"),
         }
     },
@@ -413,6 +414,7 @@ SMODS.Consumable {
         name = "Gem Socket",
         text = {
             "Useless alone, part of a bigger picture.",
+            "Can {C:attention}combine{} with other cards",
             credit("Scraptake"),
         }
     },
@@ -446,6 +448,7 @@ SMODS.Consumable {
         name = "Socketed Gem",
         text = {
             "Useless alone, part of a bigger picture.",
+            "Can {C:attention}combine{} with other cards",
             credit("Scraptake"),
         }
     },
@@ -479,6 +482,7 @@ SMODS.Consumable {
         name = "Binding Energy",
         text = {
             "Useless alone, part of a bigger picture.",
+            "Can {C:attention}combine{} with other cards",
             credit("Scraptake"),
         }
     },
@@ -512,6 +516,7 @@ SMODS.Consumable {
         name = "Halo Fragment",
         text = {
             "Useless alone, part of a bigger picture.",
+            "Can {C:attention}combine{} with other cards",
             credit("Scraptake"),
         }
     },
@@ -848,7 +853,7 @@ SMODS.Consumable {
         name = "://MISSINGNO",
         text = {
             "Randomize edition of all cards {C:attention}held-in-hand{}",
-            "{C:inactive}(Only vanilla editions can be picked){}",
+            "{C:inactive}(Vanilla editions only){}",
             credit("Scraptake")
         }
     },
@@ -887,7 +892,7 @@ SMODS.Consumable {
         name = "://GASTER",
         text = {
             "Randomize enhancement of all cards {C:attention}held-in-hand{}",
-            "{C:inactive}(Only vanilla enhancement can be picked){}",
+            "{C:inactive}(Vanilla enhancements only){}",
             credit("Scraptake")
         }
     },

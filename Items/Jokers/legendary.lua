@@ -129,9 +129,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Cass None",
         text = {
-            "Gains {C:mult}+#1#{} Mult and {X:mult,C:white}X#2#{} XMult",
+            "Gains {C:mult}+#1#{} and {X:mult,C:white}X#2#{} Mult",
             "if played hand is {C:attention}None{}",
-            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} Mult and {X:mult,C:white}X#4#{C:inactive} XMult)"
+            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} and {X:mult,C:white}X#4#{C:inactive} Mult)"
         }
     },
     config = { extra = {gm = 10, gx = 0.2, m = 10, x = 1} },
@@ -201,7 +201,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Kathleen Rosetail",
         text = {
-            "{C:planet}Planet{} cards may replace {C:spectral}spectral{} and {C:tarot}tarot{} cards",
+            "{C:planet}Planet{} cards may replace {C:spectral}Spectral{} and {C:tarot}Tarot{} cards.",
             "When {C:attention}blind{} selected, add {C:attention}#1#{} editioned",
             "{C:attention}CCD{} {C:planet}planet{} cards to {C:attention}deck{}",
             credit("mailingway")
@@ -255,8 +255,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Sin E.P. Scarlett",
         text = {
-            "When {C:blue}hand{} played, multiply a random {C:attention}Jokers{}",
-            "values by a random number between {C:attention}X#1#{} and {C:attention}X#2#{}",
+            "When hand played, increase the values on a random ",
+            "{C:attention}Joker{} between {C:attention}X#1#{} and {C:attention}X#2#{}",
             credit("mailingway")
         }
     },
@@ -292,9 +292,9 @@ SMODS.Joker {
     loc_txt = {
         name = "TASAL",
         text = {
-            "{C:attention}+#1#{} Card selection limit and Hand size",
-            "{X:gold,C:white}X#2#{} Ascension scaling per level of {C:attention}Sol{}",
-            "When {C:planet}planet{} card used, increase power of {C:attention}Ascended{} hands",
+            "{C:attention}+#1#{} Card selection limit and Hand size.",
+            "{X:gold,C:white}X#2#{} Ascension scaling per level of {C:attention}Sol{}.",
+            "When {C:planet}Planet{} card used, increase power of {C:attention}Ascended{} hands",
             credit("Grahkon")
         }
     },

@@ -62,7 +62,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Streetlight",
         text = {
-            "Gains {X:mult,C:white}X#1#{} Mult when {C:attention}Light{} card scored",
+            "Gains {X:mult,C:white}X#1#{} Mult when a {C:attention}Light{} card scores",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
         }
     },

@@ -250,7 +250,7 @@ SMODS.Consumable {
         name = "Absolution",
         text = {
             "Turn all owned Jokers into one random {C:attention}Joker{},",
-            "then apply {C:purple}eternal{} to all Jokers",
+            "then apply {C:purple}Eternal{} to all Jokers",
             credit("Pangaea"),
         }
     },
@@ -371,7 +371,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Collision",
         text = {
-            "Randomly {C:red}Banish{} each {C:planet}planet{} card with",
+            "Randomly {C:red}Banish{} each {C:planet}Planet{} card with",
             "a {C:green}1 in 2{} chance",
             "All tarot cards have {C:attention}X#1#{} values",
             credit("Pangaea"),
@@ -422,8 +422,8 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Takeover",
         text = {
-            "Future {C:code}code{} cards gain {C:attention}+#1#{} multiuses",
-            "{C:attention}De-level{} all hands when {C:code}code{} card used",
+            "Future {C:code}Code{} cards gain {C:attention}+#1#{} multiuses",
+            "{C:attention}De-level{} all hands when {C:code}Code{} card used",
             credit("Pangaea"),
         }
     },
@@ -545,7 +545,7 @@ SMODS.Consumable {
         name = "Big Crunch",
         text = {
             "{C:red}Banish{} {C:attention}Jumbo{} and {C:attention}Mega{} {C:tarot}Tarot{} packs",
-            "{C:attention}X#1#{} to all future tarot values",
+            "{C:attention}X#1#{} to all future {C:tarot}Tarot{} values",
             credit("Pangaea"),
         }
     },
@@ -593,8 +593,8 @@ SMODS.Consumable {
         name = "Big Chill",
         text = {
             "{C:red}Banish{} {C:attention}Jumbo{} and {C:attention}Mega{} {C:spectral}Spectral{} packs",
-            "{C:attention}Hidden{} spectrals have a flat {C:green}5%{}",
-            "chance to replace {C:attention}non-hidden{} spectral cards",
+            "{C:attention}Hidden{} {C:spectral}Spectrals{} have a flat {C:green}5%{}",
+            "chance to replace {C:attention}non-hidden{} {C:spectral}Spectral{} cards",
             credit("Pangaea"),
         }
     },
@@ -638,7 +638,7 @@ SMODS.Consumable {
         name = "Big Slurp",
         text = {
             "{C:red}Banish{} all owned {C:attention}Jokers{}, then create",
-            "a {C:rare}rare{} {C:attention}Joker{} for each banished {C:attention}Joker{}",
+            "a {C:rare}Rare{} {C:attention}Joker{} for each banished {C:attention}Joker{}",
             credit("Pangaea"),
         }
     },
@@ -683,7 +683,7 @@ SMODS.Consumable {
         name = "Occulture",
         text = {
             "{C:attention}Tags{} are no longer obtainable,",
-            "All future {C:spectral}spectral{} cards have {C:attention}X#1#{} values",
+            "All future {C:spectral}Spectral{} cards have {C:attention}X#1#{} values",
             credit("Pangaea"),
         }
     },
@@ -728,7 +728,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Post-Existence",
         text = {
-            "Randomly {C:red}Banish{} each {C:tarot}tarot{} card with",
+            "Randomly {C:red}Banish{} each {C:tarot}Tarot{} card with",
             "a {C:green}1 in 2{} chance,",
             "{C:spectral}Spectral{} cards can be found in shop",
             credit("Pangaea"),
@@ -771,9 +771,9 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Stagnancy",
         text = {
-            "All owned Jokers are made {C:purple}eternal{}",
+            "All owned Jokers are made {C:purple}Eternal{}",
             "Jokers have a {C:green}5%{} chance to be",
-            "replaced by an {C:cry_exotic}exotic{} Joker",
+            "replaced by an {C:cry_exotic}Exotic{} Joker",
             credit("Pangaea"),
         }
     },
@@ -866,13 +866,21 @@ SMODS.Consumable {
         local capable = {}
 
         for name,center in pairs(G.GAME.cry_banished_keys) do
-            if G.P_CNETERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
+            if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
                 capable[#capable+1] = name
             end
         end
 
         G.GAME.cry_banished_keys[capable[pseudorandom("valk_unbanish",1,#capable)]] = false
-    end
+    end,
+    in_pool = function()
+        for name,center in pairs(G.GAME.cry_banished_keys) do
+            if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
+                return true
+            end
+        end
+        return false
+    end,
 }
 
 SMODS.Booster {
@@ -957,6 +965,14 @@ SMODS.Consumable {
                 G.GAME.hands[i].chips = G.GAME.hands[i].chips:arrow(4,value)
             end
         end
+    end,
+    in_pool = function()
+        for name,center in pairs(G.GAME.cry_banished_keys) do
+            if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
+                return true
+            end
+        end
+        return false
     end,
 
         

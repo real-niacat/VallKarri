@@ -18,7 +18,7 @@ Hefty upsides with hefty downsides, everything has a price. Now to figure out a 
 An ever changing particle, always complimenting the buff given by your deck.
 
 ### Superplanets
-Rare but powerful, superplanet cards encompass entire galaxies, and similarly to their large area, they bless you with hand levels untold.
+Rare but powerful, superplanet cards encompass entire galaxies, and similarly to their large area, they can provide immense buffs to your hands.
 
 ## And more, including:
 
@@ -30,4 +30,4 @@ Rare but powerful, superplanet cards encompass entire galaxies, and similarly to
 -  The Encore, Tauist, Pity, and Inertia Deck!
 -  Much more to come!
 
-  **__DOWNLOAD VALLKARRI TODAY!__**
+[Discord](https://discord.gg/5d3HWu88yn)

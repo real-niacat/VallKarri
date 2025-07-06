@@ -77,7 +77,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Sin Joker{}",
         text = {
-            "{X:dark_edition,C:white}^#1#{} Chips for every card with a suit scored, in hand or in deck",
+            "{X:dark_edition,C:white}^#1#{} Chips for every playing card with a vanilla suit",
             credit("Scraptake")
         }
     },
@@ -378,8 +378,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic 8 Ball{}",
         text = {
-            "When an {C:attention}8{} is scored, create a random {C:attention}tarot{} card",
-            "with {C:attention}X#1#{} values",
+            "When an {C:attention}8{} is scored, create a random {C:tarot}Tarot{} card",
+            "with {C:attention}#1#x{} values",
             credit("Scraptake")
         }
     },

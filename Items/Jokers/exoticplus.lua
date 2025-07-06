@@ -94,8 +94,8 @@ if MoreFluff then
         loc_txt = {
             name = "Triangle",
             text = {
-                "When blind selected, create {C:attention}#1#{} {C:dark_edition}Negative{} {C:colourcard}colour{} cards",
-                "All {C:colourcard}colour{} cards gain {C:attention}+#2#{} rounds when {C:attention}3{} scored",
+                "When {C:attention}Blind{} selected, create {C:attention}#1#{} {C:dark_edition}Negative{} {C:colourcard}Colour{} cards",
+                "All {C:colourcard}Colour{} cards gain {C:attention}+#2#{} rounds when {C:attention}3{} scored",
                 credit("notmario"),
             }
         },
@@ -278,7 +278,7 @@ SMODS.Joker {
         name = "Lily Felli",
         text = {
             "{X:dark_edition,C:white}#1##2#{} Mult",
-            "When a {C:attention}Light{} card is scored, increase this joker's operator by {C:attention}#3#{}",
+            "When a {C:attention}Light{} card is scored, increase this Jokers operator by {C:attention}#3#{}",
             "Scored {C:attention}9s{} of {C:spades}spades{} are turned into {C:attention}Light{} cards",
             "Scored {C:spades}non-spade{} {C:attention}9s{} are turned into spades",
             "Scored {C:attention}non-9s{} are turned into {C:attention}9s{}",
