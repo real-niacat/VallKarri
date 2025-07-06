@@ -302,6 +302,7 @@ SMODS.Joker {
     },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+        info_queue[#info_queue+1] = G.P_TAGS.tag_charm
     end,
     atlas = "main",
     pos = {x = 5, y = 11},
@@ -327,6 +328,7 @@ SMODS.Joker {
     },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+        info_queue[#info_queue+1] = G.P_TAGS.tag_meteor
     end,
     atlas = "main",
     pos = {x = 6, y = 11},
@@ -351,7 +353,7 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.c_fool
+        info_queue[#info_queue+1] = G.P_TAGS.tag_ethereal
     end,
     atlas = "main",
     pos = {x = 7, y = 11},
