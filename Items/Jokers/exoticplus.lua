@@ -19,7 +19,8 @@ SMODS.Joker {
     end,
     rarity = "valk_prestigious",
     atlas = "main",
-    pos = {x = 3, y = 6},
+    pos = {x = 8, y = 11},
+    soul_pos = {extra = {x=9, y=11}, x=10, y=11},
     cost = 500,
     demicoloncompat = true,
     calculate = function(self, card, context)
