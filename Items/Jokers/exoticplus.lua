@@ -6,7 +6,7 @@ SMODS.Joker {
             "{X:dark_edition,C:white}^^#1#{} Mult for every piece of content that {B:1,E:2,C:white}Vall-karri{} adds",
             "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
             quote("valklua"),
-            credit("Scraptake"),
+            credit("Grahkon"),
         }
     },
     config = { extra = { mult = 1 } },
