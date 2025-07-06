@@ -87,5 +87,8 @@ Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
 Cryptid.pointerblistifytype("rarity", "valk_unsurpassed", nil)
 Cryptid.pointerblistifytype("rarity", "valk_tauic", nil)
 Cryptid.pointerblistifytype("rarity", "valk_equip", nil)
+Cryptid.pointerblistify( "v_valk_alphaboosterator", nil)
+Cryptid.pointerblistify( "v_valk_betaboosterator", nil)
+Cryptid.pointerblistify( "v_valk_gammaboosterator", nil)
 
 Cryptid.mod_whitelist["Vall-karri"] = true
