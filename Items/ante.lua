@@ -184,7 +184,7 @@ function Game:update(dt)
     if (G.GAME.blind and G.GAME.ante_config) then
 
         if (G.GAME.blind.boss) then
-            G.GAME.blind.overchips = "Overscoring at " .. tostring(G.GAME.blind.chips:arrow(math.floor(G.GAME.ante_config.base_arrows), to_big(G.GAME.ante_config.base_exponent)))
+            G.GAME.blind.overchips = "Overscoring at " .. tostring(to_big(G.GAME.blind.chips):arrow(math.floor(G.GAME.ante_config.base_arrows), to_big(G.GAME.ante_config.base_exponent)))
         else
             G.GAME.blind.overchips = ""
         end
