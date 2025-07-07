@@ -197,6 +197,10 @@ SMODS.Consumable {
         for i,joker in ipairs(G.jokers.cards) do
             joker:set_debuff(true)
 
+            if not G.GAME.vallkarri.spawn_multipliers then
+                G.GAME.vallkarri.spawn_multipliers = {}
+            end
+
             if not G.GAME.vallkarri.spawn_multipliers[joker.config.center.key] then
                 G.GAME.vallkarri.spawn_multipliers[joker.config.center.key] = 1
             end
