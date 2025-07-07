@@ -20,13 +20,6 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
-    key = "tau",
-    path = "tauics.png",
-    px = 71,
-    py = 95,
-}
-
-SMODS.Atlas {
     key = "phold",
     path = "placeholder.png",
     px = 71,
@@ -63,22 +56,20 @@ merge_recipes = {
 local lilys_yap = "\
 ============================================================================================================================\
 hi! lily here. your game has crashed due to the fact that you are playing [VallKarri] with [Cryptposting].\
-While not logically incompatible, Cryptposting is an insult to quality balatro modding, and is\
-being maintained primarily by a person of moral questionability, as well as it being used as a vehicle\
+While not logically incompatible, Cryptposting is being maintained *primarily*\
+by a person of moral questionability, as well as it being used as a vehicle\
 to bully other people and their mods in the past.\
 \
 Both me and some of the primary artists behind VallKarri do not want our creations associated OR seen with it.\
-I cannot stop you from disabling the check for this crash manually, but I just ask that you don't\
-\
 Thank you <3\
 \
-\
-tl;dr: i don't want my creations seen with a low quality mod like cryptposting, pick one to play with\
+tl;dr: i don't want my creations seen with a problematic mod like Cryptposting, please disable VallKarri or disable the crash yourself\
+(hint: line 70 main.lua)\
 ============================================================================================================================"
-
+-- if cryptposting isnt installed, load vallkarri content
 if not next(SMODS.find_mod("cryptposting")) then 
     assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
-else
+else --otherwise give my speech
     error(lilys_yap, 0)
 end
 

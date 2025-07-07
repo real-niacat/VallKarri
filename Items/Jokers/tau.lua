@@ -1,3 +1,10 @@
+SMODS.Atlas {
+    key = "tau",
+    path = "tauics.png",
+    px = 71,
+    py = 95,
+}
+
 function load_tauics()
 
     for key,card in pairs(G.P_CENTERS) do
