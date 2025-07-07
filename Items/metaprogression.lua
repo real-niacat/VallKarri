@@ -1,6 +1,6 @@
 local function refresh_metaprog()
     if type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "Infinity" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_big(1)
+        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
     end
 
     if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" then
@@ -38,6 +38,10 @@ function Game:update(dt)
 
     if G and G.GAME then
         G.GAME.vallkarri = { text_display = vallkarri.update_meta_text() }
+    end
+
+    if G.PROFILES[G.SETTINGS.profile] and G.PROFILES[G.SETTINGS.profile].valk_cur_lvl and type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "table" then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_number(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
     end
 end
 
@@ -191,8 +195,8 @@ end
 function vallkarri.mod_level(amount, from_xp)
     G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl + amount
 
-    if G.PROFILES[G.SETTINGS.profile].valk_cur_lvl > to_big(vallkarri.level_cap) then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_big(vallkarri.level_cap)
+    if G.PROFILES[G.SETTINGS.profile].valk_cur_lvl > vallkarri.level_cap then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = vallkarri.level_cap
     else
         G.HUD_META:get_UIE_by_ID("curlvl_text"):juice_up()
         G.HUD_META:get_UIE_by_ID("maxxp_text"):juice_up()
