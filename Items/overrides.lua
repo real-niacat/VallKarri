@@ -267,6 +267,10 @@ function update_hand_text(config, vals)
         end
     end
 
+    if not colour then
+        -- how did we get here?
+        return
+    end
     G.E_MANAGER:add_event(Event({--Hello LocalThunk
         trigger = 'before',
         blockable = not config.immediate,
