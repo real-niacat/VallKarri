@@ -56,15 +56,9 @@ merge_recipes = {
 local lilys_yap = "\
 ============================================================================================================================\
 hi! lily here. your game has crashed due to the fact that you are playing [VallKarri] with [Cryptposting].\
-While not logically incompatible, Cryptposting is being maintained *primarily*\
-by a person of moral questionability, as well as it being used as a vehicle\
-to bully other people and their mods in the past.\
-\
-Both me and some of the primary artists behind VallKarri do not want our creations associated OR seen with it.\
+VallKarri and Cryptposting are, at the moment, incompatible due to disputes between the creators of both mods.\
+Please disable VallKarri, or replace line 64 of VallKarri/main.lua with \"if true then \"\
 Thank you <3\
-\
-tl;dr: i don't want my creations seen with a problematic mod like Cryptposting, please disable VallKarri or disable the crash yourself\
-(hint: line 70 main.lua)\
 ============================================================================================================================"
 -- if cryptposting isnt installed, load vallkarri content
 if not next(SMODS.find_mod("cryptposting")) then 
