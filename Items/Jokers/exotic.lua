@@ -66,7 +66,6 @@ SMODS.Joker {
     pos = {x=0,y=2},
     soul_pos = {x=1, y=2},
     cost = 50,
-    immutable = true,
     demicoloncompat = true,
     calculate = function(self, card, context)
         
@@ -75,7 +74,7 @@ SMODS.Joker {
 
 
             for i,c in ipairs(G.jokers.cards) do
-                if not (c.config.center_key == "j_valk_illena") then
+                if (c.config.center_key ~= "j_valk_illena") then
                     Cryptid.misprintize(c, {min=card.ability.extra.mid, max=card.ability.extra.mid}, nil, true)
                 end
                 
