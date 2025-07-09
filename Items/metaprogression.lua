@@ -177,14 +177,18 @@ function vallkarri.xp_required(level)
     local exp = 1
 
     local nlv = (level) -- shorthand. dumb i know
-    arrows = nlv:tetrate(0.1)
-    exp = math.log(nlv, 2)
+    arrows = nlv:tetrate(0.07)
+    exp = math.log(nlv, 2.2)
 
     if (level < to_big(1000)) and (arrows > to_big(1)) then
         arrows = 1    
     end
 
-    return 100 * to_big(level):arrow(math.floor(arrows), (level^0.5) ^ exp)
+    local req = 100 * to_big(level):arrow(math.floor(arrows), (level^0.5) ^ exp)
+    if req == math.huge then
+        return 1
+    end
+    return req
 end
 
 function vallkarri.set_xp(exp)
@@ -202,7 +206,7 @@ function vallkarri.mod_level(amount, from_xp)
         G.HUD_META:get_UIE_by_ID("maxxp_text"):juice_up()
     end
     G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-
+    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
     if not from_xp then
         short_update_meta()
     end
