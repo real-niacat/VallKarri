@@ -15,26 +15,24 @@ SMODS.Joker {
 }
 
 local mainmenu = Game.main_menu
-Game.main_menu = function(change_context)
+Game.main_menu = function(change_context) --code heavily adapted from cryptid
 	local ret = mainmenu(change_context)
-    for i=1, 1 do
-        local newcard = Card(
-            G.title_top.T.x,
-            G.title_top.T.y,
-            G.CARD_W,
-            G.CARD_H,
-            G.P_CARDS.empty,
-            G.P_CENTERS.j_valk_logo,
-            { bypass_discovery_center = true }
-        )
+    local newcard = Card(
+        G.title_top.T.x,
+        G.title_top.T.y,
+        G.CARD_W,
+        G.CARD_H,
+        G.P_CARDS.empty,
+        G.P_CENTERS.j_valk_logo, --replace this with the p_center of your card, you can keep everything else the same
+        { bypass_discovery_center = true }
+    )
 
-        G.title_top:emplace(newcard)
-        newcard.T.w = newcard.T.w * 1.1 * 1.2
-        newcard.T.h = newcard.T.h * 1.1 * 1.2
-        newcard.no_ui = true
-    end
-	-- "borrowed" code from cryptid that does the exact same thing
-
+    G.title_top:emplace(newcard)
+    newcard.T.w = newcard.T.w * 1.1 * 1.2
+    newcard.T.h = newcard.T.h * 1.1 * 1.2
+    -- match scale of vanilla card
+    newcard.no_ui = true
+    -- not able to hover over it, obviously
 	return ret
 end
 
