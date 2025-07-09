@@ -33,19 +33,15 @@ function ease_ante(x)
     if (G.GAME.disable_ante_gain and x > to_big(0)) then
         x = 0
     end
-
-    
-
-
-    
     -- print(G.GAME.chips and G.GAME.blind.chips)
 
     if (G.GAME.chips and G.GAME.blind.chips) then
         
         local anteChange = get_ante_change()
         display_ante_changes(anteChange)
+        G.GAME.win_ante = (G.GAME.win_ante + to_number(anteChange))
         easeantecopy(to_number(anteChange))
-
+        return
     end
     
 

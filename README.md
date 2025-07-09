@@ -1,33 +1,23 @@
 lily's terrible balatro mod!
 
-**Adds:**
+### Jokers
+There are over 70 new jokers, nearly split between *Tauic* jokers and standalone jokers
+What is a *Tauic* joker? they're a new type of joker, upgraded variants of normal jokers.
+They are usually about as strong as an Exotic joker from Cryptid
 
-### Overscoring
-Overscoring is there to make sure that you dont get _too_ powerful, scoring too high on the boss blind sends you forward extra Antes
+### Consumables
+3 new types of consumables, planetoids, superplanets, and cataclysm cards!
+Planetoids are simply better variants of planet cards, and superplanets are extremely powerful, but very rare planet cards.
+Cataclysm cards are consumables with a massive upside and downside, they can help greatly, or make you lose if you aren't careful.
 
-### Metaprogression
-Metaprogression gives you generous rewards but also cranks up the difficulty over the course of multiple runs, making each run build upon the last.
+### Decks
+4 new decks, I won't list their effects, go find out for yourself!
 
-### Tauic Jokers
-Ever thought that the normal vanilla jokers weren't cool enough? Well now you can convert them into powerful versions of themselves, called Tauic variants.
+### Mechanics
+There are some new mechanics to understand in VallKarri.
+First and foremost, if you score *way* too much on the boss blind, you will be sent forward multiple antes
+You will still have to beat 8 total antes, even if you're sent forwards.
 
-### Unsurpassed and Supercursed Jokers
-Hefty upsides with hefty downsides, everything has a price. Now to figure out a way to lock those troublesome downsides away...
-
-### The Ever Evolving Quantum Particle
-An ever changing particle, always complimenting the buff given by your deck.
-
-### Superplanets
-Rare but powerful, superplanet cards encompass entire galaxies, and similarly to their large area, they can provide immense buffs to your hands.
-
-## And more, including:
-
--  6 Brand new Merged Tarot Cards
--  The Addition of Ingredients and Crafting
--  3 New code cards
--  Over 70 new jokers
--  naneinf new ways to brick your run!
--  The Encore, Tauist, Pity, and Inertia Deck!
--  Much more to come!
+There's also meta-progression, many things will give xp, including playing on higher stakes, and you gain small bonuses based on your level!
 
 [Discord](https://discord.gg/5d3HWu88yn)
