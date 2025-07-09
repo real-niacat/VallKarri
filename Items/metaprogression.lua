@@ -185,7 +185,7 @@ function vallkarri.xp_required(level)
     end
 
     local req = 100 * to_big(level):arrow(math.floor(arrows), (level^0.5) ^ exp)
-    if req == math.huge then
+    if to_big(req) == to_big(math.huge) then
         return to_big(100)
     end
     return req
