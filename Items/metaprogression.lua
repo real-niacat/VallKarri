@@ -3,11 +3,11 @@ local function refresh_metaprog()
         G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
     end
 
-    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" then
+    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_max_xp) then
         G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
     end
 
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" then
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_cur_xp) then
         G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
     end
 end
