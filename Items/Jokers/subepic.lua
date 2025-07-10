@@ -368,7 +368,7 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
-    key = "woke_finn",
+    key = "wokegoe",
     rarity = "cry_epic",
     loc_txt = {
         name = "{C:valk_gay}Wokegoe{}",
