@@ -115,6 +115,6 @@ SMODS.Back {
         }
     },
     config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exotic_perkup", "v_valk_prestige_up" } },
-    pos = {x=0, y=0},
-    atlas = "phold",
+    pos = {x=9, y=8},
+    atlas = "main",
 }

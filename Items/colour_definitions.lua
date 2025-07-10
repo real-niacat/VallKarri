@@ -1,6 +1,8 @@
 vallkarri.custom_colours = {
     VALK_PRESTIGIOUS = {HEX("60f542"), HEX("5efaff")},
-	VALK_UNSURPASSED = {HEX("DB67FF"), HEX("56FFE3")}
+	VALK_UNSURPASSED = {HEX("DB67FF"), HEX("56FFE3")},
+	VALK_UNPLEASANT = {HEX("22d71d"),HEX("7a9374"),HEX("fd2ef6"),HEX("c24462"),HEX("9b5300"), },
+	VALK_BLUE = {HEX("2848FF"), HEX("6AC8FF")}
 }
 
 local updhook = Game.update
@@ -15,11 +17,20 @@ function Game:update(dt)
 	local anim_timer = self.TIMERS.REAL * 1.5
 	local p = 0.5 * (math.sin(anim_timer) + 1)
 	for k, c in pairs(vallkarri.custom_colours) do
-		if not G.C[k] then
-			G.C[k] = { 0, 0, 0, 0 }
-		end
-		for i = 1, 4 do
-			G.C[k][i] = c[1][i] * p + c[2][i] * (1 - p)
+		local n = #c
+		if n ~= 0 then
+			if not G.C[k] then
+				G.C[k] = { 0, 0, 0, 0 }
+			end
+			-- Calculate position in gradient
+			local t = p * (n - 1)
+			local idx = math.floor(t) + 1
+			local frac = t - math.floor(t)
+			local c1 = c[idx]
+			local c2 = c[math.min(idx + 1, n)]
+			for i = 1, 4 do
+				G.C[k][i] = c1[i] * (1 - frac) + c2[i] * frac
+			end
 		end
 	end
 

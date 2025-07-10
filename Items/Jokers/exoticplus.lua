@@ -1,7 +1,7 @@
 SMODS.Joker {
     key = "vallkarrilua",
     loc_txt = {
-        name = "{C:cry_azure}Vall-Karri.lua",
+        name = "{C:valk_blue}Vall-Karri.lua",
         text = {
             "{X:dark_edition,C:white}^^#1#{} Mult for every piece of content that {B:1,E:2,C:white}Vall-karri{} adds",
             "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
@@ -234,7 +234,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "dormantlordess",
     loc_txt = {
-        name = "{C:cry_azure}The Dormant Lordess",
+        name = "{C:valk_blue}The Dormant Lordess",
         text = {
             "{X:dark_edition,C:white}^#1#{} Mult",
             quote("dormant"),

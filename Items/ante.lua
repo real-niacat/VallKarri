@@ -40,7 +40,8 @@ function ease_ante(x)
         local anteChange = get_ante_change()
         display_ante_changes(anteChange)
         G.GAME.win_ante = (G.GAME.win_ante + to_number(anteChange))
-        easeantecopy(to_number(anteChange))
+        easeantecopy(to_number(anteChange)+to_number(x))
+        
         return
     end
     

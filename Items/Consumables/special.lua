@@ -195,7 +195,7 @@ SMODS.Consumable {
         name = "The Lordess Call",
         text = {
             "{C:attention}+#1# Hand size {}and {C:attention}Card selection limit{}",
-            "Creates {C:cry_azure,s:1.5}The Dormant Lordess{}",
+            "Creates {C:valk_blue,s:1.5}The Dormant Lordess{}",
             credit("Scraptake")
         }
     },
