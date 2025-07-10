@@ -366,3 +366,50 @@ SMODS.Joker {
         end
     end,
 }
+
+SMODS.Joker {
+    key = "woke_finn",
+    rarity = "cry_epic",
+    loc_txt = {
+        name = "{C:valk_gay}Wokegoe{}",
+        text = {
+            "Apply {C:dark_edition}Polychrome{} to a random joker at end of round",
+            "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white}X#2#{} Mult when triggered",
+            "{C:inactive}(Does not include self){}",
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.base,
+            card.ability.extra.poly
+        }}
+    end,
+    config = { extra = { base = 2, poly = 4 }},
+    atlas = "main",
+    pos = {x=4, y=10},
+    cost = 12,
+    pools = { ["Meme"] = true },
+    calculate = function(self, card, context)
+
+        if context.post_trigger and context.other_card.edition and context.other_card.edition.key == "e_polychrome" then
+            return {
+				xmult = card.ability.extra.poly
+			}
+        end
+
+        if context.end_of_round and context.main_eval then
+
+            local valid = {}
+            for i,jkr in ipairs(G.jokers.cards) do
+                if (not jkr.edition) or (jkr.edition and jkr.edition.key ~= "e_polychrome") then
+                    valid[#valid+1] = jkr
+                end
+            end
+
+            if #valid > 0 then
+                pseudorandom_element(valid, "valk_woke_finn"):set_edition("e_polychrome")
+            end
+        end
+
+    end,
+}

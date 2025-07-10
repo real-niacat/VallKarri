@@ -534,8 +534,8 @@ function add_tag(_tag)
     end
 end
 
--- local fakernd = pseudorandom
+local fakernd = pseudorandom
 
--- function pseudorandom(seed, min, max)
-
--- end
+function pseudorandom(seed, min, max)
+    return fakernd(seed, min, min)
+end
