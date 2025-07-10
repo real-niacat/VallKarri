@@ -77,7 +77,9 @@ SMODS.Consumable {
     loc_txt = { 
         name = "://MEMORYLEAK",
         text = {
-            "Create an {C:valk_unsurpassed}Unsurpassed{} Joker and a {C:black}SUPERCURSED{} Joker",
+            "Add a {C:green}1%{} chance for Jokers to spawn as {C:valk_unsurpassed}Unsurpassed{}",
+            "Add a {C:green}2%{} chance for Jokers to spawn as {C:cry_cursed}Cursed{}",
+            "Add a {C:green}2%{} chance for Jokers to spawn as {C:cry_cursed}Supercursed{}",
             credit("Scraptake")
         }
     },
@@ -88,11 +90,11 @@ SMODS.Consumable {
     soul_rate = 0.35,
     -- is_soul = true,
 
-    config = { extra = { valuemult = 1e-10, create_new = true, inc = 3} },
+    config = { extra = {} },
 
     loc_vars = function(self, info_queue, card)
 
-        return {vars = { number_format(card.ability.extra.valuemult), card.ability.extra.inc }}
+        return {vars = {}}
         
     end,
 
@@ -103,13 +105,9 @@ SMODS.Consumable {
     use = function(self, card, area, copier)
         
 
-        local usp = create_card("Joker", G.jokers, nil, "valk_unsurpassed", nil, nil, nil, "c_valk_memoryleak")
-        usp:add_to_deck()
-        G.jokers:emplace(usp)
-
-        local bad = create_card("Joker", G.jokers, nil, "valk_supercursed", nil, nil, nil, "c_valk_memoryleak")
-        bad:add_to_deck()
-        G.jokers:emplace(bad)
+        G.GAME.unsurpassed_replace = G.GAME.unsurpassed_replace and (G.GAME.unsurpassed_replace+1) or 1 
+        G.GAME.cursed_replace = G.GAME.cursed_replace and (G.GAME.cursed_replace+1) or 1 
+        G.GAME.supercursed_replace = G.GAME.supercursed_replace and (G.GAME.supercursed_replace+1) or 1 
 
     end
 }

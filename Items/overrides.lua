@@ -449,12 +449,24 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
         legendary = true
     end
 
-    if G.GAME.exotic_replace and pseudorandom("valk_exotic_replace", 1, 100) <= G.GAME.exotic_replace and not forced_key and _type == "Joker" then
+    if G.GAME.exotic_replace and pseudorandom("valk_exotic_replace")*100 < G.GAME.exotic_replace and not forced_key and _type == "Joker" then
         _rarity = "cry_exotic"
     end
 
-    if G.GAME.prestigious_replace and pseudorandom("valk_prestigious_replace", 1, 100) <= G.GAME.prestigious_replace and not forced_key and _type == "Joker" then
+    if G.GAME.prestigious_replace and pseudorandom("valk_prestigious_replace")*100 < G.GAME.prestigious_replace and not forced_key and _type == "Joker" then
         _rarity = "valk_prestigious"
+    end
+
+    if G.GAME.unsurpassed_replace and pseudorandom("valk_unsurpassed_replace")*100 < G.GAME.unsurpassed_replace and not forced_key and _type == "Joker" then
+        _rarity = "valk_unsurpassed"
+    end
+
+    if G.GAME.cursed_replace and pseudorandom("valk_cursed_replace")*100 < G.GAME.cursed_replace and not forced_key and _type == "Joker" then
+        _rarity = "cry_cursed"
+    end
+
+    if G.GAME.supercursed_replace and pseudorandom("valk_supercursed_replace")*100 < G.GAME.supercursed_replace and not forced_key and _type == "Joker" then
+        _rarity = "valk_supercursed"
     end
 
     if _type == "Tarot" and G.GAME.tarot_planet_replacement and pseudorandom("valk_tarot_replace", 1, 100) <= G.GAME.tarot_planet_replacement then
