@@ -281,8 +281,15 @@ function update_hand_text(config, vals)
         end
     }))
 end
-
+local lilycat_corrupt = false
 glcui = nil
+
+local function modtext(text) 
+    local res = {"meow! ", "mrrp! ", "hsss..", "mya, ", "nya! "}
+    local r = math.random(1,#res)
+    return res[r]
+    
+end
 
 local gcui = generate_card_ui
 function generate_card_ui(_c,full_UI_table,specific_vars,card_type,badges,hide_desc,main_start,main_end,card)
@@ -291,21 +298,21 @@ function generate_card_ui(_c,full_UI_table,specific_vars,card_type,badges,hide_d
     local center = G.P_CENTERS[_c.key]
 
 
-    -- if card and card.children and card.children.center then
-    --     local a = 0.1
-    --     local rnd1 = (math.random()*a)-(a*0.5)
-    --     local rnd2 = (math.random()*a)-(a*0.5)
-    --     card.children.center:set_sprite_pos({x=card.children.center.sprite_pos.x+rnd1, y=card.children.center.sprite_pos.y+rnd2})
-    -- end
-    -- for i,t in ipairs(tab.main) do
-    --     for j,k in ipairs(tab.main[i]) do
-    --         if k.config.text then
-    --             k.config.text = corrupt_text(k.config.text .. (tab.main[i][j-1] and tab.main[i][j-1].config.text or "") .. (tab.main[i][j+1] and tab.main[i][j+1].config.text or ""), 0.1)
-    --             k.config.colour = {math.random(), math.random(), math.random(), 1}
-    --             k.config.scale = math.random()*0.7
-    --         end
-    --     end
-    -- end
+    if lilycat_corrupt then
+        for i,t in ipairs(tab.main) do
+            for j,k in ipairs(tab.main[i]) do
+                if k.config.text then
+
+                    k.config.text = modtext(k.config.text)
+                end
+                if k.nodes then
+                    for _,node in ipairs(k.nodes) do
+                        node.config.text = modtext(node.config.text)
+                    end
+                end
+            end
+        end
+    end
 
 
 
