@@ -53,18 +53,14 @@ merge_recipes = {
     {input = {"c_wheel_of_fortune", "c_temperance"}, output = "c_valk_gameshow"},
 
 }
-local lilys_yap = "\
-============================================================================================================================\
-hi! lily here. your game has crashed due to the fact that you are playing [VallKarri] with [Cryptposting].\
-VallKarri and Cryptposting are, at the moment, incompatible due to disputes between the creators of both mods.\
-Please disable VallKarri, or replace line 64 of VallKarri/main.lua with \"if true then \"\
-Thank you <3\
-============================================================================================================================"
--- if cryptposting isnt installed, load vallkarri content
+-- i concede, i don't care anymore. i'm not here to spread hate, that makes me no better than the people i'm fighting against by doing this
+-- vallkarri will still not load, but it will not crash either.
+
+-- my own conflicts aren't relevant to the average balatro player, and frankly i'm not in the mental state to maintain this dumb bickering
+-- glitchkat, if you're reading this, you haven't won, you'll win only win when you become a good person.
+-- anyway, sorry for rambling. i am not doing well
 if not next(SMODS.find_mod("cryptposting")) then 
     assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
-else --otherwise give my speech
-    error(lilys_yap, 0)
 end
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)

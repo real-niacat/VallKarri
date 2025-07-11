@@ -15,18 +15,21 @@ end
 
 assert(SMODS.load_file("Items/hands.lua", "vallkarri"))()
 
+
+assert(SMODS.load_file("Items/Jokers/tau.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/Jokers/tau/tau_common.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/Jokers/tau/tau_uncommon.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/Jokers/tau/tau_rare.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/Jokers/tau/tau_legendary.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/cursed.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/animation.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/subepic.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/epic.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/legendary.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/exotic.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/Jokers/tau.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/Jokers/tau/tau_common.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/Jokers/tau/tau_uncommon.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/Jokers/tau/tau_rare.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/Jokers/tau/tau_legendary.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/Jokers/scp.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/exoticplus.lua", "vallkarri"))()
+
 
 assert(SMODS.load_file("Items/Consumables/code.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Consumables/spectral.lua", "vallkarri"))()
