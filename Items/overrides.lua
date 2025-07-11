@@ -533,9 +533,3 @@ function add_tag(_tag)
         addtaghook(_tag)
     end
 end
-
-local fakernd = pseudorandom
-
-function pseudorandom(seed, min, max)
-    return fakernd(seed, min, min)
-end
