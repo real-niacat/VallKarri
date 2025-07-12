@@ -507,3 +507,74 @@ SMODS.Joker {
 
     end
 }
+
+SMODS.Joker {
+    bases = {"j_dusk"},
+    key = "tau_dusk",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Dusk{}",
+        text = {
+            "{C:attention}Retrigger{} each played card {C:attention}once{}",
+            "for each hand played this round",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=4, y=7},
+    cost = 4,
+    no_doe = true,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+
+		if context.repetition and context.cardarea == G.play then
+            -- print("p.card")
+			return {
+				message = localize("k_again_ex"),
+				repetitions = G.GAME.round_resets.hands - G.GAME.current_round.hands_left,
+				card = card,
+			}
+		end
+
+    end
+}
+
+SMODS.Joker {
+    bases = {"j_fibonacci"},
+    key = "tau_fibonacci",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Fibonacci{}",
+        text = {
+            "Adds {C:mult}Mult{} equal to n-th entry in the",
+            "{C:attention}fibonacci sequence{}, where n is the current {C:mult}Mult{}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { } },
+    loc_vars = function(self, info_queue, card)
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    pos = {x=0, y=0},
+    soul_pos = {x=1, y=5},
+    cost = 4,
+    no_doe = true,
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+
+		if context.joker_main then
+            local Phi = to_big(1.6180399)
+            local phi = Phi - 1
+            local n = mult
+            local fibn = ((Phi^n) - (-phi^n)) / math.sqrt(5) 
+            return {
+                mult = fibn
+            }
+        end
+
+    end
+}

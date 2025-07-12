@@ -715,3 +715,44 @@ SMODS.Joker {
         end
     end
 }
+
+SMODS.Joker {
+    bases = {"j_raised_fist"},
+    key = "tau_raised_fist",
+    loc_txt = {
+        name = "{C:cry_ember}Tauic Raised Fist{}",
+        text = {
+            "The lowest ranked card {C:attention}held in hand{} gives",
+            "{X:dark_edition,C:white}^Mult{} equal to its rank",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { emult = 1.2 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {card.ability.extra.emult} }
+    end,
+    rarity = "valk_tauic",
+    atlas = "tau",
+    blueprint_compat = true,
+    pos = {x=0, y=0},
+    soul_pos = {x=8, y=3},
+    cost = 4,
+    no_doe = true,
+    calculate = function(self, card, context)
+        if (context.individual and context.cardarea == G.hand and not context.end_of_round) then
+            -- code taken from original raised fist
+            local nominal, card_id = 15, 15
+            local raised_card = nil
+            for i=1, #G.hand.cards do
+                if card_id >= G.hand.cards[i].base.id and not SMODS.has_no_rank(G.hand.cards[i]) then 
+                    nominal = G.hand.cards[i].base.nominal
+                    card_id = G.hand.cards[i].base.id
+                    raised_card = G.hand.cards[i]
+                end
+            end
+            if context.other_card == raised_card then
+                return {emult = nominal}
+            end
+        end
+    end
+}
