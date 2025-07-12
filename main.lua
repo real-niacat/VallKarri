@@ -59,9 +59,7 @@ merge_recipes = {
 -- my own conflicts aren't relevant to the average balatro player, and frankly i'm not in the mental state to maintain this dumb bickering
 -- glitchkat, if you're reading this, you haven't won, you'll win only win when you become a good person.
 -- anyway, sorry for rambling. i am not doing well
-if not next(SMODS.find_mod("cryptposting")) then 
-    assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
-end
+assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
 Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)

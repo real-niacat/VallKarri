@@ -10,5 +10,8 @@
 	"version": "0.7.1", 
 	"dependencies": [ 
 		"Cryptid (>=0.5.9)", 
-	], 
+	],
+	"conflicts": [
+		"cryptposting"
+	]
 }
