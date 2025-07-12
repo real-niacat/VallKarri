@@ -376,7 +376,7 @@ SMODS.Consumable {
         name = "Collision",
         text = {
             "Randomly {C:red}Banish{} each {C:planet}Planet{} card with",
-            "a {C:green}1 in 2{} chance",
+            "a {C:green}#2# in #3#{} chance",
             "All tarot cards have {C:attention}X#1#{} values",
             credit("Pangaea"),
         }
@@ -385,11 +385,12 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { vm = 5 } },
+    config = { extra = { vm = 5, num = 1, den = 2} },
 
     loc_vars = function(self, info_queue, card)
 
-        return {vars = { card.ability.extra.vm }}
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'valk_collision')
+        return {vars = { card.ability.extra.vm, num, den }}
         
     end,
     can_use = function(self, card)
@@ -400,7 +401,7 @@ SMODS.Consumable {
 
 
         for i,center in ipairs(G.P_CENTER_POOLS.Planet) do
-            if pseudorandom("valk_coll", 1, 2) == 1 then
+            if SMODS.pseudorandom_probability(card, 'collision', card.ability.extra.num, card.ability.extra.den, 'collision') then
                 G.GAME.cry_banished_keys[center.key] = true
             end
         end
@@ -733,7 +734,7 @@ SMODS.Consumable {
         name = "Post-Existence",
         text = {
             "Randomly {C:red}Banish{} each {C:tarot}Tarot{} card with",
-            "a {C:green}1 in 2{} chance,",
+            "a {C:green}#1# in #2#{} chance,",
             "{C:spectral}Spectral{} cards can be found in shop",
             credit("Pangaea"),
         }
@@ -742,11 +743,12 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { } },
+    config = { extra = { num = 1, den = 2} },
 
     loc_vars = function(self, info_queue, card)
 
-        return {vars = { card.ability.extra.mult }}
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'postexistence')
+        return {vars = { num, den }}
         
     end,
     can_use = function(self, card)
@@ -757,7 +759,7 @@ SMODS.Consumable {
         local to_make = 0
 
         for i,center in ipairs(G.P_CENTER_POOLS.Planet) do
-            if pseudorandom("valk_coll", 1, 2) == 1 then
+            if SMODS.pseudorandom_probability(card, 'postexistence', card.ability.extra.num, card.ability.extra.den, 'postexistence') then
                 G.GAME.cry_banished_keys[center.key] = true
             end
         end

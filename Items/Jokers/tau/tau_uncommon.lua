@@ -327,7 +327,8 @@ SMODS.Joker {
     },
     config = { extra = { base = 1, chance = 40, slots = 1, money = 8 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.base * G.GAME.probabilities.normal, card.ability.extra.chance, card.ability.extra.slots, card.ability.extra.money}}
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.base, card.ability.extra.chance, 'oa6.28')
+        return {vars = {num, den, card.ability.extra.slots, card.ability.extra.money}}
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -336,22 +337,20 @@ SMODS.Joker {
     cost = 4,
     no_doe = true,
 
-    add_to_deck = function(self, card, from_debuff)
-        G.GAME.probabilities.normal = G.GAME.probabilities.normal * 4
-    end,
-
-    remove_from_deck = function(self, card, debuff)
-        G.GAME.probabilities.normal = G.GAME.probabilities.normal / 4
-    end,
-
     calculate = function(self, card, context)
 
-        if (context.using_consumeable and pseudorandom("tau_oops", 1, card.ability.extra.chance) <= card.ability.extra.base * G.GAME.probabilities.normal ) then
+        if context.mod_probability then
+            return {numerator = context.numerator * 4}
+        end
+
+        if (context.using_consumeable) and SMODS.pseudorandom_probability(card, 'valk_oa6', card.ability.extra.base, card.ability.extra.chance, 'oa6.28') then
 
             G.jokers.config.card_limit = G.jokers.config.card_limit + 1
             ease_dollars(card.ability.extra.money)
 
         end
+
+        
 
         -- select(2,next(G.consumeables.cards))
 

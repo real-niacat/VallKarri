@@ -366,3 +366,32 @@ SMODS.Joker {
         end
     end,
 }
+
+SMODS.Joker {
+    key = "planetarium",
+    loc_txt = {
+        name = "Planetarium",
+        text = {
+            "When {C:attention}hand{} played, increase {C:chips}chips{} and {C:mult}mult{} per level",
+            "of played {C:attention}poker hand{} by {C:attention}#1#{}"
+        }
+    },
+    config = { extra = { inc = 1 }},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.inc
+        }}
+    end,
+    atlas = "phold",
+    pos = {x = 0, y = 1},
+    cost = 7,
+    rarity = 3,
+    calculate = function(self, card, context)
+        if context.before then
+            quick_card_speak(card, localize("k_upgrade_ex"))
+            local text = G.FUNCS.get_poker_hand_info(context.full_hand)
+            G.GAME.hands[text].l_chips = G.GAME.hands[text].l_chips + card.ability.extra.inc
+            G.GAME.hands[text].l_mult = G.GAME.hands[text].l_mult + card.ability.extra.inc
+        end
+    end,
+}

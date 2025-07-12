@@ -4,7 +4,7 @@ SMODS.Joker {
         name = "raxdflipnote",
         text = {
             "When {C:attention}Boss Blind{} is defeated, create a {C:dark_edition,T:e_negative}Negative{} {C:attention}Big Cube{}",
-            "{C:green}#1# in 10{} chance to spawn a non-{C:dark_edition}Negative{} {C:attention}Cube{}",
+            "{C:green}#1# in #2#{} chance to spawn a non-{C:dark_edition}Negative{} {C:attention}Cube{}",
             "{C:inactive}(Must have room for Cube){}",
             quote("raxd"),
             credit("Scraptake")
@@ -12,7 +12,8 @@ SMODS.Joker {
     },
     config = { extra = { state = 1, ctr = 0 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {(G.GAME.probabilities.normal or 1)} }
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "raxd")
+        return { vars = {(num, den)} }
     end,
     rarity = "cry_epic",
     atlas = "main",
@@ -39,7 +40,7 @@ SMODS.Joker {
 
         if (context.end_of_round and not context.individual and not context.repetition and not context.blueprint and G.GAME.blind.boss) or context.forcetrigger then
 
-            if pseudorandom("raxd") > (G.GAME.probabilities.normal / 10) then
+            if SMODS.pseudorandom_probability(card, "valk_raxd", card.ability.extra.num, card.ability.extra.den, "raxd") then
                 local big_cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_big_cube")
                 big_cube:set_edition("e_negative", true)
                 big_cube:add_to_deck()

@@ -254,8 +254,9 @@ SMODS.Consumable {
     end,
 
     loc_vars = function(self, info_queue, card)
+        local num, blank = SMODS.get_probability_vars(card, 1, 1, 'valk_gameshow')
         return {vars = {
-            G.GAME.probabilities.normal
+            num
         }}
     end,
     can_use = function(self, card)
@@ -266,7 +267,7 @@ SMODS.Consumable {
         
         for i,joker in ipairs(G.jokers.cards) do
 
-            if pseudorandom("valk_gameshow", 1, joker.sell_cost) <= G.GAME.probabilities.normal then
+            if SMODS.pseudorandom_probability(card, 'valk_gameshow', 1, joker.sell_cost) then
                 do_while_flipped({joker}, function(card)
                     Cryptid.manipulate(card, {type = "X", value = card.sell_cost})
                 end)

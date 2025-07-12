@@ -454,9 +454,10 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { xmult = 15, outof = 15 } },
+    config = { extra = { xmult = 15, outof = 15, num = 1 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult, G.GAME.probabilities.normal, card.ability.extra.outof } }
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.outof, 'valk_tgm')
+        return { vars = { card.ability.extra.xmult, num, den } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -472,7 +473,7 @@ SMODS.Joker {
             }
         end
 
-        if context.end_of_round and context.main_eval and pseudorandom("valk_tau_michel", 1, card.ability.extra.outof) <= G.GAME.probabilities.normal then
+        if context.end_of_round and context.main_eval and SMODS.pseudorandom_probability(card, 'valk_bananar', card.ability.extra.num, card.ability.extra.outof, 'valk_tgm') then
             card:set_ability("j_valk_tau_cavendish")
         end
     end
