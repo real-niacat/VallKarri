@@ -63,22 +63,23 @@ SMODS.Joker {
         name = "Streetlight",
         text = {
             "Gains {X:mult,C:white}X#1#{} Mult when a {C:attention}Light{} card scores",
+            "{C:attention}Light{} card requirement is capped at {C:attention}#3#{}",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
         }
     },
-    config = { extra = {cur = 1, gain = 0.2} },
+    config = { extra = {cur = 1, gain = 0.2, cap = 5} },
     rarity = 2,
     atlas = "main",
     pos = {x=5, y=8},
     cost = 6,
     demicoloncompat = true,
     loc_vars = function(self,info_queue, card)
-        return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
+        return {vars = {card.ability.extra.gain, card.ability.extra.cur, card.ability.extra.cap}}
     end,
 
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_cry_light") then
-
+            context.other_card.ability.extra.req = math.min(card.ability.extra.cap, context.other_card.ability.extra.req) --cap at 5
             card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
             quick_card_speak(card, "Upgraded!")
 
@@ -87,7 +88,16 @@ SMODS.Joker {
         if context.joker_main then
             return {xmult = card.ability.extra.cur}
         end
+    end,
+    in_pool = function()
+        for i,card in ipairs(G.playing_cards) do
+            if SMODS.has_enhancement(card, "m_cry_light") then
+                return true
+            end
+        end
+        return false
     end
+
 }
 
 SMODS.Joker {
