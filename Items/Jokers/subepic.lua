@@ -114,7 +114,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.curchips, card.ability.extra.inc} }
     end,
-    rarity = 3,
+    rarity = 2,
     atlas = "main",
     pos = {x=5, y=2},
     soul_pos = {x=6, y=2},
