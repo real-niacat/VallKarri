@@ -10,9 +10,9 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { state = 1, ctr = 0 } },
+    config = { extra = { state = 1, ctr = 0, num = 1, den = 10 } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.m_cry_light
+        
 
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "raxd")
         return { vars = {num, den} }
