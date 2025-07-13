@@ -5,7 +5,8 @@ vallkarri.custom_colours = {
 	VALK_BLUE = {HEX("2848FF"), HEX("6AC8FF")},
 	VALK_TAUIC = {HEX("523DBA"),HEX("D1CFE3"),HEX("BCC24A")},
 	VALK_SCP = {HEX("6CE746"),HEX("F1E64B"),HEX("F01212")},
-	VALK_GAY = {HEX("058f6e"),HEX("24ceaa"),HEX("99e8c0"),HEX("ffffff"),HEX("7bade3"),HEX("4e49cb"),HEX("401a76")}
+	VALK_GAY = {HEX("058f6e"),HEX("24ceaa"),HEX("99e8c0"),HEX("ffffff"),HEX("7bade3"),HEX("4e49cb"),HEX("401a76")},
+	VALK_SELFINSERT = {HEX("84BDFF"), HEX("FF93FF"), HEX("FFFFFF"), HEX("FF93FF"), HEX("84BDFF")}
 }
 
 local updhook = Game.update
