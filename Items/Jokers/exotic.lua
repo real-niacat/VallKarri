@@ -81,6 +81,19 @@ SMODS.Joker {
             end
         end
 
-    end
+    end,
+    lore = {
+        "Illena is a Fellinian, who was in her early life used as a",
+        "test subject by the EMC, causing her to develop psychic powers.",
+        "",
+        "These powers allow her to read the mind of people, initially",
+        "being a weak form of mind reading, which becomes stronger over time.",
+        "",
+        "She chooses to isolate herself from people, but also cares for people.",
+        "This makes it a tough balance between her sanity and her empathy.",
+        "",
+        "Illena's extreme obsession with people and their mental makes her unreliable",
+        "in other parts of life, often forgetting to take care of herself."
+    }
 }
 
