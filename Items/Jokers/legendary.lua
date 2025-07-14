@@ -343,10 +343,10 @@ SMODS.Joker {
     loc_txt = {
         name = "mrrp,,,, maow :3 ",
         text = {
+            "{C:attention}+#1#{} Card Selection Limit and Hand Size",
             "{X:blue,C:white}X#1#{} Chips and {X:red,C:white}X#1#{} Mult",
             "{C:blue}+#1#{} Hands and {C:red}+#1#{} Discards",
-            "When playing card is scored, earn {C:money}$#1#{} ",  
-            "{C:attention}+#1#{} Card Selection Limit and Hand Size",
+            "When playing card is scored, earn {C:money}$#1#{} ",
         } 
     },
     config = { extra = {meow = 3} },
