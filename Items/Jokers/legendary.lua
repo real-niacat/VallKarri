@@ -292,7 +292,7 @@ SMODS.Joker {
     loc_txt = {
         name = "TASAL",
         text = {
-            "{C:attention}+#1#{} Card selection limit and Hand size.",
+            "{C:attention}+#1#{} Card Selection Limit and Hand Size.",
             "{X:gold,C:white}X#2#{} Ascension scaling per level of {C:attention}Sol{}.",
             "When {C:planet}Planet{} card used, increase power of {C:attention}Ascended{} hands",
             credit("Grahkon")
@@ -336,4 +336,57 @@ SMODS.Joker {
             SMODS.change_discard_limit(-card.ability.extra.csl)
         end
     end,
+}
+
+SMODS.Joker {
+    key = "maow",
+    loc_txt = {
+        name = "mrrp,,,, maow :3 ",
+        text = {
+            "{X:blue,C:white}X#1#{} Chips and {X:red,C:white}X#1#{} Mult",
+            "{C:blue}+#1#{} Hands and {C:red}+#1#{} Discards",
+            "When playing card is scored, earn {C:money}$#1#{} ",  
+            "{C:attention}+#1#{} Card Selection Limit and Hand Size",
+        } 
+    },
+    config = { extra = {meow = 3} },
+     loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.meow}}
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = {x=4, y=12}, 
+    cost = 20,
+    immutable = false,
+    blueprint_compat = false,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+            ease_dollars(card.ability.extra.meow)
+        end
+        if (context.joker_main) or context.forcetrigger then
+            return {x_mult = card.ability.extra.meow,x_chips = card.ability.extra.meow}
+
+        end
+        if (context.setting_blind) then
+            ease_hands_played(card.ability.extra.meow)
+            ease_discard(card.ability.extra.meow)
+        end
+    end,
+
+    add_to_deck = function(self, card, from_debuff )
+        if not from_debuff then
+            G.hand:change_size(3)
+            SMODS.change_play_limit(3)
+            SMODS.change_discard_limit(3)
+            
+        end
+    end,  
+    remove_from_deck = function(self, card, from_debuff )
+        if not from_debuff then
+            G.hand:change_size(-3)
+            SMODS.change_play_limit(-3)
+            SMODS.change_discard_limit(-3)
+            
+        end
+    end,     
 }
