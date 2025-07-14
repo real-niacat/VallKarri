@@ -361,7 +361,7 @@ SMODS.Joker {
     blueprint_compat = false,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
-            ease_dollars(card.ability.extra.meow - 1)
+            ease_dollars(card.ability.extra.meow)
         end
         if (context.joker_main) or context.forcetrigger then
             return {x_mult = card.ability.extra.meow,x_chips = card.ability.extra.meow}
