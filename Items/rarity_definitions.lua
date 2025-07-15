@@ -4,7 +4,7 @@ SMODS.Rarity {
         name = 'The Mod Creator'
     },
     badge_colour = G.C.CRY_TWILIGHT,
-    pools = { ["Joker"] = true },
+    pools = { ["Joker"] = false },
 }
 
 SMODS.Rarity {
@@ -13,7 +13,7 @@ SMODS.Rarity {
         name = 'Vallkarric'
     },
     badge_colour = G.C.CRY_DAWN,
-    pools = { ["Joker"] = true },
+    pools = { ["Joker"] = false },
 }
 
 SMODS.Rarity {
@@ -22,7 +22,7 @@ SMODS.Rarity {
         name = 'Merged'
     },
     badge_colour = HEX("CE3EA3"),
-    pools = { ["Joker"] = true },
+    pools = { ["Joker"] = false },
 }
 
 SMODS.Rarity {
@@ -31,7 +31,7 @@ SMODS.Rarity {
         name = 'Prestigious'
     },
     badge_colour = G.C.VALK_PRESTIGIOUS,
-    pools = { ["Joker"] = true },
+    pools = { ["Joker"] = false },
 }
 
 SMODS.Rarity {
@@ -40,7 +40,7 @@ SMODS.Rarity {
         name = 'Unsurpassed'
     },
     badge_colour = G.C.VALK_UNSURPASSED,
-    pools = { ["Joker"] = true },
+    pools = { ["Joker"] = false },
 }
 
 SMODS.Rarity {
@@ -49,7 +49,7 @@ SMODS.Rarity {
         name = 'Tauic'
     },
     badge_colour = HEX("B080FF"),
-    pools = { ["Joker"] = true },
+    pools = { ["Joker"] = false },
 }
 
 SMODS.Rarity {
@@ -59,7 +59,7 @@ SMODS.Rarity {
     },
     badge_colour = HEX("000000"),
     
-    pools = { ["Joker"] = true },
+    pools = { ["Joker"] = false },
 }
 
 SMODS.Rarity {
@@ -68,5 +68,5 @@ SMODS.Rarity {
         name = 'Her Lordship\'s Missing Piece'
     },
     badge_colour = HEX("EB4D4D"),
-    pools = { ["Joker"] = true },
+    pools = { ["Joker"] = false },
 }

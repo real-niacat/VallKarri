@@ -321,3 +321,47 @@ SMODS.Joker {
         end
     end,
 }
+
+
+SMODS.Joker {
+    key = "matchbox",
+    loc_txt = {
+        name = "Matchbox",
+        text = {
+            "Gains {X:mult,C:white}X#1#{} Mult when scored hand is more than blind",
+            "{C:attention}Resets{} if scored hand is not more than blind",
+            "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult){}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = {cur = 1, gain = 0.5} },
+    loc_vars = function(self,info_queue, card)
+        return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
+    end,
+    rarity = 3,
+    atlas = "main",
+    pos = {x=4, y=13},
+    cost = 8,
+    blueprintcompat = true,
+
+
+    calculate = function(self, card, context)
+ 
+        -- is a little fucked with The Tax boss blind but idk how to fix, help
+        if context.final_scoring_step then     
+            if hand_chips * mult > G.GAME.blind.chips then
+                card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
+                quick_card_speak(card, "Upgraded!")
+            else
+                card.ability.extra.cur = 1
+                quick_card_speak(card, "Reset!")
+            end
+        end
+        
+        if context.joker_main or context.forcetrigger then
+            return {xmult = card.ability.extra.cur}
+        end
+
+    end,
+
+}
