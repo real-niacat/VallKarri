@@ -131,7 +131,8 @@ SMODS.Joker {
         text = {
             "Gains {C:mult}+#1#{} and {X:mult,C:white}X#2#{} Mult",
             "if played hand is {C:attention}None{}",
-            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} and {X:mult,C:white}X#4#{C:inactive} Mult)"
+            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} and {X:mult,C:white}X#4#{C:inactive} Mult)",
+            credit("unexian")
         }
     },
     config = { extra = {gm = 10, gx = 0.2, m = 10, x = 1} },

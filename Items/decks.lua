@@ -4,7 +4,8 @@ SMODS.Back {
         name = "Inertia Deck",
         text = {
             "Normal ante gain is {C:red,E:1}disabled{}",
-            "{C:attention}Overscoring{} is substantially harsher"
+            "{C:attention}Overscoring{} is substantially harsher",
+            credit("Scraptake")
         }
     },
     pos = {x=7, y=7},
@@ -26,6 +27,7 @@ SMODS.Back {
             "After hand scores,",
             "all joker {C:attention}end-of-round{}",
             "effects are triggered",
+            credit("Scraptake")
         }
     },
     pos = {x=7, y=8},
@@ -53,7 +55,8 @@ SMODS.Back {
         text = {
             "{C:cry_ember}Tauic{} Jokers do not need {C:attention}Tauist{} to spawn",
             "and spawn {C:attention}2x{} more often.",
-            "{C:attention}0.5x{} {C:cry_ember}Tauic{} Joker chance increase"
+            "{C:attention}0.5x{} {C:cry_ember}Tauic{} Joker chance increase",
+            credit("Scraptake")
         }
     },
 
@@ -73,6 +76,7 @@ SMODS.Back {
             "Start with {C:attention,T:v_valk_legendary_perkup}Legendary PERK-UP{},",
             "{C:attention,T:v_valk_exotic_perkup}Exotic PERK-UP{}, and ",
             "{C:attention,T:v_valk_prestige_up}PRESTIGE-UP{}",
+            credit("Scraptake")
         }
     },
     config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exotic_perkup", "v_valk_prestige_up" } },

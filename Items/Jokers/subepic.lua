@@ -5,6 +5,7 @@ SMODS.Joker {
         text = {
             "Creates itself when removed",
             "{C:inactive}Suck it.{}",
+            credit("Lily")
         }
     },
     config = { extra = {} },
@@ -32,7 +33,8 @@ SMODS.Joker {
         text = {
             "Gains {X:mult,C:white}X#1#{} Mult when mouse clicked",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
-            "{C:inactive}Where do I click, Drago?{}"
+            "{C:inactive}Where do I click, Drago?{}",
+            credit("Lily")
         }
     },
     config = { extra = {cur = 0.99, gain = 1e-3} },
@@ -65,6 +67,7 @@ SMODS.Joker {
             "Gains {X:mult,C:white}X#1#{} Mult when a {C:attention}Light{} card scores",
             "{C:attention}Light{} card requirement is capped at {C:attention}#3#{}",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
+            credit("Scraptake")
         }
     },
     config = { extra = {cur = 1, gain = 0.2, cap = 5} },
@@ -107,7 +110,8 @@ SMODS.Joker {
         text = {
             "{C:chips}+#1#{} chips",
             "Increases by {C:attention}#2#{} at end of round",
-            "Scales {C:dark_edition,E:1}quadratically{}"
+            "Scales {C:dark_edition,E:1}quadratically{}",
+            credit("Scraptake")
         }
     },
     config = { extra = { curchips = 1, inc = 1, incsq = 1} },
@@ -203,6 +207,7 @@ SMODS.Joker {
         text = {
             "Channels the power from the {C:edition,X:dark_edition}Infinite{}",
             "Does nothing, it is better used {C:edition,X:dark_edition}elsewhere...{}",
+            credit("Lily")
         }
     },
     config = { extra = {  } },
@@ -223,7 +228,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Periapt Beer",
         text = {
-            "Create a {C:tarot}Charm Tag{} and {C:attention}The Fool{} when sold"
+            "Create a {C:tarot}Charm Tag{} and {C:attention}The Fool{} when sold",
+            credit("Pangaea")
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -249,7 +255,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Stellar Yogurt",
         text = {
-            "Create a {C:planet}Meteor Tag{} and {C:attention}The Fool{} when sold"
+            "Create a {C:planet}Meteor Tag{} and {C:attention}The Fool{} when sold",
+            credit("Pangaea")
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -275,7 +282,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Hexed Spirit",
         text = {
-            "Create two {C:spectral}Ethereal Tags{} when sold"
+            "Create two {C:spectral}Ethereal Tags{} when sold",
+            credit("Pangaea")
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -299,7 +307,8 @@ SMODS.Joker {
         name = "Planetarium",
         text = {
             "When {C:attention}hand{} played, increase {C:chips}chips{} and {C:mult}mult{} per level",
-            "of played {C:attention}poker hand{} by {C:attention}#1#{}"
+            "of played {C:attention}poker hand{} by {C:attention}#1#{}",
+            credit("Pangaea")
         }
     },
     config = { extra = { inc = 1 }},

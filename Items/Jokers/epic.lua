@@ -154,7 +154,8 @@ SMODS.Joker {
         name = "{C:valk_prestigious,s:2}Zulu",
         text = {
             "{X:mult,C:white}X1{} Melt",
-            "{C:valk_prestigious,s:3,f:5}+π/10{C:valk_prestigious,s:3} Zulu"
+            "{C:valk_prestigious,s:3,f:5}+π/10{C:valk_prestigious,s:3} Zulu",
+            credit("Lily")
         }
     },
     config = { extra = {zulu = math.pi/10} },
@@ -185,6 +186,7 @@ SMODS.Joker {
             "Apply {C:dark_edition}Polychrome{} to a random joker at end of round",
             "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white}X#2#{} Mult when triggered",
             "{C:inactive}(Does not include self){}",
+            credit("Poker the Poker (Edit by Lily)")
         }
     },
     loc_vars = function(self, info_queue, card)

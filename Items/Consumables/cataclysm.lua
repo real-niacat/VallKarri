@@ -899,7 +899,8 @@ SMODS.Booster {
         name = "Pack of Revelations",
         text = {
             "Pick {C:attention}#1#{} of up to {C:attention}#2#{} {C:valk_cataclysm}Cataclysm{} cards",
-            "to use immediately"
+            "to use immediately",
+            credit("Pangaea")
         },
         group_name = "Pack of Revelations"
     },
@@ -996,6 +997,7 @@ SMODS.Voucher {
         name = "Seven Trumpets",
         text = {
             "The {C:valk_cataclysm}Pack of Revelations{} can now appear in the shop",
+            credit("Pangaea")
         }
     },
 
