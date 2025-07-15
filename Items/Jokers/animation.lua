@@ -5,6 +5,7 @@ SMODS.Joker {
         text = {
             "Increase the values of all {C:attention}Food Jokers{} by {C:attention}X#1#{}",
             "at end of round",
+            credit("Scraptake")
         }
     },
 
@@ -48,7 +49,8 @@ SMODS.Joker {
         name = "{C:money}Yellow{}",
         text = {
             "Create a {C:dark_edition}Negative{} {C:cry_code}Code Card{} when any",
-            "non-{C:cry_code}Code Card{} is sold"
+            "non-{C:cry_code}Code Card{} is sold",
+            credit("Scraptake")
         }
     },
 
@@ -82,7 +84,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:attention}Orange{}",
         text = {
-            "When hand played, return all {C:attention}discarded{} cards back to {C:attention}deck{}"
+            "When hand played, return all {C:attention}discarded{} cards back to {C:attention}deck{}",
+            credit("Scraptake")
         }
     },
 

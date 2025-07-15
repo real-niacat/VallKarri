@@ -131,7 +131,8 @@ SMODS.Joker {
         text = {
             "Gains {C:mult}+#1#{} and {X:mult,C:white}X#2#{} Mult",
             "if played hand is {C:attention}None{}",
-            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} and {X:mult,C:white}X#4#{C:inactive} Mult)"
+            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} and {X:mult,C:white}X#4#{C:inactive} Mult)",
+            credit("unexian")
         }
     },
     config = { extra = {gm = 10, gx = 0.2, m = 10, x = 1} },
@@ -345,8 +346,9 @@ SMODS.Joker {
         text = {
             "{X:blue,C:white}X#1#{} Chips and {X:red,C:white}X#1#{} Mult",
             "{C:blue}+#1#{} Hands and {C:red}+#1#{} Discards",
-            "When playing card is scored, earn {C:money}$#1#{} ",  
             "{C:attention}+#1#{} Card Selection Limit and Hand Size",
+            "When playing card is scored, earn {C:money}$#1#{}",
+            credit("Scraptake"),
         } 
     },
     config = { extra = {meow = 3} },

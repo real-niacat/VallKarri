@@ -18,6 +18,7 @@ SMODS.Blind {
             "Must play at least 4 cards"
         }
     },
+    -- art by pangaea
     atlas = "bli",
     pos = {y = 0, x = 0},
     boss = {min = 32, max = 0},

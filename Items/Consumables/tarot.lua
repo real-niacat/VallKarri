@@ -5,7 +5,8 @@ SMODS.Consumable {
         name = "The Knight",
         text = {
             "Select up to {C:attention}#1#{} cards,",
-            "apply a random {C:attention}CCD{} to all selected cards"
+            "apply a random {C:attention}CCD{} to all selected cards",
+            credit("Pangaea")
         }
     },
     config = { extra = { cards = 5 } },
@@ -45,7 +46,8 @@ SMODS.Consumable {
         text = {
             "Select up to {C:attention}#1#{} cards, convert",
             "all selected cards into the {C:attention}leftmost{} card, then",
-            "apply {C:attention}steel{} to all of them"
+            "apply {C:attention}steel{} to all of them",
+            credit("Scraptake")
         }
     },
     config = { extra = { cards = 5 } },
@@ -83,7 +85,8 @@ SMODS.Consumable {
         name = "The Pope",
         text = {
             "Give all cards {C:attention}held-in-hand{}",
-            "the same random {C:attention}vanilla enhancement{} and {C:attention}edition{}"
+            "the same random {C:attention}vanilla enhancement{} and {C:attention}edition{}",
+            credit("Scraptake")
         }
     },
     config = { extra = { } },
@@ -126,7 +129,8 @@ SMODS.Consumable {
         text = {
             "Select up to {C:attention}#1#{} cards,",
             "{C:red}destroy{} all selected cards and create a ",
-            "{C:dark_edition}Negative{} {C:rare}rare{} {C:attention}Joker{} for each card destroyed"
+            "{C:dark_edition}Negative{} {C:rare}rare{} {C:attention}Joker{} for each card destroyed",
+            credit("Scraptake")
         }
     },
     config = { extra = { cards = 3 } },
@@ -172,7 +176,8 @@ SMODS.Consumable {
         text = {
             "Create {C:attention}#1#{} Negative consumable for every {C:attention}#2#{}",
             "{C:tarot}tarot{} cards used in run",
-            "{C:inactive}(Currently #3#){}"
+            "{C:inactive}(Currently #3#){}",
+            credit("Pangaea")
         }
     },
     config = { extra = { per = 1, req = 2 } },
@@ -241,7 +246,8 @@ SMODS.Consumable {
         name = "Gameshow",
         text = {
             "Each Joker has a {C:green}#1# in [Sell Value]{} chance to",
-            "multiply all its values by its {C:money}Sell Value{}"
+            "multiply all its values by its {C:money}Sell Value{}",
+            credit("Pangaea")
         }
     },
     config = { extra = { } },

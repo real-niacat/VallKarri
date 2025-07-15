@@ -32,6 +32,7 @@ SMODS.Joker {
         name = "{f:valk_emojis}⚫⚫{}|{f:valk_emojis}⚫⚫⚫⚫⚫{}|{f:valk_emojis}⚫⚫{}|{f:valk_emojis}⚫",
         text = {
             "{f:valk_emojis,s:2}🎰🃏➡➕🔮",
+            credit("{f:valk_emojis,s:1}📧🛣️")
         }
     },
     rarity = "valk_scp",

@@ -241,6 +241,7 @@ SMODS.Voucher {
         text = {
             "{C:attention}Jokers{} have a {C:green}5%{} chance to be replaced by",
             "a {C:legendary}Legendary{} Joker when created",
+            credit("Pangaea")
         }
     },
 
@@ -267,7 +268,8 @@ SMODS.Voucher {
         name = "Exotic PERK-UP!",
         text = {
             "{C:attention}Jokers{} have a {C:green}2%{} chance to be replaced by",
-            "a {C:cry_exotic}Exotic{} Joker when created",
+            "an {C:cry_exotic}Exotic{} Joker when created",
+            credit("Pangaea")
         }
     },
 
@@ -292,6 +294,7 @@ SMODS.Voucher {
         text = {
             "{C:attention}Jokers{} have a {C:green}1%{} chance to be replaced by",
             "a {C:valk_prestigious}Prestigious{} Joker when created",
+            credit("Pangaea")
         }
     },
 
