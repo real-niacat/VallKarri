@@ -7,7 +7,8 @@ SMODS.Booster {
         name = "Ascended Booster Pack",
         text = {
             "Pick {C:attention}#1#{} of up to {C:attention}#2#{} {C:cry_ascendant}Powerful{} cards",
-            "to use immediately or take"
+            "to use immediately or take",
+            credit("Scraptake (Edit by Grahkon)")
         },
         group_name = "Ascended Booster Pack"
     },
@@ -53,6 +54,7 @@ SMODS.Booster {
         name = "Deck-Fixing Pack",
         text = {
             "Pick {C:attention}#1#{} of {C:attention}#2#{} {C:attention}deck-fixing{} cards to use immediately",
+            credit("Scraptake")
         },
         group_name = "Deck-Fixing Pack"
     },
