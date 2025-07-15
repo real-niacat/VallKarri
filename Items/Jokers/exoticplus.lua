@@ -205,7 +205,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { fallback_red = 56, fallback_blue = 56, max = 10, exponent = 5 } },
+    config = { extra = { fallback_red = 57, fallback_blue = 57, max = 10, exponent = 5 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {"{" .. math.ceil(ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )) .. "}", (card.ability.extra.fallback_blue + card.ability.extra.fallback_red), } }
     end,
