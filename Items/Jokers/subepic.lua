@@ -328,13 +328,15 @@ SMODS.Joker {
     loc_txt = {
         name = "Matchbox",
         text = {
-            "Gains {X:mult,C:white}X#1#{} Mult when scored hand is more than blind",
-            "{C:attention}Resets{} if scored hand is not more than blind",
+            "This Joker gains {X:mult,C:white}X#1#{} Mult per",
+            "{C:attention}consecutive{} hand played larger than blind size",
+            "{C:inactive}(Does not reset on Boss Blinds){}",
             "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult){}",
+             
             credit("Scraptake")
         }
     },
-    config = { extra = {cur = 1, gain = 0.5} },
+    config = { extra = {cur = 1, gain = 0.3} },
     loc_vars = function(self,info_queue, card)
         return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
     end,
@@ -353,8 +355,10 @@ SMODS.Joker {
                 card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
                 quick_card_speak(card, "Upgraded!")
             else
+                if not G.GAME.blind.boss then
                 card.ability.extra.cur = 1
                 quick_card_speak(card, "Reset!")
+                end
             end
         end
         
