@@ -933,7 +933,7 @@ SMODS.Consumable {
     loc_txt = {
         name = "Nevada",
         text = {
-            "All hands gain {X:dark_edition,C:white}^^^^#1#{} Chips & Mult for",
+            "All hands gain {X:dark_edition,C:white}^^#1#{} Chips & Mult for",
             "each {C:red}banished{} {C:valk_cataclysm}cataclysm{} card",
             credit("Pangaea"),
         }
@@ -963,13 +963,13 @@ SMODS.Consumable {
         -- i know the math here is incorrect but
         -- who's going to correct me on it?
         local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(levels))
-        local str = "^^^^" .. tostring(value)
+        local str = "^^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
 
         for i,hand in pairs(G.GAME.hands) do
             if (G.GAME.hands[i].chips) then
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips:arrow(4,value)
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips:tetrate(value)
             end
         end
     end,

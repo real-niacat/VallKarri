@@ -59,7 +59,7 @@ if #SMODS.find_mod("entr") > 0 then
 
         config = { extra = { tet = 1.2, exp = 1.5 } },
         loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.pen, card.ability.extra.tet}}
+            return {vars = {card.ability.extra.tet, card.ability.extra.exp}}
         end,
 
         can_use = function(self, card)
