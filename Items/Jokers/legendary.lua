@@ -390,5 +390,43 @@ SMODS.Joker {
             SMODS.change_discard_limit(-3)
             
         end
-    end,     
+    end,      
+}
+
+
+SMODS.Joker {
+    key = "issbrokie",
+    loc_txt = {
+        name = "ISSBROKIE",
+        text = {
+            "All{C:attention} Aces, Kings, 4's{} and {C:attention}7's{} increase",
+            "chips and mult of played hand type by {C:attention}X1+(rank/100){}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = {inc = 0} },
+    loc_vars = function(self,info_queue, card)
+        return {vars = {card.ability.extra.inc}}
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = {x=2, y=14},
+    soul_pos = {x=3, y=14},
+    cost = 10,
+    blueprint_compat = true,
+    immutable = true,
+
+
+    calculate = function(self, card, context)
+        if (context.individual and context.cardarea == G.play) and (context.other_card:get_id() == 4 or
+        context.other_card:get_id() == 7 or 
+        context.other_card:get_id() == 13 or 
+        context.other_card:get_id() == 14) then
+            card.ability.extra.inc = 1+(context.other_card:get_id()/100)
+            local text = G.FUNCS.get_poker_hand_info(context.full_hand)
+            G.GAME.hands[text].chips = G.GAME.hands[text].chips * card.ability.extra.inc
+            G.GAME.hands[text].mult = G.GAME.hands[text].mult * card.ability.extra.inc
+        end
+    end,
+
 }

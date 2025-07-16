@@ -16,7 +16,7 @@ SMODS.PokerHand {
         {"H_2"},
         {"C_2"},
     },
-    visible = true,
+    visible = false,
     loc_txt = {
         name = "Full Mansion",
         description = {
