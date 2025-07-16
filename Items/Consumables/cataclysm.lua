@@ -959,10 +959,7 @@ SMODS.Consumable {
             end
         end
 
-        
-        -- i know the math here is incorrect but
-        -- who's going to correct me on it?
-        local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(levels))
+        local value = to_big(card.ability.extra.eechips):pow(levels)
         local str = "^^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
