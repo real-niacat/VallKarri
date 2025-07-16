@@ -941,7 +941,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { eechips = 1.1 } },
+    config = { extra = { increase = 1.1 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.eechips}}
     end,
@@ -959,14 +959,15 @@ SMODS.Consumable {
             end
         end
 
-        local value = to_big(card.ability.extra.eechips):pow(levels)
+        local value = to_big(card.ability.extra.increase):pow(levels)
         local str = "^^" .. tostring(value)
         simple_hand_text("all")
-        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str,mult = str})
 
         for i,hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].chips) then
+            if (G.GAME.hands[i].chips) and (G.GAME.hands[i].mult) then
                 G.GAME.hands[i].chips = G.GAME.hands[i].chips:tetrate(value)
+                G.GAME.hands[i].mult = G.GAME.hands[i].mult:tetrate(value)
             end
         end
     end,
