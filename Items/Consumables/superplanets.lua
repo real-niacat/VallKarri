@@ -3,7 +3,7 @@ SMODS.ConsumableType {
     collection_rows = {4, 4},
     primary_colour = HEX("1378D6"),
     secondary_colour = HEX("0058A0"),
-    shop_rate = 0.002,
+    shop_rate = 0.01,
 
     loc_txt = {
         collection = "Superplanet Cards",
@@ -143,8 +143,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Cosmic String",
         text = {
-            "All hands gain " .. tetrvalue("#1#") .. " Chips,",
-            "plus another " .. tetrvalue("#1#") .. " Chips for every 5 levels on",
+            "All hands gain " .. expochips("#1#") .. " Chips,",
+            "plus another " .. expochips("#1#") .. " Chips for every 5 levels on",
             "{C:attention}Five of a Kind{}, {C:attention}Flush House{}, and {C:attention}Flush Five{}",
             credit("mailingway"),
             concept("arris")
@@ -153,9 +153,9 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { eechips = 1.1 } },
+    config = { extra = { echips = 1.1 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.eechips}}
+        return {vars = {card.ability.extra.echips}}
     end,
 
     can_use = function(self, card)
@@ -172,14 +172,14 @@ SMODS.Consumable {
         
         -- i know the math here is incorrect but
         -- who's going to correct me on it?
-        local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(math.floor(levels/5)))
-        local str = "^^" .. tostring(value)
+        local value = to_big(card.ability.extra.echips):pow(to_big(card.ability.extra.echips):pow(math.floor(levels/5)))
+        local str = "^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
 
         for i,hand in pairs(G.GAME.hands) do
             if (G.GAME.hands[i].chips) then
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips:tetrate(value)
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips:pow(value)
             end
         end
     end,
@@ -197,8 +197,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "HD 209458-B",
         text = {
-            "All hands gain " .. tetrvalue("#1#") .. " Mult,",
-            "plus another " .. tetrvalue("#1#") .. " Mult for every 5 levels on",
+            "All hands gain " .. expomult("#1#") .. " Mult,",
+            "plus another " .. expomult("#1#") .. " Mult for every 5 levels on",
             "{C:attention}Three of a Kind{}, {C:attention}Straight{}, and {C:attention}Flush{}",
             credit("mailingway"),
             concept("arris")
@@ -207,9 +207,9 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { eechips = 1.1 } },
+    config = { extra = { echips = 1.1 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.eechips}}
+        return {vars = {card.ability.extra.echips}}
     end,
 
     can_use = function(self, card)
@@ -226,14 +226,14 @@ SMODS.Consumable {
         
         -- i know the math here is incorrect but
         -- who's going to correct me on it?
-        local value = to_big(card.ability.extra.eechips):pow(to_big(card.ability.extra.eechips):pow(math.floor(levels/5)))
+        local value = to_big(card.ability.extra.echips):pow(to_big(card.ability.extra.eehips):pow(math.floor(levels/5)))
         local str = "^^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
 
         for i,hand in pairs(G.GAME.hands) do
             if (G.GAME.hands[i].mult) then
-                G.GAME.hands[i].mult = G.GAME.hands[i].mult:tetrate(value)
+                G.GAME.hands[i].mult = G.GAME.hands[i].mult:pow(value)
             end
         end
     end,

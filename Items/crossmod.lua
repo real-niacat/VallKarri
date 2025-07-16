@@ -48,8 +48,8 @@ if #SMODS.find_mod("entr") > 0 then
             name = "NeVe 1",
             text = {
                 "Multiply {C:chips}chips{} and {C:mult}mult{} of all hands by a {C:attention}Quindecillion{}",
-                "{X:dark_edition,C:white}^^^#1#{} {C:chips}chips{} and {C:mult}mult{} {C:attention}per level{} on all hands",
-                "{X:gold,C:white}^^^#2#{} Ascension Power of all hands",
+                "{X:dark_edition,C:white}^^#1#{} {C:chips}chips{} and {C:mult}mult{} {C:attention}per level{} on all hands",
+                "{X:gold,C:white}^#2#{} Ascension Power of all hands",
                 credit("mailingway"),
                 concept("arris")
             }
@@ -57,7 +57,7 @@ if #SMODS.find_mod("entr") > 0 then
 
         no_doe = true,
 
-        config = { extra = { pen = 2.5, tet = 1.5 } },
+        config = { extra = { tet = 1.2, exp = 1.5 } },
         loc_vars = function(self, info_queue, card)
             return {vars = {card.ability.extra.pen, card.ability.extra.tet}}
         end,
@@ -73,11 +73,11 @@ if #SMODS.find_mod("entr") > 0 then
                 hand.mult = to_big(hand.mult):mul(1e48)
                 hand.chips = to_big(hand.chips):mul(1e48)
 
-                hand.l_chips = to_big(hand.l_chips):arrow(3,card.ability.extra.pen):add(1)
-                hand.l_mult = to_big(hand.l_mult):arrow(3,card.ability.extra.pen):add(1)
+                hand.l_chips = to_big(hand.l_chips):tetrate(card.ability.extra.tet):add(1)
+                hand.l_mult = to_big(hand.l_mult):tetrate(card.ability.extra.tet):add(1)
 
                 if (hand.AscensionPower) then
-                    hand.AscensionPower = to_big(hand.AscensionPower):arrow(3,card.ability.extra.tet)
+                    hand.AscensionPower = to_big(hand.AscensionPower):pow(card.ability.extra.exp)
                 end
             end
         end,
