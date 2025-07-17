@@ -103,9 +103,9 @@ SMODS.Joker {
         name = "Arris",
         text = {
             "Superplanets appear {C:attention}20X{} more frequently in the shop",
-            "Gains {X:dark_edition,C:white}+^#1#{} when {C:valk_superplanet}Superplanet{}, {C:planet}Planet{}, or {C:planet}Planetoid{} is used",
             "Using a {C:valk_superplanet}Superplanet{} generates a random {C:planet}Planetoid{}",
             "Using a {C:planet}Planetoid{} generates a random {C:planet}Planet{}",
+            "Gains {X:dark_edition,C:white}+^#1#{} when {C:valk_superplanet}Superplanet{} is used",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult){}",
             credit("Scraptake")
         }
@@ -124,15 +124,12 @@ SMODS.Joker {
    
     calculate = function(self, card, context)
 
-        if context.using_consumeable and (context.consumeable.config.center.set == "Planet" or "Planetoid" or "Superplanet") then
-            card.ability.extra.emult = card.ability.extra.emult + 1
-        end
-
         if context.using_consumeable and context.consumeable.config.center.set == "Superplanet" then
             local c = create_card("Planetoid", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
             c:add_to_deck()
             G.consumeables:emplace(c)
             quick_card_speak(card,"We have much to discover, don't we?")
+            card.ability.extra.emult = card.ability.extra.emult + 1
         end
 
         if context.using_consumeable and context.consumeable.config.center.set == "Planetoid" then

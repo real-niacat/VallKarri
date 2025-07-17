@@ -941,9 +941,9 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { increase = 1.1 } },
+    config = { extra = {increase = 1.1} },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.eechips}}
+        return {vars = {card.ability.extra.increase}}
     end,
 
     can_use = function(self, card)
