@@ -97,3 +97,83 @@ SMODS.Joker {
     }
 }
 
+SMODS.Joker {
+    key = "arris",
+    loc_txt = {
+        name = "Arris",
+        text = {
+            "Superplanets appear {C:attention}20X{} more frequently in the shop",
+            "Gains {X:mult,C:white}^#1#{} when {C:planet}Planet{}, or {C:planet}Planetoid{} is used",
+            "Using a {C:valk_superplanet}Superplanet{} generates a random {C:planet}Planetoid{}",
+            "Using a {C:planet}Planetoid{} generates a random {C:planet}Planet{}",
+            "{C:inactive}(Currently {X:red,C:white}^#2#{C:inactive} Mult){}",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = {pmult = 1, emult = 1} },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.pmult, card.ability.extra.emult} }
+    end,
+    rarity = "cry_exotic",
+    atlas = "main",
+    pos = {x=8,y=14},
+    soul_pos = {x=9,y=14},
+    cost = 50,
+    demicoloncompat = true,
+    blueprint_compat = true,
+   
+    calculate = function(self, card, context)
+
+        if context.using_consumeable and (context.consumeable.config.center.set == "Planet" or "Planetoid" or "Superplanet") then
+            card.ability.extra.emult = card.ability.extra.emult + 1
+        end
+
+        if context.using_consumeable and context.consumeable.config.center.set == "Superplanet" then
+            local c = create_card("Planetoid", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
+            c:add_to_deck()
+            G.consumeables:emplace(c)
+            quick_card_speak(card,"We have much to discover, don't we?")
+        end
+
+        if context.using_consumeable and context.consumeable.config.center.set == "Planetoid" then
+            local c = create_card("Planet", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
+            c:add_to_deck()
+            G.consumeables:emplace(c)
+        end
+    
+        if context.joker_main or context.forcetrigger then
+            return {
+                e_mult = card.ability.extra.emult
+            }
+        end
+        
+    end,
+ 
+    add_to_deck = function(self, card, from_debuff )
+        if not from_debuff then
+            G.GAME.superplanet_rate = G.GAME.superplanet_rate * 20
+        end
+    end,  
+
+    remove_from_deck = function(self, card, from_debuff )
+        if not from_debuff then
+            G.GAME.superplanet_rate = G.GAME.superplanet_rate / 20
+        end
+    end,   
+
+        lore = {
+        "A 23 year old skeleton who was transformed into such ",
+        "due to an incorrect death, as well as his family.",
+        "",
+        "Not much is known about his human life, ",
+        "other than the fact that he had yellow hair and yellow eyes.",
+        "",
+        "Cursed with this second chance at life, he tries to make the most out of every day,",
+        "no matter how much pain he went through, and unknown to him...",
+        "...he is about to go through so much more. ",
+        "",
+        "He likes to spend his days going on walks or spending time in the park,",
+        "embracing the wild life that goes about."
+    }
+}
+

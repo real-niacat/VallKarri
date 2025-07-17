@@ -21,6 +21,17 @@ SMODS.ConsumableType {
     
 }
 
+local lc = loc_colour
+function loc_colour(_c, _default)
+	if not G.ARGS.LOC_COLOURS then
+		lc()
+	end
+	G.ARGS.LOC_COLOURS.valk_superplanet = HEX("0058A0")
+	return lc(_c, _default)
+end
+
+G.C.VALK_SUPERPLANET = HEX("50202A")
+
 SMODS.Atlas {
     key = "csm",
     path = "super_planets.png",
