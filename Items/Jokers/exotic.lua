@@ -103,10 +103,10 @@ SMODS.Joker {
         name = "Arris",
         text = {
             "Superplanets appear {C:attention}20X{} more frequently in the shop",
-            "Gains {X:mult,C:white}^#1#{} when {C:planet}Planet{}, or {C:planet}Planetoid{} is used",
+            "Gains {X:dark_edition,C:white}+^#1#{} when {C:valk_superplanet}Superplanet{}, {C:planet}Planet{}, or {C:planet}Planetoid{} is used",
             "Using a {C:valk_superplanet}Superplanet{} generates a random {C:planet}Planetoid{}",
             "Using a {C:planet}Planetoid{} generates a random {C:planet}Planet{}",
-            "{C:inactive}(Currently {X:red,C:white}^#2#{C:inactive} Mult){}",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult){}",
             credit("Scraptake")
         }
     },
