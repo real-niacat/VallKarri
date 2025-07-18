@@ -95,6 +95,7 @@ if #SMODS.find_mod("entr") > 0 then
             name = "Coronal Ejection",
             text = {
                 "{C:green}#2# in #3#{} chance to increase {C:gold}Ascension Power{} of played {C:attention}poker hand{} by {X:gold,C:white}+10{}",
+                credit("mailingway")
             }
         },
         config = { extra = { power = 10, num = 1, den = 10} },
@@ -108,7 +109,7 @@ if #SMODS.find_mod("entr") > 0 then
         cost = 8,
         demicoloncompat = true,
         blueprint_compat = true,
-        
+
         calculate = function(self, card, context)
             if context.before then
                 if SMODS.pseudorandom_probability(card, 'coronal', card.ability.extra.num, card.ability.extra.den, 'coronal') then
