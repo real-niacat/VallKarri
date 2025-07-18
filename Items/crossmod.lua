@@ -79,7 +79,7 @@ if #SMODS.find_mod("entr") > 0 then
                 if (hand.AscensionPower) then
                     hand.AscensionPower = to_big(hand.AscensionPower):pow(card.ability.extra.exp)
                 end
-            end
+            end 
         end,
 
             
@@ -88,6 +88,38 @@ if #SMODS.find_mod("entr") > 0 then
         no_grc = true,
         no_doe = true,
     }
+
+    SMODS.Joker {
+        key = "coronal",
+        loc_txt = {
+            name = "Coronal Ejection",
+            text = {
+                "{C:green}#2# in #3#{} chance to increase {C:gold}Ascension Power{} of played {C:attention}poker hand{} by {X:gold,C:white}+10{}",
+            }
+        },
+        config = { extra = { power = 10, num = 1, den = 10} },
+        loc_vars = function(self, info_queue, card)
+            local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'coronal')
+            return {vars = {card.ability.extra.power, num, den} }
+        end,
+        rarity = 3,
+        atlas = "main",
+        pos = {x=4,y=14},
+        cost = 8,
+        demicoloncompat = true,
+        blueprint_compat = true,
+        
+        calculate = function(self, card, context)
+            if context.before then
+                if SMODS.pseudorandom_probability(card, 'coronal', card.ability.extra.num, card.ability.extra.den, 'coronal') then
+                    local text = G.FUNCS.get_poker_hand_info(context.full_hand)
+                    G.GAME.hands[text].AscensionPower = (G.GAME.hands[text].AscensionPower and G.GAME.hands[text].AscensionPower+card.ability.extra.power) or card.ability.extra.power
+                end
+            end 
+        end,
+
+    }
+
 end
 
 function vallkarri.add_merge(inputs, out)
