@@ -372,25 +372,12 @@ SMODS.Joker {
         if (context.setting_blind) then
             ease_hands_played(card.ability.extra.meow)
             ease_discard(card.ability.extra.meow)
+            G.hand:change_size(card.ability.extra.meow)
+            SMODS.change_play_limit(card.ability.extra.meow)
+            SMODS.change_discard_limit(card.ability.extra.meow)
         end
     end,
-
-    add_to_deck = function(self, card, from_debuff )
-        if not from_debuff then
-            G.hand:change_size(3)
-            SMODS.change_play_limit(3)
-            SMODS.change_discard_limit(3)
-            
-        end
-    end,  
-    remove_from_deck = function(self, card, from_debuff )
-        if not from_debuff then
-            G.hand:change_size(-3)
-            SMODS.change_play_limit(-3)
-            SMODS.change_discard_limit(-3)
-            
-        end
-    end,      
+  
 }
 
 
@@ -412,7 +399,7 @@ SMODS.Joker {
     atlas = "main",
     pos = {x=2, y=14},
     soul_pos = {x=3, y=14},
-    cost = 10,
+    cost = 20,
     blueprint_compat = true,
     immutable = true,
 
