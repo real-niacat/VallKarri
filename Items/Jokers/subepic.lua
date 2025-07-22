@@ -454,8 +454,8 @@ SMODS.Joker {
             card.ability.extra.inc
         }}
     end,
-    atlas = "phold",
-    pos = {x = 0, y = 1},
+    atlas = "main",
+    pos = {x = 10, y = 4},
     cost = 7,
     rarity = 3,
     calculate = function(self, card, context)
