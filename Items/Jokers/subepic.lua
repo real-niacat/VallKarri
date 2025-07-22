@@ -1,3 +1,4 @@
+--COMMON BELOW
 SMODS.Joker {
     key = "suckit",
     loc_txt = {
@@ -35,7 +36,7 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = { extra = {per = 1} },
+    config = { extra = {per = 2} },
     loc_vars = function(self,info_queue, card)
         return {vars = {card.ability.extra.per}}
     end,
@@ -50,7 +51,6 @@ SMODS.Joker {
  
         if context.joker_main then
             local amount = (#context.full_hand - #context.scoring_hand)
-            print(amount)
             return {mult = card.ability.extra.per * amount} 
         end
 
@@ -59,6 +59,7 @@ SMODS.Joker {
 }
 
 
+--UNCOMMON BELOW
 SMODS.Joker {
     key = "whereclick",
     loc_txt = {
@@ -257,6 +258,38 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "amber",
+    loc_txt = {
+        name = "Amber",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult for every scoring {C:diamonds}diamond{} in hand",
+            credit("mailingway")
+        }
+    },
+    config = {extra = {per = 0.2}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.per}}
+    end,
+    atlas = "main",
+    pos = {x = 10, y = 6},
+    cost = 6,
+    rarity = 2,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local amount = 0
+            for i,pcard in ipairs(context.scoring_hand) do
+                if pcard:is_suit("Diamonds") then
+                    amount = amount + 1
+                end
+            end
+            return {xmult = 1 + (card.ability.extra.per * amount)} 
+        end
+    end,
+}
+
+--RARE BELOW
+
+SMODS.Joker {
     key = "femtanyl",
     loc_txt = {
         name = "Femtanyl",
@@ -312,38 +345,13 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
-    key = "keystonefragment",
-    loc_txt = {
-        name = "{C:money}Key{C:red}stone {C:money}Frag{C:red}ment",
-        text = {
-            "Channels the power from the {C:edition,X:dark_edition}Infinite{}",
-            "Does nothing, it is better used {C:edition,X:dark_edition}elsewhere...{}",
-            credit("Lily")
-        }
-    },
-    config = { extra = {  } },
-    rarity = "valk_equip",
-    atlas = "main",
-    pos = {x=4,y=2},
-    soul_pos = {x=2,y=2}, --halo
-    cost = 66,
-
-    in_pool = function()
-        return (#SMODS.find_card("j_valk_dormantlordess") > 0)
-    end
-}
--- watcher does NOT always look stupid 
-
-
-
-SMODS.Joker {
     key = "planetarium",
     loc_txt = {
         name = "Planetarium",
         text = {
             "When {C:attention}hand{} played, increase {C:chips}chips{} and {C:mult}mult{} per level",
             "of played {C:attention}poker hand{} by {C:attention}#1#{}",
-            credit("Pangaea")
+            credit("Grahkon")
         }
     },
     config = { extra = { inc = 1 }},
@@ -365,7 +373,6 @@ SMODS.Joker {
         end
     end,
 }
-
 
 SMODS.Joker {
     key = "matchbox",
@@ -414,3 +421,24 @@ SMODS.Joker {
 
 }
 
+SMODS.Joker {
+    key = "keystonefragment",
+    loc_txt = {
+        name = "{C:money}Key{C:red}stone {C:money}Frag{C:red}ment",
+        text = {
+            "Channels the power from the {C:edition,X:dark_edition}Infinite{}",
+            "Does nothing, it is better used {C:edition,X:dark_edition}elsewhere...{}",
+            credit("Lily")
+        }
+    },
+    config = { extra = {  } },
+    rarity = "valk_equip",
+    atlas = "main",
+    pos = {x=4,y=2},
+    soul_pos = {x=2,y=2}, --halo
+    cost = 66,
+
+    in_pool = function()
+        return (#SMODS.find_card("j_valk_dormantlordess") > 0)
+    end
+}
