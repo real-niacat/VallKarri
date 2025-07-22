@@ -27,6 +27,39 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "antithesis",
+    loc_txt = {
+        name = "Antithesis",
+        text = {
+            "{C:mult}+#1#{} Mult for every {C:attention}unscoring{} card",
+            credit("mailingway")
+        }
+    },
+    config = { extra = {per = 1} },
+    loc_vars = function(self,info_queue, card)
+        return {vars = {card.ability.extra.per}}
+    end,
+    rarity = 1,
+    atlas = "main",
+    pos = {x=10, y=5},
+    cost = 5,
+    blueprintcompat = true,
+
+
+    calculate = function(self, card, context)
+ 
+        if context.joker_main then
+            local amount = (#context.full_hand - #context.scoring_hand)
+            print(amount)
+            return {mult = card.ability.extra.per * amount} 
+        end
+
+    end,
+
+}
+
+
+SMODS.Joker {
     key = "whereclick",
     loc_txt = {
         name = "{C:red}Where do I click?{}",
@@ -146,84 +179,6 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
-    key = "femtanyl",
-    loc_txt = {
-        name = "Femtanyl",
-        text = {
-            "Prevents death at the cost of {C:attention}#1#{} Joker slot",
-            "Return lost Joker slot after {C:attention}#2#{} round(s)",
-            "Increase round timer by {C:attention}#3#{} and earn {C:money}$#4#{} when death is prevented",
-            "{C:inactive}Dying again or removing this Joker while the timer {}",
-            "{C:inactive}is active will result in not recovering a Joker slot{}",
-            "{C:inactive}(Does not work below 3 Joker slots){}",
-            
-            quote("femtanyl"),
-            credit("Scraptake")
-        }
-    },
-    config = { extra = { cost = 1, increase = 1, timer = 0, timerbase = 2, money = 10 } },
-    loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.cost, card.ability.extra.timerbase, card.ability.extra.increase, card.ability.extra.money}}
-    end,
-    pools = { ["Kitties"] = true },
-    rarity = 3,
-    atlas = "main",
-    pos = {x=0, y=5},
-    soul_pos = {x=1, y=5},
-    cost = 6,
-    calculate = function(self, card, context)
-
-        if (context.end_of_round and not context.blueprint and not context.individual) then
-            card.ability.extra.timer = card.ability.extra.timer - 1
-
-            if (card.ability.extra.timer == 0) then
-                G.jokers:change_size(card.ability.extra.cost, false)
-            end
-        end
-
-        if (context.end_of_round and not context.blueprint and context.game_over) then
-
-            local slots = G.jokers.config.card_limit - card.ability.extra.cost
-            G.jokers:change_size(-card.ability.extra.cost, false)
-            card.ability.extra.timer = card.ability.extra.timerbase
-            card.ability.extra.timerbase = card.ability.extra.timerbase + card.ability.extra.increase
-            
-
-            if (slots >= 3) then
-                ease_dollars(card.ability.extra.money)
-                return {saved = true}
-            end
-
-        end
-
-        
-    end
-}
-
-SMODS.Joker {
-    key = "keystonefragment",
-    loc_txt = {
-        name = "{C:money}Key{C:red}stone {C:money}Frag{C:red}ment",
-        text = {
-            "Channels the power from the {C:edition,X:dark_edition}Infinite{}",
-            "Does nothing, it is better used {C:edition,X:dark_edition}elsewhere...{}",
-            credit("Lily")
-        }
-    },
-    config = { extra = {  } },
-    rarity = "valk_equip",
-    atlas = "main",
-    pos = {x=4,y=2},
-    soul_pos = {x=2,y=2}, --halo
-    cost = 66,
-
-    in_pool = function()
-        return (#SMODS.find_card("j_valk_dormantlordess") > 0)
-    end
-}
--- watcher does NOT always look stupid 
-
-SMODS.Joker {
     key = "periapt_beer",
     loc_txt = {
         name = "Periapt Beer",
@@ -302,6 +257,86 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "femtanyl",
+    loc_txt = {
+        name = "Femtanyl",
+        text = {
+            "Prevents death at the cost of {C:attention}#1#{} Joker slot",
+            "Return lost Joker slot after {C:attention}#2#{} round(s)",
+            "Increase round timer by {C:attention}#3#{} and earn {C:money}$#4#{} when death is prevented",
+            "{C:inactive}Dying again or removing this Joker while the timer {}",
+            "{C:inactive}is active will result in not recovering a Joker slot{}",
+            "{C:inactive}(Does not work below 3 Joker slots){}",
+            
+            quote("femtanyl"),
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { cost = 1, increase = 1, timer = 0, timerbase = 2, money = 10 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {card.ability.extra.cost, card.ability.extra.timerbase, card.ability.extra.increase, card.ability.extra.money}}
+    end,
+    pools = { ["Kitties"] = true },
+    rarity = 3,
+    atlas = "main",
+    pos = {x=0, y=5},
+    soul_pos = {x=1, y=5},
+    cost = 6,
+    calculate = function(self, card, context)
+
+        if (context.end_of_round and not context.blueprint and not context.individual) then
+            card.ability.extra.timer = card.ability.extra.timer - 1
+
+            if (card.ability.extra.timer == 0) then
+                G.jokers:change_size(card.ability.extra.cost, false)
+            end
+        end
+
+        if (context.end_of_round and not context.blueprint and context.game_over) then
+
+            local slots = G.jokers.config.card_limit - card.ability.extra.cost
+            G.jokers:change_size(-card.ability.extra.cost, false)
+            card.ability.extra.timer = card.ability.extra.timerbase
+            card.ability.extra.timerbase = card.ability.extra.timerbase + card.ability.extra.increase
+            
+
+            if (slots >= 3) then
+                ease_dollars(card.ability.extra.money)
+                return {saved = true}
+            end
+
+        end
+
+        
+    end
+}
+
+SMODS.Joker {
+    key = "keystonefragment",
+    loc_txt = {
+        name = "{C:money}Key{C:red}stone {C:money}Frag{C:red}ment",
+        text = {
+            "Channels the power from the {C:edition,X:dark_edition}Infinite{}",
+            "Does nothing, it is better used {C:edition,X:dark_edition}elsewhere...{}",
+            credit("Lily")
+        }
+    },
+    config = { extra = {  } },
+    rarity = "valk_equip",
+    atlas = "main",
+    pos = {x=4,y=2},
+    soul_pos = {x=2,y=2}, --halo
+    cost = 66,
+
+    in_pool = function()
+        return (#SMODS.find_card("j_valk_dormantlordess") > 0)
+    end
+}
+-- watcher does NOT always look stupid 
+
+
+
+SMODS.Joker {
     key = "planetarium",
     loc_txt = {
         name = "Planetarium",
@@ -378,3 +413,4 @@ SMODS.Joker {
     end,
 
 }
+
