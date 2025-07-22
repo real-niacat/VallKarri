@@ -224,3 +224,58 @@ SMODS.Joker {
 
     end,
 }
+
+SMODS.Joker {
+    key = "imwithstupid",
+    rarity = "cry_epic",
+    loc_txt = {
+        name = "I'm with stupid",
+        text = {
+            "Retrigger the {C:attention}Joker{} to the left {C:attention}#1#{} time(s)",
+            "Increase retrigger amount by {C:attention}#2#{} for",
+            "every {C:attention}#3#{} {C:inactive}[#4#]{} played cards",
+            credit("mailingway")
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.retrig,
+            card.ability.extra.inc,
+            card.ability.extra.reset,
+            card.ability.extra.req
+        }}
+    end,
+    config = { extra = { retrig = 1, inc = 1, req = 20, reset = 20 }},
+    atlas = "main",
+    pos = {x=11, y=5},
+    cost = 12,
+    immutable = true,
+    pools = { ["Meme"] = true },
+    calculate = function(self, card, context)
+
+        
+        if context.retrigger_joker_check then
+
+            local my_index = 0
+            for i,joker in ipairs(G.jokers.cards) do
+                if joker == card then my_index = i end
+            end
+
+            if G.jokers.cards[my_index-1] and context.other_card == G.jokers.cards[my_index-1] then
+                return {
+                    repetitions = card.ability.extra.retrig
+                }
+            end
+
+        end
+
+        if context.joker_main then
+            card.ability.extra.req = card.ability.extra.req - #context.scoring_hand
+            if card.ability.extra.req < 0 then
+                card.ability.extra.req = card.ability.extra.req + card.ability.extra.reset
+                card.ability.extra.retrig = card.ability.extra.retrig + card.ability.extra.inc
+            end
+        end
+
+    end,
+}

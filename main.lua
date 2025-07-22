@@ -6,6 +6,10 @@ vallkarri = {
     show_options_button = true,
 }
 
+SMODS.current_mod.optional_features = {
+    retrigger_joker = true,
+}
+
 vallkarri = SMODS.current_mod
 vallkarri_config = vallkarri.config
 vallkarri.enabled = copy_table(vallkarri_config)
