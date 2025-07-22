@@ -262,7 +262,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Amber",
         text = {
-            "{X:mult,C:white}X#1#{} Mult for every scoring {C:diamonds}diamond{} in hand",
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:diamonds}Diamonds{}",
             credit("mailingway")
         }
     },
@@ -280,6 +280,99 @@ SMODS.Joker {
             local amount = 0
             for i,pcard in ipairs(context.scoring_hand) do
                 if pcard:is_suit("Diamonds") then
+                    amount = amount + 1
+                end
+            end
+            return {xmult = 1 + (card.ability.extra.per * amount)} 
+        end
+    end,
+}
+
+SMODS.Joker {
+    key = "blackjack",
+    loc_txt = {
+        name = "Blackjack",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:spades}Spades{}",
+            credit("mailingway")
+        }
+    },
+    config = {extra = {per = 0.2}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.per}}
+    end,
+    atlas = "main",
+    pos = {x = 11, y = 6},
+    cost = 6,
+    rarity = 2,
+    pools = { ["Kitties"] = true },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local amount = 0
+            for i,pcard in ipairs(context.scoring_hand) do
+                if pcard:is_suit("Spades") then
+                    amount = amount + 1
+                end
+            end
+            return {xmult = 1 + (card.ability.extra.per * amount)} 
+        end
+    end,
+}
+
+SMODS.Joker {
+    key = "troupe",
+    loc_txt = {
+        name = "Troupe",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:spades}Clubs{}",
+            credit("mailingway")
+        }
+    },
+    config = {extra = {per = 0.2}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.per}}
+    end,
+    atlas = "main",
+    pos = {x = 10, y = 7},
+    cost = 6,
+    rarity = 2,
+    pools = { ["Kitties"] = true },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local amount = 0
+            for i,pcard in ipairs(context.scoring_hand) do
+                if pcard:is_suit("Clubs") then
+                    amount = amount + 1
+                end
+            end
+            return {xmult = 1 + (card.ability.extra.per * amount)} 
+        end
+    end,
+}
+
+SMODS.Joker {
+    key = "valentine",
+    loc_txt = {
+        name = "Valentine",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:hearts}Hearts{}",
+            credit("mailingway")
+        }
+    },
+    config = {extra = {per = 0.2}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.per}}
+    end,
+    atlas = "main",
+    pos = {x = 11, y = 7},
+    cost = 6,
+    rarity = 2,
+    pools = { ["Kitties"] = true },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local amount = 0
+            for i,pcard in ipairs(context.scoring_hand) do
+                if pcard:is_suit("Hearts") then
                     amount = amount + 1
                 end
             end
