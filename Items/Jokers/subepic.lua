@@ -274,6 +274,7 @@ SMODS.Joker {
     pos = {x = 10, y = 6},
     cost = 6,
     rarity = 2,
+    pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.joker_main then
             local amount = 0
