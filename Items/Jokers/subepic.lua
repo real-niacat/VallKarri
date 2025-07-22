@@ -262,7 +262,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Amber",
         text = {
-            "{X:mult,C:white}X#1#{} Mult for each scoring {C:diamonds}Diamonds{}",
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:diamonds}Diamond{}",
             credit("mailingway")
         }
     },
@@ -293,7 +293,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Blackjack",
         text = {
-            "{X:mult,C:white}X#1#{} Mult for each scoring {C:spades}Spades{}",
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:spades}Spade{}",
             credit("mailingway")
         }
     },
@@ -324,7 +324,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Troupe",
         text = {
-            "{X:mult,C:white}X#1#{} Mult for each scoring {C:spades}Clubs{}",
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:spades}Club{}",
             credit("mailingway")
         }
     },
@@ -355,7 +355,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Valentine",
         text = {
-            "{X:mult,C:white}X#1#{} Mult for each scoring {C:hearts}Hearts{}",
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:hearts}Heart{}",
             credit("mailingway")
         }
     },
