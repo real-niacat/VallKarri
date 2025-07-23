@@ -10,8 +10,7 @@ SMODS.ConsumableType {
     collection_rows = {6, 6},
     primary_colour = HEX("D3ECF4"),
     secondary_colour = HEX("508DA0"),
-    shop_rate = 0,
-
+    shop_rate = 0.05,
     loc_txt = {
         collection = "Planetoid Cards",
         label = "planetoid",

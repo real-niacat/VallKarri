@@ -102,17 +102,15 @@ SMODS.Joker {
     loc_txt = {
         name = "Arris",
         text = {
-            "Superplanets appear {C:attention}20X{} more frequently in the shop",
-            "Using a {C:valk_superplanet}Superplanet{} generates a random {C:planet}Planetoid{}",
-            "Using a {C:planet}Planetoid{} generates a random {C:planet}Planet{}",
-            "Gains {X:dark_edition,C:white}+^#1#{} when {C:valk_superplanet}Superplanet{} is used",
-            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult){}",
+            "{C:valk_superplanet}Superplanets{} appear {C:attention}#1#X{} more frequently in the shop",
+            "Using a {C:valk_superplanet}Superplanet{} generates {C:attention}#2#{} random {C:planet}Planetoids{}",
+            "Using a {C:planet}Planetoid{} generates {C:attention}#2#{} random {C:planet}Planets{}",
             credit("Scraptake")
         }
     },
-    config = { extra = {pmult = 1, emult = 1} },
+    config = { extra = {rate = 200, copies = 2} },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.pmult, card.ability.extra.emult} }
+        return {vars = {card.ability.extra.rate, card.ability.extra.copies} }
     end,
     rarity = "cry_exotic",
     atlas = "main",
@@ -125,36 +123,33 @@ SMODS.Joker {
     calculate = function(self, card, context)
 
         if context.using_consumeable and context.consumeable.config.center.set == "Superplanet" then
-            local c = create_card("Planetoid", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
-            c:add_to_deck()
-            G.consumeables:emplace(c)
+            for i=1,card.ability.extra.copies do
+                local c = create_card("Planetoid", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
+                c:add_to_deck()
+                G.consumeables:emplace(c)
+            end
             quick_card_speak(card,"We have much to discover, don't we?")
-            card.ability.extra.emult = card.ability.extra.emult + 1
         end
 
         if context.using_consumeable and context.consumeable.config.center.set == "Planetoid" then
-            local c = create_card("Planet", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
-            c:add_to_deck()
-            G.consumeables:emplace(c)
-        end
-    
-        if context.joker_main or context.forcetrigger then
-            return {
-                e_mult = card.ability.extra.emult
-            }
+            for i=1,card.ability.extra.copies do
+                local c = create_card("Planet", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
+                c:add_to_deck()
+                G.consumeables:emplace(c)
+            end
         end
         
     end,
  
     add_to_deck = function(self, card, from_debuff )
         if not from_debuff then
-            G.GAME.superplanet_rate = G.GAME.superplanet_rate * 20
+            G.GAME.superplanet_rate = G.GAME.superplanet_rate * card.ability.extra.rate
         end
     end,  
 
     remove_from_deck = function(self, card, from_debuff )
         if not from_debuff then
-            G.GAME.superplanet_rate = G.GAME.superplanet_rate / 20
+            G.GAME.superplanet_rate = G.GAME.superplanet_rate / card.ability.extra.rate
         end
     end,   
 
