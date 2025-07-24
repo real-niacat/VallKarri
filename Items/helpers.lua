@@ -501,14 +501,14 @@ end
 function disable_mult_ui() 
 
     G.GAME.mult_disabled = true
-    G.HUD:get_UIE_by_ID("chipmult_op").UIT = 0
+    if G.HUD:get_UIE_by_ID("chipmult_op") then G.HUD:get_UIE_by_ID("chipmult_op").UIT = 0 end
     G.HUD:get_UIE_by_ID("hand_mult_area").UIT = 0
     G.HUD:get_UIE_by_ID("hand_mult").UIT = 0
     G.HUD:get_UIE_by_ID("flame_mult").UIT = 0
     G.HUD:get_UIE_by_ID("hand_chip_area").config.minw = 4
     G.HUD:get_UIE_by_ID("hand_mult_area").config.minw = 0
     G.HUD:get_UIE_by_ID("hand_mult_area").config.minh = 0
-    G.HUD:get_UIE_by_ID("chipmult_op").scale = 0
+    if G.HUD:get_UIE_by_ID("chipmult_op") then G.HUD:get_UIE_by_ID("chipmult_op").scale = 0 end
 
     G.HUD:recalculate()
 
