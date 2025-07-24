@@ -176,7 +176,7 @@ function vallkarri.xp_required(level)
     local arrows = 0
     local exp = 1
 
-    local nlv = (level) -- shorthand. dumb i know
+    local nlv = to_big(level) -- shorthand. dumb i know
     arrows = nlv:tetrate(0.07)
     exp = math.log(nlv, 2.2)
 
