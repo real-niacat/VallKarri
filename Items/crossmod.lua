@@ -47,9 +47,9 @@ if #SMODS.find_mod("entr") > 0 then
         loc_txt = {
             name = "NeVe 1",
             text = {
-                "Multiply {C:chips}chips{} and {C:mult}mult{} of all hands by a {C:attention}Quindecillion{}",
-                "{X:dark_edition,C:white}^^#1#{} {C:chips}chips{} and {C:mult}mult{} {C:attention}per level{} on all hands",
-                "{X:gold,C:white}^#2#{} Ascension Power of all hands",
+                "Multiply {C:chips}chips{} and {C:mult}mult{} of all hands by a {C:attention}#1#{}",
+                "{X:dark_edition,C:white}^^#2#{} {C:chips}chips{} and {C:mult}mult{} {C:attention}per level{} on all hands",
+                "{X:gold,C:white}^#3#{} Ascension Power of all hands",
                 credit("mailingway"),
                 concept("arris")
             }
@@ -57,9 +57,9 @@ if #SMODS.find_mod("entr") > 0 then
 
         no_doe = true,
 
-        config = { extra = { tet = 1.2, exp = 1.5 } },
+        config = { extra = { mult = 1000, tet = 1.2, exp = 1.5 } },
         loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.tet, card.ability.extra.exp}}
+            return {vars = {card.ability.extra.mult, card.ability.extra.tet, card.ability.extra.exp}}
         end,
 
         can_use = function(self, card)
@@ -70,8 +70,8 @@ if #SMODS.find_mod("entr") > 0 then
         use = function(self, card, area, copier)
 
             for i,hand in pairs(G.GAME.hands) do
-                hand.mult = to_big(hand.mult):mul(1e48)
-                hand.chips = to_big(hand.chips):mul(1e48)
+                hand.mult = to_big(hand.mult):mul(card.ability.extra.mult)
+                hand.chips = to_big(hand.chips):mul(card.ability.extra.mult)
 
                 hand.l_chips = to_big(hand.l_chips):tetrate(card.ability.extra.tet):add(1)
                 hand.l_mult = to_big(hand.l_mult):tetrate(card.ability.extra.tet):add(1)

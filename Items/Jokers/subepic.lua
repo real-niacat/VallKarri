@@ -495,7 +495,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
  
         -- is a little fucked with The Tax boss blind but idk how to fix, help
-        if context.final_scoring_step then     
+        if context.after then     
             if hand_chips * mult > G.GAME.blind.chips then
                 card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
                 quick_card_speak(card, "Upgraded!")
