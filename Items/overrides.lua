@@ -559,3 +559,28 @@ function add_tag(_tag)
         addtaghook(_tag)
     end
 end
+
+
+function Card:is_immortal()
+    return (self and self.config and self.config.center and self.config.center.immortal)
+end
+
+local card_remove = Card.remove
+local card_remove_deck = Card.remove_from_deck
+function Card:remove(...)
+    if self:is_immortal() and self.area then
+        quick_card_speak(self, self.config.center.immortal_speak)
+        self:start_materialize({G.C.BLACK}, false, G.SETTINGS.GAMESPEED)
+        self:deselect()
+    else
+        card_remove(self, ...)
+    end
+end
+
+function Card:remove_from_deck(...)
+
+    if not self:is_immortal() then
+        card_remove_deck(self, ...)
+    end
+
+end

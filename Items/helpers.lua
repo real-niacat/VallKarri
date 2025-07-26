@@ -530,6 +530,9 @@ end
 
 function find_index(card, list)
 
+    if not list then --extremely niche case
+        return false
+    end
     for i,c in ipairs(list) do
         if c == card then
             return i
@@ -594,6 +597,10 @@ function get_handtype(handtype)
         return false
     end
 
+end
+
+function Card:deselect()
+    self.area:remove_from_highlighted(self)
 end
 
 function do_while_flipped(cards, func) --mostly borrowed from entropy, thank you ruby <3

@@ -345,9 +345,9 @@ SMODS.Joker {
         
     end,
 
-    add_to_deck = function(self, card, from_debuff)
-        card.ability.cry_absolute = true
-    end,
+
+    immortal = true,
+    immortal_speak = "I'm stuck with ya!",
 
     lore = {
         "Lily is a Fellinian Entropic Lord, this means",

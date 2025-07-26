@@ -294,7 +294,7 @@ local caevsttx = card_eval_status_text
 function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
     caevsttx(card, eval_type, amt, percent, dir, extra)
 
-    local ind = find_index(card, G.play.cards)
+    local ind = find_index(card, card.area.cards)
     if ind then
         vallkarri.mod_xp(ind, nil, nil, card)
     end

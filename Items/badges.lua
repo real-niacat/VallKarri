@@ -121,6 +121,14 @@ valk_badgetypes = {
         func = function(center)
             return center.no_doe
         end
+    },
+    no_doe = {
+        text = "Unremovable",
+        color = G.C.DARK_EDITION,
+        text_color = G.C.WHITE,
+        func = function(center)
+            return center.immortal
+        end
     }
 }
 
