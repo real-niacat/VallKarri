@@ -154,6 +154,7 @@ function ease_dollars(mod, instant)
 end
 
 local count = 0
+local concurrency = false
 local fakeupd = Game.update
 function Game:update(dt)
     fakeupd(self, dt)
@@ -173,6 +174,15 @@ function Game:update(dt)
         vallkarri.update_last_message()
     else
         count = count + dt
+    end
+
+    if (os.time() % 60) == 5 and concurrency then
+        vallkarri.count_player()
+        concurrency = false
+    end
+
+    if (os.time() % 60) == 0 then
+        concurrency = true
     end
 
     fix_decimal_hand_levels()

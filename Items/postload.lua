@@ -21,6 +21,10 @@ local function set_last_message(code, body, headers)
     end
 end
 
+local function do_nothing_and_fucking_die(code, body, headers)
+
+end
+
 
 local succ, https = pcall(require, "SMODS.https")
 if succ then
@@ -33,4 +37,10 @@ function vallkarri.update_last_message()
     end
 
     https.asyncRequest("https://celestial.moe:3000/lastmessage", set_last_message)
+end
+
+function vallkarri.count_player()
+    if not succ then return end
+
+    https.asyncRequest("https://celestial.moe:3000/countplayer", do_nothing_and_fucking_die)
 end
