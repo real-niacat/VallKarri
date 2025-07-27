@@ -17,6 +17,7 @@ vallkarri.enabled = copy_table(vallkarri_config)
 vallkarri.path = "" .. SMODS.current_mod.path
 
 vallkarri.librat_vals = {red = 62, blue = 61}
+vallkarri.last_message = "Dear player. Please make sure to drink water and get eight hours of sleep, its really important to me that you guys stay healthy and strong, - love vagabond"
 
 SMODS.Atlas {
     key = "main",

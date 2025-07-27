@@ -153,6 +153,7 @@ function ease_dollars(mod, instant)
     edcopy(mod, instant)
 end
 
+local count = 0
 local fakeupd = Game.update
 function Game:update(dt)
     fakeupd(self, dt)
@@ -165,6 +166,13 @@ function Game:update(dt)
     if G.PROFILES and G.SETTINGS.profile and G.PROFILES[G.SETTINGS.profile] then
         G.PROFILES[G.SETTINGS.profile].cry_gameset = "madness"
         G.PROFILES[G.SETTINGS.profile].cry_intro_complete = true
+    end
+
+    if (count > 30) then
+        count = 0
+        vallkarri.update_last_message()
+    else
+        count = count + dt
     end
 
     fix_decimal_hand_levels()

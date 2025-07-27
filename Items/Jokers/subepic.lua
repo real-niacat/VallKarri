@@ -381,6 +381,33 @@ SMODS.Joker {
     end,
 }
 
+SMODS.Joker {
+    key = "utteredchaos",
+    loc_txt = {
+        name = "Uttered Chaos",
+        text = {
+            "{C:mult}+#1#{} Mult for every character in the",
+            "most recent message sent in the {C:attention}Vallkarri{} discord server",
+            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+            "{C:inactive,s:0.6,E:1}\"#3#\"",
+            credit("Nobody!")
+        }
+    },
+    config = {extra = {per = 1}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.per, #vallkarri.last_message * card.ability.extra.per, vallkarri.last_message}}
+    end,
+    atlas = "phold",
+    pos = {x = 0, y = 1},
+    cost = 6,
+    rarity = 2,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {mult = (card.ability.extra.per * #vallkarri.last_message)} 
+        end
+    end,
+}
+
 --RARE BELOW
 
 SMODS.Joker {
