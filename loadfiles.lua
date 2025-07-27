@@ -49,7 +49,3 @@ assert(SMODS.load_file("Items/decks.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/vouchers.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/configui.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/stakes.lua", "vallkarri"))()
-
-
-assert(SMODS.load_file("Items/superwin.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/convo.lua", "vallkarri"))()
