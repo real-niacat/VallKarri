@@ -538,6 +538,7 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
         out:set_ability(choices[pseudorandom("valk_hidden_override2", 1, #choices)])
     end
 
+    -- print(out.config.center.key .. "from " .. key_append)
     return out
 end
 

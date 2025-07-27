@@ -140,7 +140,7 @@ function Game:start_run(args)
         local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
         G.GAME.dollars = G.GAME.dollars + add_money
 
-        local add_levels = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.5))
+        local add_levels = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 2.5))
         for name, hand in pairs(G.GAME.hands) do
             G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
             G.GAME.hands[name].chips = G.GAME.hands[name].chips + (G.GAME.hands[name].l_chips * add_levels)
