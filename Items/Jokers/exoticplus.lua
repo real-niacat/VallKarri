@@ -205,7 +205,7 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { fallback_red = 57, fallback_blue = 57, max = 10, exponent = 5 } },
+    config = { extra = { max = 10, exponent = 5 } },
     loc_vars = function(self, info_queue, card)
         local ratio = ratiocalc(vallkarri.librat_vals.blue, vallkarri.librat_vals.red, card.ability.extra.exponent, card.ability.extra.max)
         ratio = math.ceil(ratio)
