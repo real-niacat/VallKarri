@@ -674,8 +674,6 @@ function fix_decimal_hand_levels()
         local lvl = G.GAME.hands[name].level
         if math.floor(lvl) ~= lvl then
             G.GAME.hands[name].level = math.floor(lvl)
-            G.GAME.hands[name].chips = G.GAME.hands[name].s_chips + (G.GAME.hands[name].level * G.GAME.hands[name].l_chips)
-            G.GAME.hands[name].mult = G.GAME.hands[name].s_mult + (G.GAME.hands[name].level * G.GAME.hands[name].l_mult)
         end
 
     end
