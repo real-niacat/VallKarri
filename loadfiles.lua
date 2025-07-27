@@ -1,3 +1,5 @@
+assert(SMODS.load_file("Items/postload.lua", "vallkarri"))()
+
 assert(SMODS.load_file("Items/helpers.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/overrides.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/rarity_definitions.lua", "vallkarri"))()

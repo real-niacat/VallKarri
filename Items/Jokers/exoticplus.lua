@@ -207,7 +207,9 @@ SMODS.Joker {
     },
     config = { extra = { fallback_red = 57, fallback_blue = 57, max = 10, exponent = 5 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {"{" .. math.ceil(ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )) .. "}", (card.ability.extra.fallback_blue + card.ability.extra.fallback_red), } }
+        local ratio = ratiocalc(vallkarri.librat_vals.blue, vallkarri.librat_vals.red, card.ability.extra.exponent, card.ability.extra.max)
+        ratio = math.ceil(ratio)
+        return {vars = {"{" .. ratio .. "}", (vallkarri.librat_vals.blue + vallkarri.librat_vals.red), } }
     end,
     rarity = "valk_unsurpassed",
     atlas = "main",
@@ -221,8 +223,8 @@ SMODS.Joker {
         if context.joker_main or context.forcetrigger then
             
             local v = {
-                math.ceil(ratiocalc(card.ability.extra.fallback_blue, card.ability.extra.fallback_red, card.ability.extra.exponent, card.ability.extra.max )),
-                card.ability.extra.fallback_blue + card.ability.extra.fallback_red
+                math.ceil(ratiocalc(vallkarri.librat_vals.blue, vallkarri.librat_vals.red, card.ability.extra.exponent, card.ability.extra.max)),
+                (vallkarri.librat_vals.blue + vallkarri.librat_vals.red)
             }
             return {
                 hyper_mult = v,

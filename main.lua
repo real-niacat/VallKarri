@@ -16,6 +16,8 @@ vallkarri.enabled = copy_table(vallkarri_config)
 
 vallkarri.path = "" .. SMODS.current_mod.path
 
+vallkarri.librat_vals = {red = 62, blue = 61}
+
 SMODS.Atlas {
     key = "main",
     path = "assets.png",
