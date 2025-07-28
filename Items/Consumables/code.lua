@@ -111,3 +111,54 @@ SMODS.Consumable {
 
     end
 }
+
+-- SMODS.Consumable {
+local httpconnect = {
+    set = "Code",
+    loc_txt = { 
+        name = "://HTTPCONNECT",
+        text = {
+            "Sends a message in the {C:attention}VallKarri{} discord server with",
+            "all of your current jokers",
+            credit("Nobody!")
+        }
+    },
+    key = "httpconnect",
+    pos = { x = 3, y = 0 },
+    atlas = "phold",
+    -- soul_rate = 0.07,
+    soul_rate = 0.35,
+    -- is_soul = true,
+
+    config = { extra = {} },
+
+    loc_vars = function(self, info_queue, card)
+
+        return {vars = {}}
+        
+    end,
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        
+        -- i really want to make this send your ip but thats a bad idea
+        local message = "Someone has used ://HTTPCONNECT! They have: "
+
+        for i,joker in ipairs(G.jokers.cards) do
+            message = message .. localize({type="name_text",set="Joker",key=joker.config.center.key})
+            if G.jokers.cards[i+1] and G.jokers.cards[i+2] then
+                message = message .. ", "
+            elseif G.jokers.cards[i+1] and not G.jokers.cards[i+2] then
+                message = message .. ", and "
+            end
+
+            
+        end
+
+        vallkarri.send_discord_message(message)
+
+    end
+}
