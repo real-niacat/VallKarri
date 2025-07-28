@@ -327,7 +327,7 @@ SMODS.Joker {
             local enh = SMODS.get_enhancements(context.other_card)
             if enh and enh.m_cry_light then
                 card.ability.extra.op = card.ability.extra.op + card.ability.extra.opinc
-                card.ability.extra.ind = to_big(card.ability.extra.op):tetrate(card.ability.extra.ind)
+                card.ability.extra.ind = to_big(card.ability.extra.op) ^ card.ability.extra.ind
                 context.other_card:juice_up()
                 card:juice_up()
                 quick_card_speak(card, "Upgraded!")
