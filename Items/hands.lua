@@ -197,4 +197,7 @@ SMODS.Consumable {
     use = function(self, card, copier)
         level_up_hand(card, card.ability.extra.handtype, nil, 1)
     end,
+    in_pool = function(self, args)
+        return (G.GAME.hands[self.ability.extra.handtype].played > 0)
+    end
 }
