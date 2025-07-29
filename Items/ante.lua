@@ -12,7 +12,7 @@ end
 local easeantecopy = ease_ante
 function ease_ante(x)
     -- print("starting")
-    x = to_big(x)
+    x = to_number(x)
 
 
     if (x < to_big(1)) then
@@ -31,13 +31,13 @@ function ease_ante(x)
         anteChange = math.ceil(anteChange)
         display_ante_changes(anteChange)
         G.GAME.win_ante = (G.GAME.win_ante + to_number(anteChange))
-        easeantecopy(to_number(anteChange)+to_number(x))
+        easeantecopy(to_number(anteChange)+x)
         
         return
     end
     
 
-    easeantecopy(to_number(x))
+    easeantecopy(x)
 end
 
 function display_ante_changes(change)
@@ -151,13 +151,12 @@ end
 
 local gba = get_blind_amount
 function get_blind_amount(ante)
-    ante = to_big(ante)
-    if ante <= (G.GAME.ante_config and to_big(G.GAME.ante_config.limit) or to_big(1500)) then --use 1500 as fallback, config is only generated when run starts
-        return gba(to_number(ante))
+    if ante <= (G.GAME.ante_config and G.GAME.ante_config.limit or 1500) then --use 1500 as fallback, config is only generated when run starts
+        return gba(ante)
     end
 
 
-    if (G.GAME.round_resets.ante ~= math.huge and ante <= to_big(1e300)) then
+    if (G.GAME.round_resets.ante ~= math.huge and ante <= 1e300) then
         -- print("scaling increase branch 1 ")
         local score = to_big(10)
         local arrows = math.log10(ante)
