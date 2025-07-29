@@ -162,7 +162,7 @@ function get_blind_amount(ante)
         local arrows = math.log10(ante)
 
         local antelog = math.log10(ante)
-        local min_arrows, max_arrows = 1, 100000
+        local min_arrows, max_arrows = 0, 1000
         local min_log, max_log = 1, 32
 
         local t = (antelog - min_log) / (max_log - min_log)
