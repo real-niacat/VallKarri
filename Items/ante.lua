@@ -3,17 +3,7 @@
 
 function config_reset()
     G.GAME.ante_config = {
-        base_arrows = 1,
-
-        base_exponent = 5,
-
-        ante_base_inc = 1,
-        ante_exponent = 1,
-
-        arrow_inc_threshold = 1,
-        arrow_exponent = 1.15,
-
-        limit = 64,
+        limit = 32
     }
 end
 
@@ -38,6 +28,7 @@ function ease_ante(x)
     if (G.GAME.chips and G.GAME.blind.chips) then
         
         local anteChange = get_ante_change()
+        anteChange = math.ceil(anteChange)
         display_ante_changes(anteChange)
         G.GAME.win_ante = (G.GAME.win_ante + to_number(anteChange))
         easeantecopy(to_number(anteChange)+to_number(x))
@@ -65,106 +56,34 @@ function display_ante_changes(change)
     return
 end
 
-local roundcopy = end_round
-function end_round()
-    if (type(G.GAME.round_resets.ante) == "table") then
-        G.GAME.win_ante = to_big(G.GAME.win_ante)
-    end
-    roundcopy()
-
-    if check_superwin() then
-        return
-    end
-end
-
 function get_ante_change(theoretical_score, debug)
 
-    local winPot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
+    local win_pot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
     if theoretical_score then
-        winPot = to_big(theoretical_score)
+        win_pot = to_big(theoretical_score)
     end
 
-    if not (G.GAME.ante_config) then
-        config_reset()
+    if win_pot < overscore_threshhold() then
+        return 0
     end
 
+    win_pot = to_big(win_pot)
 
-
-    local arrowIter = G.GAME.ante_config.base_exponent --despite what its name says, this is the exponent
-    local arrowCount = G.GAME.ante_config.base_arrows --req starts at beating blind size by ^2
-    local start_ante = G.GAME.round_resets.ante
     local anteChange = 0
-    local scalefactor = to_big(1)
-
-    -- 
-            
-    local i = 1
-
-    -- print(type(G.GAME.blind.chips))
-
-    if type(G.GAME.blind.chips) == "table" then
-
-        if debug then
-            print("requires " .. G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) .. " to overscore")
-            print("overscored by " .. winPot)
-        end
-
-        while winPot > G.GAME.blind.chips:arrow(math.floor(arrowCount), to_big(arrowIter) * scalefactor) do
-            i = i + 1
-            if debug then print("Iteration: " .. i .. ", Must hit" .. G.GAME.blind.chips .. "{" .. arrowCount .. "}" .. tostring(to_big(arrowIter) * scalefactor)) end
-            scalefactor = scalefactor:pow(2):mul(2)
-            anteChange = anteChange + G.GAME.ante_config.ante_base_inc
-            arrowIter = arrowIter + 1
-            if arrowIter > (G.GAME.ante_config.arrow_inc_threshold) then
-                arrowIter = G.GAME.ante_config.base_exponent
-                arrowCount = arrowCount * G.GAME.ante_config.arrow_exponent
-                anteChange = (anteChange + G.GAME.ante_config.ante_base_inc) ^ 1+(G.GAME.ante_config.ante_exponent/25)
-            end
-        end
+    local theochange = to_big(0)
+    while theochange < win_pot do
+        anteChange = anteChange + 1
+        theochange = to_big(get_blind_amount(anteChange+G.GAME.round_resets.ante))
+        -- print(anteChange, theochange)
     end
 
-    -- print("+"..anteChange.." ante postjen")
-    anteChange = anteChange ^ (G.GAME.ante_config.ante_exponent ^ math.log10(G.GAME.round_resets.ante) ) --keep you on your toes, ehe
-
-    
-
-    local arrow_diff = #to_big(G.GAME.chips).array - #to_big(G.GAME.blind.chips).array
-    if arrow_diff ~= 0 then
-        anteChange = anteChange ^ ((arrow_diff ^ 0.75) / 10)
-    end
-    
-    anteChange = math.floor(anteChange) 
-    -- you are lucky i decided to round down
-
-    return anteChange
+    return anteChange ^ 0.75
 end
 
-
-local unlockcopy = check_for_unlock
-function check_for_unlock(args)
-    if (args.ante and args.type == "ante_up" and type(args.ante) == "table") then
-        if args.ante >= to_big(4) then
-            unlock_achievement('ante_up')
-        end
-        if args.ante >= to_big(8) then
-            unlock_achievement('ante_upper')
-        end
-        return
-    end
-    unlockcopy(args)
+function overscore_threshhold()
+    local change = 10
+    return get_blind_amount(change + G.GAME.round_resets.ante)
 end
-
-function check_superwin()
-
-    if (G.GAME.round_resets.ante == math.huge or to_big(G.GAME.round_resets.ante) >= to_big(1e307)) then
-        superwin_game()
-        return true
-    end
-    return false
-
-end
-
-
 
 function shrdr_sfx()
     play_sound("gong", 1.4, 1)
@@ -181,15 +100,11 @@ function Game:update(dt)
     if (G.GAME.blind and G.GAME.ante_config) then
 
         if (G.GAME.blind.boss) then
-            local num = number_format(to_big(G.GAME.blind.chips):arrow(math.floor(G.GAME.ante_config.base_arrows), G.GAME.ante_config.base_exponent))
+            local num = number_format(overscore_threshhold())
             G.GAME.blind.overchips = "Overscoring at " .. num
         else
             G.GAME.blind.overchips = ""
         end
-    end
-
-    if (G.GAME.ante_config and G.GAME.round_resets.ante and to_big(G.GAME.round_resets.ante) > to_big(G.GAME.ante_config.limit) ) then
-        G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) .. "X"
     end
 
 end
@@ -249,7 +164,7 @@ function get_blind_amount(ante)
 
         local antelog = math.log10(ante)
         local min_arrows, max_arrows = 1, 100000
-        local min_log, max_log = 1, 125
+        local min_log, max_log = 1, 32
 
         local t = (antelog - min_log) / (max_log - min_log)
         t = math.max(0, math.min(1, t))

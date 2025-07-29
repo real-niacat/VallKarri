@@ -40,18 +40,11 @@ SMODS.Atlas {
     py = 34,
 }:register()
 
-maxArrow = 1e5
-
-
 merge_recipes = {
 
     {input = {"c_cry_gateway", "c_cry_pointer", "c_soul"}, output = "c_valk_lordcall"},
-    {input = {"j_valk_dormantlordess", "j_valk_keystonefragment"}, output = "j_valk_lily"},
-    -- {input = {"j_valk_keystonefragment", "j_valk_lily", "c_valk_binding_energy" }, output = "j_valk_quilla"},
     {input = {"c_valk_tauism", "c_soul", "c_wraith" }, output = "c_valk_absolutetau"},
     {input = {"c_valk_perfected_gem", "c_valk_socket"}, output = "c_valk_socketed_gem"},
-    {input = {"c_valk_socketed_gem", "c_valk_halo_fragment", "c_valk_binding_energy"}, output = "j_valk_keystonefragment"},
-    -- {input = {"c_", "c_", "c_valk_binding_energy"}, output = "c_valk"},
     {input = {"c_death", "c_hanged_man"}, output = "c_valk_iron_maiden"},
     {input = {"c_hierophant", "c_judgement"}, output = "c_valk_the_pope"},
     {input = {"c_emperor", "c_sun"}, output = "c_valk_the_knight"},

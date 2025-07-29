@@ -102,7 +102,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Arris",
         text = {
-            "{C:valk_superplanet}Superplanets{} appear {C:attention}#1#X{} more frequently in the shop",
+            "{C:valk_superplanet}Superplanets{} appear {C:attention}X#1#{} more frequently in the shop",
             "Using a {C:valk_superplanet}Superplanet{} generates {C:attention}#2#{} random {C:planet}Planetoids{}",
             "Using a {C:planet}Planetoid{} generates {C:attention}#2#{} random {C:planet}Planets{}",
             credit("Scraptake")
@@ -169,3 +169,68 @@ SMODS.Joker {
     }
 }
 
+SMODS.Joker {
+    key = "lily",
+    loc_txt = {
+        name = "Lily Felli",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Mult for each Joker owned",
+            "Increase by {X:dark_edition,C:white}^#2#{} for every {C:attention}Light card{} scored",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Mult)",
+            quote("lily"),
+            quote("lily2"),
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { per = 0.1, inc = 0.02 } },
+    loc_vars = function(self, info_queue, card)
+        local jkrs = 0
+        if G.jokers then
+            jkrs = #G.jokers.cards
+        end
+        return {
+            vars = {
+                card.ability.extra.per,
+                card.ability.extra.inc,
+                1 + (card.ability.extra.per * jkrs) 
+            }
+        }
+    end,
+    rarity = "cry_exotic",
+    atlas = "main",
+    pos = {x = 0, y = 0},
+    soul_pos = {x=3,y=2},
+    no_doe = true,
+    cost = 50,
+    demicoloncompat = true,
+    calculate = function(self, card, context)
+
+        
+
+        if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_cry_light") then
+            card.ability.extra.per = card.ability.extra.per + card.ability.extra.inc
+            quick_card_speak(card, localize("k_upgrade_ex"))
+        end
+
+        if context.joker_main or context.forcetrigger then
+
+            return {
+                emult = 1 + (card.ability.extra.per * #G.jokers.cards)
+            }
+
+        end
+        
+    end,
+
+    lore = {
+        "Lily is a Fellinian Entropic Lord, this means",
+        "she was exposed to a lot of entropy, and eventually mutating her.",
+        "This allowed her to control entropy around her, similar to weak reality bending.",
+        "",
+        "As a person, Lily tries her best, but is inherently unstable mentally",
+        "due to the effects of entropy on a person's mental health.",
+        "",
+        "Her entropic lord powers allow for heightened senses,",
+        "so it doesn't affect her as much, but she can barely see!"
+    }
+}

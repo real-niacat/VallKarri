@@ -178,7 +178,7 @@ function vallkarri.xp_required(level)
 
     local nlv = to_big(level) -- shorthand. dumb i know
     arrows = nlv:tetrate(0.07)
-    exp = math.log(nlv, 2.2)
+    exp = math.log(nlv, 4)
 
     if (level < to_big(1000)) and (arrows > to_big(1)) then
         arrows = 1    

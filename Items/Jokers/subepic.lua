@@ -541,25 +541,3 @@ SMODS.Joker {
     end,
 
 }
-
-SMODS.Joker {
-    key = "keystonefragment",
-    loc_txt = {
-        name = "{C:money}Key{C:red}stone {C:money}Frag{C:red}ment",
-        text = {
-            "Channels the power from the {C:edition,X:dark_edition}Infinite{}",
-            "Does nothing, it is better used {C:edition,X:dark_edition}elsewhere...{}",
-            credit("Lily")
-        }
-    },
-    config = { extra = {  } },
-    rarity = "valk_equip",
-    atlas = "main",
-    pos = {x=4,y=2},
-    soul_pos = {x=2,y=2}, --halo
-    cost = 66,
-
-    in_pool = function()
-        return (#SMODS.find_card("j_valk_dormantlordess") > 0)
-    end
-}

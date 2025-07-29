@@ -245,14 +245,14 @@ SMODS.Voucher {
         }
     },
 
-    cost = 28,
+    cost = 20,
 
     loc_vars = function(self, info_queue, card)
         
     end,
 
     in_pool = function()
-        return (G.GAME.round_resets.ante >= 9)
+        return (G.GAME.round_resets.ante >= 4)
     end,
 
     redeem = function(self, card)
@@ -273,7 +273,7 @@ SMODS.Voucher {
         }
     },
 
-    cost = 28,
+    cost = 20,
 
     loc_vars = function(self, info_queue, card)
         
@@ -298,7 +298,7 @@ SMODS.Voucher {
         }
     },
 
-    cost = 28,
+    cost = 20,
 
     loc_vars = function(self, info_queue, card)
         
