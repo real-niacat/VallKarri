@@ -15,7 +15,7 @@ function ease_ante(x)
     x = to_number(x)
 
 
-    if (x < to_big(1)) then
+    if (x < 1) then
         easeantecopy(to_number(x))
         return
     end
