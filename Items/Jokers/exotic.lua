@@ -175,14 +175,14 @@ SMODS.Joker {
         name = "Lily Felli",
         text = {
             "{X:dark_edition,C:white}^#1#{} Mult for each Joker owned",
-            "Increase by {X:dark_edition,C:white}^#2#{} for every {C:attention}Light card{} scored",
+            "Increase by {X:dark_edition,C:white}^#2#{} for every card scored",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Mult)",
             quote("lily"),
             quote("lily2"),
             credit("Scraptake")
         }
     },
-    config = { extra = { per = 0.1, inc = 0.02 } },
+    config = { extra = { per = 0.05, inc = 0.01 } },
     loc_vars = function(self, info_queue, card)
         local jkrs = 0
         if G.jokers then
@@ -207,7 +207,7 @@ SMODS.Joker {
 
         
 
-        if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_cry_light") then
+        if context.individual and context.cardarea == G.play then
             card.ability.extra.per = card.ability.extra.per + card.ability.extra.inc
             quick_card_speak(card, localize("k_upgrade_ex"))
         end
