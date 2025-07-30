@@ -315,8 +315,8 @@ function level_up_hand(card, hand, instant, amount)
     refresh_metaprog()
     levelhandhook(card, hand, instant, amount)
 
-    if to_big(amount) > to_big(0) then
-        vallkarri.mod_xp(amount, nil, nil, card)
+    if to_big(amount or 1) > to_big(0) then
+        vallkarri.mod_xp(amount or 1, nil, nil, card)
     end
 end
 
