@@ -204,6 +204,7 @@ SMODS.Joker {
             G.consumeables:emplace(fool)
         end
     end,
+    eternal_compat = false,
 }
 
 SMODS.Joker {
@@ -231,6 +232,7 @@ SMODS.Joker {
             G.consumeables:emplace(fool)
         end
     end,
+    eternal_compat = false,
 }
 
 SMODS.Joker {
@@ -255,6 +257,7 @@ SMODS.Joker {
             add_tag(Tag("tag_ethereal"))
         end
     end,
+    eternal_compat = false,
 }
 
 SMODS.Joker {

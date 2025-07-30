@@ -257,7 +257,6 @@ SMODS.Joker {
     pos = {x = 7, y = 5},
     soul_pos = {x = 9, y = 5, extra = {x = 8, y = 5}},
     cost = 50,
-    immutable = true,
     demicoloncompat = true,
     calculate = function(self, card, context)
         
