@@ -565,7 +565,7 @@ function Card:deselect()
 end
 
 function do_while_flipped(cards, func) --mostly borrowed from entropy, thank you ruby <3
-    if not Talisman.config_file.disable_anims then
+    if not Talisman or (Talisman and not Talisman.config_file.disable_anims) then
         for i, _ in ipairs(cards) do
             local card = cards[i]
             if card then
@@ -603,7 +603,7 @@ function do_while_flipped(cards, func) --mostly borrowed from entropy, thank you
             )
         end
     end
-    if not Talisman.config_file.disable_anims then
+    if not Talisman or (Talisman and not Talisman.config_file.disable_anims) then
         for i, _ in ipairs(cards) do
             local card = cards[i]
             if card then
