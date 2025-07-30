@@ -98,7 +98,7 @@ SMODS.Consumable {
         name = "Absolute Tau",
         text = {
             "Create a random {C:cry_ember}Tauic{} {C:legendary}Legendary{}",
-            credit("Scraptake")
+            credit("mailingway")
         }
     },
 

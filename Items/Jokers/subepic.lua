@@ -390,15 +390,15 @@ SMODS.Joker {
             "most recent message sent in the {C:attention}Vallkarri{} discord server",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
             "{C:inactive,s:0.6,E:1}\"#3#\"",
-            credit("Nobody!")
+            credit("mailingway")
         }
     },
     config = {extra = {per = 1}},
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.per, #vallkarri.last_message * card.ability.extra.per, vallkarri.last_message}}
     end,
-    atlas = "phold",
-    pos = {x = 0, y = 1},
+    atlas = "main",
+    pos = {x = 12, y = 5},
     cost = 6,
     rarity = 2,
     calculate = function(self, card, context)
@@ -406,6 +406,12 @@ SMODS.Joker {
             return {mult = (card.ability.extra.per * #vallkarri.last_message)} 
         end
     end,
+
+    update = function(self, card, dt)
+        if card and card.children and math.random(1,5) == 1 then
+            card.children.center:set_sprite_pos({x=math.random(12,13), y=5})
+        end
+    end
 }
 
 --RARE BELOW

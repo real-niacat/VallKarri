@@ -194,6 +194,10 @@ function Game:start_run(args)
     fakestart(self, args)
     G.GAME.buff_text = ""
 
+    if args.savetext then
+        return
+    end
+
     if not G.GAME.vallkarri then
         G.GAME.vallkarri = {}
     end
@@ -233,6 +237,13 @@ function Game:start_run(args)
         m_cry_echo = {title = "ECHOING", colour = G.C.PURPLE},
         m_cry_abstract = {title = "ABSTRACTED", colour = G.C.CRY_ASCENDANT},
     }
+
+
+    for name,center in pairs(G.P_CENTERS) do
+        if center.old_weight then
+            G.P_CENTERS[name].weight = center.old_weight
+        end
+    end
 end
 
 local uhthook = update_hand_text
@@ -299,38 +310,15 @@ function update_hand_text(config, vals)
         end
     }))
 end
-local lilycat_corrupt = false
+
 glcui = nil
 
-local function modtext(text) 
-    local res = {"meow! ", "mrrp! ", "hsss..", "mya, ", "nya! "}
-    local r = math.random(1,#res)
-    return res[r]
-    
-end
 
 local gcui = generate_card_ui
 function generate_card_ui(_c,full_UI_table,specific_vars,card_type,badges,hide_desc,main_start,main_end,card)
 	local tab = gcui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
     glcui = tab
     local center = G.P_CENTERS[_c.key]
-
-
-    if lilycat_corrupt then
-        for i,t in ipairs(tab.main) do
-            for j,k in ipairs(tab.main[i]) do
-                if k.config.text then
-
-                    k.config.text = modtext(k.config.text)
-                end
-                if k.nodes then
-                    for _,node in ipairs(k.nodes) do
-                        node.config.text = modtext(node.config.text)
-                    end
-                end
-            end
-        end
-    end
 
 
 

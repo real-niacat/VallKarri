@@ -46,7 +46,7 @@ SMODS.Consumable {
         text = {
             "Select up to {C:attention}#1#{} Jokers, multiply all",
             "values on selected Jokers by between {C:attention}X#2#{} and {C:attention}X#3#{}",
-            credit("Scraptake"),
+            credit("mailingway"),
         }
     },
     key = "luck",
@@ -88,12 +88,12 @@ SMODS.Consumable {
         text = {
             "Select {C:attention}#1#{} Joker, create a {C:dark_edition}Negative{}",
             "and {C:attention}Perishable{} copy.",
-            credit("Nobody!"),
+            credit("mailingway"),
         }
     },
     key = "faker",
-    pos = { x = 2, y = 0 },
-    atlas = "phold",
+    pos = { x = 5, y = 10 },
+    atlas = "main",
     -- is_soul = true,
 
     config = { extra = { jokers = 1 } },

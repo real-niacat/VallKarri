@@ -30,6 +30,7 @@ assert(SMODS.load_file("Items/Consumables/tarot.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Consumables/planetoids.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Consumables/superplanets.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Consumables/cataclysm.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/Consumables/aesthetic.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/boosters.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/crossmod.lua", "vallkarri"))()
 
