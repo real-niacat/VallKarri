@@ -74,14 +74,14 @@ SMODS.Consumable {
 
         
         
-        local value = to_big(card.ability.extra.echips):pow(to_big(card.ability.extra.echips):pow(math.floor(levels/5)))
+        local value = card.ability.extra.emult ^ (card.ability.extra.emult ^ math.floor(levels/5))
         local str = "^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
 
         for i,hand in pairs(G.GAME.hands) do
             if (G.GAME.hands[i].chips) then
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips:pow(value)
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips ^ value
             end
         end
     end,
@@ -129,14 +129,14 @@ SMODS.Consumable {
 
         
         
-        local value = to_big(card.ability.extra.emult):pow(to_big(card.ability.extra.emult):pow(math.floor(levels/5)))
+        local value = card.ability.extra.emult ^ (card.ability.extra.emult ^ math.floor(levels/5))
         local str = "^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
 
         for i,hand in pairs(G.GAME.hands) do
             if (G.GAME.hands[i].mult) then
-                G.GAME.hands[i].mult = G.GAME.hands[i].mult:pow(value)
+                G.GAME.hands[i].mult = G.GAME.hands[i].mult ^ value
             end
         end
     end,
@@ -183,14 +183,14 @@ SMODS.Consumable {
         
         -- i know the math here is incorrect but
         -- who's going to correct me on it?
-        local value = to_big(card.ability.extra.echips):pow(to_big(card.ability.extra.echips):pow(math.floor(levels/5)))
+        local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels/5))
         local str = "^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
 
         for i,hand in pairs(G.GAME.hands) do
             if (G.GAME.hands[i].chips) then
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips:pow(value)
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips ^ value
             end
         end
     end,
@@ -237,14 +237,14 @@ SMODS.Consumable {
         
         -- i know the math here is incorrect but
         -- who's going to correct me on it?
-        local value = to_big(card.ability.extra.echips):pow(to_big(card.ability.extra.eehips):pow(math.floor(levels/5)))
+        local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels/5))
         local str = "^^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
 
         for i,hand in pairs(G.GAME.hands) do
             if (G.GAME.hands[i].mult) then
-                G.GAME.hands[i].mult = G.GAME.hands[i].mult:pow(value)
+                G.GAME.hands[i].mult = G.GAME.hands[i].mult ^ value
             end
         end
     end,
@@ -283,11 +283,11 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        local value = to_big(card.ability.extra.eeall)
+        local value = card.ability.extra.eeall
 
         for i,joker in pairs(G.jokers.cards) do 
             if Cryptid.safe_get(joker.config.center, "pools", "M") or joker.config.center.key == "j_jolly" then
-                value = value:pow(2)
+                value = value ^ 2
             end
         end
 
@@ -297,8 +297,8 @@ SMODS.Consumable {
 
         for i,hand in pairs(G.GAME.hands) do
             if (G.GAME.hands[i].mult and G.GAME.hands[i].chips) then
-                G.GAME.hands[i].mult = G.GAME.hands[i].mult:pow(value)
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips:pow(value)
+                G.GAME.hands[i].mult = G.GAME.hands[i].mult ^ value
+                G.GAME.hands[i].chips = G.GAME.hands[i].chips ^ value
             end
         end
     end,
@@ -328,7 +328,7 @@ SMODS.Consumable {
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
         return {vars = {
-            2 ^ to_big(times_used(self.key)),
+            2 ^ times_used(self.key),
             localize{type = "name_text", set = self.set, key = self.key}
         }}
     end,

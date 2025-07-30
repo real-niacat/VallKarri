@@ -234,3 +234,72 @@ SMODS.Joker {
         "so it doesn't affect her as much, but she can barely see!"
     }
 }
+
+
+SMODS.Joker {
+    key = "libratpondere",
+    loc_txt = {
+        name = "Librat Pondere",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Chips per {C:blue}blue team{} member in the {C:attention}VallKarri{} discord server",
+            "{X:dark_edition,C:white}^#2#{} Mult per {C:red}red team{} member in the {C:attention}VallKarri{} discord server",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Chips and {X:dark_edition,C:white}^#4#{C:inactive} Mult)",
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { perblue = 0.02, perred = 0.02 } },
+    loc_vars = function(self, info_queue, card)
+        
+        return {vars = { card.ability.extra.perblue, card.ability.extra.perred, 1 + (card.ability.extra.perblue * vallkarri.librat_vals.blue), 1 + (card.ability.extra.perred * vallkarri.librat_vals.red)} }
+    end,
+    rarity = "cry_exotic",
+    atlas = "main",
+    pos = {x = 7, y = 5},
+    soul_pos = {x = 9, y = 5, extra = {x = 8, y = 5}},
+    cost = 50,
+    immutable = true,
+    demicoloncompat = true,
+    calculate = function(self, card, context)
+        
+        -- vallkarri.librat_vals.blue, vallkarri.librat_vals.red
+
+        if context.joker_main then
+            return {
+                emult = 1 + (card.ability.extra.perred * vallkarri.librat_vals.red),
+                echips = 1 + (card.ability.extra.perblue * vallkarri.librat_vals.blue)
+            }
+        end
+    end
+}
+
+SMODS.Joker {
+    key = "scraptake",
+    loc_txt = {
+        name = "Scraptake",
+        text = {
+            "{C:red}Lose all money{} when hand played",
+            "Earn {C:money}$#1#{} for each hand played this run at end of round",
+            quote("scraptake"),
+            credit("Scraptake")
+        }
+    },
+    config = { extra = { per = 3 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.per} }
+    end,
+    rarity = "cry_exotic",
+    atlas = "main",
+    pos = {x = 7, y = 0},
+    soul_pos = {x = 9, y = 0, extra = {x = 8, y = 0}},
+    cost = 50,
+
+    calculate = function(self, card, context)
+        if context.before then
+            ease_dollars(-G.GAME.dollars)
+        end
+    end,
+
+    calc_dollar_bonus = function(self, card)
+        return G.GAME.hands_played * card.ability.extra.per
+    end,
+}

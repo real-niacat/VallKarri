@@ -47,7 +47,7 @@ if #SMODS.find_mod("entr") > 0 then
         loc_txt = {
             name = "NeVe 1",
             text = {
-                "Multiply {C:chips}chips{} and {C:mult}mult{} of all hands by a {C:attention}#1#{}",
+                "Multiply {C:chips}chips{} and {C:mult}mult{} of all hands by {C:attention}#1#{}",
                 "{X:dark_edition,C:white}^^#2#{} {C:chips}chips{} and {C:mult}mult{} {C:attention}per level{} on all hands",
                 "{X:gold,C:white}^#3#{} Ascension Power of all hands",
                 credit("mailingway"),
@@ -87,6 +87,7 @@ if #SMODS.find_mod("entr") > 0 then
         pos = {x=5, y=0},
         no_grc = true,
         no_doe = true,
+        dependencies = {"Talisman"},
     }
 
     SMODS.Joker {

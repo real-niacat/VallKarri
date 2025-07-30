@@ -3,12 +3,12 @@ local function refresh_metaprog()
         G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
     end
 
-    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_max_xp) then
+    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_max_xp) then
         G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
     end
 
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_cur_xp) then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_cur_xp) then
+        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
     end
 end
 
@@ -97,13 +97,13 @@ function create_UIBox_useless_bullshit()
     local text_scale = 0.3
     return {
         n = G.UIT.ROOT,
-        config = { align = "cm", padding = 0.03, colour = {0,0,0,0} },
+        config = { align = "cm", padding = 0.03, colour = { 0, 0, 0, 0 } },
         nodes = {
             {
                 n = G.UIT.R,
-                config = { align = "cm", padding = 0.05, colour = {0,0,0,0}, r = 0.1 },
+                config = { align = "cm", padding = 0.05, colour = { 0, 0, 0, 0 }, r = 0.1 },
                 nodes = {
-                    { n = G.UIT.T, config = { id = "xp_change", text = "+0 XP", colour = G.C.UI.TEXT_LIGHT, scale = text_scale/1.2, shadow = true, prev_value = "nil" } },
+                    { n = G.UIT.T, config = { id = "xp_change", text = "+0 XP", colour = G.C.UI.TEXT_LIGHT, scale = text_scale / 1.2, shadow = true, prev_value = "nil" } },
                 }
             },
 
@@ -111,13 +111,14 @@ function create_UIBox_useless_bullshit()
         }
     }
 end
+
 local xp_change = false
 
 local fakestart = Game.start_run
 function Game:start_run(args)
     -- print(args)
     fakestart(self, args)
-    
+
     refresh_metaprog()
     vallkarri.run_xp_modifiers = {}
 
@@ -135,7 +136,7 @@ function Game:start_run(args)
         }
     end
 
-    if not args.savetext then 
+    if not args.savetext then
         -- DO ON-START STUFF HERE
         local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
         G.GAME.dollars = G.GAME.dollars + add_money
@@ -172,27 +173,15 @@ end
 
 -- gets the xp required for the specified level
 function vallkarri.xp_required(level)
-    level = to_big(level)
-    local arrows = 0
-    local exp = 1
+    level = to_number(level)
 
-    local nlv = to_big(level) -- shorthand. dumb i know
-    arrows = nlv:tetrate(0.04)
-    exp = math.log(nlv, 10)
+    local req = 100 * (level ^ 2)
 
-    if (level < to_big(1000)) and (arrows > to_big(1)) then
-        arrows = 1    
-    end
-
-    local req = 100 * to_big(level):arrow(math.floor(arrows), (level^0.5) ^ exp)
-    if to_big(req) == to_big(math.huge) then
-        return to_big(100)
-    end
-    return req
+    return to_number(req)
 end
 
 function vallkarri.set_xp(exp)
-    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(exp) --obligatory to_big so that end users can eval this safely
+    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_number(exp)
     short_update_meta()
 end
 
@@ -206,7 +195,7 @@ function vallkarri.mod_level(amount, from_xp)
         G.HUD_META:get_UIE_by_ID("maxxp_text"):juice_up()
     end
     G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_big(0)
+    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
     if not from_xp then
         short_update_meta()
     end
@@ -223,7 +212,7 @@ function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
     end
 
 
-    if not Talisman.config_file.disable_anims then
+    if not Talisman or (Talisman and not Talisman.config_file.disable_anims) then
         G.E_MANAGER:add_event(Event({
             func = function()
                 vallkarri.animationless_mod_xp(mod, operator, level_multiplier)
@@ -253,16 +242,15 @@ function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
 end
 
 function vallkarri.animationless_mod_xp(mod, operator, level_multiplier)
-
     -- stake mods
-    mod = mod ^ (G.GAME.stake/4)
-    
+    mod = mod ^ (G.GAME.stake / 4)
 
-    for _,func in ipairs(vallkarri.xp_modifiers) do
+
+    for _, func in ipairs(vallkarri.xp_modifiers) do
         mod = func(mod)
     end
 
-    for _,func in ipairs(vallkarri.run_xp_modifiers) do
+    for _, func in ipairs(vallkarri.run_xp_modifiers) do
         mod = func(mod)
     end
 
@@ -278,7 +266,7 @@ function vallkarri.animationless_mod_xp(mod, operator, level_multiplier)
         G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp ^ mod
     end
 
-    if operator == "^^" then
+    if operator == "^^" and Talisman then
         G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp:tetrate(mod)
     end
     short_update_meta()
@@ -304,7 +292,7 @@ end
 
 local easemoneyhook = ease_dollars
 function ease_dollars(mod, x)
-    local add_money_per = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 2) * 0.02
+    local add_money_per = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 2) * 0.002
 
     easemoneyhook(mod + add_money_per, x)
 
@@ -317,7 +305,7 @@ local easeantehook = ease_ante
 function ease_ante(x)
     easeantehook(x)
 
-    if to_big(x) > to_big(0) then
+    if x > 0 then
         vallkarri.mod_xp(5 * x)
     end
 end
@@ -334,7 +322,7 @@ end
 
 -- local calceff = SMODS.calculate_individual_effect
 -- function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
-    
+
 --     local count = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.2) * 0.025
 --     -- 2.5% buff to all scoring effects for every 50 levels
 --     -- print("effect")
@@ -348,7 +336,7 @@ end
 --     for n,obj in pairs(effect) do
 --         if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
 --             effect[n] = effect[n] * 1+count
---         end 
+--         end
 --     end
 
 --     return calceff(effect, scored_card, key, amount, from_edition)
@@ -369,127 +357,124 @@ local blindamounthook = get_blind_amount
 function get_old_blind_amount(ante)
     return blindamounthook(ante)
 end
+
 function get_blind_amount(ante)
     refresh_metaprog()
-    return blindamounthook(ante) * ((1+(0.02 * ante))^(1+(0.2*(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl^0.825))))
+    return blindamounthook(ante) * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.825))))
     -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
-local vouchers_enabled = true
 
-if vouchers_enabled then
-    local amt = 4
-    SMODS.Voucher {
-        key = "alphaboosterator",
-        atlas = "main",
-        pos = {x=2, y=7},
-        loc_txt = {
-            name = "Alpha XP Boosterator",
-            text = {
-                "{X:dark_edition,C:white}X#1#{} to all XP gain",
-                -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators apply in the order they were obtained)",
-            }
-        },
-        no_doe = true,
-        config = {extra = {xp = 9}},
+local amt = 4
+SMODS.Voucher {
+    key = "alphaboosterator",
+    atlas = "main",
+    pos = { x = 2, y = 7 },
+    loc_txt = {
+        name = "Alpha XP Boosterator",
+        text = {
+            "{X:dark_edition,C:white}X#1#{} to all XP gain",
+            -- "{C:inactive}(Can spawn and be redeemed multiple times)",
+            "{C:inactive}(XP Boosterators apply in the order they were obtained)",
+        }
+    },
+    no_doe = true,
+    config = { extra = { xp = 9 } },
 
-        loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.xp}}
-        end,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xp } }
+    end,
 
-        in_pool = function()
-            return G.GAME.round_resets.ante > amt*(2^1)
-        end,
+    in_pool = function()
+        return G.GAME.round_resets.ante > amt * (2 ^ 1)
+    end,
 
-        redeem = function(self, card)
-            vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
-                return n*card.ability.extra.xp
-            end
-        end,
-        
+    redeem = function(self, card)
+        vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
+            return n * card.ability.extra.xp
+        end
+    end,
 
 
-    }
+
+}
 
 
-    SMODS.Voucher {
-        key = "betaboosterator",
-        atlas = "main",
-        pos = {x=3, y=7},
-        loc_txt = {
-            name = "Beta XP Boosterator",
-            text = {
-                "{X:dark_edition,C:white}^#1#{} to all XP gain",
-                -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators apply in the order they were obtained)",
-            }
-        },
-        no_doe = true,
-        config = {extra = {xp = 1.9}},
+SMODS.Voucher {
+    key = "betaboosterator",
+    atlas = "main",
+    pos = { x = 3, y = 7 },
+    loc_txt = {
+        name = "Beta XP Boosterator",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} to all XP gain",
+            -- "{C:inactive}(Can spawn and be redeemed multiple times)",
+            "{C:inactive}(XP Boosterators apply in the order they were obtained)",
+        }
+    },
+    no_doe = true,
+    config = { extra = { xp = 1.9 } },
 
-        loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.xp}}
-        end,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xp } }
+    end,
 
-        in_pool = function()
-            return G.GAME.round_resets.ante > amt*(2^2)
-        end,
+    in_pool = function()
+        return G.GAME.round_resets.ante > amt * (2 ^ 2)
+    end,
 
-        redeem = function(self, card)
-            vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
-                return n^card.ability.extra.xp
-            end
-        end,
-        
+    redeem = function(self, card)
+        vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
+            return n ^ card.ability.extra.xp
+        end
+    end,
 
 
-    }
 
-    SMODS.Voucher {
-        key = "gammaboosterator",
-        atlas = "main",
-        pos = {x=4, y=7},
-        loc_txt = {
-            name = "Gamma XP Boosterator",
-            text = {
-                "{X:dark_edition,C:white}^^#1#{} to all XP gain",
-                "Effect is re-applied when {C:attention}blind{} defeated",
-                "When {C:attention}boss blind{} defeated, {X:dark_edition,C:white}+^^#2#{} XP Gain",
-                -- "{C:inactive}(Can spawn and be redeemed multiple times)",
-                "{C:inactive}(XP Boosterators apply in the order they were obtained)",
-            }
-        },
-        no_doe = true,
-        config = {extra = {xp = 1.09, gain = 0.09}},
+}
 
-        loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.xp, card.ability.extra.gain}}
-        end,
+SMODS.Voucher {
+    key = "gammaboosterator",
+    atlas = "main",
+    pos = { x = 4, y = 7 },
+    loc_txt = {
+        name = "Gamma XP Boosterator",
+        text = {
+            "{X:dark_edition,C:white}^^#1#{} to all XP gain",
+            "Effect is re-applied when {C:attention}blind{} defeated",
+            "When {C:attention}boss blind{} defeated, {X:dark_edition,C:white}+^^#2#{} XP Gain",
+            -- "{C:inactive}(Can spawn and be redeemed multiple times)",
+            "{C:inactive}(XP Boosterators apply in the order they were obtained)",
+        }
+    },
+    no_doe = true,
+    config = { extra = { xp = 1.09, gain = 0.09 } },
 
-        in_pool = function()
-            return G.GAME.round_resets.ante > amt*(2^3)
-        end,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xp, card.ability.extra.gain } }
+    end,
 
-        redeem = function(self, card)
-            vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
+    in_pool = function()
+        return G.GAME.round_resets.ante > amt * (2 ^ 3)
+    end,
+
+    redeem = function(self, card)
+        vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
+            return to_big(n):tetrate(card.ability.extra.xp)
+        end
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval then
+            vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
                 return to_big(n):tetrate(card.ability.extra.xp)
             end
-        end,
-
-        calculate = function(self, card, context)
-            if context.end_of_round and context.main_eval then
-                vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = function(n)
-                    return to_big(n):tetrate(card.ability.extra.xp)
-                end
-                if G.GAME.blind.boss then
-                    card.ability.extra.xp = card.ability.extra.xp + card.ability.extra.gain
-                end
+            if G.GAME.blind.boss then
+                card.ability.extra.xp = card.ability.extra.xp + card.ability.extra.gain
             end
         end
-        
+    end,
+    dependencies = {"Talisman"},
 
 
-    }
 
-end
-
+}

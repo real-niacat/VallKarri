@@ -56,9 +56,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Tauist",
         text = {
-            "{C:attention}Jokers{} may be replaced by their {C:cry_ember}Tauic{} variants",
-            "Spawn chance {C:attention}increases{} when {C:attention}Joker{} sold",
-            "{C:inactive}Chance increases when it fails, resets when it succeeds{}",
+            "{C:cry_ember}Tauic{} Joker variants have their spawn",
+            "chances increased whenever their roll fails",
             "{C:inactive}(Currently a {C:green}#1#%{C:inactive} chance to replace)",
             credit("Scraptake")
         }
@@ -76,11 +75,11 @@ SMODS.Joker {
     pos = {x=8, y=4},
     soul_pos = {x=8, y=8, extra = {x=9, y=4}},
     cost = 12,
-
-    calculate = function(self, card, context)
-        if context.selling_card and context.card.ability.set == "Joker" then
-            G.GAME.tau_replace = math.max(1, G.GAME.tau_replace * 0.9)
-        end
+    add_to_deck = function(self, card, from_debuff)
+        G.GAME.tau_increase = G.GAME.tau_increase + 2
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.tau_increase = G.GAME.tau_increase - 2
     end
 }
 
@@ -92,7 +91,7 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=3, y=5},
     -- is_soul = true,
-    soul_rate = 0.0000,
+    soul_rate = 0.01,
 
     loc_txt = { 
         name = "Absolute Tau",
@@ -119,10 +118,8 @@ SMODS.Consumable {
         
         simple_create("Joker", G.jokers, legendary_keys[math.random(#legendary_keys)])
 
-    end
-
-
-
+    end,
+    dependencies = {"Talisman"},
 }
 
 -- SMODS.Joker {

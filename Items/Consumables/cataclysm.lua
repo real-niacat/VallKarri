@@ -959,7 +959,7 @@ SMODS.Consumable {
             end
         end
 
-        local value = to_big(card.ability.extra.increase):pow(levels)
+        local value = card.ability.extra.increase ^ levels
         local str = "^^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str,mult = str})
@@ -985,6 +985,7 @@ SMODS.Consumable {
     pos = {x=9, y=2},
     no_grc = true,
     no_doe = true,
+    dependencies = {"Talisman"},
 }
 
 SMODS.Voucher {
@@ -1000,7 +1001,7 @@ SMODS.Voucher {
     },
 
     in_pool = function()
-        return G.GAME.round_resets.ante > 8
+        return G.GAME.round_resets.ante > 6
     end,
 
     

@@ -205,10 +205,10 @@ function Game:start_run(args)
         G.GAME.vallkarri.spawn_multipliers = {}
     end
 
-    G.GAME.tau_increase = 2
-    G.GAME.base_tau_replace = 100
+    G.GAME.tau_increase = 0
+    G.GAME.base_tau_replace = 150
     G.GAME.tau_replace = G.GAME.base_tau_replace
-    G.GAME.need_tauist = true
+    G.GAME.need_tauist = false
     if load_tauics then
        load_tauics() 
     end
@@ -521,7 +521,7 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
             play_sound("explosion_release1", 1, 3)
             G.GAME.tau_replace = G.GAME.base_tau_replace
         else
-            G.GAME.tau_replace = G.GAME.tau_replace - 1
+            G.GAME.tau_replace = G.GAME.tau_replace - G.GAME.tau_increase
         end
 
     end

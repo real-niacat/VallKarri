@@ -30,7 +30,8 @@ SMODS.Joker {
             return {ee_mult = card.ability.extra.cur}
         end
 
-    end
+    end,
+    dependencies = {"Talisman"},
 }
 
 SMODS.Joker {
@@ -62,7 +63,8 @@ SMODS.Joker {
 
         end
 
-    end
+    end,
+    dependencies = {"Talisman"},
 }
 
 SMODS.Joker {
@@ -70,13 +72,13 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:cry_ember}Tauic Yorick{}",
         text = {
-            "{X:dark_edition,C:white}^#1#{} Mult",
+            "{X:dark_edition,C:white}^^#1#{} Mult",
             "Increases by {X:dark_edition,C:white}+^#2#{} when any card discarded",
             "Scales {C:dark_edition,E:1}Quadratically{}",
             credit("Scraptake")
         }
     },
-    config = { extra = { gainsq = 0.05, gain = 0.05, cur = 1} },
+    config = { extra = { gainsq = 0.01, gain = 0.01, cur = 1} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cur, card.ability.extra.gain } }
     end,
@@ -97,10 +99,11 @@ SMODS.Joker {
         end
 
         if (context.joker_main) then
-            return {e_mult = card.ability.extra.cur}
+            return {eemult = card.ability.extra.cur}
         end
 
-    end
+    end,
+    dependencies = {"Talisman"},
 }
 
 SMODS.Joker {
@@ -137,13 +140,14 @@ SMODS.Joker {
                 card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
             end
 
-            G.GAME.blind.chips = to_big(G.GAME.blind.chips):arrow(2, 1 / card.ability.extra.antitetration)
+            G.GAME.blind.chips = to_big(G.GAME.blind.chips):tetrate(1 / card.ability.extra.antitetration)
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
             G.HUD_blind:recalculate()
 
         end
 
-    end
+    end,
+    dependencies = {"Talisman"},
 }
 
 SMODS.Joker {
@@ -197,5 +201,6 @@ SMODS.Joker {
             
         end
 
-    end
+    end,
+    dependencies = {"Talisman"},
 }

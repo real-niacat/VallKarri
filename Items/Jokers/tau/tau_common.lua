@@ -606,7 +606,8 @@ SMODS.Joker {
                 
             }
         end
-    end
+    end,
+    dependencies = {"Talisman"},
 }
 
 
@@ -617,14 +618,14 @@ SMODS.Joker {
         name = "{C:cry_ember}Tauic Photograph{}",
         text = {
             "The first scored {C:attention}face{} card gives",
-            "{X:dark_edition,C:white}^^1+([CardsPlayed]/100){} Mult",
+            "{X:dark_edition,C:white}^^#1#{} Mult",
             credit("Scraptake")
         }
     },
     immutable = true,
-    config = { extra = {min = 105, max = 113 } },
+    config = { extra = { amount = 1.2 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {} }
+        return { vars = {card.ability.extra.amount} }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -640,11 +641,11 @@ SMODS.Joker {
                 if context.scoring_hand[i]:is_face() then first_face = context.scoring_hand[i]; break end
             end
             if context.other_card == first_face then
-                photo_mult = 1 + ((#G.play.cards)/100)
-                return {eemult = photo_mult}
+                return {eemult = card.ability.extra.amount}
             end
         end
-    end
+    end,
+    dependencies = {"Talisman"},
 }
 
 

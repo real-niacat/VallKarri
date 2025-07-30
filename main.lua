@@ -1,3 +1,7 @@
+to_big = to_big or function(x) return x end
+to_number = to_number or function(x) return x end
+-- no more talisman requirement!
+
 if (not vallkarri) then
     vallkarri = {}
 end
@@ -42,9 +46,6 @@ SMODS.Atlas {
 
 merge_recipes = {
 
-    {input = {"c_cry_gateway", "c_cry_pointer", "c_soul"}, output = "c_valk_lordcall"},
-    {input = {"c_valk_tauism", "c_soul", "c_wraith" }, output = "c_valk_absolutetau"},
-    {input = {"c_valk_perfected_gem", "c_valk_socket"}, output = "c_valk_socketed_gem"},
     {input = {"c_death", "c_hanged_man"}, output = "c_valk_iron_maiden"},
     {input = {"c_hierophant", "c_judgement"}, output = "c_valk_the_pope"},
     {input = {"c_emperor", "c_sun"}, output = "c_valk_the_knight"},
@@ -53,12 +54,7 @@ merge_recipes = {
     {input = {"c_wheel_of_fortune", "c_temperance"}, output = "c_valk_gameshow"},
 
 }
--- i concede, i don't care anymore. i'm not here to spread hate, that makes me no better than the people i'm fighting against by doing this
--- vallkarri will still not load, but it will not crash either.
 
--- my own conflicts aren't relevant to the average balatro player, and frankly i'm not in the mental state to maintain this dumb bickering
--- glitchkat, if you're reading this, you haven't won, you'll win only win when you become a good person.
--- anyway, sorry for rambling. i am not doing well
 assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
 
 Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)

@@ -357,28 +357,6 @@ function tetrvalue(txt)
 	return "{X:dark_edition,C:white}^^" .. txt .. "{}"
 end
 
-function totaljokervalues()
-    local total = to_big(0)
-    if (G.jokers) then
-        for i,card in ipairs(G.jokers.cards) do
-
-            if (card.ability.extra and type(card.ability.extra) == "table") then 
-                for j,entry in pairs(card.ability.extra) do
-                
-                    if type(entry) == "number" or (type(entry) == "table" and entry.tetrate) then
-                        total = total + entry
-                    end
-
-                end 
-            end
-
-        end
-    end
-
-
-    return total
-end
-
 function reptlog(base, lim, num)
 
     for i = 1, lim do
@@ -395,23 +373,6 @@ end
 
 function run_debug()
     assert(SMODS.load_file("debug.lua", "vallkarri"))()
-end
-
-function hotswap()
-    assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
-    -- very unsafe, however: this does allow for live updates
-end
-
-function run_max_num_test()
-    local n = to_big(2)
-    local ri = 1
-    while ri < 1e9 do
-        n = n:arrow(math.floor(ri),n)
-        ri = ri * 11
-        print("Safely got to " .. ri .. "-ation, with " .. number_format(n) .. "{" .. math.floor(ri) .. "}" .. number_format(n))
-    end
-
-
 end
 
 function valk_additions()

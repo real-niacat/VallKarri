@@ -161,6 +161,7 @@ SMODS.Consumable {
         for i,joker in ipairs(G.jokers.cards) do
             if joker.edition then
 
+                joker:set_edition("e_base")
                 G.P_CENTERS[joker.edition.key].old_weight = G.P_CENTERS[joker.edition.key].weight
                 G.P_CENTERS[joker.edition.key].weight = 0 
 

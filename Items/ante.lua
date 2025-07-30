@@ -20,7 +20,7 @@ function ease_ante(x)
         return
     end
 
-    if (G.GAME.disable_ante_gain and x > to_big(0)) then
+    if (G.GAME.disable_ante_gain and x > 0) then
         x = 0
     end
     -- print(G.GAME.chips and G.GAME.blind.chips)
@@ -156,37 +156,5 @@ function get_blind_amount(ante)
     end
 
 
-    if (G.GAME.round_resets.ante ~= math.huge and ante <= 1e300) then
-        -- print("scaling increase branch 1 ")
-        local score = to_big(10)
-        local arrows = math.log10(ante)
-
-        local antelog = math.log10(ante)
-        local min_arrows, max_arrows = 0, 1000
-        local min_log, max_log = 1, 32
-
-        local t = (antelog - min_log) / (max_log - min_log)
-        t = math.max(0, math.min(1, t))
-
-        local eased = t^3
-        --i love exponents
-
-        arrows = min_arrows + (max_arrows - min_arrows) * eased
-        
-
-        score = score:arrow(math.ceil(arrows),math.sqrt(ante))
-
-        
-        if (score ~= math.huge) then
-            return score
-        else
-            return math.huge
-        end
-
-    else
-        -- print("scaling increase branch 2")
-
-        return math.huge
-
-    end
+    return gba(ante) ^ gba(ante)
 end

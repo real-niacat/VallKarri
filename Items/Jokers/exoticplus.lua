@@ -32,7 +32,8 @@ SMODS.Joker {
                 ee_mult = valk_additions()*card.ability.extra.mult
             }
         end
-    end
+    end,
+    dependencies = {"Talisman"},
 }
 
 SMODS.Joker {
@@ -40,8 +41,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Phicer Rekiniov",
         text = {
-            "{X:dark_edition,C:white}#1##2#{} Chips",
-            "Increase operator by {C:attention}1{} for each copy of this card owned",
+            "Create a random {C:attention}perishable{} ",
+            "{C:cry_exotic}Exotic{} Joker at end of round",
             quote("phicer"),
             credit("Nerxiana"),
         }
@@ -63,10 +64,13 @@ SMODS.Joker {
     blueprint_compat = true,
     calculate = function(self, card, context)
         
-        if context.joker_main or context.forcetrigger then
-            return {
-                hyper_chips = {1+(#SMODS.find_card("j_valk_phicer")), card.ability.extra.nchips}
-            }
+        if context.end_of_round and context.main_eval then
+
+            local exotic = create_card("Joker", G.jokers, nil, "cry_exotic", nil, nil, nil, "valk_phicer")
+            exotic:set_perishable(true)
+            exotic:add_to_deck()
+            G.jokers:emplace(exotic)
+
         end
 
     end,
@@ -158,160 +162,3 @@ if MoreFluff then
         end,
     }
 end
-
-SMODS.Joker {
-    key = "scraptake",
-    loc_txt = {
-        name = "Scraptake",
-        text = {
-            "Lose all money when hand played",
-            "Earn {C:money}Log1.1(Overscore){} dollars at end of round",
-            "{C:inactive}(Capped at blind size){}",
-            quote("scraptake"),
-            credit("Scraptake")
-        }
-    },
-    config = { extra = {  } },
-    loc_vars = function(self, info_queue, card)
-        return {vars = {} }
-    end,
-    rarity = "valk_unsurpassed",
-    atlas = "main",
-    pos = {x = 7, y = 0},
-    soul_pos = {x = 9, y = 0, extra = {x = 8, y = 0}},
-    cost = 500,
-    immutable = true,
-    demicoloncompat = true,
-
-    calculate = function(self, card, context)
-        if context.before then
-            ease_dollars(-G.GAME.dollars)
-        end
-    end,
-
-    calc_dollar_bonus = function(self, card)
-        return math.min(math.log(G.GAME.chips - G.GAME.blind.chips, 1.1), G.GAME.blind.chips)
-    end,
-}
-
-SMODS.Joker {
-    key = "libratpondere",
-    loc_txt = {
-        name = "Librat Pondere",
-        text = {
-            "{X:dark_edition,C:white,s:1.3}#1##2#{} Chips & Mult",
-            "{C:inactive,s:0.7}(Index scales with members in the Vall-Karri discord server)",
-            "{C:inactive,s:0.7}(Operator is based on the ratio of Red to Blue team members in the Vall-Karri discord server)",
-            credit("Scraptake")
-        }
-    },
-    config = { extra = { max = 10, exponent = 5 } },
-    loc_vars = function(self, info_queue, card)
-        local ratio = ratiocalc(vallkarri.librat_vals.blue, vallkarri.librat_vals.red, card.ability.extra.exponent, card.ability.extra.max)
-        ratio = math.ceil(ratio)
-        return {vars = {"{" .. ratio .. "}", (vallkarri.librat_vals.blue + vallkarri.librat_vals.red), } }
-    end,
-    rarity = "valk_unsurpassed",
-    atlas = "main",
-    pos = {x = 7, y = 5},
-    soul_pos = {x = 9, y = 5, extra = {x = 8, y = 5}},
-    cost = 500,
-    immutable = true,
-    demicoloncompat = true,
-    calculate = function(self, card, context)
-        
-        if context.joker_main or context.forcetrigger then
-            
-            local v = {
-                math.ceil(ratiocalc(vallkarri.librat_vals.blue, vallkarri.librat_vals.red, card.ability.extra.exponent, card.ability.extra.max)),
-                (vallkarri.librat_vals.blue + vallkarri.librat_vals.red)
-            }
-            return {
-                hyper_mult = v,
-                hyper_chips = v,
-            }
-        end
-    end
-}
-
--- SMODS.Joker {
-quilla = {
-    key = "quilla",
-    loc_txt = {
-        name = "Quilla",
-        text = {
-            "{X:dark_edition,C:white}#1#[Blind Size]{} Chips & Mult",
-            "{X:blue,C:white}X2{} Hands remaining when triggered",
-            quote("quilla"),
-            quote("quilla2"),
-            credit("Scraptake")
-        }
-    },
-    config = { extra = { state = 1, ctr = 0 } },
-    loc_vars = function(self, info_queue, card)
-        return {vars = {"{999}"}}
-    end,
-    rarity = "valk_quillagod",
-    atlas = "main",
-    pos = {x=0,y=3},
-    soul_pos = {x=1, y=3},
-    no_doe = true,
-    cost = 2e100,
-
-    update = function(self, card, front)
-        if card.ability and card.ability.extra.state and card.ability.extra.ctr and card.children and card.children.center and card.children.floating_sprite then
-            
-            card.ability.extra.ctr = (card.ability.extra.ctr + 1) % 60
-            if (card.ability.extra.ctr == 0) then
-                card.ability.extra.state = card.ability.extra.state + 1
-                if card.ability.extra.state > 4 then
-                    card.ability.extra.state = 1
-                end
-                card.children.center:set_sprite_pos({x = 0, y = 3 })
-                -- print(card.ability.extra.state)
-                card.children.floating_sprite:set_sprite_pos({x = card.ability.extra.state, y = 3})
-            end
-
-        end
-
-        local found = SMODS.find_card("j_valk_quilla")
-        if (#found > 0) then
-            local quilla = (select(2,next(found)))
-            
-            
-
-
-            quilla.debuff = false
-        end
-
-    end,
-
-    add_to_deck = function(self, card, from_debuff)
-
-        G.GAME.round_resets.ante = 1500
-        card.ability.cry_absolute = true
-    end,
-
-
-    calculate = function(self, card, context)
-
-        if context.joker_main then
-            G.GAME.current_round.hands_left = G.GAME.current_round.hands_left * 2
-            return {hyper_mult = {999, G.GAME.blind.chips + G.GAME.chips}, hyper_chips = {999, G.GAME.blind.chips + G.GAME.chips}}
-
-        end
-
-    end,
-
-    lore = {
-        "Quilla is one of the first Entropic Lords to exist.",
-        "She spent over 600 years in outer space, becoming stronger and",
-        "achieving further peace with herself.",
-        "",
-        "Sometime in the year 2999, she came back to the planet",
-        "and decided to find another Lord to live with.",
-        "After some searching, she found and entered Lily's house,",
-        "which she began living in.",
-        "Over time, they bonded more and more, and eventually began dating."
-    }
-}

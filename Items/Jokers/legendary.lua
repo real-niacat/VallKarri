@@ -168,36 +168,6 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
-    key = "elder",
-    loc_txt = {
-        name = "Elder",
-        text = {
-            "Creates a random {C:attention}Crafting Ingredient{} at end of round",
-            credit("Scraptake")
-        }
-    },
-    config = { extra = {} },
-    loc_vars = function(self, info_queue, card)
-    end,
-    rarity = 4,
-    atlas = "main",
-    pos = {x=0, y=8},
-    soul_pos = {x=1, y=8},
-    cost = 20,
-    blueprint_compat = true,
-    calculate = function(self, card, context)
-
-        if context.end_of_round and context.main_eval then
-            local valid = {"c_valk_binding_energy", "c_valk_perfected_gem", "c_valk_socket", "c_valk_halo_fragment"}
-            local choice = valid[pseudorandom("valk_elder",1,#valid)]
-
-            simple_create("Consumable", G.consumeables, choice)
-        end
-
-    end
-}
-
-SMODS.Joker {
     key = "kathleen",
     loc_txt = {
         name = "Kathleen Rosetail",

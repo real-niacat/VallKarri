@@ -72,12 +72,13 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local memoryleak = {
     set = "Code",
     loc_txt = { 
         name = "://MEMORYLEAK",
         text = {
-            "Add a {C:green}1%{} chance for Jokers to spawn as {C:valk_unsurpassed}Unsurpassed{}",
+            "Add a {C:green}1%{} chance for Jokers to spawn as {C:valk_}Unsurpassed{}",
             "Add a {C:green}2%{} chance for Jokers to spawn as {C:cry_cursed}Cursed{}",
             "Add a {C:green}2%{} chance for Jokers to spawn as {C:cry_cursed}Supercursed{}",
             credit("Scraptake")

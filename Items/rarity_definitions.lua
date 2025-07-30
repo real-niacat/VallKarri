@@ -1,25 +1,7 @@
 SMODS.Rarity {
-    key = 'selfinsert',
-    loc_txt = {
-        name = 'The Mod Creator'
-    },
-    badge_colour = G.C.CRY_TWILIGHT,
-    pools = { ["Joker"] = false },
-}
-
-SMODS.Rarity {
-    key = 'quillagod',
-    loc_txt = {
-        name = 'Vallkarric'
-    },
-    badge_colour = G.C.CRY_DAWN,
-    pools = { ["Joker"] = false },
-}
-
-SMODS.Rarity {
     key = 'unobtainable',
     loc_txt = {
-        name = 'Merged'
+        name = 'the mods logo'
     },
     badge_colour = HEX("CE3EA3"),
     pools = { ["Joker"] = false },
@@ -31,15 +13,6 @@ SMODS.Rarity {
         name = 'Prestigious'
     },
     badge_colour = G.C.VALK_PRESTIGIOUS,
-    pools = { ["Joker"] = false },
-}
-
-SMODS.Rarity {
-    key = 'unsurpassed',
-    loc_txt = {
-        name = 'Unsurpassed'
-    },
-    badge_colour = G.C.VALK_UNSURPASSED,
     pools = { ["Joker"] = false },
 }
 
@@ -59,14 +32,5 @@ SMODS.Rarity {
     },
     badge_colour = HEX("000000"),
     
-    pools = { ["Joker"] = false },
-}
-
-SMODS.Rarity {
-    key = 'equip',
-    loc_txt = {
-        name = 'Her Lordship\'s Missing Piece'
-    },
-    badge_colour = HEX("EB4D4D"),
     pools = { ["Joker"] = false },
 }

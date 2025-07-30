@@ -174,18 +174,24 @@ SMODS.Consumable {
     loc_txt = {
         name = "Etheirys",
         text = {
-            "(lvl.#1#) Level up",
+            "{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
             "{C:attention}#2#{}",
             "{C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
         }
     },
     config = { extra = {handtype = "valk_fullmansion"}},
     loc_vars = function(self, info_queue, card)
+
+
         return { vars = {
             G.GAME.hands[card.ability.extra.handtype].level,
             localize(card.ability.extra.handtype, 'poker_hands'),
             G.GAME.hands[card.ability.extra.handtype].l_mult,
             G.GAME.hands[card.ability.extra.handtype].l_chips,
+            colours = {
+                to_number(G.GAME.hands[card.ability.extra.handtype].level) == 1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, to_number(G.GAME.hands[card.ability.extra.handtype].level))]
+                --credit to aikoyori for doing this so i could figure it out
+            }
         }}
     end,
     atlas = "main",

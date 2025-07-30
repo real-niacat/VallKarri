@@ -567,7 +567,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
 
 		if context.joker_main then
-            local Phi = to_big(1.6180399)
+            local Phi = 1.6180399
             local phi = Phi - 1
             local n = mult
             local fibn = ((Phi^n) - (-phi^n)) / math.sqrt(5) 

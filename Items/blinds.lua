@@ -12,8 +12,7 @@ SMODS.Blind {
     loc_txt = {
         name = "Fanning Flames",
         text = {
-            "All played cards become marked for death",
-            "Marked for death has no visual indicator",
+            "Played cards become perishable",
             "Cards held in hand become rental",
             "Must play at least 4 cards"
         }
@@ -21,14 +20,14 @@ SMODS.Blind {
     -- art by pangaea
     atlas = "bli",
     pos = {y = 0, x = 0},
-    boss = {min = 32, max = 0},
+    boss = {min = 9, max = 0},
     boss_colour = HEX("EB7632"),
     dollars = 0,
-    mult = 1e100,
+    mult = 10,
     calculate = function(self, blind, context)
 		if context.after then
             for i,c in ipairs(G.play.cards) do
-			    c.ability.valk_marked_for_death = true
+			    c:set_perishable(true)
             end
 		end
 
