@@ -198,6 +198,6 @@ SMODS.Consumable {
         level_up_hand(card, card.ability.extra.handtype, nil, 1)
     end,
     in_pool = function(self, args)
-        return (G.GAME.hands[self.ability.extra.handtype].played > 0)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }

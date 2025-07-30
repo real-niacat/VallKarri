@@ -23,6 +23,7 @@ SMODS.ConsumableType {
             }
         }
     },
+    default = "c_valk_kerberos",
 }
 
 SMODS.Consumable {
@@ -57,6 +58,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
@@ -92,6 +96,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
@@ -127,6 +134,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
@@ -162,6 +172,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
@@ -197,6 +210,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
@@ -422,6 +438,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
@@ -457,6 +476,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
@@ -492,6 +514,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
@@ -527,6 +552,9 @@ SMODS.Consumable {
         
         level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
+    end,
+    in_pool = function(self)
+        return (G.GAME.hands[self.config.extra.handtype].played > 0)
     end
 }
 
