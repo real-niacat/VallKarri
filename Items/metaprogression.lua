@@ -377,7 +377,7 @@ end
 local vouchers_enabled = true
 
 if vouchers_enabled then
-
+    local amt = 4
     SMODS.Voucher {
         key = "alphaboosterator",
         atlas = "main",
@@ -398,7 +398,7 @@ if vouchers_enabled then
         end,
 
         in_pool = function()
-            return G.GAME.round_resets.ante > 1500*(2^1)
+            return G.GAME.round_resets.ante > amt*(2^1)
         end,
 
         redeem = function(self, card)
@@ -432,7 +432,7 @@ if vouchers_enabled then
         end,
 
         in_pool = function()
-            return G.GAME.round_resets.ante > 1500*(2^2)
+            return G.GAME.round_resets.ante > amt*(2^2)
         end,
 
         redeem = function(self, card)
@@ -467,7 +467,7 @@ if vouchers_enabled then
         end,
 
         in_pool = function()
-            return G.GAME.round_resets.ante > 1500*(2^3)
+            return G.GAME.round_resets.ante > amt*(2^3)
         end,
 
         redeem = function(self, card)
