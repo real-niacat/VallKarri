@@ -14,28 +14,40 @@ SMODS.Booster {
     },
 
     draw_hand = false,
-    config = {choose = 1, extra = 7},
+    config = {choose = 1, extra = 3},
 
     loc_vars = function(self, info_queue, card) 
         return {vars = {card.ability.choose, card.ability.extra}}
     end,
 
-    weight = 0.666,
-    cost = 99,
+    weight = 1.6,
+    cost = 50,
 
     create_card = function(self, card, i)
         ease_background_colour(G.C.CRY_ASCENDANT)
-        local r = pseudorandom("valk_ascended_pack", 1, 3)
+        --TODO: FIX
+        local r = pseudorandom("valk_ascended_pack", 1, 5)
         if (r == 1) then
             return create_card("Superplanet", G.pack_cards, nil, nil, true, nil, nil, "valk_ascended_pack")
-        elseif r == 2 then
-            local choices = {"c_valk_absolutetau", "c_valk_memoryleak", "c_valk_freeway"} --will add freeway when it exists
-            local pick = pseudorandom("valk_ascended_pack", 1, #choices)
-            
+        else
+            local choices = {}
+            -- add either 10 instances or floor(100*soul_rate) then pick randomly
 
-            return create_card("Consumable", G.pack_cards, nil, nil, true, nil, choices[pick], "valk_ascended_pack")
-        elseif r == 3 then
-            local choices = {"c_valk_perfected_gem", "c_valk_socket", "c_valk_binding_energy", "c_valk_halo_fragment"} --will add freeway when it exists
+            for i,center in ipairs(G.P_CENTER_POOLS.Spectral) do
+
+                if center.hidden and center.key and center.key ~= "c_cry_pointer" then
+
+                    if center.soul_rate then
+                        for _=1,math.floor(center.soul_rate*100)+1 do choices[#choices+1] = center.key end
+                    else
+                        for _=1,10 do choices[#choices+1] = center.key end
+                    end
+
+                end
+
+            end
+
+
             local pick = pseudorandom("valk_ascended_pack", 1, #choices)
             
 
