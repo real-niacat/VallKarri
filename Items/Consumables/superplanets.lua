@@ -54,7 +54,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { echips = 1.2} },
+    config = { extra = { echips = 1.05} },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.echips}}
     end,
@@ -74,7 +74,7 @@ SMODS.Consumable {
 
         
         
-        local value = card.ability.extra.emult ^ (card.ability.extra.emult ^ math.floor(levels/5))
+        local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels/5))
         local str = "^" .. tostring(value)
         simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
