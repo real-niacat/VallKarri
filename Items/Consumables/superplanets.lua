@@ -54,7 +54,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { echips = 1.1 } },
+    config = { extra = { echips = 1.2} },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.echips}}
     end,
@@ -164,7 +164,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { echips = 1.1 } },
+    config = { extra = { echips = 1.5 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.echips}}
     end,
@@ -218,7 +218,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { echips = 1.1 } },
+    config = { extra = { echips = 1.5 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.echips}}
     end,
@@ -272,7 +272,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { eeall = 2 } },
+    config = { extra = { eeall = 1.5 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.eeall}}
     end,
@@ -347,4 +347,62 @@ SMODS.Consumable {
     pos = {x=7, y=0},
     no_grc = true,
     no_doe = true,
+}
+
+SMODS.Booster {
+    key = "superplanet_1",
+    weight = 0.5,
+    kind = "superplanet",
+    cost = 16,
+    pos = { x=0, y=2 },
+    atlas = "csm",
+    -- group_key = "superplanet_pack",
+    config = { extra = 3, choose = 1 },
+    loc_txt = {
+        name = "Cosmic Pack",
+        text = {
+            "Choose {C:attention}#1#{} of up to",
+            "{C:attention}#2#{} {C:valk_superplanet}Superplanet{} cards to",
+            "be used immediately"
+        },
+        group_name = "Cosmic Booster Pack"
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = { card.ability.choose or self.config.choose, card.ability.extra or self.config.extra }
+        }
+    end,
+
+    create_card = function(self, card, i)
+        return create_card("Superplanet", G.pack_cards, nil, nil, true, nil, nil, "valk_superplanet_pack")
+    end,
+}
+
+SMODS.Booster {
+    key = "superplanet_2",
+    weight = 0.5,
+    kind = "superplanet",
+    cost = 16,
+    pos = { x=1, y=2 },
+    atlas = "csm",
+    -- group_key = "superplanet_pack",
+    config = { extra = 3, choose = 1 },
+    loc_txt = {
+        name = "Cosmic Pack",
+        text = {
+            "Choose {C:attention}#1#{} of up to",
+            "{C:attention}#2#{} {C:valk_superplanet}Superplanet{} cards to",
+            "be used immediately"
+        },
+        group_name = "Cosmic Booster Pack"
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = { card.ability.choose or self.config.choose, card.ability.extra or self.config.extra }
+        }
+    end,
+
+    create_card = function(self, card, i)
+        return create_card("Superplanet", G.pack_cards, nil, nil, true, nil, nil, "valk_superplanet_pack")
+    end,
 }

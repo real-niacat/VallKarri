@@ -714,7 +714,6 @@ SMODS.Booster {
     key = "planetoid_pack_1",
     atlas = "oid",
     kind = "Planetoid",
-    group_key = "k_valk_planetoid",
     pos = {x=3, y=3},
     discovered = true,
     loc_txt = {
@@ -724,7 +723,7 @@ SMODS.Booster {
             "{C:attention}#2#{} {C:planet}Planetoid{} cards to",
             "use immediately"
         },
-        group_name = "Planetoid Pack"
+        group_name = "Planetoid Booster Pack"
     },
 
     draw_hand = false,
@@ -752,7 +751,6 @@ SMODS.Booster {
     key = "planetoid_pack_2",
     atlas = "oid",
     kind = "Planetoid",
-    group_key = "k_valk_planetoid",
     pos = {x=4, y=3},
     discovered = true,
     loc_txt = {
@@ -762,7 +760,7 @@ SMODS.Booster {
             "{C:attention}#2#{} {C:planet}Planetoid{} cards to",
             "use immediately"
         },
-        group_name = "Planetoid Pack"
+        group_name = "Planetoid Booster Pack"
     },
 
     draw_hand = false,
