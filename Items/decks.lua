@@ -92,8 +92,11 @@ if AKYRS then
             name = "Hyperalphabetical Deck",
             text = {
                 "Letters-only deck",
+                "{C:attention}+8{} Hand Size",
+                "The shop does {C:red}not exist{}",
+                "{C:attention}X10{} Blind Size",
                 "{C:attention}Infinite{} card selection limit",
-                "Spelling a card creates it",
+                "Spelling a card {C:attention}creates it{}",
                 "{C:red}Pointer blacklist{} applies to spelled words",
                 credit("Nobody!")
             }
@@ -136,6 +139,9 @@ if AKYRS then
             end
 
         end,
+        apply = function(self, back)
+            G.GAME.akyrs_always_skip_shops = true
+        end,
         dependencies = {"aikoyorisshenanigans"},
         config = {
             akyrs_starting_letters = AKYRS.scrabble_letters,
@@ -145,6 +151,8 @@ if AKYRS then
             akyrs_start_with_no_cards = true,
             akyrs_letters_mult_enabled = true,
             akyrs_hide_normal_hands = true,
+            hand_size = 8,
+            ante_scaling = 10,
             vouchers = {'v_akyrs_alphabet_soup','v_akyrs_crossing_field'}
         },
     }
