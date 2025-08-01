@@ -417,6 +417,84 @@ SMODS.Joker {
     end
 }
 
+SMODS.Joker {
+    key = "planedolia",
+    loc_txt = {
+        name = "Planedolia",
+        text = {
+            "{C:planet}Planet{} cards have a {C:green}#1#%{} chance",
+            "to replace any other spawned card",
+            credit("triangle_snack")
+        }
+    },
+    config = {extra = {chance = 15}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.chance}}
+    end,
+    atlas = "main",
+    pos = {x = 8, y = 12},
+    cost = 6,
+    rarity = 2,
+    add_to_deck = function(self, card, from_debuff)
+        G.GAME.planet_replace = G.GAME.planet_replace and (G.GAME.planet_replace + card.ability.extra.chance) or card.ability.extra.chance 
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.planet_replace = G.GAME.planet_replace and (G.GAME.planet_replace - card.ability.extra.chance) or 0
+    end,
+}
+
+SMODS.Joker {
+    key = "tarodolia",
+    loc_txt = {
+        name = "Tarodolia",
+        text = {
+            "{C:tarot}Tarot{} cards have a {C:green}#1#%{} chance",
+            "to replace any other spawned card",
+            credit("triangle_snack")
+        }
+    },
+    config = {extra = {chance = 10}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.chance}}
+    end,
+    atlas = "main",
+    pos = {x = 10, y = 12},
+    cost = 6,
+    rarity = 2,
+    add_to_deck = function(self, card, from_debuff)
+        G.GAME.tarot_replace = G.GAME.tarot_replace and (G.GAME.tarot_replace + card.ability.extra.chance) or card.ability.extra.chance 
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.tarot_replace = G.GAME.tarot_replace and (G.GAME.tarot_replace - card.ability.extra.chance) or 0
+    end,
+}
+
+SMODS.Joker {
+    key = "spectradolia",
+    loc_txt = {
+        name = "Spectradolia",
+        text = {
+            "{C:spectral}Spectral{} cards have a {C:green}#1#%{} chance",
+            "to replace any other spawned card",
+            credit("triangle_snack")
+        }
+    },
+    config = {extra = {chance = 5}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.chance}}
+    end,
+    atlas = "main",
+    pos = {x = 9, y = 12},
+    cost = 6,
+    rarity = 2,
+    add_to_deck = function(self, card, from_debuff)
+        G.GAME.spectral_replace = G.GAME.spectral_replace and (G.GAME.spectral_replace + card.ability.extra.chance) or card.ability.extra.chance 
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.spectral_replace = G.GAME.spectral_replace and (G.GAME.spectral_replace - card.ability.extra.chance) or 0
+    end,
+}
+
 --RARE BELOW
 
 SMODS.Joker {

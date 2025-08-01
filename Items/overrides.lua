@@ -473,6 +473,13 @@ if #SMODS.find_mod("entr") > 0 then
 
 end
 
+local function is_consumable(type)
+    for name,type in pairs(SMODS.ConsumableTypes) do
+        if type == name then return true end 
+    end
+    return type == "Consumable"
+end
+
 
 local fakecreate = create_card
 function create_card(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
@@ -508,6 +515,19 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
     if _type == "Spectral" and G.GAME.spectral_planet_replacement and pseudorandom("valk_spectral_replace", 1, 100) <= G.GAME.spectral_planet_replacement then
         _type = "Planet"
     end
+
+    if not forced_key and G.GAME.spectral_replace and pseudorandom("valk_spectral_replace", 1, 100) <= G.GAME.spectral_replace then
+        _type = "Spectral"
+    end
+
+    if not forced_key and G.GAME.tarot_replace and pseudorandom("valk_tarot_replace", 1, 100) <= G.GAME.tarot_replace then
+        _type = "Tarot"
+    end
+
+    if not forced_key and G.GAME.planet_replace and pseudorandom("valk_planet_replace", 1, 100) <= G.GAME.planet_replace then
+        _type = "Planet"
+    end
+    
 
 
     local out = fakecreate(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
