@@ -1,5 +1,3 @@
-local g = Game.update
-function Game:update(dt)
-    g(self, dt)
-    ease_background_colour(G.C.CRY_ASCENDANT)
+for i,cen in ipairs(G.P_CENTERS) do
+    print(cen)
 end

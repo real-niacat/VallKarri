@@ -440,14 +440,11 @@ SMODS.Voucher {
         name = "Gamma XP Boosterator",
         text = {
             "{X:dark_edition,C:white}^^#1#{} to all XP gain",
-            "Effect is re-applied when {C:attention}blind{} defeated",
-            "When {C:attention}boss blind{} defeated, {X:dark_edition,C:white}+^^#2#{} XP Gain",
-            -- "{C:inactive}(Can spawn and be redeemed multiple times)",
             "{C:inactive}(XP Boosterators apply in the order they were obtained)",
         }
     },
     no_doe = true,
-    config = { extra = { xp = 1.09, gain = 0.09 } },
+    config = { extra = { xp = 1.09 } },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xp, card.ability.extra.gain } }
@@ -460,17 +457,6 @@ SMODS.Voucher {
     redeem = function(self, card)
         vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
             return to_big(n):tetrate(card.ability.extra.xp)
-        end
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval then
-            vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
-                return to_big(n):tetrate(card.ability.extra.xp)
-            end
-            if G.GAME.blind.boss then
-                card.ability.extra.xp = card.ability.extra.xp + card.ability.extra.gain
-            end
         end
     end,
     dependencies = {"Talisman"},

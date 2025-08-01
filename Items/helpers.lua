@@ -640,3 +640,28 @@ function fix_decimal_hand_levels()
     end
 
 end
+
+function area_by_key(key)
+    local t = key:sub(1,1)
+
+    if t == "j" then return G.jokers
+    elseif t == "c" then return G.consumeables
+    elseif t == "m" then return G.hand end
+    return nil
+end
+
+function create_letters(str)
+
+    str = str:gsub(" ", "")
+    for i = 1, #str do
+        local char = str:sub(i, i)
+        
+        local card = create_card("Default", G.hand, nil, nil, nil, nil, nil, nil)
+        card:set_letters(char)
+        card:add_to_deck()
+        G.hand:emplace(card)
+        card:set_ability("c_base")
+
+    end
+    
+end

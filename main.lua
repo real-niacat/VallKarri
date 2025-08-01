@@ -66,5 +66,6 @@ Cryptid.pointerblistifytype("rarity", "valk_equip", nil)
 Cryptid.pointerblistify( "v_valk_alphaboosterator", nil)
 Cryptid.pointerblistify( "v_valk_betaboosterator", nil)
 Cryptid.pointerblistify( "v_valk_gammaboosterator", nil)
+Cryptid.pointerblistify( "c_valk_freeway", nil)
 
 Cryptid.mod_whitelist["Vall-karri"] = true
