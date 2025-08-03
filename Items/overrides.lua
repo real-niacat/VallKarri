@@ -399,6 +399,7 @@ end
 
 SMODS.calculation_keys[#SMODS.calculation_keys+1] = "multe"
 SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
+SMODS.calculation_keys[#SMODS.calculation_keys+1] = "zulu"
 -- MUST HAVE THIS, WILL NOT WORK WITHOUT ADDING NEW CALC KEYS
 
 local calceff = SMODS.calculate_individual_effect
@@ -412,13 +413,13 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         return false
     end
 
-    if G.GAME.zulu then
+    if G.GAME.zulu and key ~= "zulu" then
         if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
             amount = (1+amount) ^ G.GAME.zulu
         end
 
         for n,obj in pairs(effect) do
-            if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
+            if n ~= "zulu" and type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
                 effect[n] = (1+effect[n]) ^ G.GAME.zulu
             end 
         end
@@ -440,6 +441,16 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         update_hand_text({delay = 0}, {chips = hand_chips, mult = mult})
         if not effect.remove_default_message then
             card_eval_status_text(scored_card, 'jokers', nil, percent, nil, {message = amount.."^"..localize("k_chips"), colour =  G.C.EDITION, edition = true})
+        end
+        return true
+    end
+
+    if key == "zulu" then 
+        if effect.card then juice_card(effect.card) end
+        G.GAME.zulu = to_big(G.GAME.zulu and (G.GAME.zulu+amount) or amount) 
+        update_hand_text({delay = 0}, {chips = hand_chips .. "?", mult = mult .. "?"})
+        if not effect.remove_default_message then
+            card_eval_status_text(scored_card, 'jokers', nil, percent, nil, {message = "+"..amount.." Zulu", colour =  G.C.GREEN, sound = 'voice'..math.random(1, 11), pitch = 0.2, volume = 10, trigger = "immediate",})
         end
         return true
     end

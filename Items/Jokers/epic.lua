@@ -120,8 +120,9 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_prestigious,s:2}Zulu",
         text = {
-            "{X:mult,C:white}X1{} Melt",
+            "{X:mult,C:white}X1{} Mult",
             "{C:valk_prestigious,s:3,f:5}+π/10{C:valk_prestigious,s:3} Zulu",
+            "{C:red,s:3.14159265}annihilates{}  a  few other cards",
             credit("Lily")
         }
     },
@@ -129,7 +130,7 @@ SMODS.Joker {
     rarity = "cry_epic",
     atlas = "main",
     pos = {x=4, y=0},
-    cost = math.ceil(1000*math.pi),
+    cost = math.ceil(10*math.pi),
     pools = { ["Meme"] = true },
     demicoloncompat = true,
     loc_vars = function(self,info_queue, card)
@@ -138,8 +139,15 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
-            G.GAME.zulu = (G.GAME.zulu and G.GAME.zulu+card.ability.extra.zulu) or (1+card.ability.extra.zulu)
-            return {xmult = 1}
+
+            for i,jkr in ipairs(G.jokers.cards) do
+                if jkr ~= card then jkr:start_dissolve() end
+            end
+            return {zulu = card.ability.extra.zulu, xmult = 1, }
+        end
+
+        if context.other_card and context.other_card.area == G.play then
+            context.other_card:start_dissolve()
         end
     end
 }
