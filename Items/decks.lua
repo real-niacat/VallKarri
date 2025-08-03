@@ -25,7 +25,7 @@ SMODS.Back {
         name = "Encore Deck",
         text = {
             "After hand scores,",
-            "all joker {C:attention}end-of-round{}",
+            "all Joker {C:attention}end-of-round{}",
             "effects are triggered",
             credit("Scraptake")
         }
@@ -98,11 +98,11 @@ if AKYRS then
                 "{C:attention}Infinite{} card selection limit",
                 "Spelling a card {C:attention}creates it{}",
                 "{C:red}Pointer blacklist{} applies to spelled words",
-                credit("Nobody!")
+                credit("aikoyori")
             }
         },
-        pos = {x=4, y=0},
-        atlas = "phold",
+        pos = {x=10, y=8},
+        atlas = "main",
         calculate = function(center, back, context)
 
             if G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled and context.before then

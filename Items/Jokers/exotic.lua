@@ -302,3 +302,96 @@ SMODS.Joker {
         return G.GAME.hands_played * card.ability.extra.per
     end,
 }
+
+SMODS.Joker {
+    key = "madstone_whiskey",
+    loc_txt = {
+        name = "Madstone Whiskey",
+        text = {
+            "When a booster pack is skipped, create a {C:dark_edition}Negative{} {C:attention}The Fool{}",
+            "When {C:attention}The Fool{} is used, create {C:attention}#1#{} random tag",
+            "Increase by {C:attention}#2#{} when {C:attention}Boss Blind{} defeated",
+            credit("Pangaea")
+        }
+    },
+    config = { extra = { tags = 1, increase = 1 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.tags, card.ability.extra.increase} }
+    end,
+    rarity = "cry_exotic",
+    atlas = "main",
+    pos = {x = 5, y = 12},
+    soul_pos = {x = 5, y = 13, extra = {x = 5, y = 14}},
+    cost = 50,
+    immutable = true,
+    calculate = function(self, card, context)
+        if context.skipping_booster then
+            local fool = SMODS.create_card({key = "c_fool", edition = "e_negative"})
+            fool:add_to_deck()
+            G.consumeables:emplace(fool)
+        end
+
+        if context.using_consumeable and context.consumeable and context.consumeable.config.center.key == "c_fool" then
+            for i=1,card.ability.extra.tags do
+                add_random_tag("valk_madstone_whiskey")
+            end
+        end
+
+        if context.end_of_round and context.main_eval and G.GAME.blind.boss then
+            card.ability.extra.tags = card.ability.extra.tags + card.ability.extra.increase
+            card.ability.extra.tags = math.min(card.ability.extra.tags, 40)
+            card.ability.extra.increase = math.min(card.ability.extra.increase, 40)
+        end
+    end,
+}
+
+-- SMODS.Joker {
+--     key = "astracola",
+--     loc_txt = {
+--         name = "Astracola",
+--         text = {
+--             "",
+--             credit("Pangaea")
+--         }
+--     },
+--     config = { extra = {  } },
+--     loc_vars = function(self, info_queue, card)
+--         return {vars = {  } }
+--     end,
+--     rarity = "cry_exotic",
+--     atlas = "main",
+--     pos = {x = 6, y = 12},
+--     soul_pos = {x = 6, y = 13, extra = {x = 6, y = 14}},
+--     cost = 50,
+
+--     calculate = function(self, card, context)
+        
+        
+
+--     end,
+-- }
+
+-- SMODS.Joker {
+--     key = "phylactequila",
+--     loc_txt = {
+--         name = "Phylactequila",
+--         text = {
+--             "",
+--             credit("Pangaea")
+--         }
+--     },
+--     config = { extra = {  } },
+--     loc_vars = function(self, info_queue, card)
+--         return {vars = {} }
+--     end,
+--     rarity = "cry_exotic",
+--     atlas = "main",
+--     pos = {x = 7, y = 12},
+--     soul_pos = {x = 7, y = 13, extra = {x = 7, y = 14}},
+--     cost = 50,
+
+--     calculate = function(self, card, context)
+        
+--     end,
+    
+-- }

@@ -665,3 +665,16 @@ function create_letters(str)
     end
     
 end
+
+function add_random_tag(seed)
+
+    local tag_pool = get_current_pool('Tag')
+    local selected_tag = pseudorandom_element(tag_pool, pseudoseed(seed))
+    local it = 1
+    while selected_tag == 'UNAVAILABLE' do
+        it = it + 1
+        selected_tag = pseudorandom_element(tag_pool, pseudoseed(seed..it))
+    end
+    add_tag(Tag(selected_tag))
+
+end
