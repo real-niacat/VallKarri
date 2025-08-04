@@ -63,7 +63,7 @@ function get_ante_change(theoretical_score, debug)
         win_pot = to_big(theoretical_score)
     end
 
-    if win_pot < overscore_threshhold() then
+    if to_big(win_pot) < to_big(overscore_threshhold()) then
         return 0
     end
 
