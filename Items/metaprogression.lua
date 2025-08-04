@@ -277,7 +277,7 @@ function vallkarri.animationless_mod_xp(mod, operator, level_multiplier)
 
 
 
-    while G.PROFILES[G.SETTINGS.profile].valk_cur_xp >= G.PROFILES[G.SETTINGS.profile].valk_max_xp do
+    while to_big(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) >= to_big(G.PROFILES[G.SETTINGS.profile].valk_max_xp) do
         vallkarri.mod_level(level_multiplier or 1, true)
     end
 end

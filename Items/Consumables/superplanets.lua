@@ -349,9 +349,172 @@ SMODS.Consumable {
     no_doe = true,
 }
 
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "barnard",
+    loc_txt = {
+        name = "Barnard 68",
+        text = {
+            expochips("#1#") .. " Chips on {C:attention}None{}, plus another",
+            expochips("#1#") .. " Chips for each level on {C:attention}any{} hand",
+            credit("mailingway"),
+        }
+    },
+
+    no_doe = true,
+    soul_rate = 5,
+    config = { extra = { evalue = 9 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.evalue
+        }}
+    end,
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        local levels = 0
+        for i,_ in pairs(G.GAME.hands) do
+            levels = G.GAME.hands[i].level and (levels + G.GAME.hands[i].level) or (levels + 1)
+        end
+
+        
+        
+        local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
+        local str = "^" .. number_format(value)
+        simple_hand_text("cry_None")
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
+
+        G.GAME.hands["cry_None"].chips = G.GAME.hands["cry_None"].chips ^ value
+    end,
+    in_pool = function(self, args)
+        return G.GAME.hands["cry_None"].played > 0
+    end,
+
+        
+    atlas = "csm",
+    pos = {x=8, y=0},
+    no_grc = true,
+    no_doe = true,
+}
+
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "bootesvoid",
+    loc_txt = {
+        name = "Bootes Void",
+        text = {
+            expochips("#1#") .. " Mult on {C:attention}None{}, plus another",
+            expochips("#1#") .. " Mult for each level on {C:attention}any{} hand",
+            credit("mailingway"),
+        }
+    },
+
+    no_doe = true,
+    soul_rate = 5,
+    config = { extra = { evalue = 9 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.evalue
+        }}
+    end,
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        local levels = 0
+        for i,_ in pairs(G.GAME.hands) do
+            levels = G.GAME.hands[i].level and (levels + G.GAME.hands[i].level) or (levels + 1)
+        end
+
+        
+        
+        local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
+        local str = "^" .. number_format(value)
+        simple_hand_text("cry_None")
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
+
+        G.GAME.hands["cry_None"].mult = G.GAME.hands["cry_None"].mult ^ value
+    end,
+    in_pool = function(self, args)
+        return G.GAME.hands["cry_None"].played > 0
+    end,
+
+        
+    atlas = "csm",
+    pos = {x=9, y=0},
+    no_grc = true,
+    no_doe = true,
+}
+
+SMODS.Consumable {
+    set = "Superplanet",
+    key = "lynxconstellation",
+    loc_txt = {
+        name = "Lynx Constellation",
+        text = {
+            expochips("#1#") .. " Chips & Mult on {C:attention}all hands{}, plus another",
+            expochips("#1#") .. " Chips & Mult for each {C:attention}Kitty{} Joker owned",
+            credit("mailingway"),
+        }
+    },
+
+    no_doe = true,
+    soul_rate = 5,
+    config = { extra = { evalue = 1.9 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.evalue
+        }}
+    end,
+
+    can_use = function(self, card)
+        return true
+    end,
+
+    use = function(self, card, area, copier)
+        local levels = 0
+        for i,joker in ipairs(G.jokers.cards) do
+            if Cryptid.safe_get(joker.config.center, "pools", "Kitties") then
+                levels = levels + 1
+            end
+        end
+
+        
+        
+        local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
+        local str = "^" .. number_format(value)
+        simple_hand_text("all")
+        update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str, mult = str})
+
+        for i,hand in pairs(G.GAME.hands) do
+            G.GAME.hands[i].chips = G.GAME.hands[i].chips ^ value
+            G.GAME.hands[i].mult = G.GAME.hands[i].mult ^ value
+        end
+    end,
+    in_pool = function(self, args)
+        for i,joker in ipairs(G.jokers.cards) do
+            if Cryptid.safe_get(joker.config.center, "pools", "Kitties") then
+                return true
+            end
+        end
+        return false
+    end,
+
+        
+    atlas = "csm",
+    pos = {x=0, y=1},
+    no_grc = true,
+    no_doe = true,
+}
+
 SMODS.Booster {
     key = "superplanet_1",
-    weight = 0.5,
+    weight = 0.28,
     kind = "superplanet",
     cost = 16,
     pos = { x=0, y=2 },
@@ -374,13 +537,13 @@ SMODS.Booster {
     end,
 
     create_card = function(self, card, i)
-        return create_card("Superplanet", G.pack_cards, nil, nil, true, nil, nil, "valk_superplanet_pack")
+        return create_card("Superplanet", G.pack_cards, nil, nil, true, true, nil, "valk_superplanet_pack")
     end,
 }
 
 SMODS.Booster {
     key = "superplanet_2",
-    weight = 0.5,
+    weight = 0.28,
     kind = "superplanet",
     cost = 16,
     pos = { x=1, y=2 },
@@ -403,6 +566,6 @@ SMODS.Booster {
     end,
 
     create_card = function(self, card, i)
-        return create_card("Superplanet", G.pack_cards, nil, nil, true, nil, nil, "valk_superplanet_pack")
+        return create_card("Superplanet", G.pack_cards, nil, nil, true, true, nil, "valk_superplanet_pack")
     end,
 }
