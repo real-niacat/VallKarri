@@ -12,53 +12,43 @@ SMODS.Joker {
     },
     config = { extra = { state = 1, ctr = 0, num = 1, den = 10 } },
     loc_vars = function(self, info_queue, card)
-        
-
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "raxd")
-        return { vars = {num, den} }
+        return { vars = { num, den } }
     end,
     rarity = "cry_epic",
     atlas = "main",
-    pos = {x=0,y=6},
-    soul_pos = {x=1,y=6},
+    pos = { x = 0, y = 6 },
+    soul_pos = { x = 1, y = 6 },
     cost = 15,
     demicoloncompat = true,
     update = function(self, card, front)
         if card.ability and card.ability.extra.state and card.ability.extra.ctr and card.children and card.children.center and card.children.floating_sprite then
-            
             card.ability.extra.ctr = (card.ability.extra.ctr + 1) % 5
             if (card.ability.extra.ctr == 0) then
                 card.ability.extra.state = card.ability.extra.state + 1
                 if card.ability.extra.state > 2 then
                     card.ability.extra.state = 1
                 end
-                card.children.floating_sprite:set_sprite_pos({x = card.ability.extra.state, y = 6})
+                card.children.floating_sprite:set_sprite_pos({ x = card.ability.extra.state, y = 6 })
             end
-
         end
     end,
 
     calculate = function(self, card, context)
-
         if (context.end_of_round and not context.individual and not context.repetition and not context.blueprint and G.GAME.blind.boss) or context.forcetrigger then
-
             if SMODS.pseudorandom_probability(card, "valk_raxd", card.ability.extra.num, card.ability.extra.den, "raxd") then
                 local big_cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_big_cube")
                 big_cube:set_edition("e_negative", true)
                 big_cube:add_to_deck()
                 G.jokers:emplace(big_cube)
             else
-
                 if not (#G.jokers.cards >= G.jokers.config.card_limit) then
                     local cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_cube")
                     cube:add_to_deck()
                     G.jokers:emplace(cube)
                 end
-
             end
-
         end
-
     end
 }
 
@@ -76,21 +66,19 @@ SMODS.Joker {
     },
     config = { extra = { money = 5 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.money}}
+        return { vars = { card.ability.extra.money } }
     end,
     rarity = "cry_epic",
     atlas = "main",
-    pos = {x=5, y=1},
-    soul_pos = {x=6, y=1},
+    pos = { x = 5, y = 1 },
+    soul_pos = { x = 6, y = 1 },
     cost = 15,
     demicoloncompat = true,
     calculate = function(self, card, context)
-        
         if (context.setting_blind or context.forcetrigger) and #G.GAME.tags > 0 then
             add_tag(Tag(G.GAME.tags[#G.GAME.tags].key))
             ease_dollars(-card.ability.extra.money)
         end
-
     end
 }
 
@@ -104,13 +92,13 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = {  } },
+    config = { extra = {} },
     loc_vars = function(self, info_queue, card)
-        return {vars = {} }
+        return { vars = {} }
     end,
     rarity = "cry_epic",
     atlas = "main",
-    pos = {x=0,y=10},
+    pos = { x = 0, y = 10 },
     cost = 18,
     immutable = true,
 }
@@ -126,24 +114,23 @@ SMODS.Joker {
             credit("Lily")
         }
     },
-    config = { extra = {zulu = math.pi/10} },
+    config = { extra = { zulu = math.pi / 10 } },
     rarity = "cry_epic",
     atlas = "main",
-    pos = {x=4, y=0},
-    cost = math.ceil(10*math.pi),
+    pos = { x = 4, y = 0 },
+    cost = math.ceil(10 * math.pi),
     pools = { ["Meme"] = true },
     demicoloncompat = true,
-    loc_vars = function(self,info_queue, card)
-        return {vars = {card.ability.extra.zulu}}
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.zulu } }
     end,
 
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
-
-            for i,jkr in ipairs(G.jokers.cards) do
+            for i, jkr in ipairs(G.jokers.cards) do
                 if jkr ~= card then jkr:start_dissolve() end
             end
-            return {zulu = card.ability.extra.zulu, xmult = 1, }
+            return { zulu = card.ability.extra.zulu, xmult = 1, }
         end
 
         if context.other_card and context.other_card.area == G.play then
@@ -165,30 +152,30 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        return {vars = {
-            card.ability.extra.base,
-            card.ability.extra.poly
-        }}
+        return {
+            vars = {
+                card.ability.extra.base,
+                card.ability.extra.poly
+            }
+        }
     end,
-    config = { extra = { base = 2, poly = 4 }},
+    config = { extra = { base = 2, poly = 4 } },
     atlas = "main",
-    pos = {x=4, y=10},
+    pos = { x = 4, y = 10 },
     cost = 12,
     pools = { ["Meme"] = true },
     calculate = function(self, card, context)
-
         if context.post_trigger and context.other_card.edition and context.other_card.edition.key == "e_polychrome" then
             return {
-				xmult = card.ability.extra.poly
-			}
+                xmult = card.ability.extra.poly
+            }
         end
 
         if context.end_of_round and context.main_eval then
-
             local valid = {}
-            for i,jkr in ipairs(G.jokers.cards) do
+            for i, jkr in ipairs(G.jokers.cards) do
                 if (not jkr.edition) or (jkr.edition and jkr.edition.key ~= "e_polychrome") then
-                    valid[#valid+1] = jkr
+                    valid[#valid + 1] = jkr
                 end
             end
 
@@ -196,7 +183,6 @@ SMODS.Joker {
                 pseudorandom_element(valid, "valk_woke_finn"):set_edition("e_polychrome")
             end
         end
-
     end,
 }
 
@@ -213,35 +199,33 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        return {vars = {
-            card.ability.extra.retrig,
-            card.ability.extra.inc,
-            card.ability.extra.reset,
-            card.ability.extra.req
-        }}
+        return {
+            vars = {
+                card.ability.extra.retrig,
+                card.ability.extra.inc,
+                card.ability.extra.reset,
+                card.ability.extra.req
+            }
+        }
     end,
-    config = { extra = { retrig = 1, inc = 1, req = 20, reset = 20 }},
+    config = { extra = { retrig = 1, inc = 1, req = 20, reset = 20 } },
     atlas = "main",
-    pos = {x=11, y=5},
+    pos = { x = 11, y = 5 },
     cost = 12,
     immutable = true,
     pools = { ["Meme"] = true },
     calculate = function(self, card, context)
-
-        
         if context.retrigger_joker_check then
-
             local my_index = 0
-            for i,joker in ipairs(G.jokers.cards) do
+            for i, joker in ipairs(G.jokers.cards) do
                 if joker == card then my_index = i end
             end
 
-            if G.jokers.cards[my_index-1] and context.other_card == G.jokers.cards[my_index-1] then
+            if G.jokers.cards[my_index - 1] and context.other_card == G.jokers.cards[my_index - 1] then
                 return {
                     repetitions = card.ability.extra.retrig
                 }
             end
-
         end
 
         if context.joker_main then
@@ -251,6 +235,46 @@ SMODS.Joker {
                 card.ability.extra.retrig = card.ability.extra.retrig + card.ability.extra.inc
             end
         end
+    end,
+}
 
+SMODS.Joker {
+    key = "copycat",
+    rarity = "cry_epic",
+    loc_txt = {
+        name = "Copy Cat",
+        text = {
+            "When blind selected, add a random",
+            "{C:attention}Mirrored{} card to deck",
+            credit("Nobody!")
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+
+            }
+        }
+    end,
+    config = { extra = {} },
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 12,
+    immutable = true,
+    pools = { ["Kitties"] = true },
+    calculate = function(self, card, context)
+        if context.setting_blind then
+            -- code essentially copied frmo marble joker
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    local c = SMODS.create_card({key="m_valk_mirrored"})
+                    SMODS.calculate_effect({ message = "Created!", colour = G.C.SECONDARY_SET.Enhanced }, context.blueprint_card or card)
+
+                    G.deck:emplace(c)
+                    table.insert(G.playing_cards, c)
+                    return true
+                end
+            }))
+        end
     end,
 }

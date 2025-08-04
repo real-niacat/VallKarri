@@ -3,7 +3,7 @@ SMODS.Enhancement {
     loc_txt = {
         name = "Mirrored",
         text = {
-            "Copies the {C:attention}modifications{}",
+            "Copies the {C:attention}Suit, Rank{} and {C:attention}Modifications{}",
             "of the card to the right",
             "{C:inactive}(Can replace self){}"
         },
@@ -31,9 +31,11 @@ SMODS.Enhancement {
 
             local enh = SMODS.get_enhancements(right_card)
 
+
+            SMODS.change_base(card, right_card.base.suit, right_card.base.value)
             card.seal = right_card.seal
             card.edition = right_card.edition
-            if enh then
+            if enh and not enh["m_valk_mirrored"] then
                 card:set_ability(next(enh))
             end
         else
