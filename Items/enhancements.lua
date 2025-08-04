@@ -5,11 +5,12 @@ SMODS.Enhancement {
         text = {
             "Copies the {C:attention}Suit, Rank{} and {C:attention}Modifications{}",
             "of the card to the right",
-            "{C:inactive}(Can replace self){}"
+            "{C:inactive}(Can replace self){}",
+            credit("mailingway")
         },
     },
-    atlas = "phold",
-    pos = { x = 3, y = 0 },
+    atlas = "main",
+    pos = {x = 10, y = 3},
     config = { immutable = { counter = 5 } },
     update = function(self, card, dt)
         if card.ability.immutable and card.ability.immutable.counter and card.ability.immutable.counter <= 0 then
