@@ -1,13 +1,17 @@
 local function refresh_metaprog()
+
+    G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_number(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
+    G.PROFILES[G.SETTINGS.profile].valk_max_xp = to_number(G.PROFILES[G.SETTINGS.profile].valk_max_xp)
+    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_number(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) 
     if type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) ~= "number" then
         G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
     end
 
-    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_max_xp) then
+    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "number" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_max_xp) then
         G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
     end
 
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "table" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_cur_xp) then
+    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "number" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_cur_xp) then
         G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
     end
 end
