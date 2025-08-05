@@ -33,7 +33,7 @@ SMODS.Blind {
 
         if context.before then
             for i,c in ipairs(G.hand.cards) do
-                c.ability.rental = true
+                c:set_rental(true)
             end
         end
 	end,
