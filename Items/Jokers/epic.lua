@@ -267,8 +267,9 @@ SMODS.Joker {
             -- code essentially copied frmo marble joker
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    local c = SMODS.create_card({key="m_valk_mirrored"})
-                    SMODS.calculate_effect({ message = "Created!", colour = G.C.SECONDARY_SET.Enhanced }, context.blueprint_card or card)
+                    local c = SMODS.create_card({ key = "m_valk_mirrored" })
+                    SMODS.calculate_effect({ message = "Created!", colour = G.C.SECONDARY_SET.Enhanced },
+                        context.blueprint_card or card)
 
                     G.deck:emplace(c)
                     table.insert(G.playing_cards, c)
@@ -276,5 +277,46 @@ SMODS.Joker {
                 end
             }))
         end
+    end,
+}
+
+SMODS.Joker {
+    key = "heavyhands",
+    rarity = "cry_epic",
+    loc_txt = {
+        name = "Heavy Hands",
+        text = {
+            "Forcefully play your {C:attention}full{} hand",
+            "{C:attention}+#1#{} Hand Size",
+            credit("Nobody!")
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.handsize
+            }
+        }
+    end,
+    config = { extra = {handsize = 2} },
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 12,
+    immutable = true,
+    calculate = function(self, card, context)
+        if context.press_play then
+            for i, c in ipairs(G.hand.cards) do
+                if not c.highlighted then
+                    draw_card(G.hand, G.play, nil, nil, nil, c, nil, nil, false)
+                    c:highlight(true)
+                end
+            end
+        end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        G.hand:change_size(card.ability.extra.handsize)
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.hand:change_size(-card.ability.extra.handsize)
     end,
 }

@@ -12,7 +12,7 @@ SMODS.Joker {
     config = { extra = {} },
     rarity = 1,
     atlas = "main",
-    pos = {x=4, y=5},
+    pos = { x = 4, y = 5 },
     cost = 0,
     pools = { ["Meme"] = true },
 
@@ -36,24 +36,22 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = { extra = {per = 2} },
-    loc_vars = function(self,info_queue, card)
-        return {vars = {card.ability.extra.per}}
+    config = { extra = { per = 2 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.per } }
     end,
     rarity = 1,
     atlas = "main",
-    pos = {x=10, y=5},
+    pos = { x = 10, y = 5 },
     cost = 5,
     blueprintcompat = true,
 
 
     calculate = function(self, card, context)
- 
         if context.joker_main then
             local amount = (#context.full_hand - #context.scoring_hand)
-            return {mult = card.ability.extra.per * amount} 
+            return { mult = card.ability.extra.per * amount }
         end
-
     end,
 
 }
@@ -71,15 +69,15 @@ SMODS.Joker {
             credit("Lily")
         }
     },
-    config = { extra = {cur = 0.99, gain = 1e-3} },
+    config = { extra = { cur = 0.99, gain = 1e-3 } },
     rarity = 2,
     atlas = "main",
-    pos = {x=4, y=6},
+    pos = { x = 4, y = 6 },
     cost = 6,
     pools = { ["Meme"] = true },
     demicoloncompat = true,
-    loc_vars = function(self,info_queue, card)
-        return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gain, card.ability.extra.cur } }
     end,
 
     calculate = function(self, card, context)
@@ -88,7 +86,7 @@ SMODS.Joker {
         end
 
         if context.joker_main or context.forcetrigger then
-            return {x_mult = card.ability.extra.cur}
+            return { x_mult = card.ability.extra.cur }
         end
     end
 }
@@ -104,14 +102,14 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = {cur = 1, gain = 0.2, cap = 5} },
+    config = { extra = { cur = 1, gain = 0.2, cap = 5 } },
     rarity = 2,
     atlas = "main",
-    pos = {x=5, y=8},
+    pos = { x = 5, y = 8 },
     cost = 6,
     demicoloncompat = true,
-    loc_vars = function(self,info_queue, card)
-        return {vars = {card.ability.extra.gain, card.ability.extra.cur, card.ability.extra.cap}}
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gain, card.ability.extra.cur, card.ability.extra.cap } }
     end,
 
     calculate = function(self, card, context)
@@ -119,15 +117,14 @@ SMODS.Joker {
             context.other_card.ability.extra.req = math.min(card.ability.extra.cap, context.other_card.ability.extra.req) --cap at 5
             card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
             quick_card_speak(card, "Upgraded!")
-
         end
 
         if context.joker_main then
-            return {xmult = card.ability.extra.cur}
+            return { xmult = card.ability.extra.cur }
         end
     end,
     in_pool = function()
-        for i,card in ipairs(G.playing_cards) do
+        for i, card in ipairs(G.playing_cards) do
             if SMODS.has_enhancement(card, "m_cry_light") then
                 return true
             end
@@ -148,28 +145,28 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = { curchips = 1, inc = 1, incsq = 1} },
+    config = { extra = { curchips = 1, inc = 1, incsq = 1 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.curchips, card.ability.extra.inc} }
+        return { vars = { card.ability.extra.curchips, card.ability.extra.inc } }
     end,
     rarity = 2,
     atlas = "main",
-    pos = {x=5, y=2},
-    soul_pos = {x=6, y=2},
+    pos = { x = 5, y = 2 },
+    soul_pos = { x = 6, y = 2 },
     cost = 4,
     demicoloncompat = true,
     calculate = function(self, card, context)
         if (context.joker_main) or context.forcetrigger then
-            return {chips = card.ability.extra.curchips}
+            return { chips = card.ability.extra.curchips }
         end
 
         if
-			context.end_of_round
-			and not context.blueprint
-			and not context.individual
-			and not context.repetition
-			and not context.retrigger_joker
-		then
+            context.end_of_round
+            and not context.blueprint
+            and not context.individual
+            and not context.repetition
+            and not context.retrigger_joker
+        then
             -- thank you smg9000..... :sob: i might be geeked
             -- i was really tired when i made this
 
@@ -189,17 +186,17 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.c_fool
-        info_queue[#info_queue+1] = G.P_TAGS.tag_charm
+        info_queue[#info_queue + 1] = G.P_CENTERS.c_fool
+        info_queue[#info_queue + 1] = G.P_TAGS.tag_charm
     end,
     atlas = "main",
-    pos = {x = 5, y = 11},
+    pos = { x = 5, y = 11 },
     cost = 6,
     rarity = 2,
     calculate = function(self, card, context)
         if context.selling_self then
             add_tag(Tag("tag_charm"))
-            local fool = SMODS.create_card({key = "c_fool"})
+            local fool = SMODS.create_card({ key = "c_fool" })
             fool:add_to_deck()
             G.consumeables:emplace(fool)
         end
@@ -217,17 +214,17 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.c_fool
-        info_queue[#info_queue+1] = G.P_TAGS.tag_meteor
+        info_queue[#info_queue + 1] = G.P_CENTERS.c_fool
+        info_queue[#info_queue + 1] = G.P_TAGS.tag_meteor
     end,
     atlas = "main",
-    pos = {x = 6, y = 11},
+    pos = { x = 6, y = 11 },
     cost = 6,
     rarity = 2,
     calculate = function(self, card, context)
         if context.selling_self then
             add_tag(Tag("tag_meteor"))
-            local fool = SMODS.create_card({key = "c_fool"})
+            local fool = SMODS.create_card({ key = "c_fool" })
             fool:add_to_deck()
             G.consumeables:emplace(fool)
         end
@@ -245,10 +242,10 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_TAGS.tag_ethereal
+        info_queue[#info_queue + 1] = G.P_TAGS.tag_ethereal
     end,
     atlas = "main",
-    pos = {x = 7, y = 11},
+    pos = { x = 7, y = 11 },
     cost = 6,
     rarity = 2,
     calculate = function(self, card, context)
@@ -269,24 +266,24 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = {extra = {per = 0.2}},
+    config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.per}}
+        return { vars = { card.ability.extra.per } }
     end,
     atlas = "main",
-    pos = {x = 10, y = 6},
+    pos = { x = 10, y = 6 },
     cost = 6,
     rarity = 2,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.joker_main then
             local amount = 0
-            for i,pcard in ipairs(context.scoring_hand) do
+            for i, pcard in ipairs(context.scoring_hand) do
                 if pcard:is_suit("Diamonds") then
                     amount = amount + 1
                 end
             end
-            return {xmult = 1 + (card.ability.extra.per * amount)} 
+            return { xmult = 1 + (card.ability.extra.per * amount) }
         end
     end,
 }
@@ -300,24 +297,24 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = {extra = {per = 0.2}},
+    config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.per}}
+        return { vars = { card.ability.extra.per } }
     end,
     atlas = "main",
-    pos = {x = 11, y = 6},
+    pos = { x = 11, y = 6 },
     cost = 6,
     rarity = 2,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.joker_main then
             local amount = 0
-            for i,pcard in ipairs(context.scoring_hand) do
+            for i, pcard in ipairs(context.scoring_hand) do
                 if pcard:is_suit("Spades") then
                     amount = amount + 1
                 end
             end
-            return {xmult = 1 + (card.ability.extra.per * amount)} 
+            return { xmult = 1 + (card.ability.extra.per * amount) }
         end
     end,
 }
@@ -331,24 +328,24 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = {extra = {per = 0.2}},
+    config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.per}}
+        return { vars = { card.ability.extra.per } }
     end,
     atlas = "main",
-    pos = {x = 10, y = 7},
+    pos = { x = 10, y = 7 },
     cost = 6,
     rarity = 2,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.joker_main then
             local amount = 0
-            for i,pcard in ipairs(context.scoring_hand) do
+            for i, pcard in ipairs(context.scoring_hand) do
                 if pcard:is_suit("Clubs") then
                     amount = amount + 1
                 end
             end
-            return {xmult = 1 + (card.ability.extra.per * amount)} 
+            return { xmult = 1 + (card.ability.extra.per * amount) }
         end
     end,
 }
@@ -362,24 +359,24 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = {extra = {per = 0.2}},
+    config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.per}}
+        return { vars = { card.ability.extra.per } }
     end,
     atlas = "main",
-    pos = {x = 11, y = 7},
+    pos = { x = 11, y = 7 },
     cost = 6,
     rarity = 2,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.joker_main then
             local amount = 0
-            for i,pcard in ipairs(context.scoring_hand) do
+            for i, pcard in ipairs(context.scoring_hand) do
                 if pcard:is_suit("Hearts") then
                     amount = amount + 1
                 end
             end
-            return {xmult = 1 + (card.ability.extra.per * amount)} 
+            return { xmult = 1 + (card.ability.extra.per * amount) }
         end
     end,
 }
@@ -396,23 +393,24 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = {extra = {per = 1}},
+    config = { extra = { per = 1 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.per, #vallkarri.last_message * card.ability.extra.per, vallkarri.last_message}}
+        return { vars = { card.ability.extra.per, #vallkarri.last_message * card.ability.extra.per, vallkarri.last_message } }
     end,
     atlas = "main",
-    pos = {x = 12, y = 5},
+    pos = { x = 12, y = 5 },
     cost = 6,
     rarity = 2,
+    pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.joker_main then
-            return {mult = (card.ability.extra.per * #vallkarri.last_message)} 
+            return { mult = (card.ability.extra.per * #vallkarri.last_message) }
         end
     end,
 
     update = function(self, card, dt)
-        if card and card.children and math.random(1,5) == 1 then
-            card.children.center:set_sprite_pos({x=math.random(12,13), y=5})
+        if card and card.children and math.random(1, 5) == 1 then
+            card.children.center:set_sprite_pos({ x = math.random(12, 13), y = 5 })
         end
     end
 }
@@ -427,16 +425,17 @@ SMODS.Joker {
             credit("triangle_snack")
         }
     },
-    config = {extra = {chance = 15}},
+    config = { extra = { chance = 15 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.chance}}
+        return { vars = { card.ability.extra.chance } }
     end,
     atlas = "main",
-    pos = {x = 8, y = 12},
+    pos = { x = 8, y = 12 },
     cost = 6,
     rarity = 2,
     add_to_deck = function(self, card, from_debuff)
-        G.GAME.planet_replace = G.GAME.planet_replace and (G.GAME.planet_replace + card.ability.extra.chance) or card.ability.extra.chance 
+        G.GAME.planet_replace = G.GAME.planet_replace and (G.GAME.planet_replace + card.ability.extra.chance) or
+        card.ability.extra.chance
     end,
     remove_from_deck = function(self, card, from_debuff)
         G.GAME.planet_replace = G.GAME.planet_replace and (G.GAME.planet_replace - card.ability.extra.chance) or 0
@@ -453,16 +452,17 @@ SMODS.Joker {
             credit("triangle_snack")
         }
     },
-    config = {extra = {chance = 10}},
+    config = { extra = { chance = 10 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.chance}}
+        return { vars = { card.ability.extra.chance } }
     end,
     atlas = "main",
-    pos = {x = 10, y = 12},
+    pos = { x = 10, y = 12 },
     cost = 6,
     rarity = 2,
     add_to_deck = function(self, card, from_debuff)
-        G.GAME.tarot_replace = G.GAME.tarot_replace and (G.GAME.tarot_replace + card.ability.extra.chance) or card.ability.extra.chance 
+        G.GAME.tarot_replace = G.GAME.tarot_replace and (G.GAME.tarot_replace + card.ability.extra.chance) or
+        card.ability.extra.chance
     end,
     remove_from_deck = function(self, card, from_debuff)
         G.GAME.tarot_replace = G.GAME.tarot_replace and (G.GAME.tarot_replace - card.ability.extra.chance) or 0
@@ -479,16 +479,17 @@ SMODS.Joker {
             credit("triangle_snack")
         }
     },
-    config = {extra = {chance = 5}},
+    config = { extra = { chance = 5 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.chance}}
+        return { vars = { card.ability.extra.chance } }
     end,
     atlas = "main",
-    pos = {x = 9, y = 12},
+    pos = { x = 9, y = 12 },
     cost = 6,
     rarity = 2,
     add_to_deck = function(self, card, from_debuff)
-        G.GAME.spectral_replace = G.GAME.spectral_replace and (G.GAME.spectral_replace + card.ability.extra.chance) or card.ability.extra.chance 
+        G.GAME.spectral_replace = G.GAME.spectral_replace and (G.GAME.spectral_replace + card.ability.extra.chance) or
+        card.ability.extra.chance
     end,
     remove_from_deck = function(self, card, from_debuff)
         G.GAME.spectral_replace = G.GAME.spectral_replace and (G.GAME.spectral_replace - card.ability.extra.chance) or 0
@@ -502,53 +503,37 @@ SMODS.Joker {
     loc_txt = {
         name = "Femtanyl",
         text = {
-            "Prevents death at the cost of {C:attention}#1#{} Joker slot",
-            "Return lost Joker slot after {C:attention}#2#{} round(s)",
-            "Increase round timer by {C:attention}#3#{} and earn {C:money}$#4#{} when death is prevented",
-            "{C:inactive}Dying again or removing this Joker while the timer {}",
-            "{C:inactive}is active will result in not recovering a Joker slot{}",
-            "{C:inactive}(Does not work below 3 Joker slots){}",
-            
+            "Prevent death at the cost of {C:attention}#1#{} Joker slot",
+            "Restore {C:attention}#1#{} taken joker slot when {C:attention}boss{} defeated on an odd ante",
+            "{C:inactive}(Does not work below {C:attention}#2#{C:inactive} Joker slots)",
             quote("femtanyl"),
             credit("Scraptake")
         }
     },
-    config = { extra = { cost = 1, increase = 1, timer = 0, timerbase = 2, money = 10 } },
+    config = { extra = {cost = 1, req = 4, taken = 0} },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.cost, card.ability.extra.timerbase, card.ability.extra.increase, card.ability.extra.money}}
+        return { vars = {card.ability.extra.cost, card.ability.extra.req} }
     end,
     pools = { ["Kitties"] = true },
     rarity = 3,
     atlas = "main",
-    pos = {x=0, y=5},
-    soul_pos = {x=1, y=5},
+    pos = { x = 0, y = 5 },
+    soul_pos = { x = 1, y = 5 },
     cost = 6,
+    immutable = true,
     calculate = function(self, card, context)
-
-        if (context.end_of_round and not context.blueprint and not context.individual) then
-            card.ability.extra.timer = card.ability.extra.timer - 1
-
-            if (card.ability.extra.timer == 0) then
-                G.jokers:change_size(card.ability.extra.cost, false)
-            end
+        if context.end_of_round and context.game_over and G.jokers.config.card_limit >= card.ability.extra.req then
+            G.jokers:change_size(-card.ability.extra.cost)
+            card.ability.extra.taken = card.ability.extra.taken + card.ability.extra.cost
+            return {
+                message = localize('k_saved_ex'),
+                saved = true,
+                colour = G.C.RED
+            }
+        elseif context.end_of_round and not context.game_over and G.GAME.blind.boss and (G.GAME.round_resets.ante % 2 == 1) and card.ability.extra.taken > 0 then
+            G.jokers:change_size(card.ability.extra.cost)
+            card.ability.extra.taken = card.ability.extra.taken - card.ability.extra.cost
         end
-
-        if (context.end_of_round and not context.blueprint and context.game_over) then
-
-            local slots = G.jokers.config.card_limit - card.ability.extra.cost
-            G.jokers:change_size(-card.ability.extra.cost, false)
-            card.ability.extra.timer = card.ability.extra.timerbase
-            card.ability.extra.timerbase = card.ability.extra.timerbase + card.ability.extra.increase
-            
-
-            if (slots >= 3) then
-                ease_dollars(card.ability.extra.money)
-                return {saved = true}
-            end
-
-        end
-
-        
     end
 }
 
@@ -562,14 +547,16 @@ SMODS.Joker {
             credit("Grahkon")
         }
     },
-    config = { extra = { inc = 1 }},
+    config = { extra = { inc = 1 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {
-            card.ability.extra.inc
-        }}
+        return {
+            vars = {
+                card.ability.extra.inc
+            }
+        }
     end,
     atlas = "main",
-    pos = {x = 10, y = 4},
+    pos = { x = 10, y = 4 },
     cost = 7,
     rarity = 3,
     calculate = function(self, card, context)
@@ -591,40 +578,84 @@ SMODS.Joker {
             "{C:attention}consecutive{} hand played larger than blind size",
             "{C:inactive}(Does not reset on Boss Blinds){}",
             "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult){}",
-             
+
             credit("Scraptake")
         }
     },
-    config = { extra = {cur = 1, gain = 0.3} },
-    loc_vars = function(self,info_queue, card)
-        return {vars = {card.ability.extra.gain, card.ability.extra.cur}}
+    config = { extra = { cur = 1, gain = 0.3 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gain, card.ability.extra.cur } }
     end,
     rarity = 3,
     atlas = "main",
-    pos = {x=4, y=13},
+    pos = { x = 4, y = 13 },
     cost = 8,
     blueprintcompat = true,
 
 
     calculate = function(self, card, context)
- 
         -- is a little fucked with The Tax boss blind but idk how to fix, help
-        if context.after then     
+        if context.after then
             if hand_chips * mult > G.GAME.blind.chips then
                 card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
                 quick_card_speak(card, "Upgraded!")
             else
                 if not G.GAME.blind.boss then
-                card.ability.extra.cur = 1
-                quick_card_speak(card, "Reset!")
+                    card.ability.extra.cur = 1
+                    quick_card_speak(card, "Reset!")
                 end
             end
         end
-        
-        if context.joker_main or context.forcetrigger then
-            return {xmult = card.ability.extra.cur}
-        end
 
+        if context.joker_main or context.forcetrigger then
+            return { xmult = card.ability.extra.cur }
+        end
+    end,
+
+}
+
+SMODS.Joker {
+    key = "leopard_print",
+    loc_txt = {
+        name = "Leopard Print",
+        text = {
+            "Retrigger all {C:attention}Kitty{} Jokers once",
+            "for each {C:attention}Kitty{} Joker owned",
+            credit("mailingway")
+        }
+    },
+    config = { extra = {} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {} }
+    end,
+    rarity = 3,
+    atlas = "main",
+    pos = { x = 12, y = 4 },
+    cost = 8,
+    blueprintcompat = true,
+
+
+    calculate = function(self, card, context)
+        if context.retrigger_joker_check then
+            local count = 0
+            for _, joker in ipairs(G.jokers.cards) do
+                if Cryptid.safe_get(joker.config.center, "pools", "Kitties") then
+                    count = count + 1
+                end
+            end
+
+            return {
+                repetitions = count
+            }
+        end
+    end,
+    in_pool = function(self, args)
+        for i, joker in ipairs(G.jokers.cards) do
+            if Cryptid.safe_get(joker.config.center, "pools", "Kitties") then
+                return true
+            end
+        end
+        return false
     end,
 
 }

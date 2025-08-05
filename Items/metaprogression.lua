@@ -40,13 +40,15 @@ function Game:update(dt)
     updhook(self, dt)
     vallkarri.update_meta_text()
 
-    if G and G.GAME then
-        G.GAME.vallkarri = { text_display = vallkarri.update_meta_text() }
+    if G and G.GAME and G.HUD_META and G.HUD_META:get_UIE_by_ID("buff") then
+        update_meta_text("buff", "(^" .. number_format(vallkarri.get_base_xp_exponent()) .. " XP)")
     end
 
     if G.PROFILES[G.SETTINGS.profile] and G.PROFILES[G.SETTINGS.profile].valk_cur_lvl and type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "table" then
         G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_number(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
     end
+
+    
 end
 
 function create_UIBox_metaprog()
@@ -71,6 +73,8 @@ function create_UIBox_metaprog()
                                 nodes = {
                                     { n = G.UIT.T, config = { text = "Level ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
                                     { n = G.UIT.T, config = { id = "curlvl_text", text = number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl), colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "that_fucking_space_that_i_hate", text = "  ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "buff", text = "(^1 XP)", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.8, shadow = true, prev_value = "nil" } },
                                 }
                             },
                             {
@@ -133,12 +137,10 @@ function Game:start_run(args)
         config = { align = ('cli'), offset = { x = 19, y = -2.25 }, major = G.ROOM_ATTACH }
     }
 
-    if xp_change then
-        self.HUD_XP_CHANGE = UIBox {
-            definition = create_UIBox_useless_bullshit(),
-            config = { align = ('cli'), offset = { x = 19.1, y = -1.65 }, major = G.ROOM_ATTACH }
-        }
-    end
+    -- self.HUD_XP_CHANGE = UIBox {
+    --     definition = create_UIBox_useless_bullshit(),
+    --     config = { align = ('cli'), offset = { x = 19.1, y = -1.65 }, major = G.ROOM_ATTACH }
+    -- }
 
     if not args.savetext then
         -- DO ON-START STUFF HERE
@@ -152,17 +154,27 @@ function Game:start_run(args)
             G.GAME.hands[name].mult = G.GAME.hands[name].mult + (G.GAME.hands[name].l_mult * add_levels)
         end
     end
+
+    short_update_meta()
 end
-
--- put functions
--- defaults to + if no operator given
-vallkarri.xp_modifiers = {
-
-}
 
 vallkarri.run_xp_modifiers = {
 
 }
+
+---Add an xp modifier to the run, which can optionally be removed upon a destruction condition
+---@param func function
+---@param storage table
+---@param destruction function
+function vallkarri.add_xp_modifier(func, storage, destruction)
+    
+    vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = {run = func, store = storage or {}, dest = destruction}
+
+end
+
+function vallkarri.get_base_xp_exponent()
+    return (G.GAME.stake ^ 0.25) * (1+(G.GAME.round/20))
+end
 
 vallkarri.level_cap = 1e300 --have fun :)
 
@@ -205,21 +217,14 @@ function vallkarri.mod_level(amount, from_xp)
     end
 end
 
-function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
+function vallkarri.mod_xp(mod, relevant_card)
     refresh_metaprog()
-    if not operator then
-        operator = "+"
-    end
-
-    if not level_multiplier then
-        level_multiplier = 1
-    end
 
 
     if not Talisman or (Talisman and not Talisman.config_file.disable_anims) then
         G.E_MANAGER:add_event(Event({
             func = function()
-                vallkarri.animationless_mod_xp(mod, operator, level_multiplier)
+                vallkarri.animationless_mod_xp(mod)
 
                 G.HUD_META:get_UIE_by_ID("curxp_text"):juice_up()
 
@@ -241,44 +246,41 @@ function vallkarri.mod_xp(mod, operator, level_multiplier, relevant_card)
             end,
         }))
     else
-        vallkarri.animationless_mod_xp(mod, operator, level_multiplier)
+        vallkarri.animationless_mod_xp(mod)
     end
 end
 
-function vallkarri.animationless_mod_xp(mod, operator, level_multiplier)
+function vallkarri.animationless_mod_xp(mod)
     -- stake mods
-    mod = mod ^ (G.GAME.stake / 4)
+    mod = mod ^ vallkarri.get_base_xp_exponent()
 
-
-    for _, func in ipairs(vallkarri.xp_modifiers) do
-        mod = func(mod)
+    local mfd = {}
+    for i, tab in ipairs(vallkarri.run_xp_modifiers) do
+        -- tab = {run = func, store = storage, dest = destruction}
+        local m, ret = tab.run(mod, tab.store)
+        mod = m
+        if ret then
+            tab.store = ret
+        end
+        if tab.dest and tab.dest(tab.store) then
+            table.insert(mfd, tab)
+        end
     end
 
-    for _, func in ipairs(vallkarri.run_xp_modifiers) do
-        mod = func(mod)
+    for _,val in pairs(mfd) do
+        local i = find_index(val, vallkarri.run_xp_modifiers)
+        if i then
+            table.remove(vallkarri.run_xp_modifiers, i)
+        end
     end
 
-    if operator == "+" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp + mod
-    end
-
-    if operator == "*" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp * mod
-    end
-
-    if operator == "^" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp ^ mod
-    end
-
-    if operator == "^^" and Talisman then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp:tetrate(mod)
-    end
+    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp + mod
     short_update_meta()
 
 
 
     while to_big(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) >= to_big(G.PROFILES[G.SETTINGS.profile].valk_max_xp) do
-        vallkarri.mod_level(level_multiplier or 1, true)
+        vallkarri.mod_level(1, true)
     end
 end
 
@@ -296,9 +298,9 @@ end
 
 local easemoneyhook = ease_dollars
 function ease_dollars(mod, x)
-    local add_money_per = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 2) * 0.002
+    local multiplier = 1+(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 100)
 
-    easemoneyhook(mod + add_money_per, x)
+    easemoneyhook(mod * multiplier, x)
 
     if to_big(mod) < to_big(0) then
         vallkarri.mod_xp(math.min(-mod, G.PROFILES[G.SETTINGS.profile].valk_max_xp * 0.1))
@@ -368,7 +370,7 @@ function get_blind_amount(ante)
     -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
 
-local amt = 4
+local amt = 2
 SMODS.Voucher {
     key = "alphaboosterator",
     atlas = "main",
@@ -393,9 +395,7 @@ SMODS.Voucher {
     end,
 
     redeem = function(self, card)
-        vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
-            return n * card.ability.extra.xp
-        end
+        vallkarri.add_xp_modifier(function(x,t) return x*card.ability.extra.xp end)
     end,
 
 
@@ -427,43 +427,8 @@ SMODS.Voucher {
     end,
 
     redeem = function(self, card)
-        vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
-            return n ^ card.ability.extra.xp
-        end
+        vallkarri.add_xp_modifier(function(x,t) return x^card.ability.extra.xp end)
     end,
-
-
-
-}
-
-SMODS.Voucher {
-    key = "gammaboosterator",
-    atlas = "main",
-    pos = { x = 4, y = 7 },
-    loc_txt = {
-        name = "Gamma XP Boosterator",
-        text = {
-            "{X:dark_edition,C:white}^^#1#{} to all XP gain",
-            "{C:inactive}(XP Boosterators apply in the order they were obtained)",
-        }
-    },
-    no_doe = true,
-    config = { extra = { xp = 1.09 } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xp, card.ability.extra.gain } }
-    end,
-
-    in_pool = function()
-        return G.GAME.round_resets.ante > amt * (2 ^ 3)
-    end,
-
-    redeem = function(self, card)
-        vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = function(n)
-            return to_big(n):tetrate(card.ability.extra.xp)
-        end
-    end,
-    dependencies = {"Talisman"},
 
 
 
