@@ -646,3 +646,15 @@ function Card:remove_from_deck(...)
     end
 
 end
+
+-- local original_cost = Card.set_cost
+-- function Card:set_cost()
+--     original_cost(self)
+    
+--     local new = to_number(math.min(math.max(self.cost * math.ceil(G.GAME.dollars^0.25) * 0.5, self.cost), 2^1000))
+--     local diff = new - self.cost
+--     print(self.config.center.key .. " created, diff: " .. diff)
+--     self.cost = new
+-- end
+
+-- i'll get back to this one day

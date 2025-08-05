@@ -203,6 +203,7 @@ SMODS.Joker {
     no_doe = true,
     cost = 50,
     demicoloncompat = true,
+    pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
 
         

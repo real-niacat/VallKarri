@@ -633,7 +633,7 @@ SMODS.Joker {
     pos = { x = 12, y = 4 },
     cost = 8,
     blueprintcompat = true,
-
+    pools = { ["Kitties"] = true },
 
     calculate = function(self, card, context)
         if context.retrigger_joker_check then
