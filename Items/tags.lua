@@ -8,7 +8,7 @@ SMODS.Atlas {
 SMODS.ObjectType({
 	object_type = "ObjectType",
 	key = "Kitties",
-	default = "j_valk_femtanyl",
+	default = "j_valk_amber",
 	cards = {},
 	inject = function(self)
 		SMODS.ObjectType.inject(self)
@@ -26,7 +26,7 @@ SMODS.Tag {
 			credit("Scraptake")
 		}
 	},
-    min_ante = 12,
+    min_ante = 2,
     
     apply = function(self, tag, context)
         if context.type == "store_joker_create" then

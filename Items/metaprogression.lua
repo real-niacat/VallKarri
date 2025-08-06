@@ -298,9 +298,14 @@ end
 
 local easemoneyhook = ease_dollars
 function ease_dollars(mod, x)
-    local multiplier = 1+(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 100)
+    
 
-    easemoneyhook(mod * multiplier, x)
+    if to_big(mod) > to_big(0) then
+        local multiplier = 1+(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 100)
+        easemoneyhook(mod * multiplier, x)
+    else
+        easemoneyhook(mod, x)
+    end
 
     if to_big(mod) < to_big(0) then
         vallkarri.mod_xp(math.min(-mod, G.PROFILES[G.SETTINGS.profile].valk_max_xp * 0.1))
