@@ -687,3 +687,44 @@ SMODS.Joker {
         end
     end
 }
+
+SMODS.Joker {
+    key = "familiarface",
+    loc_txt = {
+        name = "Familiar Face",
+        text = {
+            "Scored {C:attention}9s{} give {X:mult,C:white}X#1#{} Mult",
+            "Scored {C:attention}Light{} cards give {X:chips,C:white}X#2#{} Chips",
+            "{C:inactive,s:0.7}hm, where have i seen this face before?",
+            credit("aduckted")
+        }
+    },
+    config = { extra = { xmult = 1.09, xchips = 2.9 } },
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS.m_cry_light
+        return { vars = { card.ability.extra.xmult, card.ability.extra.xchips } }
+    end,
+    rarity = 3,
+    atlas = "main",
+    pos = {x=11, y=8},
+    cost = 15,
+    demicoloncompat = true,
+    pools = { ["Kitties"] = true },
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
+
+            local returntable = {}
+            if SMODS.has_enhancement(context.other_card, "m_cry_light") then
+                returntable.xchips = card.ability.extra.xchips
+            end
+            if context.other_card:get_id() == 9 then
+                returntable.xmult = card.ability.extra.xmult
+            end
+
+            return returntable
+
+        end
+    end
+}
+
+-- {x=10, y=8}
