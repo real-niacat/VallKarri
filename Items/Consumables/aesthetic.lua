@@ -46,6 +46,7 @@ local function key_to_name(str)
 end
 
 local aesthetic_cards = {
+
     { pos = { x = 0, y = 0 }, key = "e_foil", name = "frutiger_aero" },
     { pos = { x = 1, y = 0 }, key = "e_holo", name = "synthwave" },
     { pos = { x = 2, y = 0 }, key = "e_polychrome", name = "chromecore" },
@@ -60,7 +61,6 @@ local aesthetic_cards = {
     { pos = { x = 3, y = 2 }, key = "e_cry_astral", name = "raygun_gothic" },
     { pos = { x = 4, y = 2 }, key = "e_cry_m", name = "metalheart" },
 }
-
 
 for _, edit in ipairs(aesthetic_cards) do
     SMODS.Consumable {
@@ -131,9 +131,9 @@ SMODS.Consumable {
     use = function(self, card, area, copier)
         for i, joker in ipairs(G.jokers.cards) do
             if joker.edition then
-                joker:set_edition("e_base")
                 G.P_CENTERS[joker.edition.key].old_weight = G.P_CENTERS[joker.edition.key].weight
                 G.P_CENTERS[joker.edition.key].weight = 0
+                joker:set_edition("e_base")
             end
         end
 
