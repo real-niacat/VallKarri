@@ -259,6 +259,7 @@ SMODS.Joker {
     soul_pos = {x = 9, y = 5, extra = {x = 8, y = 5}},
     cost = 50,
     demicoloncompat = true,
+    pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         
         -- vallkarri.librat_vals.blue, vallkarri.librat_vals.red
@@ -292,7 +293,7 @@ SMODS.Joker {
     pos = {x = 7, y = 0},
     soul_pos = {x = 9, y = 0, extra = {x = 8, y = 0}},
     cost = 50,
-
+    pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.before then
             ease_dollars(-G.GAME.dollars)

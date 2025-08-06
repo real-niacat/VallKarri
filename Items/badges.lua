@@ -57,15 +57,10 @@ end
 
 function reload_badges()
     valk_badgecards = {}
-
-    
-
-    
-
     for key,card in pairs(G.P_CENTERS) do
         for name,badge in pairs(valk_badgetypes) do
             
-            if badge.func(card) then
+            if badge.func(card) and ((badge.excessive and vallkarri.config.excessive_badges) or not badge.excessive) then
                 valk_badgecards[#valk_badgecards+1] = {card = key, badge = valk_badgetypes[name]}
             end
 
@@ -112,7 +107,8 @@ valk_badgetypes = {
         text_color = G.C.WHITE,
         func = function(center)
             return center.no_grc
-        end
+        end,
+        excessive = true,
     },
     no_doe = {
         text = "Equilibrium-Proof",
@@ -122,13 +118,14 @@ valk_badgetypes = {
             return center.no_doe
         end
     },
-    no_doe = {
-        text = "Unremovable",
-        color = G.C.DARK_EDITION,
-        text_color = G.C.WHITE,
+    kitty = {
+        text = "Kitty",
+        color = HEX("94BAFF"),
+        text_color = G.C.UI.TEXT_LIGHT,
         func = function(center)
-            return center.immortal
-        end
+            return Cryptid.safe_get(center, "pools", "Kitties")
+        end,
+        excessive = true,
     }
 }
 

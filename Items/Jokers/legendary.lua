@@ -331,6 +331,7 @@ SMODS.Joker {
     cost = 20,
     immutable = false,
     blueprint_compat = false,
+    pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             ease_dollars(card.ability.extra.meow)
