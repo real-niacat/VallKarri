@@ -72,7 +72,8 @@ SMODS.Joker {
         name = "Homely Joker",
         text = {
             "{C:mult}+#1#{} Mult if played hand",
-            "contains a {C:attention}Full Mansion{}"
+            "contains a {C:attention}Full Mansion{}",
+            credit("Pangaea")
         }
     },
     config = {extra = {mult = 60}},
@@ -106,7 +107,8 @@ SMODS.Joker {
         name = "Roomy Joker",
         text = {
             "{C:chips}+#1#{} Chips if played hand",
-            "contains a {C:attention}Full Mansion{}"
+            "contains a {C:attention}Full Mansion{}",
+            credit("Pangaea")
         }
     },
     config = {extra = {chips = 600}},
@@ -140,7 +142,8 @@ SMODS.Joker {
         name = "Homely Joker",
         text = {
             "{X:mult,C:white}X#1#{} Mult if played hand",
-            "contains a {C:attention}Full Mansion{}"
+            "contains a {C:attention}Full Mansion{}",
+            credit("Pangaea")
         }
     },
     config = {extra = {mult = 9}},
@@ -177,6 +180,7 @@ SMODS.Consumable {
             "{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
             "{C:attention}#2#{}",
             "{C:mult}+#3#{} Mult and {C:chips}+#4#{} Chips",
+            credit("mailingway")
         }
     },
     config = { extra = {handtype = "valk_fullmansion"}},
