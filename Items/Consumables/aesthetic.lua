@@ -8,7 +8,7 @@ function loc_colour(_c, _default)
     return lc(_c, _default)
 end
 
-G.C.VALK_CATACLYSM = aes_colour
+G.C.VALK_AESTHETIC = aes_colour
 
 SMODS.Atlas {
     key = "aes",
@@ -45,80 +45,52 @@ local function key_to_name(str)
     return str
 end
 
--- frutiger - e_foil
--- synth - e_holo
--- chrome - e_polychrome
--- vapor - e_negative
--- glitch - e_cry_glitched
--- antique - e_cry_mosaic
--- weird - e_cry_oversat
--- net.art - e_cry_glass
--- vector - e_cry_gold
--- liminal - e_cry_blur
--- analog - e_cry_noisy
--- raygun - e_cry_astral
--- metalheart - e_cry_m
 local aesthetic_cards = {
-    frutiger_aero = "e_foil",
-    synthwave = "e_holo",
-    chromecore = "e_polychrome",
-    vaporwave = "e_negative",
-    glitch = "e_cry_glitched",
-    antique = "e_cry_mosaic",
-    weirdcore = "e_cry_oversat",
-    ["net__art"] = "e_cry_glass",
-    vectorheart = "e_cry_gold",
-    liminality = "e_cry_blur",
-    analog_horror = "e_cry_noisy",
-    raygun_gothic = "e_cry_astral",
-    metalheart = "e_cry_m"
+    { pos = { x = 0, y = 0 }, key = "e_foil", name = "frutiger_aero" },
+    { pos = { x = 1, y = 0 }, key = "e_holo", name = "synthwave" },
+    { pos = { x = 2, y = 0 }, key = "e_polychrome", name = "chromecore" },
+    { pos = { x = 3, y = 0 }, key = "e_negative", name = "vaporwave" },
+    { pos = { x = 0, y = 1 }, key = "e_cry_glitched", name = "glitch" },
+    { pos = { x = 1, y = 1 }, key = "e_cry_mosaic", name = "antique" },
+    { pos = { x = 2, y = 1 }, key = "e_cry_oversat", name = "weirdcore" },
+    { pos = { x = 3, y = 1 }, key = "e_cry_glass", name = "net__art" },
+    { pos = { x = 0, y = 2 }, key = "e_cry_gold", name = "vectorheart" },
+    { pos = { x = 1, y = 2 }, key = "e_cry_blur", name = "liminality" },
+    { pos = { x = 2, y = 2 }, key = "e_cry_noisy", name = "analog_horror" },
+    { pos = { x = 3, y = 2 }, key = "e_cry_astral", name = "raygun_gothic" },
+    { pos = { x = 4, y = 2 }, key = "e_cry_m", name = "metalheart" },
 }
 
-local aesthetic_positions = {
-    frutiger_aero = { x = 0, y = 0 },
-    synthwave = { x = 1, y = 0 },
-    chromecore = { x = 2, y = 0 },
-    vaporwave = { x = 3, y = 0 },
-    glitch = { x = 0, y = 1 },
-    antique = { x = 1, y = 1 },
-    weirdcore = { x = 2, y = 1 },
-    ["net__art"] = { x = 3, y = 1 },
-    vectorheart = { x = 0, y = 2 },
-    liminality = { x = 1, y = 2 },
-    analog_horror = { x = 2, y = 2 },
-    raygun_gothic = { x = 3, y = 2 },
-    metalheart = { x = 4, y = 2 },
-}
 
-for name, edit in pairs(aesthetic_cards) do
+for _, edit in ipairs(aesthetic_cards) do
     SMODS.Consumable {
         set = "Aesthetic",
-        key = name,
+        key = edit.name,
         loc_txt = {
-            name = key_to_name(name),
+            name = key_to_name(edit.name),
             text = {
                 "Enhance up to {C:attention}#1#{} selected",
                 "Joker with {C:attention}#2#{}",
                 credit("Pangaea"),
             }
         },
-        pos = aesthetic_positions[name],
+        pos = edit.pos,
         atlas = "aes",
-
-        config = { extra = { select = 1, edition = edit } },
-
+        config = { extra = { select = 1, edition = edit.key } },
         loc_vars = function(self, info_queue, card)
-            return { vars = { card.ability.extra.select, localize({ type = "name_text", set = "Edition", key = card.ability.extra.edition }) } }
+            info_queue[#info_queue + 1] = G.P_CENTERS[edit.key]
+            return { vars = { 
+                card.ability.extra.select,
+                localize({ type = "name_text", set = "Edition", key = card.ability.extra.edition })
+            } }
         end,
         can_use = function(self, card)
             local sed = true
-
             for i, jkr in ipairs(G.jokers.highlighted) do
                 if jkr.edition then
                     sed = false
                 end
             end
-
             return (#G.jokers.highlighted > 0) and (#G.jokers.highlighted <= card.ability.extra.select) and sed
         end,
         use = function(self, card, area, copier)
@@ -140,7 +112,7 @@ SMODS.Consumable {
             credit("Pangaea"),
         }
     },
-    pos = {x=4,y=0},
+    pos = { x = 4, y = 0 },
     atlas = "aes",
 
     config = { extra = { mult = 10 } },
@@ -149,22 +121,19 @@ SMODS.Consumable {
         return { vars = { card.ability.extra.mult } }
     end,
     can_use = function(self, card)
-
         for i, jkr in ipairs(G.jokers.cards) do
             if jkr.edition then
-                return true 
+                return true
             end
         end
         return false
     end,
     use = function(self, card, area, copier)
-        for i,joker in ipairs(G.jokers.cards) do
+        for i, joker in ipairs(G.jokers.cards) do
             if joker.edition then
-
                 joker:set_edition("e_base")
                 G.P_CENTERS[joker.edition.key].old_weight = G.P_CENTERS[joker.edition.key].weight
-                G.P_CENTERS[joker.edition.key].weight = 0 
-
+                G.P_CENTERS[joker.edition.key].weight = 0
             end
         end
 
@@ -173,7 +142,7 @@ SMODS.Consumable {
     in_pool = function()
         for i, jkr in ipairs(G.jokers.cards) do
             if jkr.edition then
-                return true 
+                return true
             end
         end
         return false
