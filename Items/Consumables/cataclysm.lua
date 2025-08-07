@@ -888,7 +888,6 @@ SMODS.Consumable {
         return false
     end,
 }
-
 SMODS.Booster {
     key = "revelations",
     atlas = "cata",
@@ -919,7 +918,7 @@ SMODS.Booster {
         ease_background_colour(G.C.VALK_CATACLYSM)
         return create_card("Cataclysm", G.pack_cards, nil, nil, true, nil, nil, "valk_pack_of_revelations")
 
-
+        
     end,
 
     in_pool = function()

@@ -91,7 +91,8 @@ valk_badgetypes = {
         text_color = G.C.WHITE,
         func = function(center)
             return (center.lore)
-        end
+        end,
+        excessive = true,
     },
     immutable = {
         text = "Immutable",
