@@ -678,14 +678,3 @@ function add_random_tag(seed)
     add_tag(Tag(selected_tag))
 
 end
-
-function get_random_center()
-
-    local c = {}
-    for _,center in pairs(G.P_CENTERS) do
-        c[#c+1] = center
-    end
-
-    return c[math.random(1,#c)]
-
-end
