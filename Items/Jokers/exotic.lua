@@ -347,31 +347,53 @@ SMODS.Joker {
     end,
 }
 
--- SMODS.Joker {
---     key = "astracola",
---     loc_txt = {
---         name = "Astracola",
---         text = {
---             "",
---             credit("Pangaea")
---         }
---     },
---     config = { extra = {  } },
---     loc_vars = function(self, info_queue, card)
---         return {vars = {  } }
---     end,
---     rarity = "cry_exotic",
---     atlas = "main",
---     pos = {x = 6, y = 12},
---     soul_pos = {x = 6, y = 13, extra = {x = 6, y = 14}},
---     cost = 50,
-
---     calculate = function(self, card, context)
+SMODS.Joker {
+    key = "astracola",
+    loc_txt = {
+        name = "Astracola",
+        text = {
+            "Create {C:attention}#1# Meteor Tags{} when blind skipped",
+            "Increase by {C:attention}#2#{} when planet card used",
+            "At {C:attention}#3#{}, reset back to {C:attention}#4#{} and",
+            "multiply Chips and Mult per level on all hands by {C:attention}X#5#{}",
+            credit("Pangaea")
+        }
+    },
+    config = { extra = { tags = 2, tags_base = 2, inc = 1, max = 10, mult = 5 } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {  } }
+    end,
+    rarity = "cry_exotic",
+    atlas = "main",
+    pos = {x = 6, y = 12},
+    soul_pos = {x = 6, y = 13, extra = {x = 6, y = 14}},
+    cost = 50,
+    immutable = true,
+    calculate = function(self, card, context)
         
-        
+        if context.skip_blind then
 
---     end,
--- }
+            for i=1,card.ability.extra.tags do
+                add_tag(Tag("tag_meteor"))
+            end
+
+        end
+
+        if context.using_consumeable and context.consumeable and context.consumeable.config.center.set == "Planet" then
+            card.ability.extra.tags = card.ability.extra.tags + card.ability.extra.inc
+            quick_card_speak(card, localize("k_upgrade_ex"))
+            if card.ability.extra.tags > card.ability.extra.max then
+                card.ability.extra.tags = card.ability.extra.tags_base
+                quick_card_speak(card, localize("k_reset"))
+                for name,_ in pairs(G.GAME.hands) do
+                    G.GAME.hands[name].l_chips = G.GAME.hands[name].l_chips * card.ability.extra.mult
+                    G.GAME.hands[name].l_mult = G.GAME.hands[name].l_mult * card.ability.extra.mult 
+                end
+            end
+        end
+
+    end,
+}
 
 -- SMODS.Joker {
 --     key = "phylactequila",
