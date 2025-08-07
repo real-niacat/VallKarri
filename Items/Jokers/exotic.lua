@@ -361,7 +361,7 @@ SMODS.Joker {
     },
     config = { extra = { tags = 2, tags_base = 2, inc = 1, max = 10, mult = 5 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {  } }
+        return {vars = { card.ability.extra.tags, card.ability.extra.inc, card.ability.extra.max, card.ability.extra.tags_base, card.ability.extra.mult } }
     end,
     rarity = "cry_exotic",
     atlas = "main",
