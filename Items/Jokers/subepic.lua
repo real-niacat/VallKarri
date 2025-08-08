@@ -636,7 +636,7 @@ SMODS.Joker {
     pools = { ["Kitties"] = true },
 
     calculate = function(self, card, context)
-        if context.retrigger_joker_check then
+        if context.retrigger_joker_check and Cryptid.safe_get(context.other_card.config.center, "pools", "Kitties") then
             local count = 0
             for _, joker in ipairs(G.jokers.cards) do
                 if Cryptid.safe_get(joker.config.center, "pools", "Kitties") then

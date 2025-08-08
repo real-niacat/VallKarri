@@ -353,13 +353,13 @@ SMODS.Joker {
         name = "Astracola",
         text = {
             "Create {C:attention}#1# Meteor Tags{} when blind skipped",
-            "Increase by {C:attention}#2#{} when planet card used",
-            "At {C:attention}#3#{}, reset back to {C:attention}#4#{} and",
-            "multiply Chips and Mult per level on all hands by {C:attention}X#5#{}",
+            "Increase tags by {C:attention}#2#{} when a {C:planet}Planet{} card is used",
+            "At {C:attention}#3#{} tags, reset back to {C:attention}#4#{} and increase",
+            "Chips and Mult per level on all hands by {C:attention}X#5#{}",
             credit("Pangaea")
         }
     },
-    config = { extra = { tags = 2, tags_base = 2, inc = 1, max = 10, mult = 5 } },
+    config = { extra = { tags = 2, tags_base = 2, inc = 1, max = 5, mult = 5 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_TAGS.tag_meteor
         return {vars = { card.ability.extra.tags, card.ability.extra.inc, card.ability.extra.max, card.ability.extra.tags_base, card.ability.extra.mult } }
