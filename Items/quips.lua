@@ -1,4 +1,4 @@
-vallkarri.quip_weight = 10000
+vallkarri.quip_weight = nil
 local quips = {
     lose = {
         ["j_valk_lily"] = {
@@ -9,7 +9,8 @@ local quips = {
             { "you woke me up for this?",    "..come on" },
             { "ugh, i feel weak" },
             { "this is what you",            "wanted to show me?" },
-            { "god, give me the controller " }
+            { "god, give me the controller " },
+            { "you need to be killed" },
         },
         ["j_valk_illena"] = {
             { "the magic illena-ball says:", "you lose! maybe next time?" },
@@ -33,11 +34,15 @@ local quips = {
 
 }
 
+local iter = 0
 for name, character in pairs(quips.lose) do
+    
     for i, txt in ipairs(character) do
+        iter = iter + 1
+        -- print("initializing " .. tostring(txt))
         SMODS.JimboQuip {
             type = "loss",
-            key = "lq_" .. name,
+            key = "lq_" .. iter,
             extra = { center = name },
             loc_txt = txt,
             weight = vallkarri.quip_weight --sorry, but i want you to see **my** quips!
@@ -47,9 +52,11 @@ end
 
 for name, character in pairs(quips.win) do
     for i, txt in ipairs(character) do
+        iter = iter + 1
+        -- print("initializing " .. tostring(txt))
         SMODS.JimboQuip {
             type = "win",
-            key = "wq_" .. name,
+            key = "wq_" .. iter,
             extra = { center = name },
             loc_txt = txt,
             weight = vallkarri.quip_weight

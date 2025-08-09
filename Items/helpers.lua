@@ -1,25 +1,23 @@
 function credit(artist)
-	return ('{C:dark_edition,s:0.6,E:2}Art by : ' .. artist .. '{}')
+    return ('{C:dark_edition,s:0.6,E:2}Art by : ' .. artist .. '{}')
 end
 
 function concept(creator)
-	-- return ('{C:dark_edition,s:0.6,E:2}Idea by : ' .. creator .. '{}')
+    -- return ('{C:dark_edition,s:0.6,E:2}Idea by : ' .. creator .. '{}')
     return ""
 end
 
 short_sprites = {
-    placeholder = {x=0,y=0},
+    placeholder = { x = 0, y = 0 },
 
-    halo = {x=2, y=2}
+    halo = { x = 2, y = 2 }
 }
 
 function days_since(year, month, day)
-
     local now = os.date("*t")
-    local then_time = os.time({year=year, month=month, day=day, hour=0})
+    local then_time = os.time({ year = year, month = month, day = day, hour = 0 })
     local diff = os.difftime(os.time(now), then_time)
     return math.floor(diff / (60 * 60 * 24))
-
 end
 
 local old_indiv_effect = SMODS.calculate_individual_effect
@@ -64,62 +62,62 @@ function quote(character)
     }
 
     return ('{C:enhanced,s:0.7,E:1}' .. quotes[character] .. '{}')
-
 end
 
 function chardesc(text)
-
     return ('{C:inactive,s:0.7,E:1}' .. text .. '{}')
-
 end
 
 function times_used(key)
-    for name,card in pairs(G.GAME.consumeable_usage) do
+    for name, card in pairs(G.GAME.consumeable_usage) do
         if name == key then return card.count end
     end
     return 0
 end
 
-
 -- simplified code from jenlib
 
 function basic_text_announce(txt, duration, size, col, snd, sndpitch, sndvol)
-	G.E_MANAGER:add_event(Event({
-		func = (function()
-			if snd then play_sound(snd, sndpitch, sndvol) end
-			attention_text({
-				scale = size or 1.4, text = txt, hold = duration or 2, colour = col or G.C.WHITE, align = 'cm', offset = {x = 0,y = -2.7},major = G.play
-			})
-		return true
-	end)}))
+    G.E_MANAGER:add_event(Event({
+        func = (function()
+            if snd then play_sound(snd, sndpitch, sndvol) end
+            attention_text({
+                scale = size or 1.4, text = txt, hold = duration or 2, colour = col or G.C.WHITE, align = 'cm', offset = { x = 0, y = -2.7 }, major =
+            G.play
+            })
+            return true
+        end)
+    }))
 end
 
 function quick_hand_text(name, chip, mul, lv, notif, snd, vol, pit, de)
-	update_hand_text({sound = type(snd) == 'string' and snd or type(snd) == 'nil' and 'button', volume = vol or 0.7, pitch = pit or 0.8, delay = de or 0.3}, {handname=name or '????', chips = chip or '?', mult = mul or '?', level=lv or '?', StatusText = notif})
+    update_hand_text(
+    { sound = type(snd) == 'string' and snd or type(snd) == 'nil' and 'button', volume = vol or 0.7, pitch = pit or 0.8, delay =
+    de or 0.3 }, { handname = name or '????', chips = chip or '?', mult = mul or '?', level = lv or '?', StatusText =
+    notif })
 end
 
 function simple_hand_text(hand, notify)
-	if hand == 'all' or hand == 'allhands' or hand == 'all_hands' then
-		quick_hand_text(localize('k_all_hands'), '...', '...', '', notify)
-	elseif G.GAME.hands[hand] then
-		quick_hand_text(localize(hand, 'poker_hands'), G.GAME.hands[hand].chips, G.GAME.hands[hand].mult, G.GAME.hands[hand].level, notify)
-	end
+    if hand == 'all' or hand == 'allhands' or hand == 'all_hands' then
+        quick_hand_text(localize('k_all_hands'), '...', '...', '', notify)
+    elseif G.GAME.hands[hand] then
+        quick_hand_text(localize(hand, 'poker_hands'), G.GAME.hands[hand].chips, G.GAME.hands[hand].mult,
+            G.GAME.hands[hand].level, notify)
+    end
 end
 
 function ratiocalc(a, b, c, d)
-    local larger = math.max(a,b)
-    local smaller = math.min(a,b)
+    local larger = math.max(a, b)
+    local smaller = math.min(a, b)
 
     return ((smaller / larger) ^ c) * d
-
 end
 
 function mostplayed_name()
-
     local name = nil
     local timesplayed = -1
 
-    for i,hand in pairs(G.GAME.hands) do
+    for i, hand in pairs(G.GAME.hands) do
         if hand.played > timesplayed then
             name = i
             timesplayed = hand.played
@@ -127,7 +125,6 @@ function mostplayed_name()
     end
 
     return name
-
 end
 
 function self_annihilate(card)
@@ -138,28 +135,28 @@ function self_annihilate(card)
 end
 
 function random_suit()
-    local n = {"Spades", "Hearts", "Clubs", "Diamonds"}
+    local n = { "Spades", "Hearts", "Clubs", "Diamonds" }
     return n[pseudorandom("valk_random_suit", 1, #n)]
 end
 
 function random_rank()
-    local n = {"2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"}
+    local n = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" }
     return n[pseudorandom("valk_random_rank", 1, #n)]
 end
 
 function random_enhancement()
     local choices = {}
-    for i,e in ipairs(G.P_CENTER_POOLS.Enhanced) do
-        choices[#choices+1] = e.key
+    for i, e in ipairs(G.P_CENTER_POOLS.Enhanced) do
+        choices[#choices + 1] = e.key
     end
     return choices[pseudorandom("valk_random_enhance", 1, #choices)]
 end
 
 function random_edition()
     local choices = {}
-    for i,e in ipairs(G.P_CENTER_POOLS.Edition) do
+    for i, e in ipairs(G.P_CENTER_POOLS.Edition) do
         if e.key ~= "e_negative" then
-            choices[#choices+1] = e.key
+            choices[#choices + 1] = e.key
         end
     end
     return choices[pseudorandom("valk_random_edition", 1, #choices)]
@@ -171,49 +168,47 @@ function level_ascended_hands(amount, card)
     end
     local sunlevel = (G.GAME.sunlevel and G.GAME.sunlevel or 0) + amount
     G.GAME.sunlevel = (G.GAME.sunlevel or 0) + amount
-	delay(0.4)
-	update_hand_text(
-		{ sound = "button", volume = 0.7, pitch = 0.8, delay = 0.3 },
-		{ handname = localize("cry_asc_hands"), chips = "...", mult = "...", level = to_big(sunlevel) }
-	)
-	delay(1.0)
-	G.E_MANAGER:add_event(Event({
-		trigger = "after",
-		delay = 0.2,
-		func = function()
-			play_sound("tarot1")
-			ease_colour(G.C.UI_CHIPS, copy_table(G.C.GOLD), 0.1)
-			ease_colour(G.C.UI_MULT, copy_table(G.C.GOLD), 0.1)
-			Cryptid.pulse_flame(0.01, sunlevel)
-            if card then card:juice_up(0.8, 0.5) end 
-			
-			G.E_MANAGER:add_event(Event({
-				trigger = "after",
-				blockable = false,
-				blocking = false,
-				delay = 1.2,
-				func = function()
-					ease_colour(G.C.UI_CHIPS, G.C.BLUE, 1)
-					ease_colour(G.C.UI_MULT, G.C.RED, 1)
-					return true
-				end,
-			}))
-			return true
-		end,
-	}))
-	update_hand_text({ sound = "button", volume = 0.7, pitch = 0.9, delay = 0 }, { level = to_big(sunlevel + amount) })
-	delay(2.6)
-	G.GAME.sunnumber = G.GAME.sunnumber ~= nil and G.GAME.sunnumber + (0.05*amount) or (0.05*amount)
-	update_hand_text(
-		{ sound = "button", volume = 0.7, pitch = 1.1, delay = 0 },
-		{ mult = 0, chips = 0, handname = "", level = "" }
-	)
+    delay(0.4)
+    update_hand_text(
+        { sound = "button", volume = 0.7, pitch = 0.8, delay = 0.3 },
+        { handname = localize("cry_asc_hands"), chips = "...", mult = "...", level = to_big(sunlevel) }
+    )
+    delay(1.0)
+    G.E_MANAGER:add_event(Event({
+        trigger = "after",
+        delay = 0.2,
+        func = function()
+            play_sound("tarot1")
+            ease_colour(G.C.UI_CHIPS, copy_table(G.C.GOLD), 0.1)
+            ease_colour(G.C.UI_MULT, copy_table(G.C.GOLD), 0.1)
+            Cryptid.pulse_flame(0.01, sunlevel)
+            if card then card:juice_up(0.8, 0.5) end
+
+            G.E_MANAGER:add_event(Event({
+                trigger = "after",
+                blockable = false,
+                blocking = false,
+                delay = 1.2,
+                func = function()
+                    ease_colour(G.C.UI_CHIPS, G.C.BLUE, 1)
+                    ease_colour(G.C.UI_MULT, G.C.RED, 1)
+                    return true
+                end,
+            }))
+            return true
+        end,
+    }))
+    update_hand_text({ sound = "button", volume = 0.7, pitch = 0.9, delay = 0 }, { level = to_big(sunlevel + amount) })
+    delay(2.6)
+    G.GAME.sunnumber = G.GAME.sunnumber ~= nil and G.GAME.sunnumber + (0.05 * amount) or (0.05 * amount)
+    update_hand_text(
+        { sound = "button", volume = 0.7, pitch = 1.1, delay = 0 },
+        { mult = 0, chips = 0, handname = "", level = "" }
+    )
 end
 
 function math.map(v, imi, ima, omi, oma)
-
-    return (v-imi) * (oma - omi) / (ima - imi) + omi
-
+    return (v - imi) * (oma - omi) / (ima - imi) + omi
 end
 
 function mspl(amt)
@@ -224,7 +219,7 @@ function mspl(amt)
 end
 
 function table:vcontains(table, value)
-    for i,j in ipairs(table) do
+    for i, j in ipairs(table) do
         if (j == value) then return true end
     end
     return false
@@ -233,8 +228,8 @@ end
 function table:superset(t_a, t_b)
     local valid = true
 
-    for i,j in ipairs(t_b) do
-        valid = valid and table:vcontains(t_a,j)
+    for i, j in ipairs(t_b) do
+        valid = valid and table:vcontains(t_a, j)
     end
     return valid
 end
@@ -246,37 +241,31 @@ function destroy_first_instance(key)
     end
 end
 
-function joker_owned(key) 
-
+function joker_owned(key)
     if (G.jokers and G.jokers.cards) then
-
-        for i,card in ipairs(G.jokers.cards) do
-        
+        for i, card in ipairs(G.jokers.cards) do
             if (card.config.center.key == key) then return true end
-
         end
-
     end
 
     return false
-
 end
 
 function immutable_chance_roll(source, percent_chance)
-    return pseudorandom(source)*100 <= percent_chance
+    return pseudorandom(source) * 100 <= percent_chance
 end
 
 function quick_card_speak(card, text, wait)
-    card_eval_status_text(card, 'extra', nil, nil, nil, {message = text, delay = wait})
+    card_eval_status_text(card, 'extra', nil, nil, nil, { message = text, delay = wait })
 end
 
 function pause_event(time)
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
-		timer = 'REAL',
+        timer = 'REAL',
         delay = time or 1,
         func = function()
-           return true
+            return true
         end
     }))
 end
@@ -290,9 +279,9 @@ function get_first_instance(key)
 end
 
 function Card:quick_dissolve()
-	self.ability.eternal = nil
-	self.true_dissolve = true
-	self:start_dissolve(nil, nil, nil, nil)
+    self.ability.eternal = nil
+    self.true_dissolve = true
+    self:start_dissolve(nil, nil, nil, nil)
 end
 
 function simple_create(type, area, key)
@@ -302,25 +291,22 @@ function simple_create(type, area, key)
 end
 
 function debug_print_antes()
-
     local ante = 1
     local i = 1
     local i2 = 1
     while ante < 1e300 do
         local blind_amount = tostring(get_blind_amount(ante) or "nil")
         print("Ante " .. ante .. ": " .. blind_amount)
-        
+
         if (ante > 15) then
             ante = ante * 1e10
         else
             ante = ante + i
         end
     end
-
 end
 
 function corrupt_text(text, amount, available_chars)
-
     local chars = (available_chars or "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[];:',.<>/?|")
     -- amount is a 0-1 being a chance to replace each character with a rnd one
 
@@ -328,7 +314,7 @@ function corrupt_text(text, amount, available_chars)
         if math.random() < amount then
             local rand_index = math.random(1, #chars)
             local random_char = chars:sub(rand_index, rand_index)
-            text = text:sub(1, i-1) .. random_char .. text:sub(i+1)
+            text = text:sub(1, i - 1) .. random_char .. text:sub(i + 1)
         end
     end
     return text
@@ -345,30 +331,28 @@ end
 -- i take no credit for these functions, theyre just slightly modified
 -- versions of jenlib functions, as i don't like the text color which jenlib uses
 function expochips(txt)
-	return "{X:dark_edition,C:white}^" .. txt .. "{}"
+    return "{X:dark_edition,C:white}^" .. txt .. "{}"
 end
 
 function expomult(txt)
-	return "{X:dark_edition,C:white}^" .. txt .. "{}"
+    return "{X:dark_edition,C:white}^" .. txt .. "{}"
 end
 
 -- chips and mult are identical since it uses x:dark
 function tetrvalue(txt)
-	return "{X:dark_edition,C:white}^^" .. txt .. "{}"
+    return "{X:dark_edition,C:white}^^" .. txt .. "{}"
 end
 
 function reptlog(base, lim, num)
-
     for i = 1, lim do
         num = math.log(num, base)
     end
 
     return num
-
 end
 
-function get_first(area) 
-    return select(2,next(area))
+function get_first(area)
+    return select(2, next(area))
 end
 
 function run_debug()
@@ -385,6 +369,7 @@ function valk_additions()
 
     return total
 end
+
 function scraptake_calculation()
     local calced, b = 0, 0
 
@@ -393,7 +378,7 @@ function scraptake_calculation()
     end
 
 
-    for i,jok in ipairs(G.jokers.cards) do
+    for i, jok in ipairs(G.jokers.cards) do
         if (string.find(jok.config.center_key, "valk")) then
             calced = calced + 1
         end
@@ -410,57 +395,69 @@ function scraptake_calculation()
 end
 
 function level_all_hands(source, amount, mul)
-    if amount == nil then 
+    if amount == nil then
         amount = 1
     end
 
-    if mul == nil then 
+    if mul == nil then
         mul = 0
     end
 
-    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_all_hands'),chips = '...', mult = '...', level=''})
-    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
-        play_sound('tarot1')
-        if source then source:juice_up(0.8, 0.5) end
-        G.TAROT_INTERRUPT_PULSE = true
-        return true end 
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3 },
+        { handname = localize('k_all_hands'), chips = '...', mult = '...', level = '' })
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            play_sound('tarot1')
+            if source then source:juice_up(0.8, 0.5) end
+            G.TAROT_INTERRUPT_PULSE = true
+            return true
+        end
     }))
 
-    update_hand_text({delay = 0}, {mult = '+', StatusText = true})
-    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
-        play_sound('tarot1')
-        if source then source:juice_up(0.8, 0.5) end
-        return true end
+    update_hand_text({ delay = 0 }, { mult = '+', StatusText = true })
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.9,
+        func = function()
+            play_sound('tarot1')
+            if source then source:juice_up(0.8, 0.5) end
+            return true
+        end
     }))
-    update_hand_text({delay = 0}, {chips = '+', StatusText = true})
-    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
-        play_sound('tarot1')
-        if source then source:juice_up(0.8, 0.5) end
-        G.TAROT_INTERRUPT_PULSE = nil
-        return true end
+    update_hand_text({ delay = 0 }, { chips = '+', StatusText = true })
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.9,
+        func = function()
+            play_sound('tarot1')
+            if source then source:juice_up(0.8, 0.5) end
+            G.TAROT_INTERRUPT_PULSE = nil
+            return true
+        end
     }))
-    local text = amount > 0 and "+"..amount or amount
-    if mul ~= 0 then 
-        text = "x"..(mul+1)
+    local text = amount > 0 and "+" .. amount or amount
+    if mul ~= 0 then
+        text = "x" .. (mul + 1)
     end
 
-    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level=text})
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { level = text })
 
     delay(1.3)
     for k, v in pairs(G.GAME.hands) do
         level_up_hand(source, k, true, amount + (v.level * mul))
     end
-    update_hand_text({delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+    update_hand_text({ delay = 0 }, { mult = 0, chips = 0, handname = '', level = '' })
 end
 
 function dvi(value)
-    for i,joker in ipairs(G.jokers.cards) do
-        Cryptid.misprintize(joker, {min=value, max=value}, false, true)
+    for i, joker in ipairs(G.jokers.cards) do
+        Cryptid.misprintize(joker, { min = value, max = value }, false, true)
     end
 end
 
-function disable_mult_ui() 
-
+function disable_mult_ui()
     G.GAME.mult_disabled = true
     if G.HUD:get_UIE_by_ID("chipmult_op") then G.HUD:get_UIE_by_ID("chipmult_op").UIT = 0 end
     G.HUD:get_UIE_by_ID("hand_mult_area").UIT = 0
@@ -472,39 +469,32 @@ function disable_mult_ui()
     if G.HUD:get_UIE_by_ID("chipmult_op") then G.HUD:get_UIE_by_ID("chipmult_op").scale = 0 end
 
     G.HUD:recalculate()
-
 end
 
 function quick_misprintize(card, val, growth, arrows)
-
-    Cryptid.misprintize(card, {min = val, max = val}, nil, true, growth, arrows)
-
+    Cryptid.misprintize(card, { min = val, max = val }, nil, true, growth, arrows)
 end
 
 function qdvi(val, growth, arrows)
-
-    for i,card in ipairs(G.jokers.cards) do 
-        Cryptid.misprintize(card, {min = val, max = val}, nil, true, growth, arrows)
+    for i, card in ipairs(G.jokers.cards) do
+        Cryptid.misprintize(card, { min = val, max = val }, nil, true, growth, arrows)
     end
-
 end
 
 function find_index(card, list)
-
     if not list then --extremely niche case
         return false
     end
-    for i,c in ipairs(list) do
+    for i, c in ipairs(list) do
         if c == card then
             return i
         end
     end
     return false
-
 end
 
-function draw_to_hand(cardlist) 
-    for i,card in ipairs(cardlist) do
+function draw_to_hand(cardlist)
+    for i, card in ipairs(cardlist) do
         draw_card(card.area, G.hand, nil, nil, nil, card)
     end
 end
@@ -514,7 +504,7 @@ function enhanced_in_deck(enhancement)
         return 0
     end
     local count = 0
-    for i,card in ipairs(G.playing_cards) do
+    for i, card in ipairs(G.playing_cards) do
         if SMODS.has_enhancement(card, enhancement) then
             count = count + 1
         end
@@ -524,40 +514,34 @@ function enhanced_in_deck(enhancement)
 end
 
 function get_handtype(handtype)
-
     local a, b, c, d, e = G.FUNCS.get_poker_hand_info(G.deck.cards)
 
     local selected_hand = handtype
 
     local intentional_length = 0
-    
+
     if not (G.GAME.hands[selected_hand]) then
         return false
     end
 
-    for _,ca in ipairs(G.GAME.hands[selected_hand].example) do
-
+    for _, ca in ipairs(G.GAME.hands[selected_hand].example) do
         if ca[2] then
             intentional_length = intentional_length + 1
         end
-
     end
 
     if c[selected_hand] and #c[selected_hand] > 0 then
         local valid_cards = {}
-        for i,card in ipairs(c[selected_hand][1]) do
+        for i, card in ipairs(c[selected_hand][1]) do
             if i > intentional_length then
                 break
             end
             table.insert(valid_cards, card)
-            
-
         end
         return valid_cards
     else
         return false
     end
-
 end
 
 function Card:deselect()
@@ -627,54 +611,50 @@ function do_while_flipped(cards, func) --mostly borrowed from entropy, thank you
 end
 
 function fix_decimal_hand_levels()
-
     if not (G and G.GAME and G.GAME.hands) then
         return
     end
-    for name,hand in pairs(G.GAME.hands) do
+    for name, hand in pairs(G.GAME.hands) do
         local lvl = G.GAME.hands[name].level
         if math.floor(lvl) ~= lvl then
             G.GAME.hands[name].level = math.floor(lvl)
         end
-
     end
-
 end
 
 function area_by_key(key)
-    local t = key:sub(1,1)
+    local t = key:sub(1, 1)
 
-    if t == "j" then return G.jokers
-    elseif t == "c" then return G.consumeables
-    elseif t == "m" then return G.hand end
+    if t == "j" then
+        return G.jokers
+    elseif t == "c" then
+        return G.consumeables
+    elseif t == "m" then
+        return G.hand
+    end
     return nil
 end
 
 function create_letters(str)
-
     str = str:gsub(" ", "")
     for i = 1, #str do
         local char = str:sub(i, i)
-        
+
         local card = create_card("Default", G.hand, nil, nil, nil, nil, nil, nil)
         card:set_letters(char)
         card:add_to_deck()
         G.hand:emplace(card)
         card:set_ability("c_base")
-
     end
-    
 end
 
 function add_random_tag(seed)
-
     local tag_pool = get_current_pool('Tag')
     local selected_tag = pseudorandom_element(tag_pool, pseudoseed(seed))
     local it = 1
     while selected_tag == 'UNAVAILABLE' do
         it = it + 1
-        selected_tag = pseudorandom_element(tag_pool, pseudoseed(seed..it))
+        selected_tag = pseudorandom_element(tag_pool, pseudoseed(seed .. it))
     end
     add_tag(Tag(selected_tag))
-
 end
