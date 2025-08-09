@@ -10,5 +10,6 @@
 	"version": "0.8.0", 
 	"dependencies": [ 
 		"Cryptid (>=0.5.9)",
+		"Steamodded (>=1.0.0~BETA-0808a)",
 	]
 }

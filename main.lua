@@ -46,13 +46,6 @@ SMODS.Atlas {
 
 merge_recipes = {
 
-    {input = {"c_death", "c_hanged_man"}, output = "c_valk_iron_maiden"},
-    {input = {"c_hierophant", "c_judgement"}, output = "c_valk_the_pope"},
-    {input = {"c_emperor", "c_sun"}, output = "c_valk_the_knight"},
-    {input = {"c_justice", "c_fool"}, output = "c_valk_the_killer"},
-    {input = {"c_judgement", "c_strength"}, output = "c_valk_gods_finger"},
-    {input = {"c_wheel_of_fortune", "c_temperance"}, output = "c_valk_gameshow"},
-
 }
 
 assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()

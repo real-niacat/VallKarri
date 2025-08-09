@@ -1,3 +1,5 @@
+vallkarri.merged_tarot_rate = 2
+
 SMODS.Consumable {
     key = "the_knight",
     set = "Tarot",
@@ -35,7 +37,8 @@ SMODS.Consumable {
         end)
         
 
-    end
+    end,
+    soul_rate = vallkarri.merged_tarot_rate
 }
 
 SMODS.Consumable {
@@ -74,7 +77,8 @@ SMODS.Consumable {
             ca:set_ability("m_steel")
             G.hand:remove_from_highlighted(ca)
         end)
-    end
+    end,
+    soul_rate = vallkarri.merged_tarot_rate
 }
 
 
@@ -118,7 +122,8 @@ SMODS.Consumable {
             card:set_ability(choices.enhancement)
             card:set_edition(choices.edition, true)
         end)
-    end
+    end,
+    soul_rate = vallkarri.merged_tarot_rate
 }
 
 SMODS.Consumable {
@@ -165,7 +170,8 @@ SMODS.Consumable {
                 return true
             end
         }))
-    end
+    end,
+    soul_rate = vallkarri.merged_tarot_rate
 }
 
 SMODS.Consumable {
@@ -236,7 +242,8 @@ SMODS.Consumable {
             end
         }))
 
-    end
+    end,
+    soul_rate = vallkarri.merged_tarot_rate
 }
 
 SMODS.Consumable {
@@ -281,5 +288,6 @@ SMODS.Consumable {
 
         end
 
-    end
+    end,
+    soul_rate = vallkarri.merged_tarot_rate
 }

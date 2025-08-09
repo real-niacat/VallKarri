@@ -708,7 +708,6 @@ SMODS.Joker {
     atlas = "main",
     pos = {x=11, y=8},
     cost = 15,
-    demicoloncompat = true,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
