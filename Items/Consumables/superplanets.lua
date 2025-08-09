@@ -54,7 +54,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { echips = 1.05} },
+    config = { extra = { echips = 1.03} },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.echips}}
     end,
