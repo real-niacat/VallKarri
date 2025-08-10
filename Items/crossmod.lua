@@ -28,7 +28,7 @@ if #SMODS.find_mod("entr") > 0 then
             for i,hand in pairs(G.GAME.hands) do
                 local lvl = G.GAME.hands[i].level
                 local asc = G.GAME.hands[i].AscensionPower
-                if asc and lvl >= 1 then
+                if asc and to_big(lvl) >= to_big(1) then
                     level_up_hand(card, i, false, (lvl^asc)-lvl)
                 end
             end
