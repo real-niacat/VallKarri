@@ -2,7 +2,7 @@
 	"id": "vallkarri",
 	"name": "Vall-karri", 
 	"author": ["Lily"], 
-	"description": "a nice, silly addon for cryptid",
+	"description": "the epitome of B tier game design. it's pronounced Valkyrie",
 	"prefix": "valk",
 	"main_file": "main.lua",
 	"priority": 2147483647, 

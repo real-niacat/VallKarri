@@ -286,6 +286,7 @@ SMODS.Joker {
             return { xmult = 1 + (card.ability.extra.per * amount) }
         end
     end,
+    blueprint_compat = true,
 }
 
 SMODS.Joker {
@@ -317,6 +318,7 @@ SMODS.Joker {
             return { xmult = 1 + (card.ability.extra.per * amount) }
         end
     end,
+    blueprint_compat = true,
 }
 
 SMODS.Joker {
@@ -348,6 +350,7 @@ SMODS.Joker {
             return { xmult = 1 + (card.ability.extra.per * amount) }
         end
     end,
+    blueprint_compat = true,
 }
 
 SMODS.Joker {
@@ -379,6 +382,7 @@ SMODS.Joker {
             return { xmult = 1 + (card.ability.extra.per * amount) }
         end
     end,
+    blueprint_compat = true,
 }
 
 SMODS.Joker {
