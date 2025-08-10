@@ -539,6 +539,9 @@ SMODS.Booster {
     create_card = function(self, card, i)
         return create_card("Superplanet", G.pack_cards, nil, nil, true, true, nil, "valk_superplanet_pack")
     end,
+    in_pool = function()
+        return G.GAME.round_resets.ante > 6
+    end
 }
 
 SMODS.Booster {
@@ -568,4 +571,7 @@ SMODS.Booster {
     create_card = function(self, card, i)
         return create_card("Superplanet", G.pack_cards, nil, nil, true, true, nil, "valk_superplanet_pack")
     end,
+    in_pool = function()
+        return G.GAME.round_resets.ante > 6
+    end
 }
