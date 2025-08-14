@@ -696,3 +696,13 @@ function count_cat_tags_level()
     end 
     return c
 end
+
+function lerpcolour(c1, c2, percent)
+
+    local new = { }
+
+    new[1] = lerp(c1[1], c2[1], math.log10(percent/10)) --strange, i know.
+    new[2] = lerp(c1[2], c2[2], math.log10(percent/10))
+    new[3] = lerp(c1[3], c2[3], math.log10(percent/10))
+    return {new[1], new[2], new[3], 1}
+end

@@ -13,6 +13,7 @@ end
 vallkarri.hand_buffs = {
     m_bonus = { title = "EXTRA", colour = G.C.CHIPS },
     m_mult = { title = "MULTI", colour = G.C.MULT },
+    m_wild = { title = "WILD", colour = lerpcolour(G.C.RED, G.C.MONEY, 20) },
     m_gold = { title = "GILDED", colour = G.C.MONEY },
     m_lucky = { title = "CHANCE", colour = G.C.GREEN },
     m_glass = { title = "SHATTERED", colour = G.C.WHITE},
@@ -26,6 +27,10 @@ vallkarri.hand_buffs = {
 vallkarri.hand_buff_functions = {
     m_bonus = function(n) return { xchips = (1 + n) ^ 1.25 } end,
     m_mult = function(n) return { xmult = (1 + n) ^ 1.25 } end,
+    m_wild = function(n, cards)
+        local t = vallkarri.get_hand_buff_functions_except_for({"m_cry_abstract"}) 
+        return SMODS.merge_effects({pseudorandom_element(t, "m_wild_buff")(n,cards),pseudorandom_element(t, "m_wild_buff")(n,cards)}) 
+    end,
     m_gold = function(n) return { dollars = math.ceil((3 + n) ^ 1.1) } end,
     m_lucky = function(n)
         n = n + 1
@@ -56,7 +61,7 @@ end
 local uhthook = update_hand_text
 function update_hand_text(config, vals)
     uhthook(config, vals)
-
+    
     local enhancements = {}
     for i, card in ipairs(#G.hand.highlighted > 0 and G.hand.highlighted or G.play.cards) do
         for key, enhancement in pairs(SMODS.get_enhancements(card)) do
@@ -150,4 +155,15 @@ function create_UIBox_HUD(force)
     }
 
     return res
+end
+
+function vallkarri.get_hand_buff_functions_except_for(exceptions)
+    -- this functions name is intentionally long and stupid
+    local new = {}
+    for name,func in pairs(vallkarri.hand_buff_functions) do
+        if not table:vcontains(exceptions,name) then
+            new[name] = func
+        end
+    end
+    return new
 end
