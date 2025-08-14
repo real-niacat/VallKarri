@@ -662,3 +662,37 @@ function add_random_tag(seed)
     end
     add_tag(Tag(selected_tag))
 end
+
+function Card:is_kitty()
+    return Cryptid.safe_get(self.config.center, "pools", "Kitties")
+end
+
+function kitty_count(base)
+    local c = base or 0
+    for i,joker in ipairs((G.jokers and G.jokers.cards) or {}) do
+        if joker:is_kitty() then
+            c = c + 1
+        end
+    end
+    return c
+end
+
+function count_cat_tags()
+    local c = 0
+    for i,tag in ipairs(G.GAME.tags or {}) do
+        if tag.key == "tag_cry_cat" then
+            c = c + 1
+        end
+    end 
+    return c
+end
+
+function count_cat_tags_level()
+    local c = 0
+    for i,tag in ipairs(G.GAME.tags or {}) do
+        if tag.key == "tag_cry_cat" then
+            c = c + tag.config.level
+        end
+    end 
+    return c
+end

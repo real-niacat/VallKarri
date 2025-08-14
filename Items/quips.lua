@@ -23,6 +23,7 @@ local quips = {
             { "that was", "stressful, huh?" },
             { "you alright?" },
             { "can i go", "see Quilla now?" },
+            { "well, that was", "entropious" }
 
         },
         ["j_valk_illena"] = {

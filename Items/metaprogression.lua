@@ -144,14 +144,15 @@ function Game:start_run(args)
 
     if not args.savetext then
         -- DO ON-START STUFF HERE
-        local add_money = math.floor(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 25) * 0.5
+        local add_money = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
         G.GAME.dollars = G.GAME.dollars + add_money
 
         local add_levels = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 2.5))
         for name, hand in pairs(G.GAME.hands) do
-            G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
-            G.GAME.hands[name].chips = G.GAME.hands[name].chips + (G.GAME.hands[name].l_chips * add_levels)
-            G.GAME.hands[name].mult = G.GAME.hands[name].mult + (G.GAME.hands[name].l_mult * add_levels)
+            -- G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
+            -- what if i just dont give the levels,,,...
+            G.GAME.hands[name].chips = G.GAME.hands[name].chips + (add_levels)
+            G.GAME.hands[name].mult = G.GAME.hands[name].mult + (add_levels)
         end
     end
 
@@ -301,7 +302,7 @@ function ease_dollars(mod, x)
     
 
     if to_big(mod) > to_big(0) then
-        local multiplier = 1+(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 100)
+        local multiplier = math.log(1+(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 100), 2)
         easemoneyhook(mod * multiplier, x)
     else
         easemoneyhook(mod, x)
@@ -371,7 +372,7 @@ end
 
 function get_blind_amount(ante)
     refresh_metaprog()
-    return blindamounthook(ante) * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.825))))
+    return blindamounthook(ante) * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.9))))
     -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
 

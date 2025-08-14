@@ -1,19 +1,3 @@
-SMODS.Joker {
-	key = "logo",
-    loc_txt = {
-        name = "VallKarri Logo",
-        text = {
-            "what"
-        }
-    },
-    rarity = "valk_unobtainable",
-    atlas = "main",
-    pos = {x = 9, y = 2},
-	hidden = true,
-	no_collection = true,
-    no_doe = true,
-}
-
 local mainmenu = Game.main_menu
 Game.main_menu = function(change_context) --code heavily adapted from cryptid
 	local ret = mainmenu(change_context)
@@ -23,7 +7,7 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
         G.CARD_W,
         G.CARD_H,
         G.P_CARDS.empty,
-        G.P_CENTERS.j_valk_logo, --replace this with the p_center of your card, you can keep everything else the same
+        G.P_CENTERS.j_valk_lily, --replace this with the p_center of your card, you can keep everything else the same
         { bypass_discovery_center = true }
     )
 
@@ -33,6 +17,7 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
     -- match scale of vanilla card
     newcard.no_ui = true
     -- not able to hover over it, obviously
+    newcard:set_sprites(newcard.config.center)
 	return ret
 end
 

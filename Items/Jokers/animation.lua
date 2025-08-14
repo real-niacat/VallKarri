@@ -84,7 +84,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:attention}Orange{}",
         text = {
-            "When hand played, return all {C:attention}discarded{} cards back to {C:attention}deck{}",
+            "Create a random {C:dark_edition}negative{} Consumable for each unscoring card played",
             credit("Scraptake")
         }
     },
@@ -102,10 +102,15 @@ SMODS.Joker {
     cost = 12,
     calculate = function(self, card, context)
 
-        if context.joker_main and not context.individual and not context.repetition then
-            for i,card in ipairs(G.discard.cards) do
-                draw_card(G.discard, G.deck, nil, nil, nil, card)
+        if context.before then
+            local amount = (#context.full_hand - #context.scoring_hand)
+            for i=1,amount do
+                local c = create_card("Consumable", G.consumeables, nil, nil, nil, nil, nil, "valk_orange")
+                c:set_edition("e_negative", true)
+                c:add_to_deck()
+                G.consumeables:emplace(c)
             end
+
         end
 
     end

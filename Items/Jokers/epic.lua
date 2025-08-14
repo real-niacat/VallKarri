@@ -178,7 +178,7 @@ SMODS.Joker {
             }
         }
     end,
-    config = { extra = { retrig = 1, inc = 1, req = 20, reset = 20 } },
+    config = { extra = { retrig = 0, inc = 1, req = 20, reset = 20 } },
     atlas = "main",
     pos = { x = 11, y = 5 },
     cost = 12,

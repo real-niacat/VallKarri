@@ -31,6 +31,13 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
+    key = "atlas2",
+    path = "atlas_two.png",
+    px = 71,
+    py = 95,
+}
+
+SMODS.Atlas {
     key = "phold",
     path = "placeholder.png",
     px = 71,

@@ -56,6 +56,37 @@ SMODS.Joker {
 
 }
 
+SMODS.Joker {
+    key = "kitty",
+    loc_txt = {
+        name = "Kitty",
+        text = {
+            "At end of round, {C:green}#1# in #2#{} chance",
+            "to create a {C:attention}Cat Tag{}",
+            credit("Nobody!")
+        }
+    },
+    config = { extra = { num = 1, den = 2 } },
+    loc_vars = function(self, info_queue, card)
+        local n,d = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "kitty")
+        return { vars = { n,d } }
+    end,
+    rarity = 1,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 5,
+    blueprintcompat = true,
+    pools = { ["Kitties"] = true },
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval and 
+            SMODS.pseudorandom_probability(card, "valk_kitty", card.ability.extra.num, card.ability.extra.den, "valk_kitty") then
+            add_tag(Tag("tag_cry_cat"))
+        end
+    end,
+
+}
+
 
 --UNCOMMON BELOW
 SMODS.Joker {
@@ -500,6 +531,33 @@ SMODS.Joker {
     end,
 }
 
+SMODS.Joker {
+    key = "merchantcat",
+    rarity = 2,
+    atlas = "phold",
+    pos = {x=0,y=1},
+    cost = 8,
+    loc_txt = {
+        name = "Merchant Cat",
+        text = {
+            "Create a {C:attention}Cat Tag{} when a card is bought",
+            credit("Nobody!"),
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {}}
+    end,
+    demicoloncompat = true,
+    config = { extra = { }},
+    calculate = function(self, card, context)
+        if context.buying_card then
+            add_tag(Tag("tag_cry_cat"))
+        end
+    end,
+    pools = { ["Kitties"] = true },
+
+}
+
 --RARE BELOW
 
 SMODS.Joker {
@@ -731,3 +789,159 @@ SMODS.Joker {
 }
 
 -- {x=10, y=8}
+
+SMODS.Joker {
+    key = "neffy",
+    rarity = 3,
+    atlas = "atlas2",
+    pos = {x=2,y=1},
+    cost = 8,
+    loc_txt = {
+        name = "Neffy",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult",
+            "Lose {X:mult,C:white}X#2#{} for every other {C:attention}Kitty{} Joker owned",
+            credit("mailingway"),
+            catby("cg")
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.base - math.max(kitty_count(-1)*card.ability.extra.loss, 0), card.ability.extra.loss}}
+    end,
+    demicoloncompat = true,
+    config = { extra = { base = 3, loss = 0.25 }},
+    calculate = function(self, card, context)
+        if context.joker_main or context.forcetrigger then
+            return {
+                xmult = card.ability.extra.base - math.max(kitty_count(-1)*card.ability.extra.loss, 0)
+            }
+        end
+    end,
+    pools = { ["Kitties"] = true },
+
+}
+
+SMODS.Joker {
+    key = "norma",
+    rarity = 3,
+    atlas = "atlas2",
+    pos = {x=2,y=0},
+    cost = 8,
+    loc_txt = {
+        name = "Norma",
+        text = {
+            "Cards in hand are {C:attention}flipped{} when cards are drawn",
+            "Gain {X:mult,C:white}X#1#{} Mult for each card drawn",
+            "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+            credit("mailingway"),
+            catby("Ren")
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {card.ability.extra.gain, card.ability.extra.xmult}}
+    end,
+    demicoloncompat = true,
+    config = { extra = { xmult = 1, gain = 0.03, real_gain = 0 }},
+    calculate = function(self, card, context)
+        if context.drawing_cards then
+            card.ability.extra.real_gain = (card.ability.extra.gain*context.amount)
+            card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.real_gain
+            
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "xmult", scalar_value = "real_gain"})
+
+            for i,handcard in ipairs(G.hand.cards) do
+                handcard:flip()
+            end
+        end
+
+        if context.joker_main or context.forcetrigger then
+            return {
+                xmult = card.ability.extra.xmult
+            }
+        end
+    end,
+    pools = { ["Kitties"] = true },
+
+}
+
+SMODS.Joker {
+    key = "boxofkittens",
+    rarity = 3,
+    atlas = "phold",
+    pos = {x=0,y=1},
+    cost = 8,
+    loc_txt = {
+        name = "Box of Kittens",
+        text = {
+            "Create a {C:attention}Cat Tag{} when rerolling the shop",
+            "{C:mult}+#1#{} Mult for each cat tag owned",
+            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+            credit("Nobody!"),
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = {card.ability.extra.mult, card.ability.extra.mult * count_cat_tags()}}
+    end,
+    demicoloncompat = true,
+    config = { extra = { mult = 3 }},
+    calculate = function(self, card, context)
+        if context.joker_main or context.forcetrigger then
+            return {
+                mult = card.ability.extra.mult*count_cat_tags()
+            }
+        end
+
+        if context.reroll_shop then
+            add_tag(Tag("tag_cry_cat"))
+        end
+    end,
+    pools = { ["Kitties"] = true },
+
+}
+
+SMODS.Joker {
+    key = "dupli_cat_ion",
+    rarity = 3,
+    atlas = "phold",
+    pos = {x=0,y=1},
+    cost = 8,
+    loc_txt = {
+        name = "Dupli-cat-ion",
+        text = {
+            "At end of round, each {C:attention}Cat Tag{} has a {C:green}#1# in #2#{}",
+            "chance to create another {C:attention}Cat Tag{}",
+            "Increase denominator by {C:attention}#3#{} for every {C:attention}#4# Cat Tags{} owned",
+            credit("Nobody!"),
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.base_num, card.ability.extra.base_den+math.floor(count_cat_tags()/card.ability.extra.thresh))
+
+        return { vars = {num, den, card.ability.extra.inc, card.ability.extra.thresh}}
+    end,
+    demicoloncompat = true,
+    config = { extra = { base_num = 1, base_den = 2, inc = 1, thresh = 4 }},
+    calculate = function(self, card, context)
+        if context.end_of_round and context.main_eval then
+            local to_make = 0
+
+            for i,tag in ipairs(G.GAME.tags) do
+                if tag.key == "tag_cry_cat" then
+                    
+                    if SMODS.pseudorandom_probability(card, "duplication", card.ability.extra.base_num, card.ability.extra.base_den+math.floor(count_cat_tags()/card.ability.extra.thresh)) then
+                        to_make = to_make + 1
+                    end
+
+                end
+            end
+
+            for i=1,to_make do
+                add_tag(Tag("tag_cry_cat"))
+            end
+
+        end
+    end,
+    pools = { ["Kitties"] = true },
+
+}
