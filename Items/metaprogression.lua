@@ -147,13 +147,7 @@ function Game:start_run(args)
         local add_money = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
         G.GAME.dollars = G.GAME.dollars + add_money
 
-        local add_levels = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 2.5))
-        for name, hand in pairs(G.GAME.hands) do
-            -- G.GAME.hands[name].level = G.GAME.hands[name].level + add_levels
-            -- what if i just dont give the levels,,,...
-            G.GAME.hands[name].chips = G.GAME.hands[name].chips + (add_levels)
-            G.GAME.hands[name].mult = G.GAME.hands[name].mult + (add_levels)
-        end
+        -- hand levels come back eventually. not right now
     end
 
     short_update_meta()
@@ -302,8 +296,11 @@ function ease_dollars(mod, x)
     
 
     if to_big(mod) > to_big(0) then
-        local multiplier = math.log(1+(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl / 100), 2)
-        easemoneyhook(mod * multiplier, x)
+        local lvl = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl
+        local multiplier = math.max(1,math.log(lvl,2)^0.2)
+        local final = mod * multiplier
+        final = math.max(math.floor(final), mod)
+        easemoneyhook(final, x)
     else
         easemoneyhook(mod, x)
     end
@@ -318,18 +315,19 @@ function ease_ante(x)
     easeantehook(x)
 
     if x > 0 then
-        vallkarri.mod_xp(5 * x)
+        vallkarri.mod_xp(5 * x * G.GAME.round_resets.ante)
     end
 end
 
 local levelhandhook = level_up_hand
 function level_up_hand(card, hand, instant, amount)
-    refresh_metaprog()
+    
     levelhandhook(card, hand, instant, amount)
 
     if to_big(amount or 1) > to_big(0) then
-        vallkarri.mod_xp(amount or 1, nil, nil, card)
+        vallkarri.mod_xp(amount or 1,  card)
     end
+    refresh_metaprog()
 end
 
 -- local calceff = SMODS.calculate_individual_effect

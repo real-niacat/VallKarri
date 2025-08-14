@@ -13,9 +13,7 @@ SMODS.Back {
     apply = function()
         config_reset()
         G.GAME.disable_ante_gain = true
-        G.GAME.ante_config.base_exponent = 1.4
-        G.GAME.ante_config.arrow_exponent = 1.05
-        G.GAME.ante_config.ante_exponent = 2
+        G.GAME.overscoring_threshold_base = 2
     end
 }
 
@@ -53,14 +51,14 @@ SMODS.Back {
     loc_txt = {
         name = "Tauic Deck",
         text = {
-            "{C:cry_ember}Tauic{} Jokers do not need {C:attention}Tauist{} to spawn",
-            "and spawn {C:attention}2x{} more often.",
-            "{C:attention}0.5x{} {C:cry_ember}Tauic{} Joker chance increase",
+            "{C:cry_ember}Tauic{} Jokers spawn {C:attention}twice{} as often.",
+            "and have their {C:green}chance{} increase when the roll fails",
+            "{C:dark_edition}-2{} Joker Slots",
             credit("Scraptake")
         }
     },
 
-    config = { rate = 2, inc = 0.5 },
+    config = { rate = 2, inc = 0.5, joker_slot = -2 },
     pos = {x=7, y=9},
     atlas = "main",
     apply = function(self)

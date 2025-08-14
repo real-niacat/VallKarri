@@ -47,11 +47,7 @@ function create_UIBox_HUD(force)
 			{n=G.UIT.B, config={w=0.0,h=0.0}},
 			{n=G.UIT.B, config={id = 'hand_mult', func = 'hand_mult_UI_set',object = DynaText({string = "", colours = {G.C.UI.TEXT_LIGHT}, font = G.LANGUAGES['en-us'].font, shadow = false, float = true, scale = 0})}},
 		}}
-	end 
-
-    res.nodes[1].nodes[1].nodes[4].nodes[1].nodes[4] = {n=G.UIT.R, config={align = "cm", minh = 0.5}, nodes={{n=G.UIT.C, config={align = "cm"}, nodes={
-			{n=G.UIT.T, config={id = "bufftext", ref_table = G.GAME, ref_value = "buff_text", scale = 0.3, colour = G.C.WHITE, shadow = true}},
-		}}}}
+	end
 
 	return res
     -- test tst etetdstestredf
@@ -177,7 +173,6 @@ end
 local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
-    G.GAME.buff_text = ""
 
     if args.savetext then
         return
@@ -193,7 +188,6 @@ function Game:start_run(args)
     G.GAME.tau_increase = 0
     G.GAME.base_tau_replace = 150
     G.GAME.tau_replace = G.GAME.base_tau_replace
-    G.GAME.need_tauist = false
     if load_tauics then
        load_tauics() 
     end
@@ -205,23 +199,10 @@ function Game:start_run(args)
     -- keeping these settings so that i can make a deck focused around tauics later on
 
     if G.GAME.tauic_deck then
-        G.GAME.need_tauist = false
         G.GAME.base_tau_replace = G.GAME.base_tau_replace / 2
         G.GAME.tau_replace = G.GAME.base_tau_replace 
-        G.GAME.tau_increase = G.GAME.tau_increase / 2
+        G.GAME.tau_increase = 1
     end
-
-    G.GAME.existing_buffs = {
-        m_bonus = {title = "EXTRA", colour = G.C.CHIPS},
-        m_mult = {title = "MULTI", colour = G.C.MULT},
-        m_gold = {title = "GILDED", colour = G.C.MONEY},
-        m_lucky = {title = "CHANCE", colour = G.C.GREEN},
-        m_glass = {title = "SHATTERED", colour = G.C.WHITE},
-        m_steel = {title = "FORGED", colour = G.C.GREY},
-        m_stone = {title = "CRACKED", colour = darken(G.C.GREY, 10)},
-        m_cry_echo = {title = "ECHOING", colour = G.C.PURPLE},
-        m_cry_abstract = {title = "ABSTRACTED", colour = G.C.CRY_ASCENDANT},
-    }
 
 
     for name,center in pairs(G.P_CENTERS) do
@@ -229,71 +210,6 @@ function Game:start_run(args)
             G.P_CENTERS[name].weight = center.old_weight
         end
     end
-end
-
-local uhthook = update_hand_text
-function update_hand_text(config, vals)
-    uhthook(config, vals)
-
-    local enhancements = {}
-    for i,card in ipairs(G.hand.highlighted) do
-        for key,enhancement in pairs(SMODS.get_enhancements(card)) do
-            enhancements[#enhancements+1] = key
-        end
-    end
-    if not (#enhancements > 0) then
-        G.GAME.buff_text = ""
-        return
-    end
-
-    local counts = {}
-    for i,enh in ipairs(enhancements) do
-
-        if G.GAME.existing_buffs[enh] then
-            if not counts[enh] then
-                counts[enh] = 1
-            else
-                counts[enh] = counts[enh]+1
-            end
-        end
-    end
-
-    -- string is build like +NAME+2xNAME+3xNAME
-    -- not in order of number
-    local str = ""
-    local colour = nil
-    G.GAME.applied_buffs = {}
-    for name,count in pairs(counts) do
-        if count > 5 then
-            str = str .. " + " .. count-4 .. "x" .. G.GAME.existing_buffs[name].title
-            G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
-        elseif count == 5 then
-            str = str .. " + " .. G.GAME.existing_buffs[name].title
-            G.GAME.applied_buffs[#G.GAME.applied_buffs+1] = name
-        end
-    end
-
-    for name,vals in pairs(G.GAME.existing_buffs) do
-        if counts[name] then
-            colour = vals.colour
-        end
-    end
-
-    if not colour then
-        -- how did we get here?
-        return
-    end
-    G.E_MANAGER:add_event(Event({--Hello LocalThunk
-        trigger = 'before',
-        blockable = not config.immediate,
-        delay = config.delay or 0.8,
-        func = function()
-            G.GAME.buff_text = str
-            G.HUD:get_UIE_by_ID("bufftext"):juice_up()
-            G.HUD:get_UIE_by_ID("bufftext").config.colour = colour
-            return true 
-        end
-    }))
 end
 
 glcui = nil
@@ -552,7 +468,7 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 
     local out = fakecreate(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 
-    if out.config.center.tau and ((G.GAME.need_tauist and (#SMODS.find_card("j_valk_tauist") > 0)) or not G.GAME.need_tauist) then
+    if out.config.center.tau then
 
         local roll = pseudorandom("valk_roll_tauic", 1, G.GAME.tau_replace)
         if roll <= 1 then
