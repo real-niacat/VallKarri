@@ -298,11 +298,11 @@ function G.UIDEF.use_and_sell_buttons(card)
     return ref
 end
 
-SMODS.calculation_keys[#SMODS.calculation_keys+1] = "multe"
-SMODS.calculation_keys[#SMODS.calculation_keys+1] = "chipse"
-SMODS.calculation_keys[#SMODS.calculation_keys+1] = "eqzulu"
-SMODS.calculation_keys[#SMODS.calculation_keys+1] = "zulu"
-SMODS.calculation_keys[#SMODS.calculation_keys+1] = "xzulu"
+SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys+1] = "multe"
+SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys+1] = "chipse"
+SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys+1] = "eqzulu"
+SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys+1] = "zulu"
+SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys+1] = "xzulu"
 -- MUST HAVE THIS, WILL NOT WORK WITHOUT ADDING NEW CALC KEYS
 
 local calceff = SMODS.calculate_individual_effect
@@ -559,3 +559,36 @@ end
 -- end
 
 -- i'll get back to this one day
+vallkarri.main_menu_text = ""
+local gameMainMenuRef = Game.main_menu
+function Game:main_menu(change_context)
+    gameMainMenuRef(self, change_context)
+    UIBox({
+        definition = {
+            n = G.UIT.ROOT,
+            config = {
+                align = "cm",
+                colour = G.C.UI.TRANSPARENT_DARK
+            },
+            nodes = {
+                {
+                    n = G.UIT.T,
+                    config = {
+                        scale = 0.3,
+                        ref_table = vallkarri,
+                        ref_value = "main_menu_text",
+                        colour = G.C.UI.TEXT_LIGHT
+                    }
+                }
+            }
+        },
+        config = {
+            align = "tri",
+            bond = "Weak",
+            offset = {
+                x = 0,
+                y = 0
+            },
+        }
+    })
+end

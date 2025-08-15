@@ -81,7 +81,7 @@ function get_ante_change(theoretical_score, debug)
 end
 
 function overscore_threshhold()
-    local change = 10 or G.GAME.overscoring_threshold_base
+    local change = G.GAME.overscoring_threshold_base or 10 
     return get_blind_amount(change + G.GAME.round_resets.ante)
 end
 
