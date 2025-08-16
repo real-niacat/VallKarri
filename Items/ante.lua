@@ -71,13 +71,15 @@ function get_ante_change(theoretical_score, debug)
 
     local anteChange = 0
     local theochange = to_big(0)
+    local inc = 1
     while theochange < win_pot do
-        anteChange = anteChange + 1
+        anteChange = math.floor(anteChange + inc)
+        inc = inc * 1.1
         theochange = to_big(get_blind_amount(anteChange+G.GAME.round_resets.ante))
         -- print(anteChange, theochange)
     end
 
-    return anteChange ^ 0.75
+    return math.max(anteChange ^ 0.75, anteChange / 2)
 end
 
 function overscore_threshhold()
@@ -155,6 +157,9 @@ function get_blind_amount(ante)
         return gba(ante)
     end
 
+    if Talisman then
+        return to_big(gba(ante)):arrow(math.floor(ante / 1500), gba(ante))
+    end
 
     return gba(ante) ^ gba(ante)
 end
