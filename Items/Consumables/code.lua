@@ -1,7 +1,7 @@
 SMODS.Consumable {
     set = "Code",
     loc_txt = { 
-        name = "://GASTER",
+        name = "://HIM",
         text = {
             "Randomize enhancement of all cards {C:attention}held-in-hand{}",
             "{C:inactive}(Vanilla enhancements only){}",

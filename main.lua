@@ -69,3 +69,59 @@ Cryptid.pointerblistify( "v_valk_gammaboosterator", nil)
 Cryptid.pointerblistify( "c_valk_freeway", nil)
 
 Cryptid.mod_whitelist["Vall-karri"] = true
+
+
+-- for lily(me)
+
+-- to-do
+
+-- greedy bastard
+-- rare joker
+-- when a cat tag is created, destroy it and gain 0.2x mult
+
+-- cat costume
+-- legendary joker
+-- +1 to adjacent joker values at end of round, increase by 0.1x for each level on every cat tag owned
+
+-- pawprints
+-- rare
+-- create a cat tag for every kitty joker owned when a blind is skipped
+
+-- assassin kitty
+-- epic
+-- when a cat tag is levelled to level 5 or beyond, destroy it and gain +^0.1 mult
+
+-- jonh meowk
+-- rare
+-- x1 mult
+-- +0.1x for each cat tag owned
+-- increase by +0.05x for every sly joker sold this run
+
+-- the :3
+-- rare
+-- x3 mult if last chat message contains :3
+-- (hidden effect, gives x9 if message contains :3c)
+
+-- crabus
+-- legendary joker - entr crossmod
+-- unscoring cards become dark cards
+-- dark cards scale when scored
+-- gains x0.05 chips when a card becomes a dark card
+
+-- roundabout
+-- uncommon joker
+-- prevent the next source of ante gain
+-- when ante gain prevented, lose 1 hand and self destructs
+
+-- chipless cookie
+-- uncommon joker
+-- +2 joker slots
+-- if played poker hand is not the same as the previously played poker hand, self destruct
+
+-- .
+-- uncommon joker
+-- x0.3 mult for each scoring rankless card
+
+-- callie
+-- epic joker
+-- ^0.05 for each scoring wild card
