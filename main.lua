@@ -102,17 +102,6 @@ Cryptid.mod_whitelist["Vall-karri"] = true
 -- x3 mult if last chat message contains :3
 -- (hidden effect, gives x9 if message contains :3c)
 
--- crabus
--- legendary joker - entr crossmod
--- unscoring cards become dark cards
--- dark cards scale when scored
--- gains x0.05 chips when a card becomes a dark card
-
--- roundabout
--- uncommon joker
--- prevent the next source of ante gain
--- when ante gain prevented, lose 1 hand and self destructs
-
 -- chipless cookie
 -- uncommon joker
 -- +2 joker slots

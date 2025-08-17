@@ -20,7 +20,7 @@ SMODS.Booster {
         return {vars = {card.ability.choose, card.ability.extra}}
     end,
 
-    weight = 1.6,
+    weight = 0.7,
     cost = 50,
 
     create_card = function(self, card, i)
@@ -55,6 +55,9 @@ SMODS.Booster {
         end
 
     end,
+    in_pool = function(self, args)
+        return to_big(G.GAME.dollars) > to_big(self.cost)
+    end
 }
 
 SMODS.Booster {

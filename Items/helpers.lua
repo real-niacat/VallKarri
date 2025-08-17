@@ -138,32 +138,32 @@ function self_annihilate(card)
     card:quick_dissolve()
 end
 
-function random_suit()
+function random_suit(seed)
     local n = { "Spades", "Hearts", "Clubs", "Diamonds" }
-    return n[pseudorandom("valk_random_suit", 1, #n)]
+    return n[pseudorandom(seed or "valk_random_suit", 1, #n)]
 end
 
-function random_rank()
+function random_rank(seed)
     local n = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" }
-    return n[pseudorandom("valk_random_rank", 1, #n)]
+    return n[pseudorandom(seed or "valk_random_rank", 1, #n)]
 end
 
-function random_enhancement()
+function random_enhancement(seed)
     local choices = {}
     for i, e in ipairs(G.P_CENTER_POOLS.Enhanced) do
         choices[#choices + 1] = e.key
     end
-    return choices[pseudorandom("valk_random_enhance", 1, #choices)]
+    return choices[pseudorandom(seed or "valk_random_enhance", 1, #choices)]
 end
 
-function random_edition()
+function random_edition(seed)
     local choices = {}
     for i, e in ipairs(G.P_CENTER_POOLS.Edition) do
         if e.key ~= "e_negative" then
             choices[#choices + 1] = e.key
         end
     end
-    return choices[pseudorandom("valk_random_edition", 1, #choices)]
+    return choices[pseudorandom(seed or "valk_random_edition", 1, #choices)]
 end
 
 function level_ascended_hands(amount, card)
@@ -372,30 +372,6 @@ function valk_additions()
     end
 
     return total
-end
-
-function scraptake_calculation()
-    local calced, b = 0, 0
-
-    if (not G.jokers or not G.playing_cards) then
-        return 0
-    end
-
-
-    for i, jok in ipairs(G.jokers.cards) do
-        if (string.find(jok.config.center_key, "valk")) then
-            calced = calced + 1
-        end
-    end
-
-    for _, playing_card in pairs(G.playing_cards) do
-        if next(SMODS.get_enhancements(playing_card)) then
-            b = b + 1
-        end
-    end
-
-    calced = calced ^ b
-    return calced
 end
 
 function level_all_hands(source, amount, mul)

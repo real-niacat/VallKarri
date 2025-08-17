@@ -379,7 +379,7 @@ SMODS.Joker {
     rarity = 2,
     add_to_deck = function(self, card, from_debuff)
         G.GAME.planet_replace = G.GAME.planet_replace and (G.GAME.planet_replace + card.ability.extra.chance) or
-        card.ability.extra.chance
+            card.ability.extra.chance
     end,
     remove_from_deck = function(self, card, from_debuff)
         G.GAME.planet_replace = G.GAME.planet_replace and (G.GAME.planet_replace - card.ability.extra.chance) or 0
@@ -406,7 +406,7 @@ SMODS.Joker {
     rarity = 2,
     add_to_deck = function(self, card, from_debuff)
         G.GAME.tarot_replace = G.GAME.tarot_replace and (G.GAME.tarot_replace + card.ability.extra.chance) or
-        card.ability.extra.chance
+            card.ability.extra.chance
     end,
     remove_from_deck = function(self, card, from_debuff)
         G.GAME.tarot_replace = G.GAME.tarot_replace and (G.GAME.tarot_replace - card.ability.extra.chance) or 0
@@ -433,7 +433,7 @@ SMODS.Joker {
     rarity = 2,
     add_to_deck = function(self, card, from_debuff)
         G.GAME.spectral_replace = G.GAME.spectral_replace and (G.GAME.spectral_replace + card.ability.extra.chance) or
-        card.ability.extra.chance
+            card.ability.extra.chance
     end,
     remove_from_deck = function(self, card, from_debuff)
         G.GAME.spectral_replace = G.GAME.spectral_replace and (G.GAME.spectral_replace - card.ability.extra.chance) or 0
@@ -444,7 +444,7 @@ SMODS.Joker {
     key = "merchantcat",
     rarity = 2,
     atlas = "phold",
-    pos = {x=0,y=1},
+    pos = { x = 0, y = 1 },
     cost = 8,
     loc_txt = {
         name = "Merchant Cat",
@@ -454,15 +454,84 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = {}}
+        return { vars = {} }
     end,
     demicoloncompat = true,
-    config = { extra = { }},
+    config = { extra = {} },
     calculate = function(self, card, context)
         if context.buying_card then
             add_tag(Tag("tag_cry_cat"))
         end
     end,
     pools = { ["Kitties"] = true },
+
+}
+
+SMODS.Joker {
+    key = "roundabout",
+    rarity = 2,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 8,
+    loc_txt = {
+        name = "Roundabout",
+        text = {
+            "{C:attention}-#1#{} to the next change in ante",
+            "{C:red,E:1}Self-destructs{}",
+            credit("Nobody!"),
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.change } }
+    end,
+    demicoloncompat = true,
+    config = { extra = { change = 1 } },
+    calculate = function(self, card, context)
+        if context.modify_ante then
+            card:start_dissolve({ G.C.BLACK }, false)
+            return { modify = -card.ability.extra.change }
+        end
+    end,
+
+}
+
+SMODS.Joker {
+    key = "chipless_cookie",
+    rarity = 2,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 8,
+    loc_txt = {
+        name = "Chipless Cookie",
+        text = {
+            "{C:attention}+#1#{} Joker Slots",
+            "{C:red,E:1}Self-destructs{} if played hand is not most played {C:attention}poker hand{}",
+            credit("Nobody!"),
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.slots } }
+    end,
+    config = { extra = { slots = 2 } },
+    calculate = function(self, card, context)
+        if context.before then
+            local die = true
+            local play_more_than = (G.GAME.hands[context.scoring_name].played or 0)
+            for k, v in pairs(G.GAME.hands) do
+                if k ~= context.scoring_name and v.played >= play_more_than and SMODS.is_poker_hand_visible(k) then
+                    die = false
+                end
+            end
+            if die then
+                card:start_dissolve({G.C.RED})
+            end
+        end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        G.jokers:change_size(card.ability.extra.slots)
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.jokers:change_size(-card.ability.extra.slots)
+    end,
 
 }

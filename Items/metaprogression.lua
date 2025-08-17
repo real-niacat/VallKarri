@@ -147,7 +147,12 @@ function Game:start_run(args)
         local add_money = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
         G.GAME.dollars = G.GAME.dollars + add_money
 
-        -- hand levels come back eventually. not right now
+        local chance = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.35
+        for i,card in ipairs(G.playing_cards) do
+            if pseudorandom("valk_metaprog", 1, 100) < chance then
+                card:set_seal(pseudorandom_element(G.P_CENTER_POOLS.Seal,"valk_metaprog_seal").key)
+            end
+        end
     end
 
     short_update_meta()
@@ -370,7 +375,11 @@ end
 
 function get_blind_amount(ante)
     refresh_metaprog()
-    return blindamounthook(ante) * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.9))))
+    local amount = blindamounthook(ante) * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.9))))
+    local nearest = math.floor(math.log10(amount)) - 1
+    -- round to nearest
+    nearest = 10^nearest 
+    return math.floor((amount / nearest)+0.5)*nearest
     -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
 
