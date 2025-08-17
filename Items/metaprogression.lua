@@ -146,13 +146,6 @@ function Game:start_run(args)
         -- DO ON-START STUFF HERE
         local add_money = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
         G.GAME.dollars = G.GAME.dollars + add_money
-
-        local chance = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.35
-        for i,card in ipairs(G.playing_cards) do
-            if pseudorandom("valk_metaprog", 1, 100) < chance then
-                card:set_seal(pseudorandom_element(G.P_CENTER_POOLS.Seal,"valk_metaprog_seal").key)
-            end
-        end
     end
 
     short_update_meta()
