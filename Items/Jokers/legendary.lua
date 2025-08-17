@@ -326,12 +326,24 @@ SMODS.Joker {
         if (context.setting_blind) then
             ease_hands_played(card.ability.extra.meow)
             ease_discard(card.ability.extra.meow)
+        end
+    end,
+
+    add_to_deck = function(self, card, from_debuff )
+        if not from_debuff then
             G.hand:change_size(card.ability.extra.meow)
             SMODS.change_play_limit(card.ability.extra.meow)
             SMODS.change_discard_limit(card.ability.extra.meow)
         end
     end,
-
+    remove_from_deck = function(self, card, from_debuff )
+        if not from_debuff then
+            G.hand:change_size(-card.ability.extra.meow)
+            SMODS.change_play_limit(-card.ability.extra.meow)
+            SMODS.change_discard_limit(-card.ability.extra.meow)
+        end
+    end,
+  
 }
 
 
