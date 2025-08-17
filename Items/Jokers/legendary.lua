@@ -352,7 +352,7 @@ SMODS.Joker {
     loc_txt = {
         name = "ISSBROKIE",
         text = {
-            "All{C:attention} Aces, Kings, 4's{} and {C:attention}7's{} increase",
+            "All{C:attention} Aces, Kings, 4s{} and {C:attention}7s{} increase",
             "chips and mult of played hand type by {C:attention}X1+(rank/100){}",
             credit("Scraptake")
         }
