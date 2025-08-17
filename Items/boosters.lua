@@ -69,7 +69,7 @@ SMODS.Booster {
         name = "Deck-Fixing Pack",
         text = {
             "Pick {C:attention}#1#{} of {C:attention}#2#{} {C:attention}deck-fixing{} cards to use immediately",
-            credit("Scraptake")
+            credit("mailingway")
         },
         group_name = "Deck-Fixing Pack"
     },

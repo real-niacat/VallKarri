@@ -686,3 +686,14 @@ function lerpcolour(c1, c2, percent)
     new[3] = lerp(c1[3], c2[3], math.log10(percent/10))
     return {new[1], new[2], new[3], 1}
 end
+
+function CardArea:check_individual(func)
+
+    for i,card in ipairs(self.cards) do
+        if func(card) then
+            return true
+        end
+    end
+    return false
+
+end

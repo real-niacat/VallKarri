@@ -290,3 +290,61 @@ SMODS.Joker {
         G.hand:change_size(-card.ability.extra.handsize)
     end,
 }
+
+SMODS.Joker {
+    key = "ancientfingers",
+    loc_txt = {
+        name = "Ancient Fingers",
+        text = {
+            "All {V:1}#1#{} are forcefully played",
+            "Draw {C:attention}two{} replacements for each card forcefully played",
+            credit("Nobody!")
+        }
+    },
+    config = { extra = {} },
+    loc_vars = function(self, info_queue, card)
+        local suit = G.GAME.current_round.ancient_card.suit
+        local name = localize(suit, 'suits_plural')
+        local colour = G.C.SUITS[suit]
+        return { vars = { name, colours = { colour } } }
+    end,
+    rarity = "cry_epic",
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    -- soul_pos = {x=0, y=0},
+    cost = 20,
+    immutable = true,
+
+
+    calculate = function(self, card, context)
+        if context.press_play then
+            G.E_MANAGER:add_event(
+                Event(
+                    {
+                        trigger = "after",
+                        delay = 0.1,
+                        func = function()
+                            local drawn = 0
+                            local played = 0
+                            for i, c in ipairs(G.hand.cards) do
+                                if not c.highlighted and c:is_suit(G.GAME.current_round.ancient_card.suit) then
+                                    draw_card(G.hand, G.play, nil, nil, nil, c, nil, nil, false)
+                                    c:highlight(true)
+                                    drawn = drawn + 1
+                                end
+
+                                if c.highlighted then
+                                    played = played + 1
+                                end
+                            end
+
+                            G.FUNCS.draw_from_deck_to_hand((drawn*2) + played,true)
+                            return true
+                        end
+                    }
+                )
+            )
+        end
+    end,
+
+}

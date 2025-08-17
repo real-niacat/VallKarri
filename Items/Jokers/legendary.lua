@@ -16,27 +16,23 @@ SMODS.Joker {
     rarity = 4,
     atlas = "main",
     pools = { ["Kitties"] = true },
-    pos = {x=0,y=4},
-    soul_pos = {x=1,y=4},
+    pos = { x = 0, y = 4 },
+    soul_pos = { x = 1, y = 4 },
     cost = 20,
     blueprint_compat = true,
     calculate = function(self, card, context)
-
-        if (context.setting_blind) then 
-            
+        if (context.setting_blind) then
             if G.jokers.cards[1] and G.jokers.cards[1].config.center.key ~= "j_valk_niko" then
                 G.jokers.cards[1].debuff = true
-                Cryptid.manipulate(G.jokers.cards[1], {type = "X", value = 2}) --oh no! hardcoding!
+                Cryptid.manipulate(G.jokers.cards[1], { type = "X", value = 2 }) --oh no! hardcoding!
             end
-
         end
 
         if (context.end_of_round and context.main_eval) then
-            for i,joker in ipairs(G.jokers.cards) do
+            for i, joker in ipairs(G.jokers.cards) do
                 joker.debuff = false
             end
         end
-
     end
 }
 
@@ -52,19 +48,19 @@ SMODS.Joker {
             credit("Scraptake"),
         }
     },
-    config = { extra = {gain = 0.1}},
-    loc_vars = function(self,info_queue,card)
-        return {vars = {card.ability.extra.gain, card.ability.extra.gain * days_since(2019, 2, 14)}}
+    config = { extra = { gain = 0.1 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gain, card.ability.extra.gain * days_since(2019, 2, 14) } }
     end,
     rarity = 4,
     atlas = "main",
-    pos = {x=5,y=0},
-    soul_pos = {x=6,y=0},
+    pos = { x = 5, y = 0 },
+    soul_pos = { x = 6, y = 0 },
     cost = 20,
     demicoloncompat = true,
-    calculate = function(self, card, context) 
+    calculate = function(self, card, context)
         if (context.joker_main) or context.forcetrigger then
-            return {x_mult = card.ability.extra.gain * days_since(2019, 2, 14)}
+            return { x_mult = card.ability.extra.gain * days_since(2019, 2, 14) }
         end
     end
 
@@ -82,30 +78,27 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = {money = 5.4} },
+    config = { extra = { money = 5.4 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.money}}
+        return { vars = { card.ability.extra.money } }
     end,
     rarity = 4,
     pools = { ["Kitties"] = true },
     atlas = "main",
-    pos = {x=0,y=7},
-    soul_pos = {x=1,y=7},
-    cost = 20, 
+    pos = { x = 0, y = 7 },
+    soul_pos = { x = 1, y = 7 },
+    cost = 20,
     calculate = function(self, card, context)
         if (context.end_of_round and not context.repetition and not context.individual and not context.blueprint) then
-
             local c = create_card("Food", G.jokers, nil, nil, nil, nil, nil, "valk_lilac")
             c:add_to_deck()
             c:set_edition("e_negative", true)
             G.jokers:emplace(c)
 
             if (G.GAME.blind.boss) then
-                
-                for _i,joker in pairs(G.jokers.cards) do
-                
+                for _i, joker in pairs(G.jokers.cards) do
                     local res = Cryptid.safe_get(joker.config.center, "pools", "Food")
-                    for _j,pooljoker in pairs(G.P_CENTER_POOLS.Food) do
+                    for _j, pooljoker in pairs(G.P_CENTER_POOLS.Food) do
                         res = res or (pooljoker.key == joker.key)
                         -- print(pooljoker.key)
                     end
@@ -113,11 +106,8 @@ SMODS.Joker {
                     if res then
                         joker.sell_cost = joker.sell_cost * card.ability.extra.money
                     end
-            
                 end
-
             end
-
         end
     end
 }
@@ -135,26 +125,27 @@ SMODS.Joker {
             credit("unexian")
         }
     },
-    config = { extra = {gm = 10, gx = 0.2, m = 10, x = 1} },
+    config = { extra = { gm = 10, gx = 0.2, m = 10, x = 1 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {
-            card.ability.extra.gm,
-            card.ability.extra.gx,
-            card.ability.extra.m,
-            card.ability.extra.x
-        }}
+        return {
+            vars = {
+                card.ability.extra.gm,
+                card.ability.extra.gx,
+                card.ability.extra.m,
+                card.ability.extra.x
+            }
+        }
     end,
     rarity = 4,
     atlas = "main",
-    pos = {x=7, y=6},
-    soul_pos = {x=8, y=6},
+    pos = { x = 7, y = 6 },
+    soul_pos = { x = 8, y = 6 },
     cost = 20,
     calculate = function(self, card, context)
-
         if context.before and context.scoring_name == "cry_None" then
             card.ability.extra.m = card.ability.extra.m + card.ability.extra.gm
             card.ability.extra.x = card.ability.extra.x + card.ability.extra.gx
-            return {message = "Upgraded!"}
+            return { message = "Upgraded!" }
         end
 
         if context.joker_main then
@@ -163,7 +154,6 @@ SMODS.Joker {
                 xmult = card.ability.extra.x
             }
         end
-
     end
 }
 
@@ -178,22 +168,21 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = { extra = {cards = 5} },
+    config = { extra = { cards = 5 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.cards}}
+        return { vars = { card.ability.extra.cards } }
     end,
     rarity = 4,
     atlas = "main",
-    pos = {x=0, y=11},
-    soul_pos = {x=1, y=11},
+    pos = { x = 0, y = 11 },
+    soul_pos = { x = 1, y = 11 },
     cost = 20,
     blueprint_compat = true,
     pools = { ["Kitties"] = true },
     immutable = true,
     calculate = function(self, card, context)
-
         if context.setting_blind then
-            for i=1,card.ability.extra.cards do
+            for i = 1, card.ability.extra.cards do
                 local _card = create_card("Base", G.play, nil, nil, nil, nil, nil, "valk_kathleen")
                 SMODS.change_base(_card, random_suit(), random_rank())
                 _card:set_edition(random_edition(), true)
@@ -201,11 +190,8 @@ SMODS.Joker {
                 _card:add_to_deck()
                 G.deck:emplace(_card)
                 table.insert(G.playing_cards, _card)
-                
             end
-
         end
-
     end,
     add_to_deck = function(self, card, from_debuff)
         if from_debuff then return end
@@ -231,30 +217,30 @@ SMODS.Joker {
             credit("mailingway")
         }
     },
-    config = { extra = {min = 1.1, max = 6.9} },
+    config = { extra = { min = 1.1, max = 6.9 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.min, card.ability.extra.max}}
+        return { vars = { card.ability.extra.min, card.ability.extra.max } }
     end,
     rarity = 4,
     atlas = "main",
-    pos = {x=0, y=12},
-    soul_pos = {x=1, y=12},
+    pos = { x = 0, y = 12 },
+    soul_pos = { x = 1, y = 12 },
     cost = 20,
     blueprint_compat = false,
     immutable = true,
     calculate = function(self, card, context)
-
         if context.before and not context.blueprint then
             local chosen = G.jokers.cards[pseudorandom("valk_sinep", 1, #G.jokers.cards)]
             if not Card.no(chosen, "immutable", true) then
-				Cryptid.with_deck_effects(chosen, function(cards)
-					Cryptid.manipulate(chosen,
-                        {value = math.map(pseudorandom("valk_sinep"), 0, 1, card.ability.extra.min, card.ability.extra.max)})
-				end)
-			end
-            
+                Cryptid.with_deck_effects(chosen, function(cards)
+                    Cryptid.manipulate(chosen,
+                        {
+                            value = math.map(pseudorandom("valk_sinep"), 0, 1, card.ability.extra.min,
+                                card.ability.extra.max)
+                        })
+                end)
+            end
         end
-
     end,
 }
 
@@ -269,19 +255,18 @@ SMODS.Joker {
             credit("Grahkon")
         }
     },
-    config = { extra = {csl = 3, scaling = 4} },
+    config = { extra = { csl = 3, scaling = 4 } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.c_cry_sunplanet
-        return {vars = {card.ability.extra.csl, card.ability.extra.scaling + 1}}
+        info_queue[#info_queue + 1] = G.P_CENTERS.c_cry_sunplanet
+        return { vars = { card.ability.extra.csl, card.ability.extra.scaling + 1 } }
     end,
     rarity = 4,
     atlas = "main",
-    pos = {x=2, y=12},
-    soul_pos = {x=3, y=12},
+    pos = { x = 2, y = 12 },
+    soul_pos = { x = 3, y = 12 },
     cost = 20,
     blueprint_compat = false,
     calculate = function(self, card, context)
-
         if context.using_consumeable then
             if context.consumeable.ability.set == "Planet" then
                 level_ascended_hands(1, card)
@@ -290,17 +275,16 @@ SMODS.Joker {
                 level_ascended_hands(card.ability.extra.scaling, card)
             end
         end
-        
     end,
 
-    add_to_deck = function(self, card, from_debuff )
+    add_to_deck = function(self, card, from_debuff)
         if not from_debuff then
             G.hand:change_size(card.ability.extra.csl)
             SMODS.change_play_limit(card.ability.extra.csl)
             SMODS.change_discard_limit(card.ability.extra.csl)
         end
     end,
-    remove_from_deck = function(self, card, from_debuff )
+    remove_from_deck = function(self, card, from_debuff)
         if not from_debuff then
             G.hand:change_size(-card.ability.extra.csl)
             SMODS.change_play_limit(-card.ability.extra.csl)
@@ -319,15 +303,15 @@ SMODS.Joker {
             "{C:attention}+#1#{} Card Selection Limit and Hand Size",
             "When playing card is scored, earn {C:money}$#1#{}",
             credit("Scraptake"),
-        } 
+        }
     },
-    config = { extra = {meow = 3} },
-     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.meow}}
+    config = { extra = { meow = 3 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.meow } }
     end,
     rarity = 4,
     atlas = "main",
-    pos = {x=4, y=12}, 
+    pos = { x = 4, y = 12 },
     cost = 20,
     immutable = false,
     blueprint_compat = false,
@@ -337,8 +321,7 @@ SMODS.Joker {
             ease_dollars(card.ability.extra.meow)
         end
         if (context.joker_main) or context.forcetrigger then
-            return {x_mult = card.ability.extra.meow,x_chips = card.ability.extra.meow}
-
+            return { x_mult = card.ability.extra.meow, x_chips = card.ability.extra.meow }
         end
         if (context.setting_blind) then
             ease_hands_played(card.ability.extra.meow)
@@ -348,7 +331,7 @@ SMODS.Joker {
             SMODS.change_discard_limit(card.ability.extra.meow)
         end
     end,
-  
+
 }
 
 
@@ -362,14 +345,14 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = {inc = 0} },
-    loc_vars = function(self,info_queue, card)
-        return {vars = {card.ability.extra.inc}}
+    config = { extra = { inc = 0 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.inc } }
     end,
     rarity = 4,
     atlas = "main",
-    pos = {x=2, y=14},
-    soul_pos = {x=3, y=14},
+    pos = { x = 2, y = 14 },
+    soul_pos = { x = 3, y = 14 },
     cost = 20,
     blueprint_compat = true,
     immutable = true,
@@ -377,10 +360,10 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
         if (context.individual and context.cardarea == G.play) and (context.other_card:get_id() == 4 or
-        context.other_card:get_id() == 7 or 
-        context.other_card:get_id() == 13 or 
-        context.other_card:get_id() == 14) then
-            card.ability.extra.inc = 1+(context.other_card:get_id()/100)
+                context.other_card:get_id() == 7 or
+                context.other_card:get_id() == 13 or
+                context.other_card:get_id() == 14) then
+            card.ability.extra.inc = 1 + (context.other_card:get_id() / 100)
             local text = G.FUNCS.get_poker_hand_info(context.full_hand)
             G.GAME.hands[text].chips = G.GAME.hands[text].chips * card.ability.extra.inc
             G.GAME.hands[text].mult = G.GAME.hands[text].mult * card.ability.extra.inc
