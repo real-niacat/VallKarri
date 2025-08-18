@@ -438,7 +438,7 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        local active = string.find(vallkarri.last_message, ":3") and "Active" or "Inactive"
+        local active = string.find(vallkarri.last_message, ":3") and "Active!" or "Inactive"
         return { vars = { card.ability.extra.mult, active } }
     end,
     demicoloncompat = true,
