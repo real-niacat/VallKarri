@@ -10,9 +10,9 @@ SMODS.Joker {
             credit("Scraptake")
         }
     },
-    config = { extra = {cost = 1, req = 4, taken = 0} },
+    config = { extra = { cost = 1, req = 4, taken = 0 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.cost, card.ability.extra.req} }
+        return { vars = { card.ability.extra.cost, card.ability.extra.req } }
     end,
     pools = { ["Kitties"] = true },
     rarity = 3,
@@ -201,17 +201,16 @@ SMODS.Joker {
     },
     config = { extra = { xmult = 1.09, xchips = 2.9 } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_CENTERS.m_cry_light
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_cry_light
         return { vars = { card.ability.extra.xmult, card.ability.extra.xchips } }
     end,
     rarity = 3,
     atlas = "main",
-    pos = {x=11, y=8},
+    pos = { x = 11, y = 8 },
     cost = 8,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
-
             local returntable = {}
             if SMODS.has_enhancement(context.other_card, "m_cry_light") then
                 returntable.xchips = card.ability.extra.xchips
@@ -221,7 +220,6 @@ SMODS.Joker {
             end
 
             return returntable
-
         end
     end
 }
@@ -232,7 +230,7 @@ SMODS.Joker {
     key = "neffy",
     rarity = 3,
     atlas = "atlas2",
-    pos = {x=2,y=1},
+    pos = { x = 2, y = 1 },
     cost = 8,
     loc_txt = {
         name = "Neffy",
@@ -244,14 +242,14 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.base - math.max(kitty_count(-1)*card.ability.extra.loss, 0), card.ability.extra.loss}}
+        return { vars = { card.ability.extra.base - math.max(kitty_count(-1) * card.ability.extra.loss, 0), card.ability.extra.loss } }
     end,
     demicoloncompat = true,
-    config = { extra = { base = 3, loss = 0.25 }},
+    config = { extra = { base = 3, loss = 0.25 } },
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
             return {
-                xmult = card.ability.extra.base - math.max(kitty_count(-1)*card.ability.extra.loss, 0)
+                xmult = card.ability.extra.base - math.max(kitty_count(-1) * card.ability.extra.loss, 0)
             }
         end
     end,
@@ -263,7 +261,7 @@ SMODS.Joker {
     key = "norma",
     rarity = 3,
     atlas = "atlas2",
-    pos = {x=2,y=0},
+    pos = { x = 2, y = 0 },
     cost = 8,
     loc_txt = {
         name = "Norma",
@@ -276,18 +274,18 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.gain, card.ability.extra.xmult}}
+        return { vars = { card.ability.extra.gain, card.ability.extra.xmult } }
     end,
     demicoloncompat = true,
-    config = { extra = { xmult = 1, gain = 0.03, real_gain = 0 }},
+    config = { extra = { xmult = 1, gain = 0.03, real_gain = 0 } },
     calculate = function(self, card, context)
         if context.drawing_cards then
-            card.ability.extra.real_gain = (card.ability.extra.gain*context.amount)
+            card.ability.extra.real_gain = (card.ability.extra.gain * context.amount)
             card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.real_gain
-            
-            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "xmult", scalar_value = "real_gain"})
 
-            for i,handcard in ipairs(G.hand.cards) do
+            SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "xmult", scalar_value = "real_gain" })
+
+            for i, handcard in ipairs(G.hand.cards) do
                 handcard:flip()
             end
         end
@@ -306,7 +304,7 @@ SMODS.Joker {
     key = "boxofkittens",
     rarity = 3,
     atlas = "atlas2",
-    pos = {x=3,y=2},
+    pos = { x = 3, y = 2 },
     cost = 8,
     loc_txt = {
         name = "Box of Kittens",
@@ -318,14 +316,14 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.mult, card.ability.extra.mult * count_cat_tags()}}
+        return { vars = { card.ability.extra.mult, card.ability.extra.mult * count_cat_tags() } }
     end,
     demicoloncompat = true,
-    config = { extra = { mult = 3 }},
+    config = { extra = { mult = 3 } },
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
             return {
-                mult = card.ability.extra.mult*count_cat_tags()
+                mult = card.ability.extra.mult * count_cat_tags()
             }
         end
 
@@ -341,7 +339,7 @@ SMODS.Joker {
     key = "dupli_cat_ion",
     rarity = 3,
     atlas = "atlas2",
-    pos = {x=3,y=3},
+    pos = { x = 3, y = 3 },
     cost = 8,
     loc_txt = {
         name = "Dupli-cat-ion",
@@ -353,31 +351,28 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.base_num,
+            card.ability.extra.base_den + math.floor(count_cat_tags() / card.ability.extra.thresh))
 
-        local num, den = SMODS.get_probability_vars(card, card.ability.extra.base_num, card.ability.extra.base_den+math.floor(count_cat_tags()/card.ability.extra.thresh))
-
-        return { vars = {num, den, card.ability.extra.inc, card.ability.extra.thresh}}
+        return { vars = { num, den, card.ability.extra.inc, card.ability.extra.thresh } }
     end,
     demicoloncompat = true,
-    config = { extra = { base_num = 1, base_den = 2, inc = 1, thresh = 4 }},
+    config = { extra = { base_num = 1, base_den = 2, inc = 1, thresh = 4 } },
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval then
             local to_make = 0
 
-            for i,tag in ipairs(G.GAME.tags) do
+            for i, tag in ipairs(G.GAME.tags) do
                 if tag.key == "tag_cry_cat" then
-                    
-                    if SMODS.pseudorandom_probability(card, "duplication", card.ability.extra.base_num, card.ability.extra.base_den+math.floor(count_cat_tags()/card.ability.extra.thresh)) then
+                    if SMODS.pseudorandom_probability(card, "duplication", card.ability.extra.base_num, card.ability.extra.base_den + math.floor(count_cat_tags() / card.ability.extra.thresh)) then
                         to_make = to_make + 1
                     end
-
                 end
             end
 
-            for i=1,to_make do
+            for i = 1, to_make do
                 add_tag(Tag("tag_cry_cat"))
             end
-
         end
     end,
     pools = { ["Kitties"] = true },
@@ -388,7 +383,7 @@ SMODS.Joker {
     key = "greedy_bastard",
     rarity = 3,
     atlas = "atlas2",
-    pos = {x=2,y=2},
+    pos = { x = 2, y = 2 },
     cost = 8,
     loc_txt = {
         name = "Greedy Bastard",
@@ -399,10 +394,10 @@ SMODS.Joker {
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.gain, card.ability.extra.mult}}
+        return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
     end,
     demicoloncompat = true,
-    config = { extra = { mult = 1, gain = 0.05 }},
+    config = { extra = { mult = 1, gain = 0.05 } },
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
             return {
@@ -412,7 +407,7 @@ SMODS.Joker {
 
         if context.end_of_round and context.main_eval then
             local upgr = false
-            for i,tag in ipairs(G.GAME.tags) do
+            for i, tag in ipairs(G.GAME.tags) do
                 if tag.key == "tag_cry_cat" then
                     upgr = true
                     card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
@@ -431,7 +426,7 @@ SMODS.Joker {
     key = "thecolonthree",
     rarity = 3,
     atlas = "atlas2",
-    pos = {x=0,y=2},
+    pos = { x = 0, y = 2 },
     cost = 8,
     loc_txt = {
         name = "The :3",
@@ -444,10 +439,10 @@ SMODS.Joker {
     },
     loc_vars = function(self, info_queue, card)
         local active = string.find(vallkarri.last_message, ":3") and "Active" or "Inactive"
-        return { vars = {card.ability.extra.mult, active}}
+        return { vars = { card.ability.extra.mult, active } }
     end,
     demicoloncompat = true,
-    config = { extra = { mult = 5 }},
+    config = { extra = { mult = 5 } },
     blueprint_compat = true,
     calculate = function(self, card, context)
         if (context.joker_main and string.find(vallkarri.last_message, ":3")) or context.forcetrigger then
@@ -457,5 +452,40 @@ SMODS.Joker {
         end
     end,
     pools = { ["Kitties"] = true },
+
+}
+
+SMODS.Joker {
+    key = "coronal",
+    loc_txt = {
+        name = "Coronal Ejection",
+        text = {
+            "{C:green}#1# in #2#{} chance to increase {C:gold}Ascension Power{} of played {C:attention}poker hand{} by {X:gold,C:white}+#3#{}",
+            credit("mailingway")
+        }
+    },
+    config = { extra = { num = 1, den = 10, power = 10 } },
+    loc_vars = function(self, info_queue, card)
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'coronal')
+        return { vars = { num, den, card.ability.extra.power } }
+    end,
+    rarity = 3,
+    atlas = "main",
+    pos = { x = 4, y = 14 },
+    cost = 8,
+    demicoloncompat = true,
+    blueprint_compat = true,
+
+    calculate = function(self, card, context)
+        if context.before then
+            if SMODS.pseudorandom_probability(card, 'coronal', card.ability.extra.num, card.ability.extra.den, 'coronal') then
+                local text = G.FUNCS.get_poker_hand_info(context.full_hand)
+                G.GAME.hands[text].AscensionPower = (G.GAME.hands[text].AscensionPower and G.GAME.hands[text].AscensionPower + card.ability.extra.power) or
+                card.ability.extra.power
+                quick_card_speak(card, "Upgraded!")
+            end
+        end
+    end,
+    dependencies = {"entr"},
 
 }
