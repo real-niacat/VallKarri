@@ -33,6 +33,7 @@ function short_update_meta()
     update_meta_text("curxp_text", number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp))
     update_meta_text("maxxp_text", number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp))
     update_meta_text("curlvl_text", number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
+    update_meta_text("curpow_text", number_format(vallkarri.calculate_power()))
 end
 
 local updhook = Game.update
@@ -51,10 +52,39 @@ function Game:update(dt)
     
 end
 
+function vallkarri.calculate_power()
+    local base = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.5
+
+    -- ex. 
+    -- vallkarri.add_power_modifier(function(m) return m^2 end)
+
+    local mfd = {}
+    for i, tab in ipairs(vallkarri.run_power_modifiers) do
+        -- tab = {run = func, store = storage, dest = destruction}
+        local m, ret = tab.run(base, tab.store)
+        base = m
+        if ret then
+            tab.store = ret
+        end
+        if tab.dest and tab.dest(tab.store) then
+            table.insert(mfd, tab)
+        end
+    end
+
+    for _,val in pairs(mfd) do
+        local i = find_index(val, vallkarri.run_power_modifiers)
+        if i then
+            table.remove(vallkarri.run_power_modifiers, i)
+        end
+    end
+    return base
+
+end
+
 function create_UIBox_metaprog()
     local text_scale = 0.3
     vallkarri.update_meta_text()
-    G.GAME.vallkarri = { text_display = vallkarri.update_meta_text() }
+    G.GAME.vallkarri = { text_display = vallkarri.update_meta_text(), power = vallkarri.calculate_power() }
     return {
         n = G.UIT.ROOT,
         config = { align = "cm", padding = 0.03, colour = G.C.UI.TRANSPARENT_DARK },
@@ -88,6 +118,15 @@ function create_UIBox_metaprog()
                                     -- { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "req", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } }
                                 },
 
+                            },
+                            {
+                                n = G.UIT.R,
+                                config = { align = "tl", padding = 0.01, maxw = 2 },
+                                nodes = {
+                                    { n = G.UIT.T, config = { text = "Power: ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.85, shadow = true } },
+                                    { n = G.UIT.T, config = { id = "curpow_text", text = number_format(G.GAME.vallkarri.power), colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.85, shadow = true, prev_value = "nil" } },
+                                }
+
                             }
                         }
                     },
@@ -101,27 +140,6 @@ function create_UIBox_metaprog()
     }
 end
 
-function create_UIBox_useless_bullshit()
-    local text_scale = 0.3
-    return {
-        n = G.UIT.ROOT,
-        config = { align = "cm", padding = 0.03, colour = { 0, 0, 0, 0 } },
-        nodes = {
-            {
-                n = G.UIT.R,
-                config = { align = "cm", padding = 0.05, colour = { 0, 0, 0, 0 }, r = 0.1 },
-                nodes = {
-                    { n = G.UIT.T, config = { id = "xp_change", text = "+0 XP", colour = G.C.UI.TEXT_LIGHT, scale = text_scale / 1.2, shadow = true, prev_value = "nil" } },
-                }
-            },
-
-
-        }
-    }
-end
-
-local xp_change = false
-
 local fakestart = Game.start_run
 function Game:start_run(args)
     -- print(args)
@@ -129,12 +147,13 @@ function Game:start_run(args)
 
     refresh_metaprog()
     vallkarri.run_xp_modifiers = {}
+    vallkarri.run_power_modifiers = {}
 
 
 
     self.HUD_META = UIBox {
         definition = create_UIBox_metaprog(),
-        config = { align = ('cli'), offset = { x = 19, y = -2.25 }, major = G.ROOM_ATTACH }
+        config = { align = ('cli'), offset = { x = 19, y = -2.15 }, major = G.ROOM_ATTACH }
     }
 
     -- self.HUD_XP_CHANGE = UIBox {
@@ -151,9 +170,8 @@ function Game:start_run(args)
     short_update_meta()
 end
 
-vallkarri.run_xp_modifiers = {
-
-}
+vallkarri.run_xp_modifiers = {}
+vallkarri.run_power_modifiers = {}
 
 ---Add an xp modifier to the run, which can optionally be removed upon a destruction condition
 ---@param func function
@@ -162,6 +180,16 @@ vallkarri.run_xp_modifiers = {
 function vallkarri.add_xp_modifier(func, storage, destruction)
     
     vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = {run = func, store = storage or {}, dest = destruction}
+
+end
+
+---Add a power modifier to the run, which can optionally be removed upon a destruction condition
+---@param func function
+---@param storage table
+---@param destruction function
+function vallkarri.add_power_modifier(func, storage, destruction)
+    
+    vallkarri.run_power_modifiers[#vallkarri.run_power_modifiers+1] = {run = func, store = storage or {}, dest = destruction}
 
 end
 
@@ -430,6 +458,37 @@ SMODS.Voucher {
 
     in_pool = function()
         return G.GAME.round_resets.ante > amt * (2 ^ 2)
+    end,
+
+    redeem = function(self, card)
+        vallkarri.add_xp_modifier(function(x,t) return x^card.ability.extra.xp end)
+    end,
+
+
+
+}
+
+SMODS.Voucher {
+    key = "gammaboosterator",
+    atlas = "main",
+    pos = { x = 4, y = 7 },
+    loc_txt = {
+        name = "Gamma XP Boosterator",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} to all XP gain",
+            -- "{C:inactive}(Can spawn and be redeemed multiple times)",
+            "{C:inactive}(XP Boosterators apply in the order they were obtained)",
+        }
+    },
+    no_doe = true,
+    config = { extra = { xp = 9.9 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xp } }
+    end,
+
+    in_pool = function()
+        return G.GAME.round_resets.ante > amt * (2 ^ 3)
     end,
 
     redeem = function(self, card)

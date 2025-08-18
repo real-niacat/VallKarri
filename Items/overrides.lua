@@ -199,9 +199,9 @@ function Game:start_run(args)
     -- keeping these settings so that i can make a deck focused around tauics later on
 
     if G.GAME.tauic_deck then
-        G.GAME.base_tau_replace = G.GAME.base_tau_replace / 2
+        G.GAME.base_tau_replace = G.GAME.base_tau_replace / 5
         G.GAME.tau_replace = G.GAME.base_tau_replace 
-        G.GAME.tau_increase = 1
+        G.GAME.tau_increase = 2
     end
 
 

@@ -51,19 +51,20 @@ SMODS.Back {
     loc_txt = {
         name = "Tauic Deck",
         text = {
-            "{C:cry_ember}Tauic{} Jokers spawn {C:attention}twice{} as often.",
+            "{C:cry_ember}Tauic{} Jokers spawn {C:attention}five times{} as often.",
             "and have their {C:green}chance{} increase when the roll fails",
             "{C:dark_edition}-2{} Joker Slots",
+            -- "{C:attention}X3{} Blind Size",
             credit("Scraptake")
         }
     },
 
-    config = { rate = 2, inc = 0.5, joker_slot = -2 },
+    config = { rate = 2, inc = 0.5, joker_slot = -2,},
     pos = {x=7, y=9},
     atlas = "main",
     apply = function(self)
         G.GAME.tauic_deck = true
-    end
+    end,
 }
 
 SMODS.Back {

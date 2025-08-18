@@ -379,7 +379,7 @@ SMODS.Joker {
         name = "{C:cry_ember}Tauic 8 Ball{}",
         text = {
             "When an {C:attention}8{} is scored, create a random {C:tarot}Tarot{} card",
-            "with {C:attention}#1#x{} values",
+            "with {C:attention}X#1#{} values",
             credit("Scraptake")
         }
     },
