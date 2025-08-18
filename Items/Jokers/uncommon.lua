@@ -326,6 +326,47 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
+    key = "rocky",
+    loc_txt = {
+        name = "Rocky",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult for each scoring {C:attention}Suitless{} card",
+            credit("lord.ruby")
+        }
+    },
+    config = { extra = { per = 0.4 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.per } }
+    end,
+    atlas = "atlas2",
+    pos = { x = 1, y = 2 },
+    cost = 6,
+    rarity = 2,
+    pools = { ["Kitties"] = true },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local amount = 0
+            for i, pcard in ipairs(context.scoring_hand) do
+                if Entropy.true_suitless(pcard) then
+                    amount = amount + 1
+                end
+            end
+            return { xmult = 1 + (card.ability.extra.per * amount) }
+        end
+    end,
+    in_pool = function(self, args)
+        for i,card in ipairs(G.playing_cards) do
+            if Entropy.true_suitless(card) then
+                return true
+            end
+        end
+        return false
+    end,
+    blueprint_compat = true,
+    dependencies = {"entr"}
+}
+
+SMODS.Joker {
     key = "utteredchaos",
     loc_txt = {
         name = "Uttered Chaos",
@@ -443,14 +484,14 @@ SMODS.Joker {
 SMODS.Joker {
     key = "merchantcat",
     rarity = 2,
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "atlas2",
+    pos = { x = 3, y = 1 },
     cost = 8,
     loc_txt = {
         name = "Merchant Cat",
         text = {
             "Create a {C:attention}Cat Tag{} when a card is bought",
-            credit("Nobody!"),
+            credit("Lil Mr. Slipstream"),
         }
     },
     loc_vars = function(self, info_queue, card)

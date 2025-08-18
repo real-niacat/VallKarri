@@ -62,7 +62,7 @@ SMODS.Joker {
         text = {
             "At end of round, {C:green}#1# in #2#{} chance",
             "to create a {C:attention}Cat Tag{}",
-            credit("Nobody!")
+            credit("mailingway")
         }
     },
     config = { extra = { num = 1, den = 2 } },
@@ -71,8 +71,8 @@ SMODS.Joker {
         return { vars = { n,d } }
     end,
     rarity = 1,
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "atlas2",
+    pos = { x = 2, y = 3 },
     cost = 5,
     blueprintcompat = true,
     pools = { ["Kitties"] = true },

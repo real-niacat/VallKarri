@@ -216,7 +216,7 @@ SMODS.Joker {
         text = {
             "When blind selected, add a random",
             "{C:attention}Mirrored{} card to deck",
-            credit("Nobody!")
+            credit("mailingway")
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -227,8 +227,8 @@ SMODS.Joker {
         }
     end,
     config = { extra = {} },
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "atlas2",
+    pos = { x = 3, y = 4 },
     cost = 12,
     immutable = true,
     pools = { ["Kitties"] = true },
@@ -258,7 +258,7 @@ SMODS.Joker {
         text = {
             "Forcefully play your {C:attention}full{} hand",
             "{C:attention}+#1#{} Hand Size",
-            credit("Nobody!")
+            credit("mailingway")
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -269,8 +269,8 @@ SMODS.Joker {
         }
     end,
     config = { extra = {handsize = 2} },
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "atlas2",
+    pos = { x = 2, y = 4 },
     cost = 12,
     immutable = true,
     calculate = function(self, card, context)

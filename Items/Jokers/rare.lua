@@ -305,8 +305,8 @@ SMODS.Joker {
 SMODS.Joker {
     key = "boxofkittens",
     rarity = 3,
-    atlas = "phold",
-    pos = {x=0,y=1},
+    atlas = "atlas2",
+    pos = {x=3,y=2},
     cost = 8,
     loc_txt = {
         name = "Box of Kittens",
@@ -314,7 +314,7 @@ SMODS.Joker {
             "Create a {C:attention}Cat Tag{} when rerolling the shop",
             "{C:mult}+#1#{} Mult for each cat tag owned",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
-            credit("Nobody!"),
+            credit("mailingway"),
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -340,8 +340,8 @@ SMODS.Joker {
 SMODS.Joker {
     key = "dupli_cat_ion",
     rarity = 3,
-    atlas = "phold",
-    pos = {x=0,y=1},
+    atlas = "atlas2",
+    pos = {x=3,y=3},
     cost = 8,
     loc_txt = {
         name = "Dupli-cat-ion",
@@ -349,7 +349,7 @@ SMODS.Joker {
             "At end of round, each {C:attention}Cat Tag{} has a {C:green}#1# in #2#{}",
             "chance to create another {C:attention}Cat Tag{}",
             "Increase denominator by {C:attention}#3#{} for every {C:attention}#4# Cat Tags{} owned",
-            credit("Nobody!"),
+            credit("mailingway"),
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -387,15 +387,15 @@ SMODS.Joker {
 SMODS.Joker {
     key = "greedy_bastard",
     rarity = 3,
-    atlas = "phold",
-    pos = {x=0,y=1},
+    atlas = "atlas2",
+    pos = {x=2,y=2},
     cost = 8,
     loc_txt = {
         name = "Greedy Bastard",
         text = {
             "At end of round, gain {X:mult,C:white}X#1#{} Mult for each {C:attention}Cat Tag{} owned",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
-            credit("Nobody!"),
+            credit("mailingway"),
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -421,6 +421,39 @@ SMODS.Joker {
             if upgr then
                 quick_card_speak(card, localize("k_upgrade_ex"))
             end
+        end
+    end,
+    pools = { ["Kitties"] = true },
+
+}
+
+SMODS.Joker {
+    key = "thecolonthree",
+    rarity = 3,
+    atlas = "atlas2",
+    pos = {x=0,y=2},
+    cost = 8,
+    loc_txt = {
+        name = "The :3",
+        text = {
+            "{X:mult,C:white}X#1#{} Mult if the last message in the {C:attention}Vallkarri{}",
+            "discord server contains {E:1}\":3\"{}",
+            "{C:inactive,s:0.8}(#2#)",
+            credit("notmario"),
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        local active = string.find(vallkarri.last_message, ":3") and "Active" or "Inactive"
+        return { vars = {card.ability.extra.mult, active}}
+    end,
+    demicoloncompat = true,
+    config = { extra = { mult = 5 }},
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+        if (context.joker_main and string.find(vallkarri.last_message, ":3")) or context.forcetrigger then
+            return {
+                xmult = card.ability.extra.mult
+            }
         end
     end,
     pools = { ["Kitties"] = true },
