@@ -4,6 +4,9 @@ function Game:start_run(args)
 
     for name,center in pairs(G.P_CENTER_POOLS.Cataclysm) do
         G.P_CENTER_POOLS.Cataclysm[name].cost = 16
+        G.P_CENTER_POOLS.Cataclysm[name].in_pool = function(self, args)
+            return G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count
+        end
     end
 
 end
@@ -458,7 +461,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local mmmmmm = {
     no_doe = true,
     no_grc = true,
     set = "Cataclysm",
@@ -933,7 +937,7 @@ SMODS.Consumable {
         name = "Nevada",
         text = {
             "All hands gain {X:dark_edition,C:white}^^#1#{} Chips & Mult for",
-            "each {C:red}banished{} {C:valk_cataclysm}cataclysm{} card",
+            "each used {C:valk_cataclysm}cataclysm{} card",
             credit("Pangaea"),
         }
     },
@@ -952,9 +956,9 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         local levels = 0
-        for name,center in pairs(G.GAME.cry_banished_keys) do
+        for name,center in pairs(G.GAME.consumeable_usage) do
             if G.P_CENTERS[name].set == "Cataclysm" then
-                levels = levels + 1
+                levels = levels + center.count
             end
         end
 
@@ -971,9 +975,9 @@ SMODS.Consumable {
         end
     end,
     in_pool = function()
-        for name,center in pairs(G.GAME.cry_banished_keys) do
-            if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
-                return true
+        for name,center in pairs(G.GAME.consumeable_usage) do
+            if G.P_CENTERS[name].set == "Cataclysm" then
+                return true 
             end
         end
         return false

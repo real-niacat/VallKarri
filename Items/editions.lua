@@ -50,7 +50,8 @@ SMODS.Edition {
         if (context.edition and context.cardarea == G.jokers and card.config.trigger ) 
         or (context.main_scoring and context.cardarea == G.play) then
             local c = SMODS.create_card({set = "Consumeables", edition = "e_negative", area = G.consumeables})
-
+            c:add_to_deck()
+            G.consumeables:emplace(c)
         end
     end,
     weight = 1,
