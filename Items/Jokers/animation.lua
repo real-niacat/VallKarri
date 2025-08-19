@@ -48,8 +48,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:money}Yellow{}",
         text = {
-            "Create a {C:dark_edition}Negative{} {C:cry_code}Code Card{} when any",
-            "non-{C:cry_code}Code Card{} is sold",
+            "Create a {C:dark_edition}Negative{} {C:attention}Consumable{} when any",
+            "{C:tarot}Tarot{} card is sold",
             credit("Scraptake")
         }
     },
@@ -68,12 +68,12 @@ SMODS.Joker {
     demicoloncompat = true,
     calculate = function(self, card, context)
         
-        if (context.selling_card and context.card.ability and context.card.ability.set ~= "Code") or context.forcetrigger then
+        if (context.selling_card and context.card.ability and context.card.ability.set == "Tarot") or context.forcetrigger then
 
-            local codecard = create_card("Code", G.consumeables, nil, nil, nil, nil, nil, "valk_yellow")
-            codecard:set_edition("e_negative", true)
-            codecard:add_to_deck()
-            G.consumeables:emplace(codecard)
+            local not_a_codecard = create_card("Consumable", G.consumeables, nil, nil, nil, nil, nil, "valk_yellow")
+            not_a_codecard:set_edition("e_negative", true)
+            not_a_codecard:add_to_deck()
+            G.consumeables:emplace(not_a_codecard)
         end
 
     end

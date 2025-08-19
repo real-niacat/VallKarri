@@ -36,8 +36,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Streetlight",
         text = {
-            "Gains {X:mult,C:white}X#1#{} Mult when a {C:attention}Light{} card scores",
-            "{C:attention}Light{} card requirement is capped at {C:attention}#3#{}",
+            "Gains {X:mult,C:white}X#1#{} Mult when a {C:attention}Mirrored{} card scores",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
             credit("Scraptake")
         }
@@ -49,12 +48,12 @@ SMODS.Joker {
     cost = 6,
     demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.gain, card.ability.extra.cur, card.ability.extra.cap } }
+        info_queue[#info_queue+1] = G.P_CENTERS.m_valk_mirrored
+        return { vars = { card.ability.extra.gain, card.ability.extra.cur } }
     end,
 
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_cry_light") then
-            context.other_card.ability.extra.req = math.min(card.ability.extra.cap, context.other_card.ability.extra.req) --cap at 5
+        if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, "m_valk_mirrored") then
             card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
             quick_card_speak(card, "Upgraded!")
         end
@@ -65,7 +64,7 @@ SMODS.Joker {
     end,
     in_pool = function()
         for i, card in ipairs(G.playing_cards) do
-            if SMODS.has_enhancement(card, "m_cry_light") then
+            if SMODS.has_enhancement(card, "m_valk_mirrored") then
                 return true
             end
         end
