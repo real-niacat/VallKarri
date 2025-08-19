@@ -1,7 +1,7 @@
 {
 	"id": "vallkarri",
 	"name": "Vall-karri", 
-	"author": ["Lily"], 
+	"author": ["Lily Felli", "The VallKarri Discord Server"], 
 	"description": "the epitome of B tier game design. it's pronounced Valkyrie",
 	"prefix": "valk",
 	"main_file": "main.lua",

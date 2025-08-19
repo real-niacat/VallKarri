@@ -47,7 +47,7 @@ for name, character in pairs(quips.lose) do
             extra = { center = name },
             loc_txt = txt,
             filter = function(self, quip_type)
-                return true, { weight = weight = vallkarri.quip_weight }
+                return true, { weight = vallkarri.quip_weight }
             end
         }
     end
@@ -64,7 +64,7 @@ for name, character in pairs(quips.win) do
             loc_txt = txt,
             weight = vallkarri.quip_weight,
             filter = function(self, quip_type)
-                return true, { weight = weight = vallkarri.quip_weight }
+                return true, { weight = vallkarri.quip_weight }
             end
         }
     end

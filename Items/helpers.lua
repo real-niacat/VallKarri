@@ -2,6 +2,10 @@ function credit(artist)
     return ('{C:dark_edition,s:0.6,E:2}Art by : ' .. artist .. '{}')
 end
 
+function shadercredit(shader_artist)
+    return ('{C:dark_edition,s:0.6,E:2}Shader by : ' .. shader_artist .. '{}')
+end
+
 function catby(cat_owner)
     return ('{C:dark_edition,s:0.6,E:2}Cat by : ' .. cat_owner .. '{}')
 end

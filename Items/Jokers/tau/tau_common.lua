@@ -280,7 +280,7 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Credit Card{}",
         text = {
             "Refund {C:attention}#1#%{} of all money spent",
-            credit("Lily")
+            credit("Lily Felli")
         }
     },
     config = { immutable = {refund = 75} }, --value is pointless, it's always a 3/4 refund

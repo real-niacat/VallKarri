@@ -5,7 +5,7 @@ SMODS.Joker {
         text = {
             "Creates itself when removed",
             "{C:inactive}Suck it.{}",
-            credit("Lily")
+            credit("Lily Felli")
         }
     },
     config = { extra = {} },

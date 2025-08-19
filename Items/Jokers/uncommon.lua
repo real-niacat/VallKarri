@@ -6,7 +6,7 @@ SMODS.Joker {
             "Gains {X:mult,C:white}X#1#{} Mult when mouse clicked",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
             "{C:inactive}Where do I click, Drago?{}",
-            credit("Lily")
+            credit("Lily Felli")
         }
     },
     config = { extra = { cur = 0.99, gain = 1e-3 } },

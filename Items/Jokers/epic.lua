@@ -81,7 +81,7 @@ SMODS.Joker {
             "{X:mult,C:white}X1{} Mult",
             "{C:valk_prestigious,s:3,f:5}+π/10{C:valk_prestigious,s:3} Zulu",
             "{C:red,s:3.14159265}annihilates{}  a  few other cards",
-            credit("Lily")
+            credit("Lily Felli")
         }
     },
     config = { extra = { zulu = math.pi / 10 } },
