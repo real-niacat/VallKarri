@@ -72,7 +72,7 @@ SMODS.ConsumableType {
 --         return true
 --     end,
 --     use = function(self, card, area, copier)
---         self_annihilate(card)
+--         
 
 
 --     end
@@ -106,7 +106,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         level_all_hands(card, -card.ability.extra.loss)
         for name,_ in pairs(G.GAME.hands) do
@@ -146,7 +146,7 @@ SMODS.Consumable {
         return card.ability.extra.rounds <= 0
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         for i,joker in ipairs(G.jokers.cards) do
             Cryptid.manipulate(joker, {value = card.ability.extra.bonus/(card.ability.extra.negativemult ^ card.ability.extra.startrounds)})
@@ -192,7 +192,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         for i,joker in ipairs(G.jokers.cards) do
             joker:set_debuff(true)
@@ -237,7 +237,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         ease_discard(-card.ability.extra.change)
         G.GAME.round_resets.discards = G.GAME.round_resets.discards - 20 
@@ -273,7 +273,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         local chosen_joker = G.jokers.cards[pseudorandom("cata_abso", 1, #G.jokers.cards)]
         for i,joker in ipairs(G.jokers.cards) do
@@ -311,7 +311,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         local copies = {}
         for i,to_copy in ipairs(G.deck.cards) do 
@@ -358,7 +358,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         G.hand:change_size(-card.ability.extra.change)
         for i,joker in ipairs(G.jokers.cards) do
@@ -397,7 +397,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
 
         for i,center in ipairs(G.P_CENTER_POOLS.Planet) do
@@ -447,7 +447,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         G.GAME.punish_code_usage = true
         if not G.GAME.code_multiuses then
@@ -487,7 +487,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         for i,joker in ipairs(G.jokers.cards) do
 
@@ -529,7 +529,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_banish = {"p_celestial_jumbo_1","p_celestial_jumbo_2","p_celestial_mega_1","p_celestial_mega_2",}
 
         for i,banish in ipairs(to_banish) do
@@ -569,7 +569,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_banish = {"p_tarot_jumbo_1","p_tarot_jumbo_2","p_tarot_mega_1","p_tarot_mega_2",}
 
         for i,banish in ipairs(to_banish) do
@@ -618,7 +618,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_banish = {"p_spectral_jumbo_1","p_spectral_mega_1",}
 
         for i,banish in ipairs(to_banish) do
@@ -662,7 +662,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_make = 0
 
         for i,joker in ipairs(G.jokers.cards) do
@@ -707,7 +707,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_make = 0
 
         G.GAME.ban_tags = true
@@ -755,7 +755,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_make = 0
 
         for i,center in ipairs(G.P_CENTER_POOLS.Planet) do
@@ -798,7 +798,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         for i,joker in ipairs(G.jokers.cards) do
             joker.ability.eternal = true 
@@ -834,7 +834,7 @@ SMODS.Consumable {
 --         return true
 --     end,
 --     use = function(self, card, area, copier)
---         self_annihilate(card)
+--         
 
         
 --     end
@@ -867,7 +867,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         local capable = {}
 

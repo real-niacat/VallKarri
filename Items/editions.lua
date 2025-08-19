@@ -22,6 +22,10 @@ SMODS.Edition {
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.echips}}
     end,
+    weight = 1,
+    get_weight = function(self)
+        return G.GAME.edition_rate * self.weight
+    end
 }
 
 SMODS.Shader {
@@ -42,7 +46,15 @@ SMODS.Edition {
         }
     },
     config = {extra = {}},
-    calculate = function()
+    calculate = function(self, card, context)
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger ) 
+        or (context.main_scoring and context.cardarea == G.play) then
+            local c = SMODS.create_card({set = "Consumeables", edition = "e_negative", area = G.consumeables})
 
+        end
     end,
+    weight = 1,
+    get_weight = function(self)
+        return G.GAME.edition_rate * self.weight
+    end
 }

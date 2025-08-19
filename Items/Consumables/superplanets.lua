@@ -355,14 +355,13 @@ SMODS.Consumable {
     loc_txt = {
         name = "Barnard 68",
         text = {
-            expochips("#1#") .. " Chips on {C:attention}None{}, plus another",
+            expochips("#1#") .. " Chips on {C:attention}Full Mansion{}, plus another",
             expochips("#1#") .. " Chips for each level on {C:attention}any{} hand",
             credit("mailingway"),
         }
     },
 
     no_doe = true,
-    soul_rate = 5,
     config = { extra = { evalue = 9 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {
@@ -387,10 +386,10 @@ SMODS.Consumable {
         simple_hand_text("cry_None")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str})
 
-        G.GAME.hands["cry_None"].chips = G.GAME.hands["cry_None"].chips ^ value
+        G.GAME.hands["valk_fullmansion"].chips = G.GAME.hands["valk_fullmansion"].chips ^ value
     end,
     in_pool = function(self, args)
-        return G.GAME.hands["cry_None"].played > 0
+        return G.GAME.hands["valk_fullmansion"].played > 0
     end,
 
         
@@ -406,14 +405,13 @@ SMODS.Consumable {
     loc_txt = {
         name = "Bootes Void",
         text = {
-            expochips("#1#") .. " Mult on {C:attention}None{}, plus another",
+            expochips("#1#") .. " Mult on {C:attention}Full Mansion{}, plus another",
             expochips("#1#") .. " Mult for each level on {C:attention}any{} hand",
             credit("mailingway"),
         }
     },
 
     no_doe = true,
-    soul_rate = 5,
     config = { extra = { evalue = 9 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {
@@ -438,10 +436,10 @@ SMODS.Consumable {
         simple_hand_text("cry_None")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {mult = str})
 
-        G.GAME.hands["cry_None"].mult = G.GAME.hands["cry_None"].mult ^ value
+        G.GAME.hands["valk_fullmansion"].mult = G.GAME.hands["valk_fullmansion"].mult ^ value
     end,
     in_pool = function(self, args)
-        return G.GAME.hands["cry_None"].played > 0
+        return G.GAME.hands["valk_fullmansion"].played > 0
     end,
 
         

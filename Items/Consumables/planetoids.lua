@@ -330,7 +330,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local big_fucking_rock = {
     set = "Planetoid",
     key = "euphrosyne",
     loc_txt = { 
@@ -368,7 +369,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local last_chance_to_look_at_me_hektor = {
     set = "Planetoid",
     key = "hektor",
     loc_txt = { 
@@ -596,7 +598,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local protogen_robort_idiot = {
     set = "Planetoid",
     key = "proto",
     loc_txt = { 
@@ -634,7 +637,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local i_think_the_entire_fucking_deck_is_a_very_poorly_designed_idea_for_a_poker_hand = {
     set = "Planetoid",
     key = "tc25",
     loc_txt = { 
@@ -672,7 +676,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local None = {
     set = "Planetoid",
     key = "zero",
     loc_txt = { 
