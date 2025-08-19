@@ -94,7 +94,7 @@ SMODS.Joker {
     end,
     
     config = { extra = {} },
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "main",
     pos = {x=5, y=5},
     soul_pos = {x=6, y=5},
