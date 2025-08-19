@@ -301,7 +301,6 @@ SMODS.Joker {
         text = {
             "{X:blue,C:white}X#1#{} Chips and {X:red,C:white}X#1#{} Mult",
             "{C:blue}+#1#{} Hands and {C:red}+#1#{} Discards",
-            "{C:attention}+#1#{} Card Selection Limit and Hand Size",
             "When playing card is scored, earn {C:money}$#1#{}",
             credit("Scraptake"),
         }
@@ -327,21 +326,6 @@ SMODS.Joker {
         if (context.setting_blind) then
             ease_hands_played(card.ability.extra.meow)
             ease_discard(card.ability.extra.meow)
-        end
-    end,
-
-    add_to_deck = function(self, card, from_debuff )
-        if not from_debuff then
-            G.hand:change_size(card.ability.extra.meow)
-            SMODS.change_play_limit(card.ability.extra.meow)
-            SMODS.change_discard_limit(card.ability.extra.meow)
-        end
-    end,
-    remove_from_deck = function(self, card, from_debuff )
-        if not from_debuff then
-            G.hand:change_size(-card.ability.extra.meow)
-            SMODS.change_play_limit(-card.ability.extra.meow)
-            SMODS.change_discard_limit(-card.ability.extra.meow)
         end
     end,
   
