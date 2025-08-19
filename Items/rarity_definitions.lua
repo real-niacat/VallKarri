@@ -13,7 +13,9 @@ SMODS.Rarity {
         name = 'Renowned'
     },
     badge_colour = G.C.VALK_RENOWNED,
-    pools = { ["Joker"] = false },
+    pools = { ["Joker"] = true },
+    default_weight = 0.01,
+    --approx 3x more common than a cryptid epic joker
 }
 
 SMODS.Rarity {
