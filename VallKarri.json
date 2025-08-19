@@ -9,7 +9,7 @@
 	"badge_colour": "e5bf3a",
 	"version": "0.8.1", 
 	"dependencies": [ 
-		"Cryptid (>=0.5.9)",
+		"Cryptlib",
 		"Steamodded (>=1.0.0~BETA-0808a)",
 	]
 }

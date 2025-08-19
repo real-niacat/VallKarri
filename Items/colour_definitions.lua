@@ -1,21 +1,23 @@
 vallkarri.custom_colours = {
-    VALK_PRESTIGIOUS = {HEX("60f542"), HEX("5efaff")},
-	VALK_UNPLEASANT = {HEX("22d71d"),HEX("7a9374"),HEX("fd2ef6"),HEX("c24462"),HEX("9b5300"), },
-	VALK_BLUE = {HEX("2848FF"), HEX("6AC8FF")},
-	VALK_TAUIC = {HEX("523DBA"),HEX("D1CFE3"),HEX("BCC24A")},
-	VALK_SCP = {HEX("6CE746"),HEX("F1E64B"),HEX("F01212")},
-	VALK_GAY = {HEX("058f6e"),HEX("24ceaa"),HEX("99e8c0"),HEX("ffffff"),HEX("7bade3"),HEX("4e49cb"),HEX("401a76")},
+	VALK_PRESTIGIOUS = { HEX("60f542"), HEX("5efaff") },
+	VALK_UNPLEASANT = { HEX("22d71d"), HEX("7a9374"), HEX("fd2ef6"), HEX("c24462"), HEX("9b5300"), },
+	VALK_RENOWNED = { HEX("FFE96F"), HEX("D8CA00") },
+	VALK_EXQUISITE = { HEX("2B2EFF"), HEX("62EDFF"), HEX("0061CF") },
+	VALK_BLUE = { HEX("2848FF"), HEX("6AC8FF") },
+	VALK_TAUIC = { HEX("523DBA"), HEX("D1CFE3"), HEX("BCC24A") },
+	VALK_SCP = { HEX("6CE746"), HEX("F1E64B"), HEX("F01212") },
+	VALK_GAY = { HEX("058f6e"), HEX("24ceaa"), HEX("99e8c0"), HEX("ffffff"), HEX("7bade3"), HEX("4e49cb"), HEX("401a76") },
 }
 
 local updhook = Game.update
 
-for name,color in pairs(vallkarri.custom_colours) do
-    G.C[name] = {0, 0, 0, 0}
+for name, color in pairs(vallkarri.custom_colours) do
+	G.C[name] = { 0, 0, 0, 0 }
 end
 function Game:update(dt)
 	updhook(self, dt)
 	--copied from cryptid, basically.
-    -- sowwy :(
+	-- sowwy :(
 	local anim_timer = self.TIMERS.REAL * 1.5
 	local p = 0.5 * (math.sin(anim_timer) + 1)
 	for k, c in pairs(vallkarri.custom_colours) do
@@ -37,11 +39,11 @@ function Game:update(dt)
 		end
 	end
 
-    for name,colors in pairs(vallkarri.custom_colours) do
-        if G.C.RARITY[string.lower(name)] then
-            G.C.RARITY[string.lower(name)] = G.C[name]
-        end
-    end
+	for name, colors in pairs(vallkarri.custom_colours) do
+		if G.C.RARITY[string.lower(name)] then
+			G.C.RARITY[string.lower(name)] = G.C[name]
+		end
+	end
 end
 
 local lc = loc_colour
@@ -49,9 +51,9 @@ function loc_colour(_c, _default)
 	if not G.ARGS.LOC_COLOURS then
 		lc()
 	end
-    for name,colors in pairs(vallkarri.custom_colours) do
-        G.ARGS.LOC_COLOURS[string.lower(name)] = G.C[name]
-    end
+	for name, colors in pairs(vallkarri.custom_colours) do
+		G.ARGS.LOC_COLOURS[string.lower(name)] = G.C[name]
+	end
 	return lc(_c, _default)
 end
 
