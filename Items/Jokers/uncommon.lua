@@ -489,7 +489,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Merchant Cat",
         text = {
-            "Create a {C:attention}Cat Tag{} when a card is bought",
+            "Create a {C:attention}Kitty Tag{} when a card is bought",
             credit("Lil Mr. Slipstream"),
         }
     },
@@ -500,7 +500,7 @@ SMODS.Joker {
     config = { extra = {} },
     calculate = function(self, card, context)
         if context.buying_card then
-            add_tag(Tag("tag_cry_cat"))
+            add_tag(Tag("tag_valk_kitty"))
         end
     end,
     pools = { ["Kitties"] = true },

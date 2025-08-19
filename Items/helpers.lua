@@ -657,21 +657,11 @@ function kitty_count(base)
     return c
 end
 
-function count_cat_tags()
+function vallkarri.count_kitty_tags()
     local c = 0
     for i,tag in ipairs(G.GAME.tags or {}) do
-        if tag.key == "tag_cry_cat" then
+        if tag.key == "tag_valk_kitty" then
             c = c + 1
-        end
-    end 
-    return c
-end
-
-function count_cat_tags_level()
-    local c = 0
-    for i,tag in ipairs(G.GAME.tags or {}) do
-        if tag.key == "tag_cry_cat" then
-            c = c + tag.config.level
         end
     end 
     return c

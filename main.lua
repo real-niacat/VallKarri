@@ -75,10 +75,6 @@ Cryptid.mod_whitelist["Vall-karri"] = true
 
 -- to-do
 
--- greedy bastard
--- rare joker
--- when a cat tag is created, destroy it and gain 0.2x mult
-
 -- cat costume
 -- legendary joker
 -- +1 to adjacent joker values at end of round, increase by 0.1x for each level on every cat tag owned
