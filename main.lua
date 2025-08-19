@@ -22,6 +22,16 @@ vallkarri.path = "" .. SMODS.current_mod.path
 
 vallkarri.librat_vals = {red = 62, blue = 61}
 vallkarri.last_message = "Dear player. Please make sure to drink water and get eight hours of sleep, its really important to me that you guys stay healthy and strong, - love vagabond"
+vallkarri.splash_options = {
+    "Also try Entropy!",
+    "This is so VallKarric!",
+    "meow!",
+    "VallKarri Yeah!",
+    "Now with 50% more cats!",
+}
+function vallkarri.choose_main_menu_text()
+    return vallkarri.splash_options[math.random(1,#vallkarri.splash_options)]
+end
 
 SMODS.Atlas {
     key = "main",
