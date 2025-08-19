@@ -1,21 +1,9 @@
 vallkarri.calculate = function(self, context)
     -- print("we originalled")
-    G.GAME.joker_retrigger_bulk = G.GAME.joker_retrigger_bulk or 1
-    G.GAME.card_retrigger_bulk = G.GAME.card_retrigger_bulk or 1  
-    if context.retrigger_joker_check and G.GAME.joker_retriggers and G.GAME.joker_retriggers >= G.GAME.joker_retrigger_bulk then
-        G.GAME.joker_retriggers = G.GAME.joker_retriggers - G.GAME.joker_retrigger_bulk
-        return {
-            repetitions = G.GAME.joker_retrigger_bulk,
-            card = context.other_card
-        }
-    end
-
-    if context.repetition and context.cardarea == G.play and G.GAME.card_retriggers and G.GAME.card_retriggers >= G.GAME.card_retrigger_bulk then
-        G.GAME.card_retriggers = G.GAME.card_retriggers - G.GAME.card_retrigger_bulk
-        return {
-            repetitions = G.GAME.card_retrigger_bulk,
-            card = context.other_card
-        }
+    if context.final_scoring_step then
+        for i = 1, #G.GAME.tags do
+            G.GAME.tags[i]:apply_to_run({type = "valk_final_scoring_step"}) --diff name to avoid morefluff conflict
+        end
     end
     --ideally shouldnt affect anything else
 

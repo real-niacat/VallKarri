@@ -25,28 +25,26 @@ vallkarri.hand_buffs = {
 }
 
 vallkarri.hand_buff_functions = {
-    m_bonus = function(n) return { xchips = (1 + n) ^ 1.25 } end,
-    m_mult = function(n) return { xmult = (1 + n) ^ 1.25 } end,
+    m_bonus = function(n) return { sound = "valk_buff_bonus", xchips = (1 + n) ^ 1.25 } end,
+    m_mult = function(n) return { sound = "valk_buff_mult", xmult = (1 + n) ^ 1.25 } end,
     m_wild = function(n, cards)
-        local t = vallkarri.get_hand_buff_functions_except_for({"m_cry_abstract"}) 
-        return SMODS.merge_effects({pseudorandom_element(t, "m_wild_buff")(n,cards),pseudorandom_element(t, "m_wild_buff")(n,cards)}) 
+        local t = vallkarri.get_hand_buff_functions()
+        return SMODS.merge_effects({pseudorandom_element(t, "m_wild_buff")(n,cards),pseudorandom_element(t, "m_wild_buff")(n,cards),{sound = "valk_buff_wild", }}) 
     end,
-    m_gold = function(n) return { dollars = math.ceil((3 + n) ^ 1.1) } end,
+    m_gold = function(n) return { sound = "valk_buff_gold", dollars = math.ceil((3 + n) ^ 1.1) } end,
     m_lucky = function(n)
         n = n + 1
         return {
+            sound = "valk_buff_lucky", 
             chips = pseudorandom("chance", 1, n ^ 2),
             mult = pseudorandom("chance", 1, n ^ 2),
             xchips = pseudorandom("chance", 1, n^0.5),
             xmult = pseudorandom("chance", 1, n^0.5)
         }
     end,
-    m_glass = function(n) return { emult = (n + 1) ^ 1.15 } end,
-    m_steel = function(n) return { emult = (n + 3) ^ 1.05 } end,
+    m_glass = function(n) return { sound = "valk_buff_glass", emult = (n + 1) ^ 1.15 } end,
+    m_steel = function(n) return { sound = "valk_buff_steel", emult = (n + 3) ^ 1.05 } end,
     m_stone = function(n) return { echips = 1 + ((n ^ 0.7) / 2) } end,
-    m_cry_echo = function(n, cards) for _, card in ipairs(cards) do card.ability.perma_bonus = card.ability.perma_bonus and card.ability.perma_bonus + (2 + n) ^ 3 or (2 + n) ^ 3 end end,
-    m_cry_light = function(n, cards) for _, card in ipairs(cards) do card.ability.perma_x_mult = card.ability.perma_x_mult and card.ability.perma_x_mult + n or n end end,
-    m_cry_abstract = function(n) if Talisman then return { eemult = (1 + n) ^ 1.1 } else return { emult = (2*n)^2} end end,
 }
 function vallkarri.add_hand_buff(key, title, colour, scoring_func)
     vallkarri.hand_buffs[key] = { title = title, colour = colour}
@@ -157,13 +155,42 @@ function create_UIBox_HUD(force)
     return res
 end
 
-function vallkarri.get_hand_buff_functions_except_for(exceptions)
+function vallkarri.get_hand_buff_functions()
     -- this functions name is intentionally long and stupid
-    local new = {}
-    for name,func in pairs(vallkarri.hand_buff_functions) do
-        if not table:vcontains(exceptions,name) then
-            new[name] = func
-        end
-    end
-    return new
+    return vallkarri.hand_buff_functions
 end
+
+SMODS.Sound {
+    key = "buff_bonus",
+    path = "chips.ogg", 
+}
+
+SMODS.Sound {
+    key = "buff_mult",
+    path = "mult.ogg", 
+}
+
+SMODS.Sound {
+    key = "buff_wild",
+    path = "wild.ogg", 
+}
+
+SMODS.Sound {
+    key = "buff_glass",
+    path = "glass.ogg", 
+}
+
+SMODS.Sound {
+    key = "buff_steel",
+    path = "steel.ogg", 
+}
+
+SMODS.Sound {
+    key = "buff_gold",
+    path = "gold.ogg", 
+}
+
+SMODS.Sound {
+    key = "buff_lucky",
+    path = "lucky.ogg", 
+}

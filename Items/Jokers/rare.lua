@@ -319,7 +319,7 @@ SMODS.Joker {
         return { vars = { card.ability.extra.mult, card.ability.extra.mult * vallkarri.count_kitty_tags() } }
     end,
     demicoloncompat = true,
-    config = { extra = { mult = 10 } },
+    config = { extra = { mult = 3 } },
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
             return {

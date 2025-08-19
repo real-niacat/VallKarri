@@ -22,19 +22,19 @@ SMODS.Tag {
 	loc_txt = {
 		name = "Kitty Tag",
 		text = {
-			"Gives {C:mult}+#1#{} Chips for every",
+			"Gives {C:chips}+#1#{} Chips for every",
 			"{C:attention}Kitty Tag{} owned",
 			credit("Scraptake")
 		}
 	},
 	config = { chips = 2 },
 	loc_vars = function(self, info_queue, tag)
-		return { vars = { tag.config.chips }}
+		return { vars = { tag.config.chips } }
 	end,
 	min_ante = 1e100, --just. dont spawn.
 
 	apply = function(self, tag, context)
-		if context.type == "final_scoring_step" then --functionality assisted by reading morefluff code
+		if context.type == "valk_final_scoring_step" then --functionality assisted by reading morefluff code
 			SMODS.calculate_effect({ chips = vallkarri.count_kitty_tags() * tag.config.chips }, tag)
 		end
 	end

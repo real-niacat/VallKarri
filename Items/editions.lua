@@ -20,7 +20,7 @@ SMODS.Edition {
     },
     config = {extra = {echips = 1.05}},
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.echips}}
+        return {vars = {card and card.edition and card.edition.echips or self.config.echips}}
     end,
     weight = 1,
     get_weight = function(self)

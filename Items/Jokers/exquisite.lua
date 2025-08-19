@@ -70,12 +70,12 @@ SMODS.Joker {
     calculate = function(self, card, context)
         
         if (context.individual and context.cardarea == G.play) or context.forcetrigger then
-            Cryptid.misprintize(context.other_card, {min=card.ability.extra.strong, max=card.ability.extra.strong}, nil, true)
+            Cryptid.manipulate(context.other_card, {amount=card.ability.extra.strong})
 
 
             for i,c in ipairs(G.jokers.cards) do
                 if (c.config.center_key ~= "j_valk_illena") then
-                    Cryptid.misprintize(c, {min=card.ability.extra.mid, max=card.ability.extra.mid}, nil, true)
+                    Cryptid.manipulate(c, {amount=card.ability.extra.mid})
                 end
                 
             end

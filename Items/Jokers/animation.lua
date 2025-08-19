@@ -70,8 +70,7 @@ SMODS.Joker {
         
         if (context.selling_card and context.card.ability and context.card.ability.set == "Tarot") or context.forcetrigger then
 
-            local not_a_codecard = create_card("Consumable", G.consumeables, nil, nil, nil, nil, nil, "valk_yellow")
-            not_a_codecard:set_edition("e_negative", true)
+            local not_a_codecard = SMODS.create_card({set = "Consumeables", edition = "e_negative"})
             not_a_codecard:add_to_deck()
             G.consumeables:emplace(not_a_codecard)
         end
@@ -105,8 +104,7 @@ SMODS.Joker {
         if context.before then
             local amount = (#context.full_hand - #context.scoring_hand)
             for i=1,amount do
-                local c = create_card("Consumable", G.consumeables, nil, nil, nil, nil, nil, "valk_orange")
-                c:set_edition("e_negative", true)
+                local c = SMODS.create_card({set = "Consumeables", edition = "e_negative"})
                 c:add_to_deck()
                 G.consumeables:emplace(c)
             end
