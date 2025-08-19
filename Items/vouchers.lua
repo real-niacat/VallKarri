@@ -268,7 +268,7 @@ SMODS.Voucher {
         name = "Exotic PERK-UP!",
         text = {
             "{C:attention}Jokers{} have a {C:green}2%{} chance to be replaced by",
-            "an {C:cry_exotic}Exotic{} Joker when created",
+            "an {C:valk_exquisite}Exquisite{} Joker when created",
             credit("Pangaea")
         }
     },

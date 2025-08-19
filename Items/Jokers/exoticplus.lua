@@ -42,7 +42,7 @@ SMODS.Joker {
         name = "Phicer Rekiniov",
         text = {
             "Create a random {C:attention}perishable{} ",
-            "{C:cry_exotic}Exotic{} Joker at end of round",
+            "{C:valk_exquisite}Exquisite{} Joker at end of round",
             quote("phicer"),
             credit("Nerxiana"),
         }
@@ -66,10 +66,10 @@ SMODS.Joker {
         
         if context.end_of_round and context.main_eval then
 
-            local exotic = create_card("Joker", G.jokers, nil, "cry_exotic", nil, nil, nil, "valk_phicer")
-            exotic:set_perishable(true)
-            exotic:add_to_deck()
-            G.jokers:emplace(exotic)
+            local exq = create_card("Joker", G.jokers, nil, "valk_exquisite", nil, nil, nil, "valk_phicer")
+            exq:set_perishable(true)
+            exq:add_to_deck()
+            G.jokers:emplace(exq)
 
         end
 

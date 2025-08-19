@@ -783,7 +783,7 @@ SMODS.Consumable {
         text = {
             "All owned Jokers are made {C:purple}Eternal{}",
             "Jokers have a {C:green}5%{} chance to be",
-            "replaced by an {C:cry_exotic}Exotic{} Joker",
+            "replaced by an {C:valk_exquisite}Exquisite{} Joker",
             credit("Pangaea"),
         }
     },
@@ -808,7 +808,7 @@ SMODS.Consumable {
             joker.ability.eternal = true 
         end
 
-        G.GAME.exotic_replace = 5 --no stacking :)
+        G.GAME.exquisite_replace = 5 --no stacking :)
 
     end
 }

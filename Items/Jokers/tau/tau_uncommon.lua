@@ -239,7 +239,6 @@ SMODS.Joker {
             end
             if my_pos and G.jokers.cards[my_pos+1] and not card.getting_sliced and not G.jokers.cards[my_pos+1].ability.eternal and not G.jokers.cards[my_pos+1].getting_sliced then 
                     local sliced_card = G.jokers.cards[my_pos+1]
-                    if sliced_card.config.center.rarity == "cry_exotic" then check_for_unlock({type = "what_have_you_done"}) end
                     sliced_card.getting_sliced = true
                     G.GAME.joker_buffer = G.GAME.joker_buffer - 1
                     G.E_MANAGER:add_event(Event({func = function()

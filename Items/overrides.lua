@@ -424,8 +424,8 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
         legendary = true
     end
 
-    if G.GAME.exotic_replace and pseudorandom("valk_exotic_replace")*100 < G.GAME.exotic_replace and not forced_key and _type == "Joker" then
-        _rarity = "cry_exotic"
+    if G.GAME.exquisite_replace and pseudorandom("valk_exquisite_replace")*100 < G.GAME.exquisite_replace and not forced_key and _type == "Joker" then
+        _rarity = "valk_exquisite"
     end
 
     if G.GAME.prestigious_replace and pseudorandom("valk_prestigious_replace")*100 < G.GAME.prestigious_replace and not forced_key and _type == "Joker" then

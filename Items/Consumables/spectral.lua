@@ -3,7 +3,7 @@ SMODS.Consumable {
     loc_txt = {
         name = "Freeway",
         text = {
-            "Create a random {C:cry_exotic}Exotic{} Joker",
+            "Create a random {C:valk_exquisite}Exquisite{} Joker",
             credit("Pangaea"),
         }
     },
@@ -11,9 +11,8 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=9, y=3, },
     soul_pos = {x=7, y=3, extra = {x=8, y=3}},
-    soul_rate = 0,
-    hidden = true,
-    cost = 50,
+    soul_rate = 0.04,
+    cost = 8,
 
     can_use = function(self, card)
         return true
@@ -27,7 +26,7 @@ SMODS.Consumable {
 			delay = 0.4,
 			func = function()
 				play_sound("timpani")
-				local c = create_card("Joker", G.jokers, nil, "cry_exotic", nil, nil, nil, "valk_freeway")
+				local c = create_card("Joker", G.jokers, nil, "valk_exquisite", nil, nil, nil, "valk_freeway")
 				c:add_to_deck()
 				G.jokers:emplace(c)
 				c:juice_up(0.3, 0.5)
