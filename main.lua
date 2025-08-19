@@ -56,18 +56,18 @@ merge_recipes = {
 }
 
 assert(SMODS.load_file("loadfiles.lua", "vallkarri"))()
-
-Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
-Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
-Cryptid.pointerblistifytype("rarity", "valk_unsurpassed", nil)
-Cryptid.pointerblistifytype("rarity", "valk_prestigious", nil)
-Cryptid.pointerblistifytype("rarity", "valk_tauic", nil)
-Cryptid.pointerblistifytype("rarity", "valk_equip", nil)
-Cryptid.pointerblistify( "v_valk_alphaboosterator", nil)
-Cryptid.pointerblistify( "v_valk_betaboosterator", nil)
-Cryptid.pointerblistify( "v_valk_gammaboosterator", nil)
-Cryptid.pointerblistify( "c_valk_freeway", nil)
-
+if Cryptid.pointerblistifytype then
+    Cryptid.pointerblistifytype("rarity", "valk_selfinsert", nil)
+    Cryptid.pointerblistifytype("rarity", "valk_quillagod", nil)
+    Cryptid.pointerblistifytype("rarity", "valk_unsurpassed", nil)
+    Cryptid.pointerblistifytype("rarity", "valk_prestigious", nil)
+    Cryptid.pointerblistifytype("rarity", "valk_tauic", nil)
+    Cryptid.pointerblistifytype("rarity", "valk_equip", nil)
+    Cryptid.pointerblistify( "v_valk_alphaboosterator", nil)
+    Cryptid.pointerblistify( "v_valk_betaboosterator", nil)
+    Cryptid.pointerblistify( "v_valk_gammaboosterator", nil)
+    Cryptid.pointerblistify( "c_valk_freeway", nil)
+end
 Cryptid.mod_whitelist["Vall-karri"] = true
 
 
