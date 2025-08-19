@@ -98,18 +98,18 @@ function basic_text_announce(txt, duration, size, col, snd, sndpitch, sndvol)
     }))
 end
 
-function quick_hand_text(name, chip, mul, lv, notif, snd, vol, pit, de)
+function vallkarri.quick_hand_text(name, chip, mul, lv, notif, snd, vol, pit, de)
     update_hand_text(
     { sound = type(snd) == 'string' and snd or type(snd) == 'nil' and 'button', volume = vol or 0.7, pitch = pit or 0.8, delay =
     de or 0.3 }, { handname = name or '????', chips = chip or '?', mult = mul or '?', level = lv or '?', StatusText =
     notif })
 end
 
-function simple_hand_text(hand, notify)
+function vallkarri.simple_hand_text(hand, notify)
     if hand == 'all' or hand == 'allhands' or hand == 'all_hands' then
-        quick_hand_text(localize('k_all_hands'), '...', '...', '', notify)
+        vallkarri.quick_hand_text(localize('k_all_hands'), '...', '...', '', notify)
     elseif G.GAME.hands[hand] then
-        quick_hand_text(localize(hand, 'poker_hands'), G.GAME.hands[hand].chips, G.GAME.hands[hand].mult,
+        vallkarri.quick_hand_text(localize(hand, 'poker_hands'), G.GAME.hands[hand].chips, G.GAME.hands[hand].mult,
             G.GAME.hands[hand].level, notify)
     end
 end
@@ -121,7 +121,7 @@ function ratiocalc(a, b, c, d)
     return ((smaller / larger) ^ c) * d
 end
 
-function mostplayed_name()
+function vallkarri.get_most_played_hand()
     local name = nil
     local timesplayed = -1
 
@@ -168,51 +168,6 @@ function random_edition(seed)
         end
     end
     return choices[pseudorandom(seed or "valk_random_edition", 1, #choices)]
-end
-
-function level_ascended_hands(amount, card)
-    if not amount then
-        amount = 1
-    end
-    local sunlevel = (G.GAME.sunlevel and G.GAME.sunlevel or 0) + amount
-    G.GAME.sunlevel = (G.GAME.sunlevel or 0) + amount
-    delay(0.4)
-    update_hand_text(
-        { sound = "button", volume = 0.7, pitch = 0.8, delay = 0.3 },
-        { handname = localize("cry_asc_hands"), chips = "...", mult = "...", level = to_big(sunlevel) }
-    )
-    delay(1.0)
-    G.E_MANAGER:add_event(Event({
-        trigger = "after",
-        delay = 0.2,
-        func = function()
-            play_sound("tarot1")
-            ease_colour(G.C.UI_CHIPS, copy_table(G.C.GOLD), 0.1)
-            ease_colour(G.C.UI_MULT, copy_table(G.C.GOLD), 0.1)
-            Cryptid.pulse_flame(0.01, sunlevel)
-            if card then card:juice_up(0.8, 0.5) end
-
-            G.E_MANAGER:add_event(Event({
-                trigger = "after",
-                blockable = false,
-                blocking = false,
-                delay = 1.2,
-                func = function()
-                    ease_colour(G.C.UI_CHIPS, G.C.BLUE, 1)
-                    ease_colour(G.C.UI_MULT, G.C.RED, 1)
-                    return true
-                end,
-            }))
-            return true
-        end,
-    }))
-    update_hand_text({ sound = "button", volume = 0.7, pitch = 0.9, delay = 0 }, { level = to_big(sunlevel + amount) })
-    delay(2.6)
-    G.GAME.sunnumber = G.GAME.sunnumber ~= nil and G.GAME.sunnumber + (0.05 * amount) or (0.05 * amount)
-    update_hand_text(
-        { sound = "button", volume = 0.7, pitch = 1.1, delay = 0 },
-        { mult = 0, chips = 0, handname = "", level = "" }
-    )
 end
 
 function math.map(v, imi, ima, omi, oma)

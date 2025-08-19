@@ -250,15 +250,15 @@ SMODS.Joker {
         name = "TASAL",
         text = {
             "{C:attention}+#1#{} Card Selection Limit and Hand Size.",
-            "{X:gold,C:white}X#2#{} Ascension scaling per level of {C:attention}Sol{}.",
-            "When {C:planet}Planet{} card used, increase power of {C:attention}Ascended{} hands",
+            "{C:planet}Planet{} cards have a {C:green}#2# in #3#{} chance",
+            "to level up your most played Poker Hand {C:attention}#4#{} Times",
             credit("Grahkon")
         }
     },
-    config = { extra = { csl = 3, scaling = 4 } },
+    config = { extra = { csl = 3, num = 1, den = 3, levels = 3} },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.c_cry_sunplanet
-        return { vars = { card.ability.extra.csl, card.ability.extra.scaling + 1 } }
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den)
+        return { vars = { card.ability.extra.csl, num, den, card.ability.extra.levels } }
     end,
     rarity = 4,
     atlas = "main",
@@ -268,11 +268,12 @@ SMODS.Joker {
     blueprint_compat = false,
     calculate = function(self, card, context)
         if context.using_consumeable then
-            if context.consumeable.ability.set == "Planet" then
-                level_ascended_hands(1, card)
-            end
-            if context.consumeable.config.center.key == "c_cry_sunplanet" then
-                level_ascended_hands(card.ability.extra.scaling, card)
+            if context.consumeable.ability.set == "Planet" and SMODS.pseudorandom_probability(card, "valk_tasal", card.ability.extra.num, card.ability.extra.den) then
+
+                local hand = vallkarri.get_most_played_hand()
+                vallkarri.quick_hand_text(hand, nil, nil, G.GAME.hands[hand].level)
+                level_up_hand(card, hand, false, card.ability.extra.levels)
+
             end
         end
     end,
