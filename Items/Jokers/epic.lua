@@ -15,7 +15,7 @@ SMODS.Joker {
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "raxd")
         return { vars = { num, den } }
     end,
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "main",
     pos = { x = 0, y = 6 },
     soul_pos = { x = 1, y = 6 },
@@ -66,7 +66,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return { vars = {} }
     end,
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "main",
     pos = { x = 0, y = 10 },
     cost = 18,
@@ -85,7 +85,7 @@ SMODS.Joker {
         }
     },
     config = { extra = { zulu = math.pi / 10 } },
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "main",
     pos = { x = 4, y = 0 },
     cost = math.ceil(10 * math.pi),
@@ -111,7 +111,7 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "wokegoe",
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     loc_txt = {
         name = "{C:valk_gay}Wokegoe{}",
         text = {
@@ -158,7 +158,7 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "imwithstupid",
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     loc_txt = {
         name = "I'm with stupid",
         text = {
@@ -210,7 +210,7 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "copycat",
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     loc_txt = {
         name = "Copy Cat",
         text = {
@@ -252,7 +252,7 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "heavyhands",
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     loc_txt = {
         name = "Heavy Hands",
         text = {
@@ -308,7 +308,7 @@ SMODS.Joker {
         local colour = G.C.SUITS[suit]
         return { vars = { name, colours = { colour } } }
     end,
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "phold",
     pos = { x = 0, y = 1 },
     -- soul_pos = {x=0, y=0},
