@@ -264,7 +264,7 @@ SMODS.Consumable {
         text = {
             "All hands gain " .. expomult("#1#") .. " Chips & Mult,",
             "plus another " .. expomult("#1#") .. " Chips & Mult for",
-            "every {C:attention}M Joker{} or {C:attention}Jolly Joker{} owned",
+            "every {C:attention}Jolly Joker{} owned",
             credit("mailingway"),
             concept("arris")
         }
@@ -286,8 +286,8 @@ SMODS.Consumable {
         local value = card.ability.extra.eeall
 
         for i, joker in pairs(G.jokers.cards) do
-            if Cryptid.safe_get(joker.config.center, "pools", "M") or joker.config.center.key == "j_jolly" then
-                value = value ^ 2
+            if joker.config.center.key == "j_jolly" then
+                value = value ^ card.ability.extra.eeall
             end
         end
 
