@@ -964,7 +964,7 @@ SMODS.Consumable {
 
         local value = card.ability.extra.increase ^ levels
         local str = "^^" .. tostring(value)
-        simple_hand_text("all")
+        vallkarri.simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str,mult = str})
 
         for i,hand in pairs(G.GAME.hands) do

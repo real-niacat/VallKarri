@@ -76,7 +76,7 @@ SMODS.Consumable {
 
         local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels / 5))
         local str = "^" .. tostring(value)
-        simple_hand_text("all")
+        vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str })
 
         for i, hand in pairs(G.GAME.hands) do
@@ -131,7 +131,7 @@ SMODS.Consumable {
 
         local value = card.ability.extra.emult ^ (card.ability.extra.emult ^ math.floor(levels / 5))
         local str = "^" .. tostring(value)
-        simple_hand_text("all")
+        vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
 
         for i, hand in pairs(G.GAME.hands) do
@@ -185,7 +185,7 @@ SMODS.Consumable {
         -- who's going to correct me on it?
         local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels / 5))
         local str = "^" .. tostring(value)
-        simple_hand_text("all")
+        vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str })
 
         for i, hand in pairs(G.GAME.hands) do
@@ -239,7 +239,7 @@ SMODS.Consumable {
         -- who's going to correct me on it?
         local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels / 5))
         local str = "^^" .. tostring(value)
-        simple_hand_text("all")
+        vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
 
         for i, hand in pairs(G.GAME.hands) do
@@ -292,7 +292,7 @@ SMODS.Consumable {
         end
 
         local str = "^" .. tostring(value)
-        simple_hand_text("all")
+        vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
 
         for i, hand in pairs(G.GAME.hands) do
@@ -387,7 +387,7 @@ SMODS.Consumable {
 
         local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
         local str = "^" .. number_format(value)
-        simple_hand_text("cry_None")
+        vallkarri.simple_hand_text("cry_None")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str })
 
         G.GAME.hands["valk_fullmansion"].chips = G.GAME.hands["valk_fullmansion"].chips ^ value
@@ -439,7 +439,7 @@ SMODS.Consumable {
 
         local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
         local str = "^" .. number_format(value)
-        simple_hand_text("cry_None")
+        vallkarri.simple_hand_text("cry_None")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
 
         G.GAME.hands["valk_fullmansion"].mult = G.GAME.hands["valk_fullmansion"].mult ^ value
@@ -494,7 +494,7 @@ SMODS.Consumable {
 
         local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
         local str = "^" .. number_format(value)
-        simple_hand_text("all")
+        vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str, mult = str })
 
         for i, hand in pairs(G.GAME.hands) do
