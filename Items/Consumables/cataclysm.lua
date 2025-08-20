@@ -430,8 +430,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Takeover",
         text = {
-            "Future {C:code}Code{} cards gain {C:attention}+#1#{} multiuses",
-            "{C:attention}De-level{} all hands when {C:code}Code{} card used",
+            "TO REWORK",
             credit("Pangaea"),
         }
     },
@@ -451,18 +450,10 @@ SMODS.Consumable {
     end,
     use = function(self, card, area, copier)
         
-
-        G.GAME.punish_code_usage = true
-        if not G.GAME.code_multiuses then
-            G.GAME.code_multiuses = card.ability.extra.uses
-        else
-            G.GAME.code_multiuses = G.GAME.code_multiuses + card.ability.extra.uses
-        end
     end
 }
 
--- SMODS.Consumable {
-local mmmmmm = {
+SMODS.Consumable {
     no_doe = true,
     no_grc = true,
     set = "Cataclysm",
@@ -470,8 +461,7 @@ local mmmmmm = {
     loc_txt = { 
         name = "Maleficence",
         text = {
-            "Destroy all {C:attention}M Jokers{}, then",
-            "apply {C:attention}Jolly{} to all Jokers",
+            "TO REWORK",
             credit("Pangaea"),
         }
     },
@@ -493,15 +483,6 @@ local mmmmmm = {
     use = function(self, card, area, copier)
         
 
-        for i,joker in ipairs(G.jokers.cards) do
-
-            
-            joker:set_edition("e_cry_m",true)
-            if joker.config.center.pools and joker.config.center.pools.M then
-                joker:start_dissolve({G.C.BLACK}, 8)
-            end
-
-        end
     end
 }
 
