@@ -70,12 +70,12 @@ SMODS.Joker {
     calculate = function(self, card, context)
         
         if (context.individual and context.cardarea == G.play) or context.forcetrigger then
-            Cryptid.manipulate(context.other_card, {amount=card.ability.extra.strong})
+            Cryptid.manipulate(context.other_card, {value=card.ability.extra.strong})
 
 
             for i,c in ipairs(G.jokers.cards) do
                 if (c.config.center_key ~= "j_valk_illena") then
-                    Cryptid.manipulate(c, {amount=card.ability.extra.mid})
+                    Cryptid.manipulate(c, {value=card.ability.extra.mid})
                 end
                 
             end

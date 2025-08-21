@@ -116,7 +116,7 @@ SMODS.Joker {
         name = "{C:valk_gay}Wokegoe{}",
         text = {
             "Apply {C:dark_edition}Polychrome{} to a random joker at end of round",
-            "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white}X#2#{} Mult when triggered",
+            "{C:dark_edition}Polychrome{} Jokers give an additional {X:mult,C:white}X#2#{} Mult when triggered",
             "{C:inactive}(Does not include self){}",
             credit("Poker the Poker (Edit by Lily)")
         }
@@ -129,7 +129,7 @@ SMODS.Joker {
             }
         }
     end,
-    config = { extra = { base = 2, poly = 4 } },
+    config = { extra = { base = 2, poly = 1.5 } },
     atlas = "main",
     pos = { x = 4, y = 10 },
     cost = 12,

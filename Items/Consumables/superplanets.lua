@@ -238,7 +238,7 @@ SMODS.Consumable {
         -- i know the math here is incorrect but
         -- who's going to correct me on it?
         local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels / 5))
-        local str = "^^" .. tostring(value)
+        local str = "^" .. tostring(value)
         vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
 

@@ -72,7 +72,7 @@ SMODS.Consumable {
         
         for i,c in ipairs(G.jokers.highlighted) do
 
-            Cryptid.misprintize(c, {min=card.ability.extra.base, max=card.ability.extra.base+(card.ability.extra.limit/100)}, nil, true)
+            Cryptid.manipulate(c, {type="X",value=pseudorandom("valk_luck", card.ability.extra.base, card.ability.extra.base+(card.ability.extra.limit/100))})
 
         end
 

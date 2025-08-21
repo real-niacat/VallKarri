@@ -24,7 +24,7 @@ SMODS.Booster {
     cost = 50,
 
     create_card = function(self, card, i)
-        ease_background_colour(G.C.CRY_ASCENDANT)
+        ease_background_colour({new_colour = G.C.CRY_ASCENDANT})
         --TODO: FIX
         local r = pseudorandom("valk_ascended_pack", 1, 5)
         if (r == 1) then
@@ -35,7 +35,7 @@ SMODS.Booster {
 
             for i,center in ipairs(G.P_CENTER_POOLS.Spectral) do
 
-                if center.hidden and center.key and center.key ~= "c_cry_pointer" then
+                if center.hidden and center.key then
 
                     if center.soul_rate then
                         for _=1,math.floor(center.soul_rate*100)+1 do choices[#choices+1] = center.key end
@@ -86,7 +86,7 @@ SMODS.Booster {
 
     create_card = function(self, card, i)
         ease_background_colour(G.C.ORANGE)
-        local choices = {"c_death", "c_hanged_man", "c_cryptid", "c_strength", "c_cry_ctrl_v"} --will add freeway when it exists
+        local choices = {"c_death", "c_hanged_man", "c_cryptid", "c_strength"} --will add freeway when it exists
         local pick = pseudorandom("valk_deckfixing_pack", 1, #choices)
             
 

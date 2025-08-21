@@ -5,7 +5,7 @@ function Game:start_run(args)
     for name,center in pairs(G.P_CENTER_POOLS.Cataclysm) do
         G.P_CENTER_POOLS.Cataclysm[name].cost = 16
         G.P_CENTER_POOLS.Cataclysm[name].in_pool = function(self, args)
-            return G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count
+            return not (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count)
         end
     end
 
@@ -149,7 +149,10 @@ SMODS.Consumable {
         return card.ability.extra.rounds <= 0
     end,
     use = function(self, card, area, copier)
-        
+        if card.area ~= G.consumeables then
+            G.consumeables:emplace(card)
+            return
+        end 
 
         for i,joker in ipairs(G.jokers.cards) do
             Cryptid.manipulate(joker, {value = card.ability.extra.bonus/(card.ability.extra.negativemult ^ card.ability.extra.startrounds)})
@@ -165,6 +168,13 @@ SMODS.Consumable {
 
         end
     end,
+
+    keep_on_use = function(self, card)
+        if card.area ~= G.consumeables then
+            return true
+        end
+        return false
+    end
 }
 
 SMODS.Consumable {
