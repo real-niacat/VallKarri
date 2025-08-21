@@ -386,6 +386,7 @@ SMODS.Joker {
     cost = 6,
     rarity = 2,
     pools = { ["Kitties"] = true },
+    blueprint_compat = true,
     calculate = function(self, card, context)
         if context.joker_main then
             return { mult = (card.ability.extra.per * #vallkarri.last_message) }
