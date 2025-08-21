@@ -26,694 +26,78 @@ SMODS.ConsumableType {
     default = "c_valk_kerberos",
 }
 
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "kerberos",
-    loc_txt = { 
-        name = "Kerberos",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 0, y = 0 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
+local function key_to_name(str)
+    str = str:gsub("__", ".")
+    str = str:gsub("_", " ")
+    str = str:gsub("(%a)([%w%.]*)", function(first, rest) return first:upper() .. rest end)
+    return str
+end
 
-    config = { extra = { handtype = "High Card", increase = 1 } },
+local planetoid_cards = {
 
-    loc_vars = function(self, info_queue, card)
+    { pos = { x = 0, y = 0 }, hand = "High Card", name = "Kerberos" },
+    { pos = { x = 1, y = 0 }, hand = "Pair", name = "Icarus" },
+    { pos = { x = 3, y = 2 }, hand = "Two Pair", name = "Miranda" },
+    { pos = { x = 2, y = 0 }, hand = "Three of a Kind", name = "Daedalus" },
+    { pos = { x = 1, y = 2 }, hand = "Straight", name = "Pan" },
+    { pos = { x = 0, y = 2 }, hand = "Flush", name = "Amalthea" },
+    { pos = { x = 3, y = 0 }, hand = "Full House", name = "Cardea" },
+    { pos = { x = 4, y = 0 }, hand = "Four of a Kind", name = "Eureka" },
+    { pos = { x = 2, y = 2 }, hand = "Straight Flush", name = "Despina" },
+    { pos = { x = 1, y = 1 }, hand = "Five of a Kind", name = "Tyche" },
+    { pos = { x = 2, y = 1 }, hand = "Flush House", name = "Artemis" },
+    { pos = { x = 0, y = 1 }, hand = "Flush Five", name = "Ixion" },
+    { pos = { x = 4, y = 2 }, hand = "valk_fullmansion", name = "Dalamud" },
+    
+    { pos = { x = 3, y = 1 }, hand = "cry_Bulwark", name = "Euphrosyne", dep = {"Cryptid"} },
+    { pos = { x = 4, y = 1 }, hand = "cry_UltPair", name = "Hektor", dep = {"Cryptid"} },
+    { pos = { x = 0, y = 3 }, hand = "cry_Clusterfuck", name = "Protoplanetary_Disk", dep = {"Cryptid"} },
+    { pos = { x = 1, y = 3 }, hand = "cry_WholeDeck", name = "2015_TC25", dep = {"Cryptid"} },
+    { pos = { x = 2, y = 3 }, hand = "cry_None", name = "Zero", dep = {"Cryptid"} },
 
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
 
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
 }
 
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "icarus",
-    loc_txt = { 
-        name = "Icarus",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 1, y = 0 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Pair", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "daedalus",
-    loc_txt = { 
-        name = "Daedalus",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 2, y = 0 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Three of a Kind", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "cardea",
-    loc_txt = { 
-        name = "Cardea",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 3, y = 0 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Full House", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "eureka",
-    loc_txt = { 
-        name = "Eureka",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 4, y = 0 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Four of a Kind", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "ixion",
-    loc_txt = { 
-        name = "Ixion",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 0, y = 1 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Five of a Kind", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "tyche",
-    loc_txt = { 
-        name = "Tyche",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 1, y = 1 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Flush Five", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "artemis",
-    loc_txt = { 
-        name = "Artemis",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 2, y = 1 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Flush House", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
--- SMODS.Consumable {
-local big_fucking_rock = {
-    set = "Planetoid",
-    key = "euphrosyne",
-    loc_txt = { 
-        name = "Euphrosyne",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 3, y = 1 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "cry_Bulwark", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
--- SMODS.Consumable {
-local last_chance_to_look_at_me_hektor = {
-    set = "Planetoid",
-    key = "hektor",
-    loc_txt = { 
-        name = "Hektor",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 4, y = 1 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "cry_UltPair", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "amalthea",
-    loc_txt = { 
-        name = "Amalthea",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 0, y = 2 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Flush", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "pan",
-    loc_txt = { 
-        name = "Pan",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 1, y = 2 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Straight", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "despina",
-    loc_txt = { 
-        name = "Despina",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 2, y = 2 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Straight Flush", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "miranda",
-    loc_txt = { 
-        name = "Miranda",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 3, y = 2 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "Two Pair", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
-SMODS.Consumable {
-    set = "Planetoid",
-    key = "dalamud",
-    loc_txt = { 
-        name = "Dalamud",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 4, y = 2 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "valk_fullmansion", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
--- SMODS.Consumable {
-local protogen_robort_idiot = {
-    set = "Planetoid",
-    key = "proto",
-    loc_txt = { 
-        name = "Protoplanetary Disk",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 0, y = 3 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "cry_Clusterfuck", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
--- SMODS.Consumable {
-local i_think_the_entire_fucking_deck_is_a_very_poorly_designed_idea_for_a_poker_hand = {
-    set = "Planetoid",
-    key = "tc25",
-    loc_txt = { 
-        name = "2015 TC25",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 1, y = 3 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "cry_WholeDeck", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
-
--- SMODS.Consumable {
-local None = {
-    set = "Planetoid",
-    key = "zero",
-    loc_txt = { 
-        name = "Zero",
-        text = {
-            "Level up {C:attention}#1#{}",
-            "for each time {C:attention}#4#{} has been",
-            "used this run",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            credit("mailingway"),
-        }
-    },
-    pos = { x = 2, y = 3 },
-    atlas = "oid",
-    display_size = {w=64, h=78},
-
-    config = { extra = { handtype = "cry_None", increase = 1 } },
-
-    loc_vars = function(self, info_queue, card)
-
-        return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
-                         card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
-        
-    end,
-    can_use = function()
-        return true
-    end,
-    use = function(self, card, area, copier)
-        
-        level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
-
-    end,
-    in_pool = function(self)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
-}
+for i,planetoid in ipairs(planetoid_cards) do
+    SMODS.Consumable {
+        set = "Planetoid",
+        key = planetoid.name,
+        loc_txt = { 
+            name = planetoid.name,
+            text = {
+                "Level up {C:attention}#1#{}",
+                "for each time {C:attention}#4#{} has been",
+                "used this run",
+                "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
+                credit("mailingway"),
+            }
+        },
+        pos = planetoid.pos,
+        atlas = "oid",
+        display_size = {w=64, h=78},
+
+        config = { extra = { handtype = planetoid.hand, increase = 1 } },
+
+        loc_vars = function(self, info_queue, card)
+
+            return {vars = { localize(card.ability.extra.handtype, "poker_hands"), 1+(times_used(self.key)*card.ability.extra.increase),
+                            card.ability.extra.increase, localize{type = "name_text", set = self.set, key = self.key} }}
+            
+        end,
+        can_use = function()
+            return true
+        end,
+        use = function(self, card, area, copier)
+            update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {handname = localize(card.ability.extra.handtype, "poker_hands")})
+            level_up_hand(card, card.ability.extra.handtype, nil, 1+(times_used(self.key)*card.ability.extra.increase))
+            vallkarri.reset_hand_text()
+        end,
+        in_pool = function(self)
+            return (G.GAME.hands[self.config.extra.handtype].played > 0)
+        end,
+        dependencies = planetoid.dep,
+    }
+end
 
 SMODS.Booster {
     key = "planetoid_pack_1",
