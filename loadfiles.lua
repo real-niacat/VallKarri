@@ -37,7 +37,7 @@ assert(SMODS.load_file("Items/boosters.lua", "vallkarri"))()
 
 assert(SMODS.load_file("Items/Jokers/cursed.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/animation.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/Jokers/scp.lua", "vallkarri"))()
+-- assert(SMODS.load_file("Items/Jokers/scp.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/common.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/uncommon.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/rare.lua", "vallkarri"))()

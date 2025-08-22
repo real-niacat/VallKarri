@@ -445,17 +445,9 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
 end
 
 if #SMODS.find_mod("entr") > 0 then
-    local originalentropy = Entropy.CanEeSpawn
     function Entropy.CanEeSpawn()
         return false
     end
-end
-
-local function is_consumable(type)
-    for name, type in pairs(SMODS.ConsumableTypes) do
-        if type == name then return true end
-    end
-    return type == "Consumable"
 end
 
 
@@ -518,7 +510,10 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
             play_sound("explosion_release1", 1, 3)
             G.GAME.tau_replace = G.GAME.base_tau_replace
         else
+            play_sound("tarot1")
+            print("before: " .. G.GAME.tau_replace)
             G.GAME.tau_replace = G.GAME.tau_replace - G.GAME.tau_increase
+            print("after: " .. G.GAME.tau_replace)
         end
     end
 
