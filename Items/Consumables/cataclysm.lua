@@ -995,7 +995,7 @@ SMODS.Voucher {
     },
 
     in_pool = function()
-        return G.GAME.round_resets.ante > 6
+        return G.GAME.round_resets.ante > 2
     end,
 
     
