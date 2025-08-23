@@ -153,12 +153,15 @@ end
 
 local gba = get_blind_amount
 function get_blind_amount(ante)
-    if ante <= (G.GAME.ante_config and G.GAME.ante_config.limit or 1500) then --use 1500 as fallback, config is only generated when run starts
+    if ante <= (G.GAME.ante_config and G.GAME.ante_config.limit or 32) then
         return gba(ante)
     end
 
     if Talisman then
-        return to_big(gba(ante)):arrow(math.floor(ante / 1500), gba(ante))
+        -- print("ante size current calc:")
+        -- print(number_format(gba(ante)) .. "{" .. number_format(math.floor(ante / 1500)) .. "}" .. number_format(gba(ante)))
+        -- print("Expecting:" .. number_format(to_big(gba(ante)):arrow(math.floor(ante / 1500), to_big(gba(ante)))))
+        return to_big(gba(ante)):arrow(math.floor(ante / 1500), to_big(gba(ante)))
     end
 
     return gba(ante) ^ gba(ante)
