@@ -30,7 +30,7 @@ function loc_colour(_c, _default)
     return lc(_c, _default)
 end
 
-G.C.VALK_SUPERPLANET = HEX("50202A")
+G.C.VALK_SUPERPLANET = HEX("0058A0")
 
 SMODS.Atlas {
     key = "csm",
