@@ -125,7 +125,7 @@ SMODS.Joker {
             credit("unexian")
         }
     },
-    config = { extra = {  gx = 0.05, x = 1, thresh = 5 } },
+    config = { extra = { gx = 0.05, x = 1, thresh = 5 } },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -142,11 +142,15 @@ SMODS.Joker {
     cost = 20,
     calculate = function(self, card, context)
         if context.before then
-            local calced = card.ability.extra.gx * (card.ability.extra.thresh - #context.scoring_hand)
-            if calced > 0 then
-                SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "x", scalar_table = {calced}, scalar_value = 1})
-                -- not quite sure if this is a sin or not, it works but will i be hurt by eremel for it?
-            end
+            SMODS.scale_card(card,
+                {
+                    ref_table = card.ability.extra,
+                    ref_value = "x",
+                    scalar_value = "gx",
+                    operation = function(ref_table, ref_value, initial, change)
+                        ref_table[ref_value] = initial + (card.ability.extra.thresh - #context.scoring_hand) * change
+                    end
+                })
         end
 
         if context.joker_main then
@@ -255,7 +259,7 @@ SMODS.Joker {
             credit("Grahkon")
         }
     },
-    config = { extra = { csl = 3, num = 1, den = 3, levels = 3} },
+    config = { extra = { csl = 3, num = 1, den = 3, levels = 3 } },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den)
         return { vars = { card.ability.extra.csl, num, den, card.ability.extra.levels } }
@@ -269,11 +273,9 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.using_consumeable then
             if context.consumeable.ability.set == "Planet" and SMODS.pseudorandom_probability(card, "valk_tasal", card.ability.extra.num, card.ability.extra.den) then
-
                 local hand = vallkarri.get_most_played_hand()
                 vallkarri.quick_hand_text(hand, nil, nil, G.GAME.hands[hand].level)
                 level_up_hand(card, hand, false, card.ability.extra.levels)
-
             end
         end
     end,
@@ -328,7 +330,7 @@ SMODS.Joker {
             ease_discard(card.ability.extra.meow)
         end
     end,
-  
+
 }
 
 
