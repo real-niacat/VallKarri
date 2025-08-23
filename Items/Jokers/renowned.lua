@@ -36,17 +36,16 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
         if (context.end_of_round and context.main_eval and G.GAME.blind.boss) then
-            if SMODS.pseudorandom_probability(card, "valk_raxd", card.ability.extra.num, card.ability.extra.den, "raxd") then
-                local big_cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_big_cube")
-                big_cube:set_edition("e_negative", true)
-                big_cube:add_to_deck()
-                G.jokers:emplace(big_cube)
-            else
+            if SMODS.pseudorandom_probability(card, "valk_raxd", card.ability.extra.num, card.ability.extra.den) then
                 if not (#G.jokers.cards >= G.jokers.config.card_limit) then
-                    local cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_cube")
-                    cube:add_to_deck()
-                    G.jokers:emplace(cube)
+                    local common = SMODS.create_card({ set = "Joker", stickers = { "eternal" }, rarity = 0 })
+                    common:add_to_deck()
+                    G.jokers:emplace(common)
                 end
+            else
+                local rare = SMODS.create_card({ set = "Joker", rarity = 1, edition = "e_negative" })
+                rare:add_to_deck()
+                G.jokers:emplace(rare)
             end
         end
     end
@@ -268,7 +267,7 @@ SMODS.Joker {
             }
         }
     end,
-    config = { extra = {handsize = 2} },
+    config = { extra = { handsize = 2 } },
     atlas = "atlas2",
     pos = { x = 2, y = 4 },
     cost = 12,
@@ -338,7 +337,7 @@ SMODS.Joker {
                                 end
                             end
 
-                            G.FUNCS.draw_from_deck_to_hand((drawn*2) + played,true)
+                            G.FUNCS.draw_from_deck_to_hand((drawn * 2) + played, true)
                             return true
                         end
                     }
