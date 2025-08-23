@@ -56,20 +56,39 @@ SMODS.Joker {
     loc_txt = {
         name = "Cascading Chain",
         text = {
-            "When {X:blue,C:white}XChips{} triggered,",
-            "Divide blind size by triggered amount",
+            "When any Joker is triggered,",
+            "Multiply blind size by {X:dark_edition,C:white}X#1#{}",
             credit("Scraptake")
         }
     },
-    config = { extra = {} },
+    config = { extra = { mul = 0.95 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {} }
+        return { vars = { card.ability.extra.mul } }
     end,
     rarity = "valk_renowned",
     atlas = "main",
     pos = { x = 0, y = 10 },
-    cost = 18,
+    cost = 12,
     immutable = true,
+    calculate = function(self, card, context)
+        -- play_sound('timpani')
+        -- G.GAME.blind.chips = G.GAME.blind.chips / amount
+        -- G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+        -- G.HUD_blind:recalculate()
+        -- G.hand_text_area.blind_chips:juice_up()\
+
+        if context.post_trigger then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound("timpani")
+                    G.GAME.blind.chips = G.GAME.blind.chips * card.ability.extra.mul
+                    G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+                    G.HUD_blind:recalculate()
+                    G.hand_text_area.blind_chips:juice_up()
+                end
+            }))
+        end
+    end
 }
 
 SMODS.Joker {
