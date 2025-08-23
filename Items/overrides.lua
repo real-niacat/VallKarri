@@ -239,6 +239,8 @@ function Game:start_run(args)
             G.P_CENTERS[name].weight = center.old_weight
         end
     end
+
+    G.jokers.config.highlighted_limit = 1e10 -- bleehhhhhh
 end
 
 glcui = nil

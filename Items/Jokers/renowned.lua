@@ -3,9 +3,9 @@ SMODS.Joker {
     loc_txt = {
         name = "raxdflipnote",
         text = {
-            "When {C:attention}Boss Blind{} is defeated, create a {C:dark_edition,T:e_negative}Negative{} {C:attention}Big Cube{}",
-            "{C:green}#1# in #2#{} chance to spawn a non-{C:dark_edition}Negative{} {C:attention}Cube{}",
-            "{C:inactive}(Must have room for Cube){}",
+            "When {C:attention}Boss Blind{} is defeated, create a {C:dark_edition,T:e_negative}Negative{} {C:rare}Rare{} Joker",
+            "{C:green}#1# in #2#{} chance to spawn an {C:purple}Eternal{} {C:common}Common{} Joker instead",
+            "{C:inactive}(Must have room){}",
             quote("raxd"),
             credit("Scraptake")
         }
@@ -20,7 +20,7 @@ SMODS.Joker {
     pos = { x = 0, y = 6 },
     soul_pos = { x = 1, y = 6 },
     cost = 15,
-    demicoloncompat = true,
+    demicoloncompat = false,
     update = function(self, card, front)
         if card.ability and card.ability.extra.state and card.ability.extra.ctr and card.children and card.children.center and card.children.floating_sprite then
             card.ability.extra.ctr = (card.ability.extra.ctr + 1) % 5
@@ -35,7 +35,7 @@ SMODS.Joker {
     end,
 
     calculate = function(self, card, context)
-        if (context.end_of_round and not context.individual and not context.repetition and not context.blueprint and G.GAME.blind.boss) or context.forcetrigger then
+        if (context.end_of_round and context.main_eval and G.GAME.blind.boss) then
             if SMODS.pseudorandom_probability(card, "valk_raxd", card.ability.extra.num, card.ability.extra.den, "raxd") then
                 local big_cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_big_cube")
                 big_cube:set_edition("e_negative", true)

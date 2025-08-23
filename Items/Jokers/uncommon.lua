@@ -3,13 +3,13 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:red}Where do I click?{}",
         text = {
-            "Gains {X:mult,C:white}X#1#{} Mult when mouse clicked",
+            "Gains {X:mult,C:white}X#1#{} Mult when anything happens",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
             "{C:inactive}Where do I click, Drago?{}",
             credit("Lily Felli")
         }
     },
-    config = { extra = { cur = 0.99, gain = 1e-3 } },
+    config = { extra = { cur = 0.90, gain = 1e-3 } },
     rarity = 2,
     atlas = "main",
     pos = { x = 4, y = 6 },
@@ -21,12 +21,12 @@ SMODS.Joker {
     end,
 
     calculate = function(self, card, context)
-        if context.cry_press then
-            card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
+        if not context.cry_press then --anything but clicking!
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "cur", scalar_value = "gain"})
         end
 
         if context.joker_main or context.forcetrigger then
-            return { x_mult = card.ability.extra.cur }
+            return { xmult = card.ability.extra.cur }
         end
     end
 }

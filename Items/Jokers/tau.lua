@@ -56,7 +56,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Tauist",
         text = {
-            "{C:cry_ember}Tauic{} Joker variants have their spawn",
+            "{C:valk_fire}Tauic{} Joker variants have their spawn",
             "chances increased whenever their roll fails",
             "{C:inactive}(Currently a {C:green}#1#%{C:inactive} chance to replace)",
             credit("Scraptake")
@@ -96,7 +96,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Absolute Tau",
         text = {
-            "Create a random {C:cry_ember}Tauic{} {C:legendary}Legendary{}",
+            "Create a random {C:valk_fire}Tauic{} {C:legendary}Legendary{}",
             credit("mailingway")
         }
     },
@@ -125,7 +125,7 @@ SMODS.Consumable {
 -- SMODS.Joker {
 --     key = "",
 --     loc_txt = {
---         name = "{C:cry_ember}Tauic {}",
+--         name = "{C:valk_fire}Tauic {}",
 --         text = {
 --             "",
 --             "",
