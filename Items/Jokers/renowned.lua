@@ -56,8 +56,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Cascading Chain",
         text = {
-            "When any Joker is triggered,",
-            "Multiply blind size by {X:dark_edition,C:white}X#1#{}",
+            "When hand played, multiply blind size by {X:dark_edition,C:white}X#1#{}",
+            "for every other joker owned",
             credit("Scraptake")
         }
     },
@@ -77,7 +77,8 @@ SMODS.Joker {
         -- G.HUD_blind:recalculate()
         -- G.hand_text_area.blind_chips:juice_up()\
 
-        if context.post_trigger then
+        if context.other_joker then
+            print("a")
             G.E_MANAGER:add_event(Event({
                 func = function()
                     play_sound("timpani")
@@ -85,6 +86,9 @@ SMODS.Joker {
                     G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
                     G.HUD_blind:recalculate()
                     G.hand_text_area.blind_chips:juice_up()
+                    context.other_joker:juice_up()
+                    quick_card_speak(context.other_joker, "X" .. card.ability.extra.mul)
+                    return true
                 end
             }))
         end
