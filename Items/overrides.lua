@@ -35,8 +35,8 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
             align = "tri",
             bond = "Weak",
             offset = {
-                x = (-G.title_top.T.x)+2,
-                y = G.title_top.T.y+3.2
+                x = (-G.title_top.T.x) + 2,
+                y = G.title_top.T.y + 3.2
             },
             major = G.ROOM_ATTACH
         }
@@ -397,8 +397,15 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         update_hand_text({ delay = 0 }, { chips = hand_chips .. "??", mult = mult .. "??" })
         if not effect.remove_default_message then
             card_eval_status_text(scored_card, 'jokers', nil, percent, nil,
-                { message = "=" .. amount .. " Zulu", colour = G.C.GREEN, sound = 'voice' .. math.random(1, 11), pitch = 0.2, volume = 10, trigger =
-                "immediate", })
+                {
+                    message = "=" .. amount .. " Zulu",
+                    colour = G.C.GREEN,
+                    sound = 'voice' .. math.random(1, 11),
+                    pitch = 0.2,
+                    volume = 10,
+                    trigger =
+                    "immediate",
+                })
         end
         return true
     end
@@ -409,8 +416,15 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         update_hand_text({ delay = 0 }, { chips = hand_chips .. "?", mult = mult .. "?" })
         if not effect.remove_default_message then
             card_eval_status_text(scored_card, 'jokers', nil, percent, nil,
-                { message = "+" .. amount .. " Zulu", colour = G.C.GREEN, sound = 'voice' .. math.random(1, 11), pitch = 0.2, volume = 10, trigger =
-                "immediate", })
+                {
+                    message = "+" .. amount .. " Zulu",
+                    colour = G.C.GREEN,
+                    sound = 'voice' .. math.random(1, 11),
+                    pitch = 0.2,
+                    volume = 10,
+                    trigger =
+                    "immediate",
+                })
         end
         return true
     end
@@ -421,8 +435,15 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         update_hand_text({ delay = 0 }, { chips = hand_chips .. "?", mult = mult .. "?" })
         if not effect.remove_default_message then
             card_eval_status_text(scored_card, 'jokers', nil, percent, nil,
-                { message = "X" .. amount .. " Zulu", colour = G.C.GREEN, sound = 'voice' .. math.random(1, 11), pitch = 0.1, volume = 20, trigger =
-                "immediate", })
+                {
+                    message = "X" .. amount .. " Zulu",
+                    colour = G.C.GREEN,
+                    sound = 'voice' .. math.random(1, 11),
+                    pitch = 0.1,
+                    volume = 20,
+                    trigger =
+                    "immediate",
+                })
         end
         return true
     end
@@ -522,16 +543,14 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
         Cryptid.manipulate(out, { value = G.GAME.vallkarri.spawn_multipliers[out.config.center.key] })
     end
 
-    if (out.ability.set == "Code") and G.GAME.code_multiuses then
-        if out.ability.cry_multiuse then
-            out.ability.cry_multiuse = math.ceil((out.ability.cry_multiuse + G.GAME.code_multiuses))
-        else
-            out.ability.cry_multiuse = G.GAME.code_multiuses + 1
-        end
-    end
-
     if (G.GAME.hidden_override and out.ability.set == "Spectral" and not out.config.center.hidden and pseudorandom("valk_hidden_override", 1, 100) <= G.GAME.hidden_override) then
-        local choices = { "c_soul", "c_cry_pointer", "c_cry_gateway", "c_black_hole" }
+        local choices = {}
+
+        for i, center in ipairs(G.P_CENTER_POOLS.Spectral) do
+            if center.hidden and center.key then
+                choices[#choices + 1] = center.key
+            end
+        end
         out:set_ability(choices[pseudorandom("valk_hidden_override2", 1, #choices)])
     end
 
@@ -541,9 +560,7 @@ end
 
 local useconsumablehook = Card.use_consumeable
 function Card:use_consumeable(area, copier)
-    if self.ability.set == "Code" and G.GAME.punish_code_usage then
-        level_all_hands(self, -1)
-    end
+    -- i love useless hooks
 
     return useconsumablehook(self, area, copier)
 end
