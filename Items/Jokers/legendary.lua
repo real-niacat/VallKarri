@@ -119,19 +119,18 @@ SMODS.Joker {
     loc_txt = {
         name = "Cass None",
         text = {
-            "Gains {C:mult}+#1#{} and {X:mult,C:white}X#2#{} Mult",
-            "if played hand is {C:attention}None{}",
-            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} and {X:mult,C:white}X#4#{C:inactive} Mult)",
+            "Gains {X:mult,C:white}X#1#{} Mult",
+            "for each card under {C:attention}#2#{} in {C:attention}Scoring{} hand",
+            "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
             credit("unexian")
         }
     },
-    config = { extra = { gm = 10, gx = 0.2, m = 10, x = 1 } },
+    config = { extra = {  gx = 0.05, x = 1, thresh = 5 } },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                card.ability.extra.gm,
                 card.ability.extra.gx,
-                card.ability.extra.m,
+                card.ability.extra.thresh,
                 card.ability.extra.x
             }
         }
@@ -142,15 +141,16 @@ SMODS.Joker {
     soul_pos = { x = 8, y = 6 },
     cost = 20,
     calculate = function(self, card, context)
-        if context.before and context.scoring_name == "cry_None" then
-            card.ability.extra.m = card.ability.extra.m + card.ability.extra.gm
-            card.ability.extra.x = card.ability.extra.x + card.ability.extra.gx
-            return { message = "Upgraded!" }
+        if context.before then
+            local calced = card.ability.extra.gx * (card.ability.extra.thresh - #context.scoring_hand)
+            if calced > 0 then
+                SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "x", scalar_table = {calced}, scalar_value = 1})
+                -- not quite sure if this is a sin or not, it works but will i be hurt by eremel for it?
+            end
         end
 
         if context.joker_main then
             return {
-                mult = card.ability.extra.m,
                 xmult = card.ability.extra.x
             }
         end
