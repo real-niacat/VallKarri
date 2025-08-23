@@ -357,8 +357,7 @@ SMODS.Consumable {
     loc_txt = {
         name = "Barnard 68",
         text = {
-            expochips("#1#") .. " Chips on {C:attention}Full Mansion{}, plus another",
-            expochips("#1#") .. " Chips for each level on {C:attention}any{} hand",
+            expochips("#1#") .. " Chips on {C:attention}Full Mansion{}",
             credit("mailingway"),
         }
     },
@@ -378,14 +377,7 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        local levels = 0
-        for i, _ in pairs(G.GAME.hands) do
-            levels = G.GAME.hands[i].level and (levels + G.GAME.hands[i].level) or (levels + 1)
-        end
-
-
-
-        local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
+        local value = card.ability.extra.evalue
         local str = "^" .. number_format(value)
         vallkarri.simple_hand_text("cry_None")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str })
@@ -409,8 +401,7 @@ SMODS.Consumable {
     loc_txt = {
         name = "Bootes Void",
         text = {
-            expochips("#1#") .. " Mult on {C:attention}Full Mansion{}, plus another",
-            expochips("#1#") .. " Mult for each level on {C:attention}any{} hand",
+            expochips("#1#") .. " Mult on {C:attention}Full Mansion{}",
             credit("mailingway"),
         }
     },
@@ -430,14 +421,7 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        local levels = 0
-        for i, _ in pairs(G.GAME.hands) do
-            levels = G.GAME.hands[i].level and (levels + G.GAME.hands[i].level) or (levels + 1)
-        end
-
-
-
-        local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
+        local value = card.ability.extra.evalue
         local str = "^" .. number_format(value)
         vallkarri.simple_hand_text("cry_None")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
