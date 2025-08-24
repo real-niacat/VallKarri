@@ -40,10 +40,12 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     // For all vectors (vec2, vec3, vec4), .rgb is equivalent of .xyz, so uv.y == uv.g
     // .a is last parameter for vec4 (usually the alpha channel - transparency)
     float sintime = (1+(sin(cosmic.y)+1)/2) * 1.5;
+    float opposite = 4.5 - sintime;
+    sintime = mix(sintime, opposite, texture_coords.y);
 
     tex.r = tex.r * (sintime * 0.45);
     tex.g = tex.g / (sintime * 0.75);
-    tex.b = tex.b * (sintime * 0.8);
+    tex.b = tex.b * (sintime * 0.80);
 
     // required
     return dissolve_mask(tex*colour, texture_coords, uv);
