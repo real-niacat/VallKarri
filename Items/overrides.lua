@@ -606,8 +606,16 @@ vallkarri.run_eante_modifiers = {}
 local original_gba = get_blind_amount
 function get_blind_amount(ante)
     local original_ante = ante
+    local to_remove = {}
     for _,mod in pairs(vallkarri.run_eante_modifiers) do
         ante = mod.func(ante,mod.data)
+        if mod.dest and mod.dest(mod.data) then
+            to_remove[#to_remove+1] = mod
+        end
+    end
+
+    for _,tab in pairs(to_remove) do
+        table.remove(vallkarri.run_eante_modifiers, find_index(tab, vallkarri.run_eante_modifiers))
     end
 
     if G.GAME and G.GAME.round_resets then
@@ -617,6 +625,6 @@ function get_blind_amount(ante)
     return original_gba(ante)
 end
 
-function vallkarri.add_effective_ante_mod(fn, tab)
-    vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers+1] = {func = fn, data = tab}
+function vallkarri.add_effective_ante_mod(fn, tab, destruction)
+    vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers+1] = {func = fn, data = tab, dest = destruction}
 end
