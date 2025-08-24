@@ -102,3 +102,39 @@ SMODS.Edition {
         end
     end,
 }
+
+SMODS.Shader {
+    key = "lowqual",
+    path = "lowqual.fs"
+}
+
+SMODS.Edition {
+    key = "lowqual",
+    shader = "lowqual",
+    loc_txt = {
+        name = "Low Quality",
+        label = "Low Quality",
+        text = {
+            "",
+            shadercredit("Lily Felli")
+        }
+    },
+    config = {mult = 5, xmult = 1.2, chips = 5, xchips = 1.2},
+    loc_vars = function(self, info_queue, card)
+        -- print(self)
+        return {vars = { 
+            card and card.edition and card.edition.mult or self.config.mult,
+            card and card.edition and card.edition.xmult or self.config.xmult
+         }}
+    end,
+    weight = 4,
+    get_weight = function(self)
+        return G.GAME.edition_rate * self.weight
+    end,
+    calculate = function(self, card, context)
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger ) 
+        or (context.main_scoring and context.cardarea == G.play) then
+            SMODS.calculate_effect({mult = card.edition.mult, chips = card.edition.mult, xmult = card.edition.xmult, xchips = card.edition.xchips}, card)
+        end
+    end,
+}
