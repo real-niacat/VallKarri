@@ -334,7 +334,7 @@ SMODS.Joker {
     atlas = "phold",
     pos = { x = 0, y = 1 },
     -- soul_pos = {x=0, y=0},
-    cost = 20,
+    cost = 14,
     immutable = true,
 
 
