@@ -662,3 +662,11 @@ end
 function vallkarri.reset_hand_text()
     update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
 end
+
+function vallkarri.search(search_table, find)
+    for name,value in pairs(search_table) do
+        if string.find(name, find) then
+            print(name .. ": " .. tostring(value))
+        end
+    end
+end

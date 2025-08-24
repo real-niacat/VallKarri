@@ -30,8 +30,8 @@ function ease_ante(x)
         local anteChange = get_ante_change()
         anteChange = math.ceil(anteChange)
         display_ante_changes(anteChange)
-        G.GAME.win_ante = (G.GAME.win_ante + to_number(anteChange))
-        easeantecopy(to_number(anteChange)+x)
+        easeantecopy(x)
+        vallkarri.add_effective_ante_mod(function(ante) return ante+to_number(anteChange) end)
         
         return
     end

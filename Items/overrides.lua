@@ -196,6 +196,11 @@ function Game:update(dt)
         concurrency = true
     end
 
+    if G.GAME.round_resets and G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
+        local operator = G.GAME.round_resets.eante_ante_diff > 0 and "+" or "-"
+        G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) .. "(" .. operator .. number_format(G.GAME.round_resets.eante_ante_diff) .. ")"
+    end
+
     fix_decimal_hand_levels()
 end
 
@@ -206,6 +211,8 @@ function Game:start_run(args)
     if args.savetext then
         return
     end
+
+    vallkarri.run_eante_modifiers = {}
 
     if not G.GAME.vallkarri then
         G.GAME.vallkarri = {}
@@ -593,3 +600,23 @@ end
 --     print(self.config.center.key .. " created, diff: " .. diff)
 --     self.cost = new
 -- end
+
+vallkarri.run_eante_modifiers = {}
+
+local original_gba = get_blind_amount
+function get_blind_amount(ante)
+    local original_ante = ante
+    for _,mod in pairs(vallkarri.run_eante_modifiers) do
+        ante = mod.func(ante,mod.data)
+    end
+
+    if G.GAME and G.GAME.round_resets then
+        G.GAME.round_resets.eante_ante_diff = (ante - original_ante)
+    end
+
+    return original_gba(ante)
+end
+
+function vallkarri.add_effective_ante_mod(fn, tab)
+    vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers+1] = {func = fn, data = tab}
+end
