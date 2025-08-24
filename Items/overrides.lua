@@ -625,6 +625,20 @@ function get_blind_amount(ante)
     return original_gba(ante)
 end
 
+
+function vallkarri.refresh_ante_diff()
+    local ante = G.GAME.round_resets.ante
+    local original_ante = ante
+
+    for _,mod in pairs(vallkarri.run_eante_modifiers) do
+        ante = mod.func(ante,mod.data)
+        -- dont run destruction conditions on a visual refresh
+    end
+
+    G.GAME.round_resets.eante_ante_diff = (ante - original_ante)
+end
+
 function vallkarri.add_effective_ante_mod(fn, tab, destruction)
     vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers+1] = {func = fn, data = tab, dest = destruction}
+    vallkarri.refresh_ante_diff()
 end
