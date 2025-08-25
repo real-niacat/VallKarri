@@ -107,7 +107,7 @@ return {
                 }
             },
             cata_self_banish = {
-                name = "Cataclym Card",
+                name = "Cataclysm Card",
                 text = {
                     "This card will {C:red}Banish{}",
                     "itself when used"
