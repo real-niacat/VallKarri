@@ -238,6 +238,7 @@ function Game:start_run(args)
         G.GAME.base_tau_replace = G.GAME.base_tau_replace / 5
         G.GAME.tau_replace = G.GAME.base_tau_replace
         G.GAME.tau_increase = 2
+        vallkarri.add_effective_ante_mod(function(x) return x*2 end)
     end
 
 

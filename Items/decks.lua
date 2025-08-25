@@ -53,18 +53,25 @@ SMODS.Back {
         text = {
             "{C:cry_ember}Tauic{} Jokers spawn {C:attention}five times{} as often.",
             "and have their {C:green}chance{} increase when the roll fails",
-            "{C:dark_edition}-2{} Joker Slots",
+            "{C:attention}X#1#{} Effective Ante",
             -- "{C:attention}X3{} Blind Size",
             credit("Scraptake")
         }
     },
 
-    config = { rate = 2, inc = 0.5, joker_slot = -2,},
+    config = { rate = 2, inc = 0.5, eante = 2},
     pos = {x=7, y=9},
     atlas = "main",
     apply = function(self)
         G.GAME.tauic_deck = true
     end,
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                self.config.eante
+            }
+        }
+    end
 }
 
 SMODS.Back {

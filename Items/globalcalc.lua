@@ -1,4 +1,5 @@
 vallkarri.calculate = function(self, context)
+    vallkarri.refresh_ante_diff()
     -- print("we originalled")
     if context.final_scoring_step then
         for i = 1, #G.GAME.tags do
