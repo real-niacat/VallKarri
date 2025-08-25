@@ -432,7 +432,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local DISABLED_ONE = {
     no_doe = true,
     no_grc = true,
     set = "Cataclysm",
@@ -463,7 +464,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local DISABLED_TWO = {
     no_doe = true,
     no_grc = true,
     set = "Cataclysm",

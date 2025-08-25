@@ -4,6 +4,7 @@ SMODS.Consumable {
         name = "Freeway",
         text = {
             "Create a random {C:valk_exquisite}Exquisite{} Joker",
+            "{X:dark_edition,C:white}^#1#{} Effective Ante",
             credit("Pangaea"),
         }
     },
@@ -11,13 +12,19 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=9, y=3, },
     soul_pos = {x=7, y=3, extra = {x=8, y=3}},
-    soul_rate = 0.04,
-    cost = 8,
-
+    soul_rate = 0.02,
+    cost = 10,
+    config = {extra = {eeante = 1.35}},
     can_use = function(self, card)
         return true
     end,
-
+    loc_vars = function(self,info_queue,card)
+        return {
+            vars = {
+                card.ability.extra.eeante,
+            }
+        }
+    end,
     use = function(self, card, area, copier)
         
 
@@ -30,6 +37,7 @@ SMODS.Consumable {
 				c:add_to_deck()
 				G.jokers:emplace(c)
 				c:juice_up(0.3, 0.5)
+                vallkarri.add_effective_ante_mod(function(x) return x^card.ability.extra.eeante end)
 				return true
 			end,
 		}))
