@@ -75,12 +75,22 @@ SMODS.Back {
             "Start with {C:attention,T:v_valk_legendary_perkup}Legendary PERK-UP{},",
             "{C:attention,T:v_valk_exotic_perkup}Exotic PERK-UP{}, and ",
             "{C:attention,T:v_valk_prestige_up}PRESTIGE-UP{}",
+            "{C:attention}X#1#{} Effective Ante when a card is bought",
             credit("Scraptake")
         }
     },
-    config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exotic_perkup", "v_valk_prestige_up" } },
+    config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exotic_perkup", "v_valk_prestige_up" }, eante = 1.05 },
     pos = {x=9, y=8},
     atlas = "main",
+    loc_vars = function(self, info_queue, card)
+        return { vars = { self.config.eante } }
+    end,
+    calculate = function(self, card, context)
+        if context.buying_card then
+            -- print("joker obtained")
+            vallkarri.add_effective_ante_mod(function(x) return x * self.config.eante end) --no data to store, no self-destruct condition
+        end
+    end,
 }
 
 if AKYRS then
