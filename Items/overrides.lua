@@ -197,7 +197,7 @@ function Game:update(dt)
     end
 
     if G.GAME.round_resets and G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
-        local operator = G.GAME.round_resets.eante_ante_diff > 0 and "+" or "-"
+        local operator = G.GAME.round_resets.eante_ante_diff > 0 and "+" or ""
         G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) .. "(" .. operator .. number_format(G.GAME.round_resets.eante_ante_diff) .. ")"
     end
 
@@ -618,9 +618,9 @@ function get_blind_amount(ante)
         table.remove(vallkarri.run_eante_modifiers, find_index(tab, vallkarri.run_eante_modifiers))
     end
 
-    if G.GAME and G.GAME.round_resets then
-        G.GAME.round_resets.eante_ante_diff = (ante - original_ante)
-    end
+    ante = math.floor(ante) --prevent issues with decimal antes
+
+    vallkarri.refresh_ante_diff()
 
     return original_gba(ante)
 end
@@ -634,6 +634,8 @@ function vallkarri.refresh_ante_diff()
         ante = mod.func(ante,mod.data)
         -- dont run destruction conditions on a visual refresh
     end
+
+    ante = math.floor(ante)
 
     G.GAME.round_resets.eante_ante_diff = (ante - original_ante)
 end
