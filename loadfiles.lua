@@ -25,7 +25,6 @@ assert(SMODS.load_file("Items/Jokers/tau/tau_uncommon.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/tau/tau_rare.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Jokers/tau/tau_legendary.lua", "vallkarri"))()
 
-assert(SMODS.load_file("Items/Consumables/code.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Consumables/spectral.lua", "vallkarri"))()
 -- assert(SMODS.load_file("Items/Consumables/special.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/Consumables/tarot.lua", "vallkarri"))()
