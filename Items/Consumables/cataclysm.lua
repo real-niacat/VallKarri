@@ -1,11 +1,17 @@
-local fakestart = Game.start_run
-function Game:start_run(args)
-    fakestart(self, args)
+local fakestart = Game.main_menu
+function Game:main_menu(...)
+    fakestart(self, ...)
 
     for name,center in pairs(G.P_CENTER_POOLS.Cataclysm) do
         G.P_CENTER_POOLS.Cataclysm[name].cost = 16
         G.P_CENTER_POOLS.Cataclysm[name].in_pool = function(self, args)
             return not (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count)
+        end
+        -- info_queue[#info_queue + 1] = {set = "Other", key = first}
+        local original_locvar = G.P_CENTER_POOLS.Cataclysm[name].loc_vars
+        G.P_CENTER_POOLS.Cataclysm[name].loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue + 1] = {set = "Other", key = "cata_self_banish"}
+            return original_locvar(self, info_queue, card)
         end
     end
 
@@ -415,7 +421,7 @@ SMODS.Consumable {
 
         for i,center in ipairs(G.P_CENTER_POOLS.Planet) do
             if SMODS.pseudorandom_probability(card, 'collision', card.ability.extra.num, card.ability.extra.den, 'collision') then
-                G.GAME.cry_banished_keys[center.key] = true
+                G.GAME.banned_keys[center.key] = true
             end
         end
 
@@ -530,7 +536,7 @@ SMODS.Consumable {
         local to_banish = {"p_celestial_jumbo_1","p_celestial_jumbo_2","p_celestial_mega_1","p_celestial_mega_2",}
 
         for i,banish in ipairs(to_banish) do
-            G.GAME.cry_banished_keys[banish] = true
+            G.GAME.banned_keys[banish] = true
         end
 
         mspl(card.ability.extra.mult)
@@ -570,7 +576,7 @@ SMODS.Consumable {
         local to_banish = {"p_tarot_jumbo_1","p_tarot_jumbo_2","p_tarot_mega_1","p_tarot_mega_2",}
 
         for i,banish in ipairs(to_banish) do
-            G.GAME.cry_banished_keys[banish] = true
+            G.GAME.banned_keys[banish] = true
         end
 
         for i,center in ipairs(G.P_CENTER_POOLS.Tarot) do
@@ -619,7 +625,7 @@ SMODS.Consumable {
         local to_banish = {"p_spectral_jumbo_1","p_spectral_mega_1",}
 
         for i,banish in ipairs(to_banish) do
-            G.GAME.cry_banished_keys[banish] = true
+            G.GAME.banned_keys[banish] = true
         end
 
         if not G.GAME.hidden_override then
@@ -663,7 +669,7 @@ SMODS.Consumable {
         local to_make = 0
 
         for i,joker in ipairs(G.jokers.cards) do
-            G.GAME.cry_banished_keys[joker.config.center.key] = true
+            G.GAME.banned_keys[joker.config.center.key] = true
             to_make = to_make + 1
             joker:quick_dissolve()
         end
@@ -757,7 +763,7 @@ SMODS.Consumable {
 
         for i,center in ipairs(G.P_CENTER_POOLS.Planet) do
             if SMODS.pseudorandom_probability(card, 'postexistence', card.ability.extra.num, card.ability.extra.den, 'postexistence') then
-                G.GAME.cry_banished_keys[center.key] = true
+                G.GAME.banned_keys[center.key] = true
             end
         end
 
@@ -868,16 +874,16 @@ SMODS.Consumable {
 
         local capable = {}
 
-        for name,center in pairs(G.GAME.cry_banished_keys) do
-            if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
+        for name,data in pairs(G.GAME.consumeable_usage) do
+            if G.P_CENTERS[name] and data.set == "Cataclysm" and data.count > 0 then
                 capable[#capable+1] = name
             end
         end
 
-        G.GAME.cry_banished_keys[capable[pseudorandom("valk_unbanish",1,#capable)]] = false
+        G.GAME.consumeable_usage[capable[pseudorandom("valk_unbanish",1,#capable)]].count = 0
     end,
     in_pool = function()
-        for name,center in pairs(G.GAME.cry_banished_keys) do
+        for name,center in pairs(G.GAME.banned_keys) do
             if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
                 return true
             end

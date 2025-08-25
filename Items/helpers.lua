@@ -670,3 +670,11 @@ function vallkarri.search(search_table, find)
         end
     end
 end
+
+function vallkarri.list_banned_keys()
+    for key,is_banned in pairs(G.GAME.banned_keys) do
+        if is_banned then
+            print(key .. " is banned. Set: " .. G.P_CENTERS[key].set)
+        end
+    end
+end

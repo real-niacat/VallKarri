@@ -105,6 +105,13 @@ return {
                 text = {
                     "Applies all {C:attention}Quantum Particle{} effects"
                 }
+            },
+            cata_self_banish = {
+                name = "Cataclym Card",
+                text = {
+                    "This card will {C:red}Banish{}",
+                    "itself when used"
+                }
             }
 
         }
