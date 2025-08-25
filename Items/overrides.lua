@@ -604,6 +604,21 @@ end
 vallkarri.run_eante_modifiers = {}
 
 local original_gba = get_blind_amount
+
+function calc_blind_amount(ante)
+    if ante <= (G.GAME.ante_config and G.GAME.ante_config.limit or 32) then
+        return original_gba(ante)
+    end
+
+    if Talisman then
+        -- print("ante size current calc:")
+        -- print(number_format(gba(ante)) .. "{" .. number_format(math.floor(ante / 1500)) .. "}" .. number_format(gba(ante)))
+        -- print("Expecting:" .. number_format(to_big(gba(ante)):arrow(math.floor(ante / 1500), to_big(gba(ante)))))
+        return to_big(original_gba(ante)):arrow(math.floor(ante / 1500), to_big(original_gba(ante)))
+    end
+
+    return original_gba(ante) ^ original_gba(ante)
+end
 function get_blind_amount(ante)
     local original_ante = ante
     local to_remove = {}
@@ -622,7 +637,7 @@ function get_blind_amount(ante)
 
     vallkarri.refresh_ante_diff()
 
-    return original_gba(ante)
+    return calc_blind_amount(ante)
 end
 
 
@@ -644,3 +659,4 @@ function vallkarri.add_effective_ante_mod(fn, tab, destruction)
     vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers+1] = {func = fn, data = tab, dest = destruction}
     vallkarri.refresh_ante_diff()
 end
+

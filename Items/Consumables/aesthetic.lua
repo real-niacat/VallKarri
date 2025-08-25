@@ -149,3 +149,35 @@ SMODS.Consumable {
         return false
     end
 }
+
+SMODS.Consumable {
+    set = "Spectral",
+    key = "revitalism",
+    loc_txt = {
+        name = "Revitalism",
+        text = {
+            "Give all jokers a random {C:attention}Edition{}",
+            "{C:attention}+#1#{} Effective Ante",
+            credit("Pangaea"),
+        }
+    },
+    pos = { x = 4, y = 1 },
+    atlas = "aes",
+
+    config = { extra = { ante = 2 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.ante } }
+    end,
+    can_use = function(self, card)
+        return true
+    end,
+    use = function(self, card, area, copier)
+        for i,joker in ipairs(G.jokers.cards) do
+            joker:set_edition(poll_edition("valk_revitalism", 1, false, true))
+        end
+        vallkarri.add_effective_ante_mod(function(x)
+            return x+card.ability.extra.ante
+        end)
+    end,
+}
