@@ -851,7 +851,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Phoenix",
         text = {
-            "{C:red}Unbanish{} a random used {C:red}Cataclysm{} card",
+            "{C:red}Unbanish{} a random used {C:valk_cataclysm}Cataclysm{} card",
             credit("Pangaea"),
         }
     },
