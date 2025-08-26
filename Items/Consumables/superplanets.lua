@@ -54,7 +54,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { echips = 1.03 } },
+    config = { extra = { echips = 1.02 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.echips } }
     end,
@@ -111,7 +111,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { emult = 1.5 } },
+    config = { extra = { emult = 1.1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.emult } }
     end,
@@ -164,7 +164,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { echips = 1.5 } },
+    config = { extra = { echips = 1.1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.echips } }
     end,
@@ -218,7 +218,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { echips = 1.5 } },
+    config = { extra = { echips = 1.1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.echips } }
     end,
@@ -272,7 +272,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { eeall = 1.5 } },
+    config = { extra = { eeall = 1.25 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.eeall } }
     end,
@@ -445,8 +445,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Lynx Constellation",
         text = {
-            expochips("#1#") .. " Chips & Mult on {C:attention}all hands{}, plus another",
-            expochips("#1#") .. " Chips & Mult for each {C:attention}Kitty{} Joker owned",
+            expochips("#1#") .. " Chips & Mult on {C:attention}All hands{}",
+            "for each {C:attention}Kitty{} Joker owned",
             credit("mailingway"),
         }
     },
@@ -476,7 +476,7 @@ SMODS.Consumable {
 
 
 
-        local value = card.ability.extra.evalue ^ (card.ability.extra.evalue ^ levels)
+        local value = (card.ability.extra.evalue ^ levels)
         local str = "^" .. number_format(value)
         vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str, mult = str })
@@ -551,7 +551,7 @@ SMODS.Consumable {
         name = "NeVe 1",
         text = {
             "Multiply {C:chips}chips{} and {C:mult}mult{} of all hands by {C:attention}#1#{}",
-            "{X:dark_edition,C:white}^^#2#{} {C:chips}chips{} and {C:mult}mult{} {C:attention}per level{} on all hands",
+            "{X:dark_edition,C:white}^^#2#{} Chips and Mult on all hands",
             "{X:gold,C:white}^#3#{} Ascension Power of all hands",
             credit("mailingway"),
             concept("arris")
@@ -560,7 +560,7 @@ SMODS.Consumable {
 
     no_doe = true,
 
-    config = { extra = { mult = 1000, tet = 1.2, exp = 1.5 } },
+    config = { extra = { mult = 5, tet = 1.05, exp = 1.5 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult, card.ability.extra.tet, card.ability.extra.exp } }
     end,
