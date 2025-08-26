@@ -74,6 +74,7 @@ for _, edit in ipairs(aesthetic_cards) do
                 credit("Pangaea"),
             }
         },
+        cost = 7,
         pos = edit.pos,
         atlas = "aes",
         config = { extra = { select = 1, edition = edit.key } },
