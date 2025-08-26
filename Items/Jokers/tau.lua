@@ -20,14 +20,6 @@ function load_tauics()
 
 end
 
-legendary_tauics = {
-    {base = "j_canio", tau = "j_valk_tau_canio"},
-    {base = "j_triboulet", tau = "j_valk_tau_triboulet"},
-    {base = "j_yorick", tau = "j_valk_tau_yorick"},
-    {base = "j_chicot", tau = "j_valk_tau_chicot"},
-    {base = "j_perkeo", tau = "j_valk_tau_perkeo"},
-}
-
 function tauic_check()
     for i,joker in ipairs(G.jokers.cards) do
         if joker.config.center.tau then
@@ -96,7 +88,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Absolute Tau",
         text = {
-            "Create a random {C:valk_fire}Tauic{} {C:legendary}Legendary{}",
+            "Create a random {C:valk_fire}Tauic{} {C:legendary}Legendary{} Joker",
             credit("mailingway")
         }
     },
@@ -110,13 +102,14 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier) 
-
-        local legendary_keys = {}
-        for i,t in ipairs(legendary_tauics) do
-            table.insert(legendary_keys, t.tau)
+        local allowed = {}
+        for i,joker in pairs(G.P_CENTER_POOLS.Joker) do
+            if joker.rarity == 4 and joker.tau then
+                allowed[#allowed+1] = joker.tau
+            end
         end
         
-        simple_create("Joker", G.jokers, legendary_keys[math.random(#legendary_keys)])
+        simple_create("Joker", G.jokers, allowed[pseudorandom("valk_absolute_tau",1,#allowed)])
 
     end,
     dependencies = {"Talisman"},
