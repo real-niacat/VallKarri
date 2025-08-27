@@ -390,12 +390,6 @@ function level_all_hands(source, amount, mul)
     update_hand_text({ delay = 0 }, { mult = 0, chips = 0, handname = '', level = '' })
 end
 
-function dvi(value)
-    for i, joker in ipairs(G.jokers.cards) do
-        Cryptid.misprintize(joker, { min = value, max = value }, false, true)
-    end
-end
-
 function disable_mult_ui()
     G.GAME.mult_disabled = true
     if G.HUD:get_UIE_by_ID("chipmult_op") then G.HUD:get_UIE_by_ID("chipmult_op").UIT = 0 end
@@ -410,13 +404,9 @@ function disable_mult_ui()
     G.HUD:recalculate()
 end
 
-function quick_misprintize(card, val, growth, arrows)
-    Cryptid.misprintize(card, { min = val, max = val }, nil, true, growth, arrows)
-end
-
 function qdvi(val, growth, arrows)
     for i, card in ipairs(G.jokers.cards) do
-        Cryptid.misprintize(card, { min = val, max = val }, nil, true, growth, arrows)
+        Cryptid.manipulate(card, { value = val } )
     end
 end
 

@@ -34,7 +34,7 @@ SMODS.Joker {
                 end
 
                 if res then
-                    Cryptid.misprintize(joker, {min=card.ability.extra.change, max=card.ability.extra.change}, false, true)
+                    Cryptid.manipulate(joker, {value=card.ability.extra.change})
                 end
             
             end

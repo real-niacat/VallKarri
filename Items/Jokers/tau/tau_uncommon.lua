@@ -70,7 +70,7 @@ SMODS.Joker {
             card.ability.immutable.hands = card.ability.immutable.hands - 1
             if card.ability.immutable.hands < 1 then
                 card.ability.immutable.hands = card.ability.immutable.req
-                quick_misprintize(card, 2)
+                Cryptid.manipulate(card, {value = 2})
                 -- self misprintizing! how could this ever go wrong!
             end
 
