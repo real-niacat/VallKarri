@@ -366,7 +366,7 @@ SMODS.Joker {
 
             local n = G.jokers.config.card_limit - #G.jokers.cards
             for i,joker in ipairs(G.jokers.cards) do
-                Cryptid.misprintize(joker, {min=n,max=n},false, true )
+                Cryptid.manipulate(joker, {value=n} )
             end
         end
     end
