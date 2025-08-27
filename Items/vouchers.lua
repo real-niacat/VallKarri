@@ -165,7 +165,7 @@ SMODS.Voucher {
     atlas = "main",
     pos = {x=7, y=4},
     loc_txt = {
-        name = "{C:cry_azure}Quantum Particle{}",
+        name = "{C:valk_blue}Quantum Particle{}",
         text = {
             "Severely {C:attention,E:1}enhances{} your deck",
             "{C:inactive,s:0.85}(If applicable){}",

@@ -28,8 +28,8 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        local first_card = G.hand.highlighted[1]
-        do_while_flipped(G.hand.highlighted, function(ca)
+        local first_card = vallkarri.get_ordered_highlighted(G.hand)[1]
+        do_while_flipped(vallkarri.get_ordered_highlighted(G.hand), function(ca)
             copy_card(first_card, ca)
             ca:set_ability("m_steel")
             G.hand:remove_from_highlighted(ca)
@@ -111,7 +111,7 @@ SMODS.Consumable {
             trigger = "after",
             delay = 0.1,
             func = function()
-                for i,c in ipairs(G.hand.highlighted) do
+                for i,c in ipairs(vallkarri.get_ordered_highlighted(G.hand)) do
                     c:start_dissolve({G.C.BLACK}, nil, 2 * G.SETTINGS.GAMESPEED)
                     local joker = create_card("Joker", G.jokers, nil, 3, nil, nil, nil, "valk_godsfinger")
                     joker:add_to_deck()
@@ -265,7 +265,7 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         
-        do_while_flipped(G.hand.highlighted, function(c)
+        do_while_flipped(vallkarri.get_ordered_highlighted(G.hand), function(c)
             c:set_ability(Cryptid.random_consumable("valk_knight"), true, nil)
             G.hand:remove_from_highlighted(c)
         end)

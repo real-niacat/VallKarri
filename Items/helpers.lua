@@ -678,3 +678,15 @@ function vallkarri.list_banned_keys()
         end
     end
 end
+
+function vallkarri.get_ordered_highlighted(cardarea)
+    local ordered = {}
+
+    for _,card in pairs(cardarea.cards) do
+        if table.vcontains(cardarea.highlighted, card) then
+            ordered[#ordered+1] = card
+        end
+    end
+
+    return ordered
+end
