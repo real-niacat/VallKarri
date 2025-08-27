@@ -56,7 +56,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Cascading Chain",
         text = {
-            "{X:dark_edition,C:white}X#1#{} for every other Joker owned",
+            "{X:dark_edition,C:white}X#1#{} Blind Size for every other Joker owned",
             credit("Scraptake")
         }
     },
