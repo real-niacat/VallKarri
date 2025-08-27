@@ -10,6 +10,6 @@
 	"version": "0.8.1", 
 	"dependencies": [ 
 		"Cryptlib",
-		"Steamodded (>=1.0.0~BETA-0808a)",
+		"Steamodded (>=1.0.0~BETA-0827)",
 	]
 }
