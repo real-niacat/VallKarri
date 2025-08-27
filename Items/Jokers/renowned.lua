@@ -56,8 +56,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Cascading Chain",
         text = {
-            "When hand played, multiply blind size by {X:dark_edition,C:white}X#1#{}",
-            "for every other joker owned",
+            "{X:dark_edition,C:white}X#1#{} for every other Joker owned",
             credit("Scraptake")
         }
     },
