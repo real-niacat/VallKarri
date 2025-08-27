@@ -3,9 +3,9 @@ SMODS.Joker {
     loc_txt = {
         name = "raxdflipnote",
         text = {
-            "When {C:attention}Boss Blind{} is defeated, create a {C:dark_edition,T:e_negative}Negative{} {C:attention}Big Cube{}",
-            "{C:green}#1# in #2#{} chance to spawn a non-{C:dark_edition}Negative{} {C:attention}Cube{}",
-            "{C:inactive}(Must have room for Cube){}",
+            "When {C:attention}Boss Blind{} is defeated, create a {C:dark_edition,T:e_negative}Negative{} {C:rare}Rare{} Joker",
+            "{C:green}#1# in #2#{} chance to spawn an {C:purple}Eternal{} {C:common}Common{} Joker instead",
+            "{C:inactive}(Must have room){}",
             quote("raxd"),
             credit("Scraptake")
         }
@@ -15,12 +15,12 @@ SMODS.Joker {
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "raxd")
         return { vars = { num, den } }
     end,
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "main",
     pos = { x = 0, y = 6 },
     soul_pos = { x = 1, y = 6 },
     cost = 15,
-    demicoloncompat = true,
+    demicoloncompat = false,
     update = function(self, card, front)
         if card.ability and card.ability.extra.state and card.ability.extra.ctr and card.children and card.children.center and card.children.floating_sprite then
             card.ability.extra.ctr = (card.ability.extra.ctr + 1) % 5
@@ -35,18 +35,17 @@ SMODS.Joker {
     end,
 
     calculate = function(self, card, context)
-        if (context.end_of_round and not context.individual and not context.repetition and not context.blueprint and G.GAME.blind.boss) or context.forcetrigger then
-            if SMODS.pseudorandom_probability(card, "valk_raxd", card.ability.extra.num, card.ability.extra.den, "raxd") then
-                local big_cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_big_cube")
-                big_cube:set_edition("e_negative", true)
-                big_cube:add_to_deck()
-                G.jokers:emplace(big_cube)
-            else
+        if (context.end_of_round and context.main_eval and G.GAME.blind.boss) then
+            if SMODS.pseudorandom_probability(card, "valk_raxd", card.ability.extra.num, card.ability.extra.den) then
                 if not (#G.jokers.cards >= G.jokers.config.card_limit) then
-                    local cube = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_cry_cube")
-                    cube:add_to_deck()
-                    G.jokers:emplace(cube)
+                    local common = SMODS.create_card({ set = "Joker", stickers = { "eternal" }, rarity = 0 })
+                    common:add_to_deck()
+                    G.jokers:emplace(common)
                 end
+            else
+                local rare = SMODS.create_card({ set = "Joker", rarity = 1, edition = "e_negative" })
+                rare:add_to_deck()
+                G.jokers:emplace(rare)
             end
         end
     end
@@ -57,20 +56,43 @@ SMODS.Joker {
     loc_txt = {
         name = "Cascading Chain",
         text = {
-            "When {X:blue,C:white}XChips{} triggered,",
-            "Divide blind size by triggered amount",
+            "When hand played, multiply blind size by {X:dark_edition,C:white}X#1#{}",
+            "for every other joker owned",
             credit("Scraptake")
         }
     },
-    config = { extra = {} },
+    config = { extra = { mul = 0.95 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {} }
+        return { vars = { card.ability.extra.mul } }
     end,
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "main",
     pos = { x = 0, y = 10 },
-    cost = 18,
+    cost = 12,
     immutable = true,
+    calculate = function(self, card, context)
+        -- play_sound('timpani')
+        -- G.GAME.blind.chips = G.GAME.blind.chips / amount
+        -- G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+        -- G.HUD_blind:recalculate()
+        -- G.hand_text_area.blind_chips:juice_up()\
+
+        if context.other_joker then
+            print("a")
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound("timpani")
+                    G.GAME.blind.chips = G.GAME.blind.chips * card.ability.extra.mul
+                    G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+                    G.HUD_blind:recalculate()
+                    G.hand_text_area.blind_chips:juice_up()
+                    context.other_joker:juice_up()
+                    quick_card_speak(context.other_joker, "X" .. card.ability.extra.mul)
+                    return true
+                end
+            }))
+        end
+    end
 }
 
 SMODS.Joker {
@@ -81,11 +103,11 @@ SMODS.Joker {
             "{X:mult,C:white}X1{} Mult",
             "{C:valk_prestigious,s:3,f:5}+π/10{C:valk_prestigious,s:3} Zulu",
             "{C:red,s:3.14159265}annihilates{}  a  few other cards",
-            credit("Lily")
+            credit("Lily Felli")
         }
     },
     config = { extra = { zulu = math.pi / 10 } },
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "main",
     pos = { x = 4, y = 0 },
     cost = math.ceil(10 * math.pi),
@@ -111,12 +133,12 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "wokegoe",
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     loc_txt = {
         name = "{C:valk_gay}Wokegoe{}",
         text = {
             "Apply {C:dark_edition}Polychrome{} to a random joker at end of round",
-            "{C:dark_edition}Polychrome{} Jokers give {X:mult,C:white}X#2#{} Mult when triggered",
+            "{C:dark_edition}Polychrome{} Jokers give an additional {X:mult,C:white}X#2#{} Mult when triggered",
             "{C:inactive}(Does not include self){}",
             credit("Poker the Poker (Edit by Lily)")
         }
@@ -129,7 +151,7 @@ SMODS.Joker {
             }
         }
     end,
-    config = { extra = { base = 2, poly = 4 } },
+    config = { extra = { base = 2, poly = 1.5 } },
     atlas = "main",
     pos = { x = 4, y = 10 },
     cost = 12,
@@ -158,7 +180,7 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "imwithstupid",
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     loc_txt = {
         name = "I'm with stupid",
         text = {
@@ -210,7 +232,7 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "copycat",
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     loc_txt = {
         name = "Copy Cat",
         text = {
@@ -252,7 +274,7 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "heavyhands",
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     loc_txt = {
         name = "Heavy Hands",
         text = {
@@ -268,7 +290,7 @@ SMODS.Joker {
             }
         }
     end,
-    config = { extra = {handsize = 2} },
+    config = { extra = { handsize = 2 } },
     atlas = "atlas2",
     pos = { x = 2, y = 4 },
     cost = 12,
@@ -308,11 +330,11 @@ SMODS.Joker {
         local colour = G.C.SUITS[suit]
         return { vars = { name, colours = { colour } } }
     end,
-    rarity = "cry_epic",
+    rarity = "valk_renowned",
     atlas = "phold",
     pos = { x = 0, y = 1 },
     -- soul_pos = {x=0, y=0},
-    cost = 20,
+    cost = 14,
     immutable = true,
 
 
@@ -338,7 +360,7 @@ SMODS.Joker {
                                 end
                             end
 
-                            G.FUNCS.draw_from_deck_to_hand((drawn*2) + played,true)
+                            G.FUNCS.draw_from_deck_to_hand((drawn * 2) + played, true)
                             return true
                         end
                     }

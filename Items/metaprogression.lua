@@ -397,10 +397,16 @@ end
 function get_blind_amount(ante)
     refresh_metaprog()
     local amount = blindamounthook(ante) * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.9))))
+
+    if amount > to_big(10):pow(308) then
+        return amount
+    end
+
     local nearest = math.floor(math.log10(amount)) - 1
-    -- round to nearest
+    -- round to 2 sigfigs
     nearest = 10^nearest 
     return math.floor((amount / nearest)+0.5)*nearest
+
     -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
 

@@ -5,7 +5,7 @@ SMODS.Joker {
         text = {
             "Creates itself when removed",
             "{C:inactive}Suck it.{}",
-            credit("Lily")
+            credit("Lily Felli")
         }
     },
     config = { extra = {} },
@@ -61,7 +61,7 @@ SMODS.Joker {
         name = "Kitty",
         text = {
             "At end of round, {C:green}#1# in #2#{} chance",
-            "to create a {C:attention}Cat Tag{}",
+            "to create a {C:attention}Kitty Tag{}",
             credit("mailingway")
         }
     },
@@ -80,7 +80,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval and 
             SMODS.pseudorandom_probability(card, "valk_kitty", card.ability.extra.num, card.ability.extra.den, "valk_kitty") then
-            add_tag(Tag("tag_cry_cat"))
+            add_tag(Tag("tag_valk_kitty"))
         end
     end,
 

@@ -1,8 +1,8 @@
 SMODS.Atlas {
-    key = "tags",
-    path = "tags.png",
-    px = 34,
-    py = 34,
+	key = "tags",
+	path = "tags.png",
+	px = 34,
+	py = 34,
 }
 
 SMODS.ObjectType({
@@ -16,41 +16,35 @@ SMODS.ObjectType({
 })
 
 SMODS.Tag {
-    key = "catter",
-    atlas = "tags",
-    pos = {x=0, y=0},
-    loc_txt = {
-		name = "Catter Tag",
+	key = "kitty",
+	atlas = "tags",
+	pos = { x = 0, y = 0 },
+	loc_txt = {
+		name = "Kitty Tag",
 		text = {
-			"Next shop will have a {C:attention}Kitty Joker{}",
+			"Gives {C:chips}+#1#{} Chips for every",
+			"{C:attention}Kitty Tag{} owned",
 			credit("Scraptake")
 		}
 	},
-    min_ante = 2,
-    
-    apply = function(self, tag, context)
-        if context.type == "store_joker_create" then
+	config = { chips = 2 },
+	loc_vars = function(self, info_queue, tag)
+		return { vars = { tag.config.chips } }
+	end,
+	min_ante = 1e100, --just. dont spawn.
 
-            local card = create_card("Kitties", context.area, nil, nil, nil, nil, nil)
-			create_shop_card_ui(card, "Joker", context.area)
-			card.states.visible = false
-			tag:yep("+", G.C.RED, function()
-				card:start_materialize()
-				card:set_cost()
-				return true
-			end)
-			tag.triggered = true
-			return card
-
-        end
-    end
+	apply = function(self, tag, context)
+		if context.type == "valk_final_scoring_step" then --functionality assisted by reading morefluff code
+			SMODS.calculate_effect({ chips = vallkarri.count_kitty_tags() * tag.config.chips }, tag)
+		end
+	end
 }
 
 SMODS.Tag {
-    key = "negativeeternal",
-    atlas = "tags",
-    pos = {x=1, y=0},
-    loc_txt = {
+	key = "negativeeternal",
+	atlas = "tags",
+	pos = { x = 1, y = 0 },
+	loc_txt = {
 		name = "Negative Eternal Tag",
 		text = {
 			"Next base edition shop Joker",
@@ -59,14 +53,11 @@ SMODS.Tag {
 			credit("Pangaea")
 		}
 	},
-    min_ante = 0,
-    
-    apply = function(self, tag, context)
-        if context.type == "store_joker_modify" then
+	min_ante = 0,
+
+	apply = function(self, tag, context)
+		if context.type == "store_joker_modify" then
 			local _applied = nil
-			if Cryptid.forced_edition() then
-				tag:nope()
-			end
 			if not context.card.edition and not context.card.temp_edition and context.card.ability.set == "Joker" then
 				local lock = tag.ID
 				G.CONTROLLER.locks[lock] = true
@@ -83,7 +74,6 @@ SMODS.Tag {
 				_applied = true
 				tag.triggered = true
 			end
-
 		end
-    end
+	end
 }

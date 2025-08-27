@@ -3,7 +3,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Freeway",
         text = {
-            "Create a random {C:cry_exotic}Exotic{} Joker",
+            "Create a random {C:valk_exquisite}Exquisite{} Joker",
+            "{X:dark_edition,C:white}^#1#{} Effective Ante",
             credit("Pangaea"),
         }
     },
@@ -11,14 +12,19 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=9, y=3, },
     soul_pos = {x=7, y=3, extra = {x=8, y=3}},
-    soul_rate = 0,
-    hidden = true,
-    cost = 50,
-
+    soul_rate = 0.02,
+    cost = 10,
+    config = {extra = {eeante = 1.35}},
     can_use = function(self, card)
         return true
     end,
-
+    loc_vars = function(self,info_queue,card)
+        return {
+            vars = {
+                card.ability.extra.eeante,
+            }
+        }
+    end,
     use = function(self, card, area, copier)
         
 
@@ -27,10 +33,11 @@ SMODS.Consumable {
 			delay = 0.4,
 			func = function()
 				play_sound("timpani")
-				local c = create_card("Joker", G.jokers, nil, "cry_exotic", nil, nil, nil, "valk_freeway")
+				local c = create_card("Joker", G.jokers, nil, "valk_exquisite", nil, nil, nil, "valk_freeway")
 				c:add_to_deck()
 				G.jokers:emplace(c)
 				c:juice_up(0.3, 0.5)
+                vallkarri.add_effective_ante_mod(function(x) return x^card.ability.extra.eeante end)
 				return true
 			end,
 		}))
@@ -73,7 +80,7 @@ SMODS.Consumable {
         
         for i,c in ipairs(G.jokers.highlighted) do
 
-            Cryptid.misprintize(c, {min=card.ability.extra.base, max=card.ability.extra.base+(card.ability.extra.limit/100)}, nil, true)
+            Cryptid.manipulate(c, {type="X",value=pseudorandom("valk_luck", card.ability.extra.base, card.ability.extra.base+(card.ability.extra.limit/100))})
 
         end
 
@@ -120,6 +127,80 @@ SMODS.Consumable {
             G.jokers:emplace(copy)
 
         end
+
+    end
+}
+
+SMODS.Consumable {
+    set = "Spectral",
+    loc_txt = { 
+        name = "://HIM",
+        text = {
+            "Randomize enhancement of all cards {C:attention}held-in-hand{}",
+            "{C:inactive}(Vanilla enhancements only){}",
+            credit("Scraptake")
+        }
+    },
+    key = "gaster",
+    pos = { x = 8, y = 9 },
+    atlas = "main",
+
+    config = { extra = { } },
+
+    loc_vars = function(self, info_queue, card)
+        
+    end,
+
+    can_use = function(self, card)
+        return (#G.hand.cards > 0)
+    end,
+
+    use = function(self, card, area, copier)
+        
+        do_while_flipped(G.hand.cards, function(c)
+            local valid = {"m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky"}
+            c:set_ability(valid[pseudorandom("valk_missingno", 1, #valid)])
+        end)
+        
+
+    end
+}
+
+SMODS.Consumable {
+    set = "Spectral",
+    loc_txt = { 
+        name = "://MISSINGNO",
+        text = {
+            "Randomize edition of all cards {C:attention}held-in-hand{}",
+            "{C:inactive}(Vanilla editions only){}",
+            credit("Scraptake")
+        }
+    },
+    key = "missingno",
+    pos = { x = 1, y = 9 },
+    atlas = "main",
+
+    config = { extra = { } },
+
+    loc_vars = function(self, info_queue, card)
+        
+    end,
+
+    can_use = function(self, card)
+        return (#G.hand.cards > 0)
+    end,
+
+    update = function(self, card)
+        card.children.center:set_sprite_pos({x = math.random(1, 2), y = 9 })
+    end,
+
+    use = function(self, card, area, copier)
+        
+        do_while_flipped(G.hand.cards, function(c)
+            local valid = {"e_foil", "e_holo", "e_polychrome", "e_negative"}
+            c:set_edition(valid[pseudorandom("valk_missingno", 1, #valid)], true)
+        end)
+        
 
     end
 }

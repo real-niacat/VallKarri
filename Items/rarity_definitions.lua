@@ -1,18 +1,29 @@
 SMODS.Rarity {
-    key = 'unobtainable',
-    loc_txt = {
-        name = 'the mods logo'
-    },
-    badge_colour = HEX("CE3EA3"),
-    pools = { ["Joker"] = false },
-}
-
-SMODS.Rarity {
     key = 'prestigious',
     loc_txt = {
         name = 'Prestigious'
     },
     badge_colour = G.C.VALK_PRESTIGIOUS,
+    pools = { ["Joker"] = false },
+}
+
+SMODS.Rarity {
+    key = 'renowned',
+    loc_txt = {
+        name = 'Renowned'
+    },
+    badge_colour = G.C.VALK_RENOWNED,
+    pools = { ["Joker"] = true },
+    default_weight = 0.01,
+    --approx 3x more common than a cryptid epic joker
+}
+
+SMODS.Rarity {
+    key = 'exquisite',
+    loc_txt = {
+        name = 'Exquisite'
+    },
+    badge_colour = G.C.VALK_EXQUISITE,
     pools = { ["Joker"] = false },
 }
 

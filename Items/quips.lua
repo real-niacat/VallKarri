@@ -1,4 +1,4 @@
-vallkarri.quip_weight = nil
+vallkarri.quip_weight = 15
 local quips = {
     lose = {
         ["j_valk_lily"] = {
@@ -43,10 +43,12 @@ for name, character in pairs(quips.lose) do
         -- print("initializing " .. tostring(txt))
         SMODS.JimboQuip {
             type = "loss",
-            key = "lq_" .. iter,
+            key = "lq_" .. name .. iter,
             extra = { center = name },
             loc_txt = txt,
-            weight = vallkarri.quip_weight --sorry, but i want you to see **my** quips!
+            filter = function(self, quip_type)
+                return true, { weight = vallkarri.quip_weight }
+            end
         }
     end
 end
@@ -57,10 +59,13 @@ for name, character in pairs(quips.win) do
         -- print("initializing " .. tostring(txt))
         SMODS.JimboQuip {
             type = "win",
-            key = "wq_" .. iter,
+            key = "wq_" .. name .. iter,
             extra = { center = name },
             loc_txt = txt,
-            weight = vallkarri.quip_weight
+            weight = vallkarri.quip_weight,
+            filter = function(self, quip_type)
+                return true, { weight = vallkarri.quip_weight }
+            end
         }
     end
 end

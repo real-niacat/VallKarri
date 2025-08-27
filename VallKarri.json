@@ -1,7 +1,7 @@
 {
 	"id": "vallkarri",
 	"name": "Vall-karri", 
-	"author": ["Lily"], 
+	"author": ["Lily Felli", "The VallKarri Discord Server"], 
 	"description": "the epitome of B tier game design. it's pronounced Valkyrie",
 	"prefix": "valk",
 	"main_file": "main.lua",
@@ -9,7 +9,7 @@
 	"badge_colour": "e5bf3a",
 	"version": "0.8.1", 
 	"dependencies": [ 
-		"Cryptid (>=0.5.9)",
+		"Cryptlib",
 		"Steamodded (>=1.0.0~BETA-0808a)",
 	]
 }

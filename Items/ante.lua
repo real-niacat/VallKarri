@@ -30,8 +30,8 @@ function ease_ante(x)
         local anteChange = get_ante_change()
         anteChange = math.ceil(anteChange)
         display_ante_changes(anteChange)
-        G.GAME.win_ante = (G.GAME.win_ante + to_number(anteChange))
-        easeantecopy(to_number(anteChange)+x)
+        easeantecopy(x)
+        vallkarri.add_effective_ante_mod(function(ante) return ante+to_number(anteChange) end)
         
         return
     end
@@ -151,15 +151,3 @@ function create_UIBox_HUD_blind()
     return ret
 end
 
-local gba = get_blind_amount
-function get_blind_amount(ante)
-    if ante <= (G.GAME.ante_config and G.GAME.ante_config.limit or 1500) then --use 1500 as fallback, config is only generated when run starts
-        return gba(ante)
-    end
-
-    if Talisman then
-        return to_big(gba(ante)):arrow(math.floor(ante / 1500), gba(ante))
-    end
-
-    return gba(ante) ^ gba(ante)
-end

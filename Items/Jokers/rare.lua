@@ -194,14 +194,14 @@ SMODS.Joker {
         name = "Familiar Face",
         text = {
             "Scored {C:attention}9s{} give {X:mult,C:white}X#1#{} Mult",
-            "Scored {C:attention}Light{} cards give {X:chips,C:white}X#2#{} Chips",
+            "Scored {C:attention}Mirrored{} cards give {X:chips,C:white}X#2#{} Chips",
             "{C:inactive,s:0.7}hm, where have i seen this face before?",
             credit("aduckted")
         }
     },
     config = { extra = { xmult = 1.09, xchips = 2.9 } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.m_cry_light
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_valk_mirrored
         return { vars = { card.ability.extra.xmult, card.ability.extra.xchips } }
     end,
     rarity = 3,
@@ -212,7 +212,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             local returntable = {}
-            if SMODS.has_enhancement(context.other_card, "m_cry_light") then
+            if SMODS.has_enhancement(context.other_card, "m_valk_mirrored") then
                 returntable.xchips = card.ability.extra.xchips
             end
             if context.other_card:get_id() == 9 then
@@ -309,26 +309,26 @@ SMODS.Joker {
     loc_txt = {
         name = "Box of Kittens",
         text = {
-            "Create a {C:attention}Cat Tag{} when rerolling the shop",
-            "{C:mult}+#1#{} Mult for each cat tag owned",
+            "Create a {C:attention}Kitty Tag{} when rerolling the shop",
+            "{C:mult}+#1#{} Mult for each {C:attention}Kitty Tag{} owned",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
             credit("mailingway"),
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.mult, card.ability.extra.mult * count_cat_tags() } }
+        return { vars = { card.ability.extra.mult, card.ability.extra.mult * vallkarri.count_kitty_tags() } }
     end,
     demicoloncompat = true,
     config = { extra = { mult = 3 } },
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
             return {
-                mult = card.ability.extra.mult * count_cat_tags()
+                mult = card.ability.extra.mult * vallkarri.count_kitty_tags()
             }
         end
 
         if context.reroll_shop then
-            add_tag(Tag("tag_cry_cat"))
+            add_tag(Tag("tag_valk_kitty"))
         end
     end,
     pools = { ["Kitties"] = true },
@@ -344,15 +344,15 @@ SMODS.Joker {
     loc_txt = {
         name = "Dupli-cat-ion",
         text = {
-            "At end of round, each {C:attention}Cat Tag{} has a {C:green}#1# in #2#{}",
-            "chance to create another {C:attention}Cat Tag{}",
-            "Increase denominator by {C:attention}#3#{} for every {C:attention}#4# Cat Tags{} owned",
+            "At end of round, each {C:attention}Kitty Tag{} has a {C:green}#1# in #2#{}",
+            "chance to create another {C:attention}Kitty Tag{}",
+            "Increase denominator by {C:attention}#3#{} for every {C:attention}#4# Kitty Tags{} owned",
             credit("mailingway"),
         }
     },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.base_num,
-            card.ability.extra.base_den + math.floor(count_cat_tags() / card.ability.extra.thresh))
+            card.ability.extra.base_den + math.floor(vallkarri.count_kitty_tags() / card.ability.extra.thresh))
 
         return { vars = { num, den, card.ability.extra.inc, card.ability.extra.thresh } }
     end,
@@ -363,15 +363,15 @@ SMODS.Joker {
             local to_make = 0
 
             for i, tag in ipairs(G.GAME.tags) do
-                if tag.key == "tag_cry_cat" then
-                    if SMODS.pseudorandom_probability(card, "duplication", card.ability.extra.base_num, card.ability.extra.base_den + math.floor(count_cat_tags() / card.ability.extra.thresh)) then
+                if tag.key == "tag_valk_kitty" then
+                    if SMODS.pseudorandom_probability(card, "duplication", card.ability.extra.base_num, card.ability.extra.base_den + math.floor(vallkarri.count_kitty_tags() / card.ability.extra.thresh)) then
                         to_make = to_make + 1
                     end
                 end
             end
 
             for i = 1, to_make do
-                add_tag(Tag("tag_cry_cat"))
+                add_tag(Tag("tag_valk_kitty"))
             end
         end
     end,
@@ -388,7 +388,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Greedy Bastard",
         text = {
-            "At end of round, gain {X:mult,C:white}X#1#{} Mult for each {C:attention}Cat Tag{} owned",
+            "At end of round, gain {X:mult,C:white}X#1#{} Mult for each {C:attention}Kitty Tag{} owned",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
             credit("mailingway"),
         }
@@ -408,7 +408,7 @@ SMODS.Joker {
         if context.end_of_round and context.main_eval then
             local upgr = false
             for i, tag in ipairs(G.GAME.tags) do
-                if tag.key == "tag_cry_cat" then
+                if tag.key == "tag_valk_kitty" then
                     upgr = true
                     card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.gain
                 end

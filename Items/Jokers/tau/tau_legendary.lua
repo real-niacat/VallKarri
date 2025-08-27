@@ -1,7 +1,7 @@
 SMODS.Joker {
     key = "tau_canio",
     loc_txt = {
-        name = "{C:cry_ember}Tauic Canio{}",
+        name = "{C:valk_fire}Tauic Canio{}",
         text = {
             "{X:dark_edition,C:white}+^^#1#{} Mult when any card destroyed",
             "{C:inactive}Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
@@ -37,7 +37,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "tau_triboulet",
     loc_txt = {
-        name = "{C:cry_ember}Tauic Triboulet{}",
+        name = "{C:valk_fire}Tauic Triboulet{}",
         text = {
             "{X:dark_edition,C:white}^^#1#{} Mult when any face card or Ace is scored",
             "Increases by {X:dark_edition,C:white}+^^#2#{} when any face card or Ace is scored",
@@ -70,7 +70,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "tau_yorick",
     loc_txt = {
-        name = "{C:cry_ember}Tauic Yorick{}",
+        name = "{C:valk_fire}Tauic Yorick{}",
         text = {
             "{X:dark_edition,C:white}^^#1#{} Mult",
             "Increases by {X:dark_edition,C:white}+^#2#{} when any card discarded",
@@ -109,7 +109,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "tau_chicot",
     loc_txt = {
-        name = "{C:cry_ember}Tauic Chicot{}",
+        name = "{C:valk_fire}Tauic Chicot{}",
         text = {
             "Disables effect of every {C:attention}Boss Blind{}",
             "{X:dark_edition,C:white}^^(1 / #1#){} blind size",
@@ -153,7 +153,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "tau_perkeo",
     loc_txt = {
-        name = "{C:cry_ember}Tauic Perkeo{}",
+        name = "{C:valk_fire}Tauic Perkeo{}",
         text = {
             "Create {C:attention}#1#{} {C:dark_edition}Negative{} copies of the leftmost consumable when exiting shop",
             "Remove {C:dark_edition}Negative{} from rightmost consumable at end of round",

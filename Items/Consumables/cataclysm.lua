@@ -1,9 +1,18 @@
-local fakestart = Game.start_run
-function Game:start_run(args)
-    fakestart(self, args)
+local fakestart = Game.main_menu
+function Game:main_menu(...)
+    fakestart(self, ...)
 
     for name,center in pairs(G.P_CENTER_POOLS.Cataclysm) do
         G.P_CENTER_POOLS.Cataclysm[name].cost = 16
+        G.P_CENTER_POOLS.Cataclysm[name].in_pool = function(self, args)
+            return not (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count)
+        end
+        -- info_queue[#info_queue + 1] = {set = "Other", key = first}
+        local original_locvar = G.P_CENTER_POOLS.Cataclysm[name].loc_vars
+        G.P_CENTER_POOLS.Cataclysm[name].loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue + 1] = {set = "Other", key = "cata_self_banish"}
+            return original_locvar(self, info_queue, card)
+        end
     end
 
 end
@@ -72,7 +81,7 @@ SMODS.ConsumableType {
 --         return true
 --     end,
 --     use = function(self, card, area, copier)
---         self_annihilate(card)
+--         
 
 
 --     end
@@ -106,7 +115,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         level_all_hands(card, -card.ability.extra.loss)
         for name,_ in pairs(G.GAME.hands) do
@@ -146,7 +155,10 @@ SMODS.Consumable {
         return card.ability.extra.rounds <= 0
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        if card.area ~= G.consumeables then
+            G.consumeables:emplace(card)
+            return
+        end 
 
         for i,joker in ipairs(G.jokers.cards) do
             Cryptid.manipulate(joker, {value = card.ability.extra.bonus/(card.ability.extra.negativemult ^ card.ability.extra.startrounds)})
@@ -162,6 +174,13 @@ SMODS.Consumable {
 
         end
     end,
+
+    keep_on_use = function(self, card)
+        if card.area ~= G.consumeables then
+            return true
+        end
+        return false
+    end
 }
 
 SMODS.Consumable {
@@ -192,7 +211,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         for i,joker in ipairs(G.jokers.cards) do
             joker:set_debuff(true)
@@ -237,7 +256,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         ease_discard(-card.ability.extra.change)
         G.GAME.round_resets.discards = G.GAME.round_resets.discards - 20 
@@ -273,7 +292,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         local chosen_joker = G.jokers.cards[pseudorandom("cata_abso", 1, #G.jokers.cards)]
         for i,joker in ipairs(G.jokers.cards) do
@@ -311,7 +330,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         local copies = {}
         for i,to_copy in ipairs(G.deck.cards) do 
@@ -358,7 +377,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         G.hand:change_size(-card.ability.extra.change)
         for i,joker in ipairs(G.jokers.cards) do
@@ -397,12 +416,12 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
 
         for i,center in ipairs(G.P_CENTER_POOLS.Planet) do
             if SMODS.pseudorandom_probability(card, 'collision', card.ability.extra.num, card.ability.extra.den, 'collision') then
-                G.GAME.cry_banished_keys[center.key] = true
+                G.GAME.banned_keys[center.key] = true
             end
         end
 
@@ -419,7 +438,8 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local DISABLED_ONE = {
     no_doe = true,
     no_grc = true,
     set = "Cataclysm",
@@ -427,8 +447,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Takeover",
         text = {
-            "Future {C:code}Code{} cards gain {C:attention}+#1#{} multiuses",
-            "{C:attention}De-level{} all hands when {C:code}Code{} card used",
+            "TO REWORK",
             credit("Pangaea"),
         }
     },
@@ -447,18 +466,12 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
-
-        G.GAME.punish_code_usage = true
-        if not G.GAME.code_multiuses then
-            G.GAME.code_multiuses = card.ability.extra.uses
-        else
-            G.GAME.code_multiuses = G.GAME.code_multiuses + card.ability.extra.uses
-        end
+        
     end
 }
 
-SMODS.Consumable {
+-- SMODS.Consumable {
+local DISABLED_TWO = {
     no_doe = true,
     no_grc = true,
     set = "Cataclysm",
@@ -466,8 +479,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Maleficence",
         text = {
-            "Destroy all {C:attention}M Jokers{}, then",
-            "apply {C:attention}Jolly{} to all Jokers",
+            "TO REWORK",
             credit("Pangaea"),
         }
     },
@@ -487,17 +499,8 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
-        for i,joker in ipairs(G.jokers.cards) do
-
-            
-            joker:set_edition("e_cry_m",true)
-            if joker.config.center.pools and joker.config.center.pools.M then
-                joker:start_dissolve({G.C.BLACK}, 8)
-            end
-
-        end
     end
 }
 
@@ -529,11 +532,11 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_banish = {"p_celestial_jumbo_1","p_celestial_jumbo_2","p_celestial_mega_1","p_celestial_mega_2",}
 
         for i,banish in ipairs(to_banish) do
-            G.GAME.cry_banished_keys[banish] = true
+            G.GAME.banned_keys[banish] = true
         end
 
         mspl(card.ability.extra.mult)
@@ -569,11 +572,11 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_banish = {"p_tarot_jumbo_1","p_tarot_jumbo_2","p_tarot_mega_1","p_tarot_mega_2",}
 
         for i,banish in ipairs(to_banish) do
-            G.GAME.cry_banished_keys[banish] = true
+            G.GAME.banned_keys[banish] = true
         end
 
         for i,center in ipairs(G.P_CENTER_POOLS.Tarot) do
@@ -618,11 +621,11 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_banish = {"p_spectral_jumbo_1","p_spectral_mega_1",}
 
         for i,banish in ipairs(to_banish) do
-            G.GAME.cry_banished_keys[banish] = true
+            G.GAME.banned_keys[banish] = true
         end
 
         if not G.GAME.hidden_override then
@@ -662,11 +665,11 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_make = 0
 
         for i,joker in ipairs(G.jokers.cards) do
-            G.GAME.cry_banished_keys[joker.config.center.key] = true
+            G.GAME.banned_keys[joker.config.center.key] = true
             to_make = to_make + 1
             joker:quick_dissolve()
         end
@@ -707,7 +710,7 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_make = 0
 
         G.GAME.ban_tags = true
@@ -755,12 +758,12 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
         local to_make = 0
 
         for i,center in ipairs(G.P_CENTER_POOLS.Planet) do
             if SMODS.pseudorandom_probability(card, 'postexistence', card.ability.extra.num, card.ability.extra.den, 'postexistence') then
-                G.GAME.cry_banished_keys[center.key] = true
+                G.GAME.banned_keys[center.key] = true
             end
         end
 
@@ -779,7 +782,7 @@ SMODS.Consumable {
         text = {
             "All owned Jokers are made {C:purple}Eternal{}",
             "Jokers have a {C:green}5%{} chance to be",
-            "replaced by an {C:cry_exotic}Exotic{} Joker",
+            "replaced by an {C:valk_exquisite}Exquisite{} Joker",
             credit("Pangaea"),
         }
     },
@@ -798,13 +801,13 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         for i,joker in ipairs(G.jokers.cards) do
             joker.ability.eternal = true 
         end
 
-        G.GAME.exotic_replace = 5 --no stacking :)
+        G.GAME.exquisite_replace = 5 --no stacking :)
 
     end
 }
@@ -834,7 +837,7 @@ SMODS.Consumable {
 --         return true
 --     end,
 --     use = function(self, card, area, copier)
---         self_annihilate(card)
+--         
 
         
 --     end
@@ -848,7 +851,7 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Phoenix",
         text = {
-            "{C:red}Unbanish{} a random used {C:red}Cataclysm{} card",
+            "{C:red}Unbanish{} a random used {C:valk_cataclysm}Cataclysm{} card",
             credit("Pangaea"),
         }
     },
@@ -867,20 +870,20 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        self_annihilate(card)
+        
 
         local capable = {}
 
-        for name,center in pairs(G.GAME.cry_banished_keys) do
-            if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
+        for name,data in pairs(G.GAME.consumeable_usage) do
+            if G.P_CENTERS[name] and data.set == "Cataclysm" and data.count > 0 then
                 capable[#capable+1] = name
             end
         end
 
-        G.GAME.cry_banished_keys[capable[pseudorandom("valk_unbanish",1,#capable)]] = false
+        G.GAME.consumeable_usage[capable[pseudorandom("valk_unbanish",1,#capable)]].count = 0
     end,
     in_pool = function()
-        for name,center in pairs(G.GAME.cry_banished_keys) do
+        for name,center in pairs(G.GAME.banned_keys) do
             if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
                 return true
             end
@@ -933,7 +936,7 @@ SMODS.Consumable {
         name = "Nevada",
         text = {
             "All hands gain {X:dark_edition,C:white}^^#1#{} Chips & Mult for",
-            "each {C:red}banished{} {C:valk_cataclysm}cataclysm{} card",
+            "each used {C:valk_cataclysm}cataclysm{} card",
             credit("Pangaea"),
         }
     },
@@ -952,15 +955,15 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         local levels = 0
-        for name,center in pairs(G.GAME.cry_banished_keys) do
+        for name,center in pairs(G.GAME.consumeable_usage) do
             if G.P_CENTERS[name].set == "Cataclysm" then
-                levels = levels + 1
+                levels = levels + center.count
             end
         end
 
         local value = card.ability.extra.increase ^ levels
         local str = "^^" .. tostring(value)
-        simple_hand_text("all")
+        vallkarri.simple_hand_text("all")
         update_hand_text({sound = 'button', volume = 0.7, pitch = 1, delay = 1}, {chips = str,mult = str})
 
         for i,hand in pairs(G.GAME.hands) do
@@ -971,9 +974,9 @@ SMODS.Consumable {
         end
     end,
     in_pool = function()
-        for name,center in pairs(G.GAME.cry_banished_keys) do
-            if G.P_CENTERS[name] and G.P_CENTERS[name].set == "Cataclysm" then
-                return true
+        for name,center in pairs(G.GAME.consumeable_usage) do
+            if G.P_CENTERS[name].set == "Cataclysm" then
+                return true 
             end
         end
         return false
@@ -1000,7 +1003,7 @@ SMODS.Voucher {
     },
 
     in_pool = function()
-        return G.GAME.round_resets.ante > 6
+        return G.GAME.round_resets.ante > 2
     end,
 
     

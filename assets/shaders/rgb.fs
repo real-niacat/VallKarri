@@ -10,7 +10,7 @@
 // Values of this variable:
 // self.ARGS.send_to_shader[1] = math.min(self.VT.r*3, 1) + (math.sin(G.TIMERS.REAL/28) + 1) + (self.juice and self.juice.r*20 or 0) + self.tilt_var.amt
 // self.ARGS.send_to_shader[2] = G.TIMERS.REAL
-extern PRECISION vec2 cosmic;
+extern PRECISION vec2 rgb;
 
 extern PRECISION number dissolve;
 extern PRECISION number time;
@@ -39,13 +39,12 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 
     // For all vectors (vec2, vec3, vec4), .rgb is equivalent of .xyz, so uv.y == uv.g
     // .a is last parameter for vec4 (usually the alpha channel - transparency)
-    float half_pi = 3.14159 / 2;
-    float sintime = (1+(sin(cosmic.y+(uv.y*half_pi))+1)/2) * 1.5;
-    
-
-    tex.r = tex.r * (sintime * 0.45);
-    tex.g = tex.g * (1.0 / (sintime * 0.75));
-    tex.b = tex.b * (sintime * 0.80);
+    float potency = 2+sin(rgb.y);
+    float strength = 1.0;
+    // vec2 norm = vec2(texture_coords.x / 71, texture_coords.y / 95);
+    tex.r *= strength * potency * (1-uv.x) * (1-uv.y);
+    tex.g *= strength * potency * (uv.y);
+    tex.b *= strength * potency * (uv.x) * (1-uv.y);
 
     // required
     return dissolve_mask(tex*colour, texture_coords, uv);

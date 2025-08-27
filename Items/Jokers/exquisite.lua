@@ -16,7 +16,7 @@ local orivander = {
     end,
 
     cost = 50,
-    rarity = "cry_exotic",
+    rarity = "valk_exquisite",
     atlas = "main",
     pos = {x = 0, y = 1},
     soul_pos = {x = 1, y = 1},
@@ -60,7 +60,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.strong, card.ability.extra.mid} }
     end,
-    rarity = "cry_exotic",
+    rarity = "valk_exquisite",
     atlas = "main",
     pools = { ["Kitties"] = true },
     pos = {x=0,y=2},
@@ -70,12 +70,12 @@ SMODS.Joker {
     calculate = function(self, card, context)
         
         if (context.individual and context.cardarea == G.play) or context.forcetrigger then
-            Cryptid.misprintize(context.other_card, {min=card.ability.extra.strong, max=card.ability.extra.strong}, nil, true)
+            Cryptid.manipulate(context.other_card, {value=card.ability.extra.strong})
 
 
             for i,c in ipairs(G.jokers.cards) do
                 if (c.config.center_key ~= "j_valk_illena") then
-                    Cryptid.misprintize(c, {min=card.ability.extra.mid, max=card.ability.extra.mid}, nil, true)
+                    Cryptid.manipulate(c, {value=card.ability.extra.mid})
                 end
                 
             end
@@ -112,7 +112,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.rate, card.ability.extra.copies} }
     end,
-    rarity = "cry_exotic",
+    rarity = "valk_exquisite",
     atlas = "main",
     pos = {x=8,y=14},
     soul_pos = {x=9,y=14},
@@ -196,7 +196,7 @@ SMODS.Joker {
             }
         }
     end,
-    rarity = "cry_exotic",
+    rarity = "valk_exquisite",
     atlas = "main",
     pos = {x = 0, y = 0},
     soul_pos = {x=3,y=2},
@@ -253,7 +253,7 @@ SMODS.Joker {
         
         return {vars = { card.ability.extra.perblue, card.ability.extra.perred, 1 + (card.ability.extra.perblue * vallkarri.librat_vals.blue), 1 + (card.ability.extra.perred * vallkarri.librat_vals.red)} }
     end,
-    rarity = "cry_exotic",
+    rarity = "valk_exquisite",
     atlas = "main",
     pos = {x = 7, y = 5},
     soul_pos = {x = 9, y = 5, extra = {x = 8, y = 5}},
@@ -288,7 +288,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.per} }
     end,
-    rarity = "cry_exotic",
+    rarity = "valk_exquisite",
     atlas = "main",
     pos = {x = 7, y = 0},
     soul_pos = {x = 9, y = 0, extra = {x = 8, y = 0}},
@@ -320,7 +320,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.tags, card.ability.extra.increase} }
     end,
-    rarity = "cry_exotic",
+    rarity = "valk_exquisite",
     atlas = "main",
     pos = {x = 5, y = 12},
     soul_pos = {x = 5, y = 13, extra = {x = 5, y = 14}},
@@ -364,7 +364,7 @@ SMODS.Joker {
         info_queue[#info_queue+1] = G.P_TAGS.tag_meteor
         return {vars = { card.ability.extra.tags, card.ability.extra.inc, card.ability.extra.max, card.ability.extra.tags_base, card.ability.extra.mult } }
     end,
-    rarity = "cry_exotic",
+    rarity = "valk_exquisite",
     atlas = "main",
     pos = {x = 6, y = 12},
     soul_pos = {x = 6, y = 13, extra = {x = 6, y = 14}},
@@ -409,7 +409,7 @@ SMODS.Joker {
 --     loc_vars = function(self, info_queue, card)
 --         return {vars = {} }
 --     end,
---     rarity = "cry_exotic",
+--     rarity = "valk_exquisite",
 --     atlas = "main",
 --     pos = {x = 7, y = 12},
 --     soul_pos = {x = 7, y = 13, extra = {x = 7, y = 14}},

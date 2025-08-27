@@ -80,7 +80,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         
         if context.other_joker and context.other_joker.ability.set == "Joker" then
-			if not Talisman.config_file.disable_anims then
+			if not Talisman or (Talisman and not Talisman.config_file.disable_anims) then
 				G.E_MANAGER:add_event(Event({
 					func = function()
 						context.other_joker:juice_up(0.5, 0.5)

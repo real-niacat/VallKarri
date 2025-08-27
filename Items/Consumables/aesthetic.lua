@@ -51,15 +51,15 @@ local aesthetic_cards = {
     { pos = { x = 1, y = 0 }, key = "e_holo", name = "synthwave" },
     { pos = { x = 2, y = 0 }, key = "e_polychrome", name = "chromecore" },
     { pos = { x = 3, y = 0 }, key = "e_negative", name = "vaporwave" },
-    { pos = { x = 0, y = 1 }, key = "e_cry_glitched", name = "glitch" },
-    { pos = { x = 1, y = 1 }, key = "e_cry_mosaic", name = "antique" },
-    { pos = { x = 2, y = 1 }, key = "e_cry_oversat", name = "weirdcore" },
-    { pos = { x = 3, y = 1 }, key = "e_cry_glass", name = "net__art" },
-    { pos = { x = 0, y = 2 }, key = "e_cry_gold", name = "vectorheart" },
-    { pos = { x = 1, y = 2 }, key = "e_cry_blur", name = "liminality" },
-    { pos = { x = 2, y = 2 }, key = "e_cry_noisy", name = "analog_horror" },
-    { pos = { x = 3, y = 2 }, key = "e_cry_astral", name = "raygun_gothic" },
-    { pos = { x = 4, y = 2 }, key = "e_cry_m", name = "metalheart" },
+    { pos = { x = 0, y = 1 }, key = "e_cry_glitched", name = "glitch", dep = {"Cryptid"} },
+    { pos = { x = 1, y = 1 }, key = "e_cry_mosaic", name = "antique", dep = {"Cryptid"} },
+    { pos = { x = 2, y = 1 }, key = "e_cry_oversat", name = "weirdcore", dep = {"Cryptid"} },
+    { pos = { x = 3, y = 1 }, key = "e_cry_glass", name = "net__art", dep = {"Cryptid"} },
+    { pos = { x = 0, y = 2 }, key = "e_cry_gold", name = "vectorheart", dep = {"Cryptid"} },
+    { pos = { x = 1, y = 2 }, key = "e_cry_blur", name = "liminality", dep = {"Cryptid"} },
+    { pos = { x = 2, y = 2 }, key = "e_cry_noisy", name = "analog_horror", dep = {"Cryptid"} },
+    { pos = { x = 3, y = 2 }, key = "e_cry_astral", name = "raygun_gothic", dep = {"Cryptid"} },
+    { pos = { x = 4, y = 2 }, key = "e_cry_m", name = "metalheart", dep = {"Cryptid"} },
 }
 
 for _, edit in ipairs(aesthetic_cards) do
@@ -74,6 +74,7 @@ for _, edit in ipairs(aesthetic_cards) do
                 credit("Pangaea"),
             }
         },
+        cost = 7,
         pos = edit.pos,
         atlas = "aes",
         config = { extra = { select = 1, edition = edit.key } },
@@ -97,7 +98,8 @@ for _, edit in ipairs(aesthetic_cards) do
             for i, high in ipairs(G.jokers.highlighted) do
                 high:set_edition(card.ability.extra.edition)
             end
-        end
+        end,
+        dependencies = edit.dep,
     }
 end
 
@@ -147,4 +149,36 @@ SMODS.Consumable {
         end
         return false
     end
+}
+
+SMODS.Consumable {
+    set = "Spectral",
+    key = "revitalism",
+    loc_txt = {
+        name = "Revitalism",
+        text = {
+            "Give all jokers a random {C:attention}Edition{}",
+            "{C:attention}+#1#{} Effective Ante",
+            credit("Pangaea"),
+        }
+    },
+    pos = { x = 4, y = 1 },
+    atlas = "aes",
+
+    config = { extra = { ante = 2 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.ante } }
+    end,
+    can_use = function(self, card)
+        return true
+    end,
+    use = function(self, card, area, copier)
+        for i,joker in ipairs(G.jokers.cards) do
+            joker:set_edition(poll_edition("valk_revitalism", 1, false, true))
+        end
+        vallkarri.add_effective_ante_mod(function(x)
+            return x+card.ability.extra.ante
+        end)
+    end,
 }

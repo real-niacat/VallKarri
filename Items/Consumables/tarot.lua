@@ -1,45 +1,6 @@
-vallkarri.merged_tarot_rate = 2
+vallkarri.merged_tarot_rate = 0.03
 
-SMODS.Consumable {
-    key = "the_knight",
-    set = "Tarot",
-    loc_txt = {
-        name = "The Knight",
-        text = {
-            "Select up to {C:attention}#1#{} cards,",
-            "apply a random {C:attention}CCD{} to all selected cards",
-            credit("Pangaea")
-        }
-    },
-    config = { extra = { cards = 5 } },
-    atlas = "main",
-    pos = {x=12, y=1, },
-    no_grc = true,
 
-    in_pool = function()
-        return false
-    end,
-
-    loc_vars = function(self, info_queue, card)
-        return {vars = {
-            card.ability.extra.cards
-        }}
-    end,
-    can_use = function(self, card)
-        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.cards 
-    end,
-
-    use = function(self, card, area, copier)
-        
-        do_while_flipped(G.hand.highlighted, function(c)
-            c:set_ability(Cryptid.random_consumable("valk_knight"), true, nil)
-            G.hand:remove_from_highlighted(c)
-        end)
-        
-
-    end,
-    soul_rate = vallkarri.merged_tarot_rate
-}
 
 SMODS.Consumable {
     key = "iron_maiden",
@@ -58,10 +19,6 @@ SMODS.Consumable {
     pos = {x=10, y=0, },
     no_grc = true,
 
-    in_pool = function()
-        return false
-    end,
-
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_steel
         return {vars = {card.ability.extra.cards}}
@@ -78,7 +35,8 @@ SMODS.Consumable {
             G.hand:remove_from_highlighted(ca)
         end)
     end,
-    soul_rate = vallkarri.merged_tarot_rate
+    soul_rate = vallkarri.merged_tarot_rate,
+    
 }
 
 
@@ -97,10 +55,6 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=11, y=0, },
     no_grc = true,
-
-    in_pool = function()
-        return false
-    end,
 
     loc_vars = function(self, info_queue, card)
 
@@ -123,7 +77,8 @@ SMODS.Consumable {
             card:set_edition(choices.edition, true)
         end)
     end,
-    soul_rate = vallkarri.merged_tarot_rate
+    soul_rate = vallkarri.merged_tarot_rate,
+    
 }
 
 SMODS.Consumable {
@@ -142,10 +97,6 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=12, y=0, },
     no_grc = true,
-
-    in_pool = function()
-        return false
-    end,
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.e_negative
@@ -171,7 +122,8 @@ SMODS.Consumable {
             end
         }))
     end,
-    soul_rate = vallkarri.merged_tarot_rate
+    soul_rate = vallkarri.merged_tarot_rate,
+    
 }
 
 SMODS.Consumable {
@@ -190,10 +142,6 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=10, y=1, },
     no_grc = true,
-
-    in_pool = function()
-        return false
-    end,
 
     loc_vars = function(self, info_queue, card)
         local sum = 0
@@ -243,7 +191,8 @@ SMODS.Consumable {
         }))
 
     end,
-    soul_rate = vallkarri.merged_tarot_rate
+    soul_rate = vallkarri.merged_tarot_rate,
+    
 }
 
 SMODS.Consumable {
@@ -261,10 +210,6 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=11, y=1, },
     no_grc = true,
-
-    in_pool = function()
-        return false
-    end,
 
     loc_vars = function(self, info_queue, card)
         local num, blank = SMODS.get_probability_vars(card, 1, 1, 'valk_gameshow')
@@ -289,5 +234,44 @@ SMODS.Consumable {
         end
 
     end,
-    soul_rate = vallkarri.merged_tarot_rate
+    soul_rate = vallkarri.merged_tarot_rate,
+    
+}
+
+SMODS.Consumable {
+    key = "the_knight",
+    set = "Tarot",
+    loc_txt = {
+        name = "The Knight",
+        text = {
+            "Select up to {C:attention}#1#{} cards,",
+            "apply a random {C:attention}CCD{} to all selected cards",
+            credit("Pangaea")
+        }
+    },
+    config = { extra = { cards = 5 } },
+    atlas = "main",
+    pos = {x=12, y=1, },
+    no_grc = true,
+
+    loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.cards
+        }}
+    end,
+    can_use = function(self, card)
+        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.cards 
+    end,
+
+    use = function(self, card, area, copier)
+        
+        do_while_flipped(G.hand.highlighted, function(c)
+            c:set_ability(Cryptid.random_consumable("valk_knight"), true, nil)
+            G.hand:remove_from_highlighted(c)
+        end)
+        
+
+    end,
+    soul_rate = vallkarri.merged_tarot_rate,
+    
 }

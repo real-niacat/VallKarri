@@ -119,19 +119,18 @@ SMODS.Joker {
     loc_txt = {
         name = "Cass None",
         text = {
-            "Gains {C:mult}+#1#{} and {X:mult,C:white}X#2#{} Mult",
-            "if played hand is {C:attention}None{}",
-            "{C:inactive}(Currently {C:mult}+#3#{C:inactive} and {X:mult,C:white}X#4#{C:inactive} Mult)",
+            "Gains {X:mult,C:white}X#1#{} Mult",
+            "for each card under {C:attention}#2#{} in {C:attention}Scoring{} hand",
+            "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
             credit("unexian")
         }
     },
-    config = { extra = { gm = 10, gx = 0.2, m = 10, x = 1 } },
+    config = { extra = { gx = 0.05, x = 1, thresh = 5 } },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                card.ability.extra.gm,
                 card.ability.extra.gx,
-                card.ability.extra.m,
+                card.ability.extra.thresh,
                 card.ability.extra.x
             }
         }
@@ -142,15 +141,20 @@ SMODS.Joker {
     soul_pos = { x = 8, y = 6 },
     cost = 20,
     calculate = function(self, card, context)
-        if context.before and context.scoring_name == "cry_None" then
-            card.ability.extra.m = card.ability.extra.m + card.ability.extra.gm
-            card.ability.extra.x = card.ability.extra.x + card.ability.extra.gx
-            return { message = "Upgraded!" }
+        if context.before then
+            SMODS.scale_card(card,
+                {
+                    ref_table = card.ability.extra,
+                    ref_value = "x",
+                    scalar_value = "gx",
+                    operation = function(ref_table, ref_value, initial, change)
+                        ref_table[ref_value] = initial + (card.ability.extra.thresh - #context.scoring_hand) * change
+                    end
+                })
         end
 
         if context.joker_main then
             return {
-                mult = card.ability.extra.m,
                 xmult = card.ability.extra.x
             }
         end
@@ -250,15 +254,15 @@ SMODS.Joker {
         name = "TASAL",
         text = {
             "{C:attention}+#1#{} Card Selection Limit and Hand Size.",
-            "{X:gold,C:white}X#2#{} Ascension scaling per level of {C:attention}Sol{}.",
-            "When {C:planet}Planet{} card used, increase power of {C:attention}Ascended{} hands",
+            "{C:planet}Planet{} cards have a {C:green}#2# in #3#{} chance",
+            "to level up your most played Poker Hand {C:attention}#4#{} Times",
             credit("Grahkon")
         }
     },
-    config = { extra = { csl = 3, scaling = 4 } },
+    config = { extra = { csl = 3, num = 1, den = 3, levels = 3 } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue + 1] = G.P_CENTERS.c_cry_sunplanet
-        return { vars = { card.ability.extra.csl, card.ability.extra.scaling + 1 } }
+        local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den)
+        return { vars = { card.ability.extra.csl, num, den, card.ability.extra.levels } }
     end,
     rarity = 4,
     atlas = "main",
@@ -268,11 +272,10 @@ SMODS.Joker {
     blueprint_compat = false,
     calculate = function(self, card, context)
         if context.using_consumeable then
-            if context.consumeable.ability.set == "Planet" then
-                level_ascended_hands(1, card)
-            end
-            if context.consumeable.config.center.key == "c_cry_sunplanet" then
-                level_ascended_hands(card.ability.extra.scaling, card)
+            if context.consumeable.ability.set == "Planet" and SMODS.pseudorandom_probability(card, "valk_tasal", card.ability.extra.num, card.ability.extra.den) then
+                local hand = vallkarri.get_most_played_hand()
+                vallkarri.quick_hand_text(hand, nil, nil, G.GAME.hands[hand].level)
+                level_up_hand(card, hand, false, card.ability.extra.levels)
             end
         end
     end,
@@ -300,7 +303,6 @@ SMODS.Joker {
         text = {
             "{X:blue,C:white}X#1#{} Chips and {X:red,C:white}X#1#{} Mult",
             "{C:blue}+#1#{} Hands and {C:red}+#1#{} Discards",
-            "{C:attention}+#1#{} Card Selection Limit and Hand Size",
             "When playing card is scored, earn {C:money}$#1#{}",
             credit("Scraptake"),
         }
@@ -329,21 +331,6 @@ SMODS.Joker {
         end
     end,
 
-    add_to_deck = function(self, card, from_debuff )
-        if not from_debuff then
-            G.hand:change_size(card.ability.extra.meow)
-            SMODS.change_play_limit(card.ability.extra.meow)
-            SMODS.change_discard_limit(card.ability.extra.meow)
-        end
-    end,
-    remove_from_deck = function(self, card, from_debuff )
-        if not from_debuff then
-            G.hand:change_size(-card.ability.extra.meow)
-            SMODS.change_play_limit(-card.ability.extra.meow)
-            SMODS.change_discard_limit(-card.ability.extra.meow)
-        end
-    end,
-  
 }
 
 
