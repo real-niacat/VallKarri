@@ -1,4 +1,4 @@
-vallkarri.merged_tarot_rate = 0.03
+vallkarri.merged_tarot_rate = 0.02
 
 
 
