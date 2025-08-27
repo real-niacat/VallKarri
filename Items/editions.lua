@@ -108,7 +108,8 @@ SMODS.Shader {
     path = "lowqual.fs"
 }
 
-SMODS.Edition {
+-- SMODS.Edition {
+local low_quality = {
     key = "lowqual",
     shader = "lowqual",
     loc_txt = {
