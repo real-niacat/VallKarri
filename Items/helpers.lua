@@ -647,7 +647,7 @@ function CardArea:check_individual(func)
 
 end
 
-function create_all_jokers_from(mod)
+function vallkarri.create_all_jokers_from(mod)
 
     for i,joker in ipairs(G.P_CENTER_POOLS.Joker) do
         if joker.original_mod and joker.original_mod.id == mod then
