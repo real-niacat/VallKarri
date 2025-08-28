@@ -673,8 +673,10 @@ function vallkarri.get_ordered_highlighted(cardarea)
     local ordered = {}
 
     for _,card in pairs(cardarea.cards) do
-        if table.vcontains(cardarea.highlighted, card) then
-            ordered[#ordered+1] = card
+        for _,highlighted_card in pairs(cardarea.highlighted) do
+            if highlighted_card == card then
+                ordered[#ordered+1] = card
+            end
         end
     end
 
