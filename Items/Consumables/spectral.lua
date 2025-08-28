@@ -245,3 +245,36 @@ SMODS.Consumable {
         return (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key] < self.config.extra.uses) or true
     end
 }
+
+SMODS.Consumable {
+    set = "Spectral",
+    loc_txt = { 
+        name = "",
+        text = {
+            "",
+            credit("mailingway")
+        }
+    },
+    key = "",
+    pos = { x = 0, y = 6 },
+    atlas = "atlas2",
+
+    config = { extra = { convert = 2 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = {
+            
+        }}
+    end,
+
+    can_use = function(self, card)
+        return 
+    end,
+
+    use = function(self, card, area, copier)
+        
+    end,
+}
+
+-- vallkarri
+-- freakarri
