@@ -249,30 +249,80 @@ SMODS.Consumable {
 SMODS.Consumable {
     set = "Spectral",
     loc_txt = { 
-        name = "",
+        name = "C{s:0.4}19{}H{s:0.4}28{}O{s:0.4}2",
         text = {
-            "",
+            "Convert up to {C:attention}#1#{} selected cards to {C:attention}Polychrome Kings{}",
+            "Destroy {C:attention}#2#{} random cards in deck",
             credit("mailingway")
         }
     },
-    key = "",
+    key = "testosterone",
     pos = { x = 0, y = 6 },
     atlas = "atlas2",
 
-    config = { extra = { convert = 2 } },
+    config = { extra = { convert = 3, destroy = 3 } },
 
     loc_vars = function(self, info_queue, card)
         return { vars = {
-            
+            card.ability.extra.convert,
+            card.ability.extra.destroy
         }}
     end,
 
     can_use = function(self, card)
-        return 
+        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.convert
     end,
 
     use = function(self, card, area, copier)
-        
+        do_while_flipped(vallkarri.get_ordered_highlighted(G.hand), function(c)
+            SMODS.change_base(c, nil, "King")
+            c:set_edition("e_polychrome", true)
+        end)
+
+        for i=1,card.ability.extra.destroy do
+            local thou_shall_fucking_die = pseudorandom_element(G.playing_cards, "valk_testosterone")
+            thou_shall_fucking_die:start_dissolve({G.C.RED})
+        end
+    end,
+}
+
+SMODS.Consumable {
+    set = "Spectral",
+    loc_txt = { 
+        name = "C{s:0.4}18{}H{s:0.4}24{}O{s:0.4}2",
+        text = {
+            "Convert up to {C:attention}#1#{} selected cards to {C:attention}Polychrome Queens{}",
+            "Destroy {C:attention}#2#{} random cards in deck",
+            credit("mailingway")
+        }
+    },
+    key = "estrogen",
+    pos = { x = 1, y = 6 },
+    atlas = "atlas2",
+
+    config = { extra = { convert = 3, destroy = 3 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = {
+            card.ability.extra.convert,
+            card.ability.extra.destroy
+        }}
+    end,
+
+    can_use = function(self, card)
+        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.convert
+    end,
+
+    use = function(self, card, area, copier)
+        do_while_flipped(vallkarri.get_ordered_highlighted(G.hand), function(c)
+            SMODS.change_base(c, nil, "Queen")
+            c:set_edition("e_polychrome", true)
+        end)
+
+        for i=1,card.ability.extra.destroy do
+            local thou_shall_fucking_die = pseudorandom_element(G.playing_cards, "valk_estrogen")
+            thou_shall_fucking_die:start_dissolve({G.C.RED})
+        end
     end,
 }
 
