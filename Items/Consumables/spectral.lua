@@ -204,3 +204,44 @@ SMODS.Consumable {
 
     end
 }
+
+SMODS.Consumable {
+    set = "Spectral",
+    loc_txt = { 
+        name = "Succor",
+        text = {
+            "{C:attention}+#1#{} Card Selection Limit",
+            "{C:attention}#4#{} Hand Size",
+            "May only be used {C:attention}#2#{} times per run",
+            "{C:inactive}(#3# Uses remain)",
+            credit("mailingway")
+        }
+    },
+    key = "succor",
+    pos = { x = 0, y = 5 },
+    atlas = "atlas2",
+
+    config = { extra = { limit = 2, uses = 8, hand_size = -1 } },
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = {
+            card.ability.extra.limit,
+            card.ability.extra.uses,
+            G.GAME.consumeable_usage[self.key] and card.ability.extra.uses - G.GAME.consumeable_usage[self.key].count or card.ability.extra.uses,
+            card.ability.extra.hand_size
+        }}
+    end,
+
+    can_use = function(self, card)
+        return (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key] < self.config.extra.uses) or true
+    end,
+
+    use = function(self, card, area, copier)
+        SMODS.change_play_limit(card.ability.extra.limit)
+        SMODS.change_discard_limit(card.ability.extra.limit)
+        G.hand:change_size(card.ability.extra.hand_size)
+    end,
+    in_pool = function(self, args)
+        return (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key] < self.config.extra.uses) or true
+    end
+}
