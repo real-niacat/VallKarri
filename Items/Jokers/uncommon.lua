@@ -3,13 +3,14 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:red}Where do I click?{}",
         text = {
-            "Gains {X:mult,C:white}X#1#{} Mult when anything happens",
-            "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
+            "Gains {X:mult,C:white}X#1#{} Mult when a card is sold",
+            "Loses {X:mult,C:white}X#2#{} Mult when a {C:attention}Consumable{} is used",
+            "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult){}",
             "{C:inactive}Where do I click, Drago?{}",
             credit("Lily Felli")
         }
     },
-    config = { extra = { cur = 0.90, gain = 1e-3 } },
+    config = { extra = { cur = 1, gain = 0.2, loss = 0.1 } },
     rarity = 2,
     atlas = "main",
     pos = { x = 4, y = 6 },
@@ -17,11 +18,15 @@ SMODS.Joker {
     pools = { ["Meme"] = true },
     demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.gain, card.ability.extra.cur } }
+        return { vars = { card.ability.extra.gain, card.ability.extra.loss, card.ability.extra.cur } }
     end,
 
     calculate = function(self, card, context)
-        if not context.cry_press then --anything but clicking!
+        if context.using_consumeable then --anything but clicking!
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "cur", scalar_value = "loss"})
+        end
+
+        if context.selling_card then
             SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "cur", scalar_value = "gain"})
         end
 
