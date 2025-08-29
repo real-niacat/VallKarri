@@ -242,7 +242,7 @@ SMODS.Consumable {
         G.hand:change_size(card.ability.extra.hand_size)
     end,
     in_pool = function(self, args)
-        return (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key] < self.config.extra.uses) or true
+        return (G.GAME.consumeable_usage[self.key] and to_big(G.GAME.consumeable_usage[self.key]) < to_big(self.config.extra.uses)) or true
     end
 }
 

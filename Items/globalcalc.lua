@@ -19,7 +19,9 @@ vallkarri.calculate = function(self, context)
         local effects = {}
 
         for _,buff in ipairs(G.GAME.applied_buffs) do
-            effects = SMODS.merge_effects({effects, vallkarri.hand_buff_functions[buff.key](buff.power, G.play.cards) or {}})
+            if vallkarri.hand_buff_functions[buff.key] then
+                effects = SMODS.merge_effects({effects, vallkarri.hand_buff_functions[buff.key](buff.power, G.play.cards) or {}})
+            end
         end
 
         return effects
