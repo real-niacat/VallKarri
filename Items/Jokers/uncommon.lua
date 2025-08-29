@@ -10,7 +10,7 @@ SMODS.Joker {
             credit("Lily Felli")
         }
     },
-    config = { extra = { cur = 1, gain = 0.2, loss = 0.1 } },
+    config = { extra = { cur = 1, gain = 0.2, loss = -0.1 } },
     rarity = 2,
     atlas = "main",
     pos = { x = 4, y = 6 },
@@ -22,7 +22,7 @@ SMODS.Joker {
     end,
 
     calculate = function(self, card, context)
-        if context.using_consumeable then --anything but clicking!
+        if context.using_consumeable then --fucking whatever
             SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "cur", scalar_value = "loss"})
         end
 
