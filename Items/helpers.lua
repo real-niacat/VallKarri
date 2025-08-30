@@ -682,3 +682,17 @@ function vallkarri.get_ordered_highlighted(cardarea)
 
     return ordered
 end
+
+function vallkarri.get_adjacent_cards(card)
+    local index = get_index(card.area.cards, card)
+
+    return {card.area.cards[index-1], card.area.cards[index+1]}
+end
+
+function vallkarri.for_each(tab, func)
+    local cards = tab.cards and tab.cards or tab
+
+    for _,card in pairs(cards) do
+        func(card)
+    end
+end
