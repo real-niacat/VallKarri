@@ -18,7 +18,7 @@ SMODS.Joker {
     pools = { ["Meme"] = true },
     demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.gain, card.ability.extra.loss, card.ability.extra.cur } }
+        return { vars = { card.ability.extra.gain, -card.ability.extra.loss, card.ability.extra.cur } }
     end,
 
     calculate = function(self, card, context)
