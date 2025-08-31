@@ -33,6 +33,19 @@ function vallkarri.choose_main_menu_text()
     return vallkarri.splash_options[math.random(1,#vallkarri.splash_options)]
 end
 
+function vallkarri.add_splash_text(text_or_table)
+    if type(text_or_table) == "string" then
+        vallkarri.splash_options[#vallkarri.splash_options+1] = text_or_table
+    end
+
+    if type(text_or_table) == "table" then
+        for _,text in pairs(text_or_table) do
+            vallkarri.splash_options[#vallkarri.splash_options+1] = text
+        end
+    end
+end
+
+
 SMODS.Atlas {
     key = "main",
     path = "assets.png",

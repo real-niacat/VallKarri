@@ -10,7 +10,7 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
         G.P_CENTERS.j_valk_lily, --replace this with the p_center of your card, you can keep everything else the same
         { bypass_discovery_center = true }
     )
-
+    math.randomseed(os.time())
     vallkarri.main_menu_text = vallkarri.choose_main_menu_text()
     vallkarri.main_menu_ui = UIBox({
         definition = {
