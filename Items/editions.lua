@@ -147,7 +147,8 @@ local low_quality = {
     end,
 }
 SMODS.draw_ignore_keys["halo"] = true
-SMODS.Edition {
+-- SMODS.Edition {
+local lordly = {
     key = "lordly",
     shader = false,
     loc_txt = {
