@@ -18,18 +18,18 @@ SMODS.Edition {
             shadercredit("Lily Felli")
         }
     },
-    config = {echips = 1.05},
+    config = { echips = 1.05 },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card and card.edition and card.edition.echips or self.config.echips}}
+        return { vars = { card and card.edition and card.edition.echips or self.config.echips } }
     end,
     weight = 1,
     get_weight = function(self)
         return G.GAME.edition_rate * self.weight
     end,
     calculate = function(self, card, context)
-        if (context.edition and context.cardarea == G.jokers and card.config.trigger ) 
-        or (context.main_scoring and context.cardarea == G.play) then
-            SMODS.calculate_effect({echips = card.edition.echips}, card)
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger)
+            or (context.main_scoring and context.cardarea == G.play) then
+            SMODS.calculate_effect({ echips = card.edition.echips }, card)
         end
     end,
 }
@@ -51,11 +51,11 @@ SMODS.Edition {
             shadercredit("Lily Felli")
         }
     },
-    config = {extra = {}},
+    config = { extra = {} },
     calculate = function(self, card, context)
-        if (context.edition and context.cardarea == G.jokers and card.config.trigger ) 
-        or (context.main_scoring and context.cardarea == G.play) then
-            local c = SMODS.create_card({set = "Consumeables", edition = "e_negative", area = G.consumeables})
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger)
+            or (context.main_scoring and context.cardarea == G.play) then
+            local c = SMODS.create_card({ set = "Consumeables", edition = "e_negative", area = G.consumeables })
             c:add_to_deck()
             G.consumeables:emplace(c)
         end
@@ -83,22 +83,31 @@ SMODS.Edition {
             shadercredit("Lily Felli")
         }
     },
-    config = {mult = 5, xmult = 1.2, chips = 5, xchips = 1.2},
+    config = { mult = 5, xmult = 1.2, chips = 5, xchips = 1.2 },
     loc_vars = function(self, info_queue, card)
         -- print(self)
-        return {vars = { 
-            card and card.edition and card.edition.mult or self.config.mult,
-            card and card.edition and card.edition.xmult or self.config.xmult
-         }}
+        return {
+            vars = {
+                card and card.edition and card.edition.mult or self.config.mult,
+                card and card.edition and card.edition.xmult or self.config.xmult
+            }
+        }
     end,
     weight = 4,
     get_weight = function(self)
         return G.GAME.edition_rate * self.weight
     end,
     calculate = function(self, card, context)
-        if (context.edition and context.cardarea == G.jokers and card.config.trigger ) 
-        or (context.main_scoring and context.cardarea == G.play) then
-            SMODS.calculate_effect({mult = card.edition.mult, chips = card.edition.mult, xmult = card.edition.xmult, xchips = card.edition.xchips}, card)
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger)
+            or (context.main_scoring and context.cardarea == G.play) then
+            SMODS.calculate_effect(
+                {
+                    mult = card.edition.mult,
+                    chips = card.edition.mult,
+                    xmult = card.edition.xmult,
+                    xchips = card.edition
+                        .xchips
+                }, card)
         end
     end,
 }
@@ -123,15 +132,74 @@ local low_quality = {
     config = {},
     loc_vars = function(self, info_queue, card)
         -- print(self)
-        return {vars = { 
-            
-         }}
+        return {
+            vars = {
+
+            }
+        }
     end,
     weight = 4,
     get_weight = function(self)
         return G.GAME.edition_rate * self.weight
     end,
     calculate = function(self, card, context)
-        
+
     end,
+}
+SMODS.draw_ignore_keys["halo"] = true
+SMODS.Edition {
+    key = "lordly",
+    shader = false,
+    loc_txt = {
+        name = "Lordly",
+        label = "Lordly",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Mult",
+            "Increase by {X:dark_edition,C:white}^#2#{} for each Joker owned",
+            shadercredit("Lily Felli")
+        }
+    },
+    config = { emult = 0.05, },
+    calculate = function(self, card, context)
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger)
+            or (context.main_scoring and context.cardarea == G.play) then
+            return {
+                emult = 1 + (self.config.emult * #G.jokers.cards)
+            }
+        end
+    end,
+    weight = 1,
+    get_weight = function(self)
+        return G.GAME.edition_rate * self.weight
+    end,
+    loc_vars = function(self, info_queue, card)
+        local em = card and card.edition and card.edition.emult or self.config.emult
+        return {
+            vars = {
+                1 + (em * (G.jokers and #G.jokers.cards or 0)),
+                em
+            }
+        }
+    end,
+    draw = function(self, card, layer)
+        -- print("running")
+        if not card.children.halo then
+            card.children.halo = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS['valk_main'],
+                { x = 2, y = 2 })
+            card.children.halo.role.draw_major = card
+            card.children.halo.states.hover.can = false
+            card.children.halo.states.click.can = false
+        end
+
+        local scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) +
+        0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) *
+        (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
+        local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) +
+        0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
+
+
+        card.children.halo:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil,
+            0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
+        card.children.halo:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+    end
 }

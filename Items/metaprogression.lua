@@ -396,7 +396,8 @@ end
 
 function get_blind_amount(ante)
     refresh_metaprog()
-    local amount = blindamounthook(ante) * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.9))))
+    local amount = blindamounthook(ante)
+    -- amount = amount * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.9))))
 
     if to_big(amount) > to_big(10 ^ 308) then
         return amount
