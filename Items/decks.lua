@@ -51,15 +51,15 @@ SMODS.Back {
     loc_txt = {
         name = "Tauic Deck",
         text = {
-            "{C:cry_ember}Tauic{} Jokers spawn {C:attention}five times{} as often.",
+            "{C:cry_ember}Tauic{} Jokers spawn {C:attention}ten times{} as often.",
             "and have their {C:green}chance{} increase when the roll fails",
-            "{C:attention}X#1#{} Effective Ante",
+            "{X:dark_edition,C:white}^#1#{} Effective Ante",
             -- "{C:attention}X3{} Blind Size",
             credit("Scraptake")
         }
     },
 
-    config = { rate = 2, inc = 0.5, eante = 2},
+    config = { rate = 2, inc = 0.5, eeante = 1.5},
     pos = {x=7, y=9},
     atlas = "main",
     apply = function(self)
@@ -68,7 +68,7 @@ SMODS.Back {
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                self.config.eante
+                self.config.eeante
             }
         }
     end
