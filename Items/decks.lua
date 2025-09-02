@@ -80,13 +80,13 @@ SMODS.Back {
         name = "Sunbeam Deck",
         text = {
             "Start with {C:attention,T:v_valk_legendary_perkup}Legendary PERK-UP{},",
-            "{C:attention,T:v_valk_exotic_perkup}Exotic PERK-UP{}, and ",
+            "{C:attention,T:v_valk_exquisite_perkup}Exquisite PERK-UP{}, and ",
             "{C:attention,T:v_valk_prestige_up}PRESTIGE-UP{}",
             "{C:attention}X#1#{} Effective Ante when a card is bought",
             credit("Scraptake")
         }
     },
-    config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exotic_perkup", "v_valk_prestige_up" }, eante = 1.05 },
+    config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exquisite_perkup", "v_valk_prestige_up" }, eante = 1.05 },
     pos = {x=9, y=8},
     atlas = "main",
     loc_vars = function(self, info_queue, card)
