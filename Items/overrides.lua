@@ -2,7 +2,7 @@ if not Talisman then
     SMODS.Joker {
     key = "lily",
     loc_txt = {
-        name = "Lily Felli",
+        name = "Lily Felli For The Title Screen",
         text = {
             "you should not have this"
         }
@@ -17,7 +17,8 @@ if not Talisman then
     soul_pos = {x=3,y=2},
     in_pool = function(self, args)
         return false
-    end
+    end,
+    no_collection = true,
 }
 end
 
