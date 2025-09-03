@@ -17,3 +17,18 @@ if G.GAME.strush_override then
 end
 '''
 match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = """=[SMODS multiverse "misc/hooks.lua"]"""
+pattern = '''G.GAME.chips = G.GAME.chips - G.GAME.blind.chips / 10'''
+position = "before"
+payload = '''
+if G.GAME.blind and G.GAME.blind.name == "bl_valk_fuck" then
+    G.FUNCS.DT_lose_game()
+    Multiverse.in_undyne = false
+    Multiverse.undyne_spears = {}
+end
+'''
+match_indent = true

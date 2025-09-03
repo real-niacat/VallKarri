@@ -41,3 +41,63 @@ SMODS.Blind {
         return (#cards < 4)
     end,
 }
+
+SMODS.Blind {
+    key = "fuck",
+    boss_colour = HEX("344245"),
+    mult = 0.0001,
+
+    loc_txt = {
+        name = "Oh no",
+        text = {
+            "Survive.",
+            "Die if you miss"
+        }
+    },
+
+    press_play = function(self)
+        if not G.GAME.blind.disabled then
+            Multiverse.undyne_spears = {}
+            Multiverse.done_attacking = false
+            Multiverse.in_undyne = true
+            local num_attacks = Multiverse.start_undyne_attack(1, vallkarri.generate_arrows(300))
+            G.E_MANAGER:add_event(Event({
+                trigger = "immediate",
+                func = function()
+                    if Multiverse.undyne_spears[num_attacks] and not Multiverse.undyne_spears[num_attacks].active and Multiverse.in_undyne then
+                        G.E_MANAGER:add_event(Event({
+                            trigger = "after",
+                            blockable = false,
+                            blocking = false,
+                            delay = 0.5 * (G.SPEEDFACTOR or 1),
+                            func = function()
+                                Multiverse.in_undyne = false
+                                return true
+                            end
+                        }))
+                    end
+                    return not Multiverse.in_undyne
+                end
+            }))
+        end
+    end,
+    in_pool = function(self)
+        return Multiverse.config.joke and G.GAME.round_resets.ante > 8
+    end,
+    dependencies = {"multiverse"},
+}
+
+function vallkarri.generate_arrows(amount)
+    local arrows = {}
+
+    for i=1,amount do
+        arrows[#arrows+1] = {
+            200+((i/amount)*800), 
+            pseudorandom_element({"up", "down", "left", "right"}, "valk_hell_"..i),
+            false,
+            0.05+((1-(i/amount))*0.3),
+        }
+    end
+
+    return arrows
+end
