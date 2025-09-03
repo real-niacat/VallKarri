@@ -77,7 +77,7 @@ SMODS.Joker {
         -- G.hand_text_area.blind_chips:juice_up()\
 
         if context.other_joker then
-            print("a")
+            --print("a")
             G.E_MANAGER:add_event(Event({
                 func = function()
                     play_sound("timpani")
