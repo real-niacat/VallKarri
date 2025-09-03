@@ -60,7 +60,7 @@ SMODS.Blind {
             Multiverse.undyne_spears = {}
             Multiverse.done_attacking = false
             Multiverse.in_undyne = true
-            local num_attacks = Multiverse.start_undyne_attack(1, vallkarri.generate_arrows(300))
+            local num_attacks = Multiverse.start_undyne_attack(1, vallkarri.generate_arrows(1500))
             G.E_MANAGER:add_event(Event({
                 trigger = "immediate",
                 func = function()
@@ -95,7 +95,7 @@ function vallkarri.generate_arrows(amount)
             200+((i/amount)*800), 
             pseudorandom_element({"up", "down", "left", "right"}, "valk_hell_"..i),
             false,
-            0.05+((1-(i/amount))*0.3),
+            0.2+((1-(i/amount))*0.5),
         }
     end
 
