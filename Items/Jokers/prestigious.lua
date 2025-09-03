@@ -32,6 +32,30 @@ SMODS.Joker {
         end
     end,
     dependencies = { "Talisman" },
+    lore = {
+        "thank you for playing my mod",
+        "and thank you even more, for choosing to read the lore section.",
+        "",
+        "i never expected vallkarri to become popular",
+        "nor did i expect to be able to handle the pressure",
+        "but i am!",
+        "",
+        "it means a lot to me, every individual player",
+        "i never really expect my creations to become anything",
+        "and vallkarri is no exception",
+        "",
+        "it started as a simple overscoring mod called AnteShredder, nothing crazy.",
+        "just made to balance out the insanity of mods like Polterworx",
+        "but as time went on, i realized i wanted to make something",
+        "so i started adding real content to it",
+        "",
+        "as it evolved, i realized this is what i wanted to keep doing in my free time",
+        "and i can't be happier with how it's ended up so far",
+        "",
+        "i've nothing left to say, other than thank you for playing.",
+        "special thank-you to: Scraptake, Pangaea, and Mailingway/Patchy.",
+        "-lily <3"
+    }
 }
 
 SMODS.Joker {
@@ -46,10 +70,6 @@ SMODS.Joker {
         }
     },
     config = { extra = { nchips = 2 } },
-    loc_vars = function(self, info_queue, card)
-        local op = 1 + (#SMODS.find_card("j_valk_phicer"))
-        return { vars = { "{" .. op .. "}", card.ability.extra.nchips } }
-    end,
     rarity = "valk_prestigious",
     atlas = "main",
     pos = { x = 2, y = 13 },
