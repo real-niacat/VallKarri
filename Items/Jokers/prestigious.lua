@@ -54,7 +54,9 @@ SMODS.Joker {
         "",
         "i've nothing left to say, other than thank you for playing.",
         "special thank-you to: Scraptake, Pangaea, and Mailingway/Patchy.",
-        "-lily <3"
+        "-lily <3",
+        "note: i can't stop you but, please don't share this via image/text.",
+        "i'd like each person to find it themselves."
     }
 }
 
