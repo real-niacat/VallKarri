@@ -1,3 +1,26 @@
+if not Talisman then
+    SMODS.Joker {
+    key = "lily",
+    loc_txt = {
+        name = "Lily Felli",
+        text = {
+            "you should not have this"
+        }
+    },
+    config = { extra = {} },
+    loc_vars = function(self, info_queue, card)
+
+    end,
+    rarity = "valk_supercursed",
+    atlas = "main",
+    pos = {x = 0, y = 0},
+    soul_pos = {x=3,y=2},
+    in_pool = function(self, args)
+        return false,
+    end
+}
+end
+
 local mainmenu = Game.main_menu
 Game.main_menu = function(change_context) --code heavily adapted from cryptid
     local ret = mainmenu(change_context)
@@ -51,6 +74,8 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
     newcard:set_sprites(newcard.config.center)
     return ret
 end
+
+
 
 
 local hudcopy = create_UIBox_HUD
