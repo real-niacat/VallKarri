@@ -16,7 +16,7 @@ if not Talisman then
     pos = {x = 0, y = 0},
     soul_pos = {x=3,y=2},
     in_pool = function(self, args)
-        return false,
+        return false
     end
 }
 end
