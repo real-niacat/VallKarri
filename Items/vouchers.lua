@@ -261,11 +261,11 @@ SMODS.Voucher {
 }
 
 SMODS.Voucher {
-    key = "exotic_perkup",
+    key = "exquisite_perkup",
     atlas = "main",
     pos = {x=14, y=6},
     loc_txt = {
-        name = "Exotic PERK-UP!",
+        name = "Exquisite PERK-UP!",
         text = {
             "{C:attention}Jokers{} have a {C:green}2%{} chance to be replaced by",
             "an {C:valk_exquisite}Exquisite{} Joker when created",
@@ -307,6 +307,6 @@ SMODS.Voucher {
     redeem = function(self, card)
         G.GAME.prestigious_replace = 1
     end,
-    requires = {"v_valk_exotic_perkup"},
+    requires = {"v_valk_exquisite_perkup"},
 }
 
