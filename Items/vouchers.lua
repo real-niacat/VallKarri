@@ -21,7 +21,7 @@ local decks = {
     end,
     ["Black Deck"] = function(redeeming, context)
         if redeeming then G.GAME.refund_hands = true
-        elseif G.GAME.refund_hands and context.before and context.scoring_name and context.scoring_name == mostplayed_name() then
+        elseif G.GAME.refund_hands and context.before and context.scoring_name and context.scoring_name == vallkarri.get_most_played_hand() then
             ease_hands_played(0.5)
         end
     end,
