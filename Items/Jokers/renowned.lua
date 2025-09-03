@@ -86,10 +86,10 @@ SMODS.Joker {
                     G.HUD_blind:recalculate()
                     G.hand_text_area.blind_chips:juice_up()
                     context.other_joker:juice_up()
-                    quick_card_speak(context.other_joker, "X" .. card.ability.extra.mul)
                     return true
                 end
             }))
+            quick_card_speak(context.other_joker, "X" .. card.ability.extra.mul)
         end
     end
 }
