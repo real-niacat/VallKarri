@@ -226,8 +226,8 @@ SMODS.Consumable {
         for i,joker in ipairs(G.jokers.cards) do
 
             if SMODS.pseudorandom_probability(card, 'valk_gameshow', 1, joker.sell_cost) then
-                do_while_flipped({joker}, function(card)
-                    Cryptid.manipulate(card, {type = "X", value = card.sell_cost})
+                do_while_flipped({joker}, function(c)
+                    Cryptid.manipulate(c, {type = "X", value = c.sell_cost})
                 end)
             end
 
