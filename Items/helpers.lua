@@ -589,7 +589,7 @@ function add_random_tag(seed)
 end
 
 function Card:is_kitty()
-    return Cryptid.safe_get(self.config.center, "pools", "Kitties")
+    return Cryptid.safe_get(self.config.center, "pools", "Kitties") or self.count_as_kitty
 end
 
 function kitty_count(base)

@@ -32,6 +32,9 @@ SMODS.Edition {
             SMODS.calculate_effect({ echips = card.edition.echips }, card)
         end
     end,
+    in_pool = function(self, args)
+        return true
+    end
 }
 
 SMODS.Shader {
@@ -63,6 +66,9 @@ SMODS.Edition {
     weight = 1,
     get_weight = function(self)
         return G.GAME.edition_rate * self.weight
+    end,
+    in_pool = function(self, args)
+        return true
     end
 }
 
@@ -110,6 +116,9 @@ SMODS.Edition {
                 }, card)
         end
     end,
+    in_pool = function(self, args)
+        return true
+    end
 }
 
 SMODS.Shader {
@@ -170,7 +179,7 @@ SMODS.Edition {
     end,
     weight = 1,
     get_weight = function(self)
-        return G.GAME.edition_rate * self.weight
+        return G.GAME.edition_rate * self.weight * (#SMODS.find_card("j_valk_lily") + 1)
     end,
     loc_vars = function(self, info_queue, card)
         local em = card and card.edition and card.edition.emult or self.config.emult
@@ -181,6 +190,9 @@ SMODS.Edition {
             }
         }
     end,
+    in_pool = function(self, args)
+        return true
+    end
 }
 
 SMODS.DrawStep {
