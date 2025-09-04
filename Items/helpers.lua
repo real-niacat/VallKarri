@@ -64,7 +64,7 @@ function quote(character)
         dormant = "I'm missing something.",
         dormant2 = "Help me find it and I'll make it worth your time.",
         scraptake = "good kitty",
-        hornet = "silksong tommorow",
+        hornet = "silksong OUT NOW!!!",
         valklua = "Thank you for playing <3",
         phicer = "Who would've known I'd be cursed to see these cards again?"
     }

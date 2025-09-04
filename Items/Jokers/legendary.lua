@@ -39,18 +39,19 @@ SMODS.Joker {
 SMODS.Joker {
     key = "hornet",
     -- feb 14th 2019
+    -- it's out!
     loc_txt = {
         name = "Hornet",
         text = {
-            "{X:mult,C:white}X#1#{} Mult for every day since {C:attention}Hollow Knight Silksong{} was announced",
-            "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
+            "{X:dark_edition,C:white}^#1#{} Mult for every day since {C:attention}Hollow Knight Silksong{} was released",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
             quote("hornet"),
             credit("Scraptake"),
         }
     },
-    config = { extra = { gain = 0.1 } },
+    config = { extra = { gain = 0.02 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.gain, card.ability.extra.gain * days_since(2019, 2, 14) } }
+        return { vars = { card.ability.extra.gain, card.ability.extra.gain * days_since(2025, 9, 4) } }
     end,
     rarity = 4,
     atlas = "main",
@@ -60,7 +61,7 @@ SMODS.Joker {
     demicoloncompat = true,
     calculate = function(self, card, context)
         if (context.joker_main) or context.forcetrigger then
-            return { x_mult = card.ability.extra.gain * days_since(2019, 2, 14) }
+            return { emult = card.ability.extra.gain * days_since(2025, 9, 4) }
         end
     end
 
