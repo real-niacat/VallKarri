@@ -50,7 +50,7 @@ function create_UIBox_metaprog()
                                     { n = G.UIT.T, config = { text = "Level ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
                                     { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.GAME, ref_value = "current_level", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     { n = G.UIT.T, config = { id = "that_fucking_space_that_i_hate", text = "  ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
-                                    { n = G.UIT.T, config = { id = "buff", text = "(^1 XP)", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.8, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "buff", ref_table = G.GAME, ref_value = "xp_exponent_disp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.8, shadow = true, prev_value = "nil" } },
                                 }
                             },
                             {
@@ -183,6 +183,10 @@ function vallkarri.mod_xp(mod, relevant_card)
     end
 end
 
+function vallkarri.metacalc(context)
+    G.GAME.xp_exponent_disp = "(^" .. vallkarri.get_base_xp_exponent() .. " XP)"
+end
+
 function vallkarri.animationless_mod_xp(mod)
     -- stake mods
     mod = mod ^ vallkarri.get_base_xp_exponent()
@@ -275,7 +279,7 @@ end
 
 function get_blind_amount(ante)
     local amount = blindamounthook(ante)
-    amount = amount * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.GAME.current_level ^ 0.9))))
+    amount = amount * ((1 + (0.02 * ante)) ^ (1 + (0.2 * ((G.GAME.current_level or 0) ^ 0.9))))
 
     if to_big(amount) > to_big(10 ^ 308) then
         return amount

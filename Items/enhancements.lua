@@ -33,10 +33,18 @@ SMODS.Enhancement {
             local enh = SMODS.get_enhancements(right_card)
 
 
-            SMODS.change_base(card, right_card.base.suit, right_card.base.value)
-            card.seal = right_card.seal
-            card.edition = right_card.edition
-            if enh and not enh["m_valk_mirrored"] then
+            if (right_card.base.suit ~= card.base.suit) or (right_card.base.value ~= card.base.value) then
+                SMODS.change_base(card, right_card.base.suit, right_card.base.value)
+            end
+            
+            if card.seal ~= right_card.seal then
+                card.seal = right_card.seal
+            end
+            if card.edition ~= right_card.edition then
+                card.edition = right_card.edition
+            end
+            
+            if enh and not enh["m_valk_mirrored"] and next(enh) then
                 card:set_ability(next(enh))
             end
         else

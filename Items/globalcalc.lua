@@ -8,6 +8,10 @@ vallkarri.calculate = function(self, context)
     end
     --ideally shouldnt affect anything else
 
+    if vallkarri.metacalc then
+        vallkarri.metacalc(context)
+    end
+
     -- HAND BUFF CODE BELOW:
     if not vallkarri.add_hand_buff then
         return
