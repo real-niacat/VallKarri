@@ -19,7 +19,7 @@ vallkarri.config_tab = function() -- the configs will be stored in config.lua an
                     {n = G.UIT.R, config = { minw = G.ROOM.T.w*0.125, padding = 0.05, align = "cm", }, 
                         nodes = {
                             create_toggle{
-                                label = "Toggle meta-progression", -- the label that shows up next to the toggle button
+                                label = "Toggle levelling", -- the label that shows up next to the toggle button
                                 info = {"Enables the levelling system", "Gives benefits, but increases blind size based on level"}, -- the text that will show below the toggle option
                                 active_colour = G.C.GREEN, -- the color of the toggle when it is on
                                 ref_table = vallkarri.config, -- the table of which the toggle refrerences to check if it is on or off

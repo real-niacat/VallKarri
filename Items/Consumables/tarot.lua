@@ -115,8 +115,9 @@ SMODS.Consumable {
                     c:start_dissolve({G.C.BLACK}, nil, 2 * G.SETTINGS.GAMESPEED)
                     local joker = create_card("Joker", G.jokers, nil, 3, nil, nil, nil, "valk_godsfinger")
                     joker:add_to_deck()
-                    joker:set_edition("e_negative", true)
+                    
                     G.jokers:emplace(joker)
+                    joker:set_edition("e_negative", true)
                 end
                 return true
             end

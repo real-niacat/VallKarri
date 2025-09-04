@@ -1,59 +1,7 @@
-local function refresh_metaprog()
 
-    G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_number(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-    G.PROFILES[G.SETTINGS.profile].valk_max_xp = to_number(G.PROFILES[G.SETTINGS.profile].valk_max_xp)
-    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_number(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) 
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) ~= "number" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
-    end
-
-    if type(G.PROFILES[G.SETTINGS.profile].valk_max_xp) ~= "number" or number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_max_xp) then
-        G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-    end
-
-    if type(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) ~= "number" or number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) == "Infinity" or (not G.PROFILES[G.SETTINGS.profile].valk_cur_xp) then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
-    end
-end
-
-function vallkarri.update_meta_text()
-    return {
-        level = (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl),
-        xp = (G.PROFILES[G.SETTINGS.profile].valk_cur_xp),
-        req = (G.PROFILES[G.SETTINGS.profile].valk_max_xp),
-    }
-end
-
-local function update_meta_text(uiname, value)
-    G.HUD_META:get_UIE_by_ID(uiname).config.text = value
-    G.HUD_META:recalculate()
-end
-
-function short_update_meta()
-    update_meta_text("curxp_text", number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp))
-    update_meta_text("maxxp_text", number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp))
-    update_meta_text("curlvl_text", number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
-    update_meta_text("curpow_text", number_format(vallkarri.calculate_power()))
-end
-
-local updhook = Game.update
-function Game:update(dt)
-    updhook(self, dt)
-    vallkarri.update_meta_text()
-
-    if G and G.GAME and G.HUD_META and G.HUD_META:get_UIE_by_ID("buff") then
-        update_meta_text("buff", "(^" .. number_format(vallkarri.get_base_xp_exponent()) .. " XP)")
-    end
-
-    if G.PROFILES[G.SETTINGS.profile] and G.PROFILES[G.SETTINGS.profile].valk_cur_lvl and type(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl) == "table" then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = to_number(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-    end
-
-    
-end
 
 function vallkarri.calculate_power()
-    local base = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.5
+    local base = G.GAME.current_level ^ 0.5
 
     -- ex. 
     -- vallkarri.add_power_modifier(function(m) return m^2 end)
@@ -83,8 +31,6 @@ end
 
 function create_UIBox_metaprog()
     local text_scale = 0.3
-    vallkarri.update_meta_text()
-    G.GAME.vallkarri = { text_display = vallkarri.update_meta_text(), power = vallkarri.calculate_power() }
     return {
         n = G.UIT.ROOT,
         config = { align = "cm", padding = 0.03, colour = G.C.UI.TRANSPARENT_DARK },
@@ -102,7 +48,7 @@ function create_UIBox_metaprog()
                                 config = { align = "tl", padding = 0.01, maxw = 2 },
                                 nodes = {
                                     { n = G.UIT.T, config = { text = "Level ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "curlvl_text", text = number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl), colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.GAME, ref_value = "current_level", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     { n = G.UIT.T, config = { id = "that_fucking_space_that_i_hate", text = "  ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     { n = G.UIT.T, config = { id = "buff", text = "(^1 XP)", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.8, shadow = true, prev_value = "nil" } },
                                 }
@@ -111,10 +57,10 @@ function create_UIBox_metaprog()
                                 n = G.UIT.R,
                                 config = { align = "cl", padding = 0.01, maxw = 2.7 },
                                 nodes = {
-                                    { n = G.UIT.T, config = { id = "curxp_text", text = number_format(G.PROFILES[G.SETTINGS.profile].valk_cur_xp), colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.GAME, ref_value = "current_xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     -- { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
                                     { n = G.UIT.T, config = { text = " / ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "maxxp_text", text = number_format(G.PROFILES[G.SETTINGS.profile].valk_max_xp), colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.GAME, ref_value = "required_xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     -- { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "req", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } }
                                 },
 
@@ -124,7 +70,7 @@ function create_UIBox_metaprog()
                                 config = { align = "tl", padding = 0.01, maxw = 2 },
                                 nodes = {
                                     { n = G.UIT.T, config = { text = "Power: ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.85, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "curpow_text", text = number_format(G.GAME.vallkarri.power), colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.85, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "curpow_text", ref_table = G.GAME, ref_value = "valk_power", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.85, shadow = true, prev_value = "nil" } },
                                 }
 
                             }
@@ -145,7 +91,11 @@ function Game:start_run(args)
     -- print(args)
     fakestart(self, args)
 
-    refresh_metaprog()
+    self.GAME.current_level = 1
+    self.GAME.current_xp = 0
+    self.GAME.required_xp = vallkarri.xp_required(G.GAME.current_level)
+    self.GAME.valk_power = 1
+
     vallkarri.run_xp_modifiers = {}
     vallkarri.run_power_modifiers = {}
 
@@ -155,19 +105,6 @@ function Game:start_run(args)
         definition = create_UIBox_metaprog(),
         config = { align = ('cli'), offset = { x = 19, y = -2.15 }, major = G.ROOM_ATTACH }
     }
-
-    -- self.HUD_XP_CHANGE = UIBox {
-    --     definition = create_UIBox_useless_bullshit(),
-    --     config = { align = ('cli'), offset = { x = 19.1, y = -1.65 }, major = G.ROOM_ATTACH }
-    -- }
-
-    if not args.savetext then
-        -- DO ON-START STUFF HERE
-        local add_money = math.ceil(math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl))
-        G.GAME.dollars = G.GAME.dollars + add_money
-    end
-
-    short_update_meta()
 end
 
 vallkarri.run_xp_modifiers = {}
@@ -197,49 +134,32 @@ function vallkarri.get_base_xp_exponent()
     return (G.GAME.stake ^ 0.25) * (1+(G.GAME.round/20))
 end
 
-vallkarri.level_cap = 1e300 --have fun :)
-
-function vallkarri.debug_reset_lvl()
-    if true then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = 1
-        G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
-        G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-        short_update_meta()
-    end
-end
-
 -- gets the xp required for the specified level
 function vallkarri.xp_required(level)
     level = to_number(level)
 
-    local req = 100 * (level ^ 2)
+    local req = 100 * level
 
     return to_number(req)
 end
 
-function vallkarri.set_xp(exp)
-    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = to_number(exp)
-    short_update_meta()
-end
-
 function vallkarri.mod_level(amount, from_xp)
-    G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl + amount
+    local req = vallkarri.xp_required(G.GAME.current_level)
+    G.GAME.current_level = G.GAME.current_level + amount
 
-    if G.PROFILES[G.SETTINGS.profile].valk_cur_lvl > vallkarri.level_cap then
-        G.PROFILES[G.SETTINGS.profile].valk_cur_lvl = vallkarri.level_cap
-    else
-        G.HUD_META:get_UIE_by_ID("curlvl_text"):juice_up()
-        G.HUD_META:get_UIE_by_ID("maxxp_text"):juice_up()
+    G.HUD_META:get_UIE_by_ID("curlvl_text"):juice_up()
+    G.HUD_META:get_UIE_by_ID("maxxp_text"):juice_up()
+
+    G.GAME.required_xp = vallkarri.xp_required(G.GAME.current_level)
+    if from_xp then
+        G.GAME.current_xp = G.GAME.current_xp - req
     end
-    G.PROFILES[G.SETTINGS.profile].valk_max_xp = vallkarri.xp_required(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl)
-    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = 0
-    if not from_xp then
-        short_update_meta()
-    end
+    
+    
 end
 
 function vallkarri.mod_xp(mod, relevant_card)
-    refresh_metaprog()
+    G.GAME.valk_power = vallkarri.calculate_power()
 
 
     if not Talisman or (Talisman and not Talisman.config_file.disable_anims) then
@@ -248,14 +168,6 @@ function vallkarri.mod_xp(mod, relevant_card)
                 vallkarri.animationless_mod_xp(mod)
 
                 G.HUD_META:get_UIE_by_ID("curxp_text"):juice_up()
-
-                if xp_change then
-                    local str = "+" .. number_format(mod) .. " XP"
-                    G.HUD_XP_CHANGE:get_UIE_by_ID("xp_change").config.text = str
-                    G.HUD_XP_CHANGE:recalculate()
-
-                    G.HUD_XP_CHANGE:get_UIE_by_ID("xp_change"):juice_up()
-                end
 
                 if relevant_card and relevant_card.juice_up then
                     relevant_card:juice_up()
@@ -295,12 +207,13 @@ function vallkarri.animationless_mod_xp(mod)
         end
     end
 
-    G.PROFILES[G.SETTINGS.profile].valk_cur_xp = G.PROFILES[G.SETTINGS.profile].valk_cur_xp + mod
-    short_update_meta()
+    G.GAME.current_xp = G.GAME.current_xp + mod
 
 
+    G.GAME.current_xp = math.floor(G.GAME.current_xp)
+    G.GAME.required_xp = math.floor(G.GAME.required_xp)
 
-    while to_big(G.PROFILES[G.SETTINGS.profile].valk_cur_xp) >= to_big(G.PROFILES[G.SETTINGS.profile].valk_max_xp) do
+    while to_big(G.GAME.current_xp) >= to_big(G.GAME.required_xp) do
         vallkarri.mod_level(1, true)
     end
 end
@@ -322,8 +235,7 @@ function ease_dollars(mod, x)
     
 
     if to_big(mod) > to_big(0) then
-        local lvl = G.PROFILES[G.SETTINGS.profile].valk_cur_lvl
-        local multiplier = math.max(1,math.log(lvl,2)^0.2)
+        local multiplier = math.max(1,math.log(G.GAME.current_level,2)^0.2)
         local final = mod * multiplier
         final = math.max(math.floor(final), mod)
         easemoneyhook(final, x)
@@ -332,7 +244,7 @@ function ease_dollars(mod, x)
     end
 
     if to_big(mod) < to_big(0) then
-        vallkarri.mod_xp(math.min(-mod, G.PROFILES[G.SETTINGS.profile].valk_max_xp * 0.1))
+        vallkarri.mod_xp(math.min(-mod, G.GAME.required_xp * 0.1))
     end
 end
 
@@ -353,40 +265,7 @@ function level_up_hand(card, hand, instant, amount)
     if to_big(amount or 1) > to_big(0) then
         vallkarri.mod_xp(amount or 1,  card)
     end
-    refresh_metaprog()
 end
-
--- local calceff = SMODS.calculate_individual_effect
--- function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
-
---     local count = math.log(G.PROFILES[G.SETTINGS.profile].valk_cur_lvl, 1.2) * 0.025
---     -- 2.5% buff to all scoring effects for every 50 levels
---     -- print("effect")
---     -- print(effect)
---     -- print("amount")
---     -- print(amount)
---     if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
---         amount = amount * 1+count
---     end
-
---     for n,obj in pairs(effect) do
---         if type(obj) == "number" or (type(obj) == "table" and obj.tetrate) then
---             effect[n] = effect[n] * 1+count
---         end
---     end
-
---     return calceff(effect, scored_card, key, amount, from_edition)
-
--- end
-
--- local evalplayscorehook = evaluate_play_final_scoring
-
--- function evaluate_play_final_scoring(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
---     refresh_metaprog()
---     mult = mult + ((G.PROFILES[G.SETTINGS.profile].valk_cur_lvl - 1) * 0.1)
-
---     evalplayscorehook(text, disp_text, poker_hands, scoring_hand, non_loc_disp_text, percent, percent_delta)
--- end
 
 local blindamounthook = get_blind_amount
 
@@ -395,9 +274,8 @@ function get_old_blind_amount(ante)
 end
 
 function get_blind_amount(ante)
-    refresh_metaprog()
     local amount = blindamounthook(ante)
-    -- amount = amount * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.PROFILES[G.SETTINGS.profile].valk_cur_lvl ^ 0.9))))
+    amount = amount * ((1 + (0.02 * ante)) ^ (1 + (0.2 * (G.GAME.current_level ^ 0.9))))
 
     if to_big(amount) > to_big(10 ^ 308) then
         return amount
