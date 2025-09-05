@@ -279,7 +279,9 @@ end
 
 function get_blind_amount(ante)
     local amount = blindamounthook(ante)
-    amount = amount * ((1 + (0.02 * ante)) ^ (1 + (0.2 * ((G.GAME.current_level or 0) ^ 0.9))))
+    local multiplier = (((1 + (0.02 * ante)) ^ (1 + (0.2 * (math.max((G.GAME.current_level or 0)-5, 0) ^ 0.9))))) ^ 0.9
+    -- print(multiplier .. " at level " ..  (G.GAME.current_level or 0))
+    amount = amount * multiplier
 
     if to_big(amount) > to_big(10 ^ 308) then
         return amount

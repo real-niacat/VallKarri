@@ -195,7 +195,7 @@ SMODS.Joker {
     rarity = "valk_prestigious",
     atlas = "main",
     pos = {x = 0, y = 0},
-    soul_pos = {x=3,y=2},
+    soul_pos = {x=1,y=0},
     no_doe = true,
     cost = 500,
     demicoloncompat = true,
@@ -211,7 +211,7 @@ SMODS.Joker {
         end
         
     end,
-
+    has_halo = true,
     lore = {
         "Lily is a Fellinian Entropic Lord, this means",
         "she was exposed to a lot of entropy, and eventually mutating her.",
