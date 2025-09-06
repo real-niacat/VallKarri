@@ -59,12 +59,9 @@ SMODS.Back {
         }
     },
 
-    config = { rate = 2, inc = 0.5, eeante = 1.5},
+    config = { rate = 2, inc = 0.5, eeante = 1.5, tauic_deck = true },
     pos = {x=7, y=9},
     atlas = "main",
-    apply = function(self)
-        G.GAME.tauic_deck = true
-    end,
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
