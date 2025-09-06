@@ -179,7 +179,7 @@ SMODS.Edition {
     end,
     weight = 1,
     get_weight = function(self)
-        return G.GAME.edition_rate * self.weight * (#SMODS.find_card("j_valk_lily") + 1)
+        return G.GAME.edition_rate * self.weight * 1000 ^ #SMODS.find_card("j_valk_lily")
     end,
     loc_vars = function(self, info_queue, card)
         local em = card and card.edition and card.edition.emult or self.config.emult
