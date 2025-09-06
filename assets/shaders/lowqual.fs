@@ -43,7 +43,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     tex.r = floor((tex.r/n)+0.5)*n;
     tex.g = floor((tex.g/n)+0.5)*n;
     tex.b = floor((tex.b/n)+0.5)*n;
-    tex *= 1 + (0.001 * sin(lowqual.y));
+    tex *= 1. + (0.001 * sin(lowqual.y));
 
     // required
     return dissolve_mask(tex*colour, texture_coords, uv);
@@ -103,6 +103,6 @@ vec4 position( mat4 transform_projection, vec4 vertex_position )
     float scale = 0.2*(-0.03 - 0.3*max(0., 0.3-mid_dist))
                 *hovering*(length(mouse_offset)*length(mouse_offset))/(2. -mid_dist);
 
-    return transform_projection * vertex_position + vec4(0,0,0,scale);
+    return transform_projection * vertex_position + vec4(0.,0.,0.,scale);
 }
 #endif

@@ -39,12 +39,12 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 
     // For all vectors (vec2, vec3, vec4), .rgb is equivalent of .xyz, so uv.y == uv.g
     // .a is last parameter for vec4 (usually the alpha channel - transparency)
-    float potency = 2+sin(rgb.y);
+    float potency = 2.+sin(rgb.y);
     float strength = 1.0;
     // vec2 norm = vec2(texture_coords.x / 71, texture_coords.y / 95);
-    tex.r *= strength * potency * (1-uv.x) * (1-uv.y);
+    tex.r *= strength * potency * (1.-uv.x) * (1.-uv.y);
     tex.g *= strength * potency * (uv.y);
-    tex.b *= strength * potency * (uv.x) * (1-uv.y);
+    tex.b *= strength * potency * (uv.x) * (1.-uv.y);
 
     // required
     return dissolve_mask(tex*colour, texture_coords, uv);
