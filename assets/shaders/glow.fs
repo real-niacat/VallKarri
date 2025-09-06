@@ -39,13 +39,13 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 
     // For all vectors (vec2, vec3, vec4), .rgb is equivalent of .xyz, so uv.y == uv.g
     // .a is last parameter for vec4 (usually the alpha channel - transparency)
-    float sintime = (sin(glow.y)+1)*2;
+    float sintime = (sin(glow.y)+1.)*2.;
     float n = 10.0;
-    vec3 inv = vec3(1-tex.r, 1-tex.g, 1-tex.b);
+    vec3 inv = vec3(1.-tex.r, 1.-tex.g, 1.-tex.b);
     float greenmult = max(max(inv.r, inv.g), inv.b);
     // tex.g *= greenmult+1;
     vec3 balatro_black = vec3(79.0, 99.0, 103.0);
-    balatro_black /= 255;
+    balatro_black /= 255.;
     tex.r = max(inv.b, balatro_black.r);
     tex.g = inv.g*exp2(sintime);
     tex.b = max(inv.r, balatro_black.b);

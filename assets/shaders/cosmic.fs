@@ -39,8 +39,8 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 
     // For all vectors (vec2, vec3, vec4), .rgb is equivalent of .xyz, so uv.y == uv.g
     // .a is last parameter for vec4 (usually the alpha channel - transparency)
-    float half_pi = 3.14159 / 2;
-    float sintime = (1+(sin(cosmic.y+(uv.y*half_pi))+1)/2) * 1.5;
+    float half_pi = 3.14159 / 2.;
+    float sintime = (1.+(sin(cosmic.y+(uv.y*half_pi))+1.)/2.) * 1.5;
     
 
     tex.r = tex.r * (sintime * 0.45);
