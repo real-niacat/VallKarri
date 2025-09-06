@@ -1,7 +1,7 @@
 
 
 function vallkarri.calculate_power()
-    local base = G.GAME.current_level ^ 0.5
+    local base = (G.GAME.current_level or 1) ^ 0.5
 
     -- ex. 
     -- vallkarri.add_power_modifier(function(m) return m^2 end)
@@ -48,7 +48,7 @@ function create_UIBox_metaprog()
                                 config = { align = "tl", padding = 0.01, maxw = 2 },
                                 nodes = {
                                     { n = G.UIT.T, config = { text = "Level ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.GAME, ref_value = "current_level", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.GAME, ref_value = "current_level_disp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     { n = G.UIT.T, config = { id = "that_fucking_space_that_i_hate", text = "  ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     { n = G.UIT.T, config = { id = "buff", ref_table = G.GAME, ref_value = "xp_exponent_disp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.8, shadow = true, prev_value = "nil" } },
                                 }
@@ -57,10 +57,10 @@ function create_UIBox_metaprog()
                                 n = G.UIT.R,
                                 config = { align = "cl", padding = 0.01, maxw = 2.7 },
                                 nodes = {
-                                    { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.GAME, ref_value = "current_xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.GAME, ref_value = "current_xp_disp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     -- { n = G.UIT.T, config = { id = "curxp_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
                                     { n = G.UIT.T, config = { text = " / ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.GAME, ref_value = "required_xp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.GAME, ref_value = "required_xp_disp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     -- { n = G.UIT.T, config = { id = "maxxp_text", ref_table = G.GAME.vallkarri.text_display, ref_value = "req", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } }
                                 },
 
@@ -84,6 +84,24 @@ function create_UIBox_metaprog()
 
         }
     }
+end
+
+local upd = Game.update
+function Game:update(dt)
+    upd(self, dt)
+
+    if G.GAME.current_level then
+        G.GAME.current_level_disp = number_format(G.GAME.current_level)
+    end
+
+    if G.GAME.current_xp then
+        G.GAME.current_xp_disp = number_format(G.GAME.current_xp)
+    end
+
+    if G.GAME.required_xp then
+        G.GAME.required_xp_disp = number_format(G.GAME.required_xp)
+    end
+
 end
 
 local fakestart = Game.start_run
@@ -135,13 +153,7 @@ function vallkarri.get_base_xp_exponent()
 end
 
 -- gets the xp required for the specified level
-function vallkarri.xp_required(level)
-    level = to_number(level)
 
-    local req = 100 * level
-
-    return to_number(req)
-end
 
 function vallkarri.mod_level(amount, from_xp)
     local req = vallkarri.xp_required(G.GAME.current_level)
@@ -157,12 +169,16 @@ function vallkarri.mod_level(amount, from_xp)
     
     
 end
-
+local compress_events = false
+local active_xp_queue = 0
+local xp_queued = 0
 function vallkarri.mod_xp(mod, relevant_card)
-    G.GAME.valk_power = vallkarri.calculate_power()
+    
 
 
-    if not Talisman or (Talisman and not Talisman.config_file.disable_anims) then
+    if (not Talisman or (Talisman and not Talisman.config_file.disable_anims)) and active_xp_queue < 128 then --prevent excessive retriggers or whatever from causing problems
+        active_xp_queue = active_xp_queue + 1
+        -- print("+1 event, now " .. active_xp_queue)
         G.E_MANAGER:add_event(Event({
             func = function()
                 vallkarri.animationless_mod_xp(mod)
@@ -174,17 +190,37 @@ function vallkarri.mod_xp(mod, relevant_card)
                 end
 
 
-
+                active_xp_queue = active_xp_queue - 1
+                -- print("-1 event, now " .. active_xp_queue)
                 return true
             end,
-        }))
+            
+        }), 'other')
     else
-        vallkarri.animationless_mod_xp(mod)
+        -- emergency optimization
+        -- print("!!QUEUEING SLOWLY")
+        if compress_events then
+            xp_queued = xp_queued + mod
+        else
+            vallkarri.animationless_mod_xp(mod)
+        end 
+        
+
+        
     end
+end
+
+
+
+function vallkarri.reset_levels()
+    G.GAME.current_level = 1
+    G.GAME.current_xp = 0
+    G.GAME.required_xp = vallkarri.xp_required(G.GAME.current_level)
 end
 
 function vallkarri.metacalc(context)
     G.GAME.xp_exponent_disp = "(^" .. vallkarri.get_base_xp_exponent() .. " XP)"
+    G.GAME.valk_power = vallkarri.calculate_power()
 end
 
 function vallkarri.animationless_mod_xp(mod)
@@ -217,9 +253,31 @@ function vallkarri.animationless_mod_xp(mod)
     G.GAME.current_xp = math.floor(G.GAME.current_xp)
     G.GAME.required_xp = math.floor(G.GAME.required_xp)
 
+    if to_big(G.GAME.current_xp) > to_big(G.GAME.required_xp)*16 then
+        vallkarri.mod_level(math.floor(vallkarri.xp_to_level(G.GAME.current_xp + vallkarri.level_to_xp(G.GAME.current_level)) - G.GAME.current_level))
+        G.GAME.current_xp = 0
+    end
+
+
     while to_big(G.GAME.current_xp) >= to_big(G.GAME.required_xp) do
         vallkarri.mod_level(1, true)
     end
+end
+
+function vallkarri.xp_to_level(x)
+    return math.sqrt(0.25 + (x/50)) - 0.5
+end
+
+function vallkarri.level_to_xp(l)
+    return 50 * (l + (l ^ 2))
+end
+
+function vallkarri.xp_required(level)
+    level = to_number(level)
+
+    local req = 100 * level
+
+    return to_number(req)
 end
 
 local caevsttx = card_eval_status_text
