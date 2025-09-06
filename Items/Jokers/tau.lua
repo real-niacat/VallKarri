@@ -1,6 +1,6 @@
 SMODS.Atlas {
     key = "tau",
-    path = "tauics.png",
+    path = "tauic_jokers.png",
     px = 71,
     py = 95,
 }
