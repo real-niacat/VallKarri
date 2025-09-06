@@ -198,7 +198,9 @@ SMODS.Edition {
 SMODS.DrawStep {
     key = "lordly",
     func = function(card, layer)
-        if (card.edition and card.edition.key == "e_valk_lordly") or card.draw_halo or (card.config and card.config.center and card.config.center.has_halo) then
+        local draw_halo = (card.edition and card.edition.key == "e_valk_lordly") or card.draw_halo or (card.config and card.config.center and card.config.center.has_halo)
+        local allowed = layer == "both" or layer == "card"
+        if draw_halo and allowed then
             if not card.children.halo then
                 card.children.halo = Sprite(card.T.x, card.T.y, card.T.w, card.T.h, G.ASSET_ATLAS['valk_main'],
                     { x = 2, y = 2 })
