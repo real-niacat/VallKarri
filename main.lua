@@ -93,6 +93,23 @@ if Cryptid.pointerblistifytype then
 end
 Cryptid.mod_whitelist["Vall-karri"] = true
 
+--smods, why do i have to do this?
+-- seriously, this wasn't an issue in vanilla so the excuse "vanilla recalculates stats" is just invalid and wrong
+-- give me an actual reason as to why you should recalculate every hand level
+SMODS.Scoring_Parameter:take_ownership("mult", {
+    level_up_hand = function(self, amount, hand)
+        local v = hand[self.key] + (hand["l_"..self.key]*amount)
+        hand[self.key] = math.max(v,0)
+    end
+})
+
+SMODS.Scoring_Parameter:take_ownership("chips", {
+    level_up_hand = function(self, amount, hand)
+        local v = hand[self.key] + (hand["l_"..self.key]*amount)
+        hand[self.key] = math.max(v,0)
+    end
+})
+
 
 -- for lily(me)
 
