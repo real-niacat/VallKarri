@@ -297,7 +297,7 @@ function ease_dollars(mod, x)
     
 
     if to_big(mod) > to_big(0) then
-        local multiplier = math.max(1,math.log(G.GAME.current_level,2)^0.2)
+        local multiplier = math.max(1,math.log(G.GAME.current_level,2))
         local final = mod * multiplier
         final = math.max(math.floor(final), mod)
         easemoneyhook(final, x)
@@ -306,7 +306,7 @@ function ease_dollars(mod, x)
     end
 
     if to_big(mod) < to_big(0) then
-        vallkarri.mod_xp(math.min(-mod, G.GAME.required_xp * 0.1))
+        vallkarri.mod_xp(-mod)
     end
 end
 
@@ -315,7 +315,7 @@ function ease_ante(x)
     easeantehook(x)
 
     if x > 0 then
-        vallkarri.mod_xp(5 * x * G.GAME.round_resets.ante)
+        vallkarri.mod_xp((5 * x) ^ G.GAME.round_resets.ante)
     end
 end
 
@@ -325,7 +325,7 @@ function level_up_hand(card, hand, instant, amount)
     levelhandhook(card, hand, instant, amount)
 
     if to_big(amount or 1) > to_big(0) then
-        vallkarri.mod_xp(amount or 1,  card)
+        vallkarri.mod_xp((amount or 1) * 25,  card)
     end
 end
 
