@@ -223,5 +223,6 @@ SMODS.Joker {
         "Her entropic lord powers allow for heightened senses,",
         "so it doesn't affect her as much, but she can barely see!"
     },
-    dependencies = {"Talisman"}
+    dependencies = {"Talisman"},
+    pronouns = "she_her",
 }
