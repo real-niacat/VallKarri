@@ -174,21 +174,22 @@ SMODS.Joker {
         name = "Lily Felli",
         text = {
             "{X:dark_edition,C:white}^^#1#{} Mult for each Joker owned",
-            "{C:attention}Lordly{} Edition is {C:attention}1000{} times more common",
+            "{C:attention}Lordly{} Edition is {C:attention}#3#{} times more common",
             "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult)",
             quote("lily"),
             quote("lily2"),
             credit("Scraptake")
         }
     },
-    config = { extra = { per = 0.05 } },
+    config = { extra = { per = 0.05, rate = 50 } },
     loc_vars = function(self, info_queue, card)
         local jkrs = G.jokers and #G.jokers.cards or 0
         info_queue[#info_queue+1] = G.P_CENTERS.e_valk_lordly
         return {
             vars = {
                 card.ability.extra.per,
-                1 + (card.ability.extra.per * jkrs) 
+                1 + (card.ability.extra.per * jkrs),
+                card.ability.extra.rate
             }
         }
     end,

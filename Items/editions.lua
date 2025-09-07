@@ -27,9 +27,18 @@ SMODS.Edition {
         return G.GAME.edition_rate * self.weight
     end,
     calculate = function(self, card, context)
-        if (context.edition and context.cardarea == G.jokers and card.config.trigger)
-            or (context.main_scoring and context.cardarea == G.play) then
-            SMODS.calculate_effect({ echips = card.edition.echips }, card)
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger) or
+            (context.main_scoring and context.cardarea == G.play)
+        then
+            SMODS.calculate_effect({ echips = card.edition and card.edition.echips or 1.05 }, card)
+        end
+
+        if context.joker_main then
+            card.config.trigger = true
+        end
+
+        if context.after then
+            card.config.trigger = nil
         end
     end,
     in_pool = function(self, args)
@@ -69,7 +78,8 @@ SMODS.Edition {
     end,
     in_pool = function(self, args)
         return true
-    end
+    end,
+    in_shop = true,
 }
 
 SMODS.Shader {
@@ -104,21 +114,30 @@ SMODS.Edition {
         return G.GAME.edition_rate * self.weight
     end,
     calculate = function(self, card, context)
-        if (context.edition and context.cardarea == G.jokers and card.config.trigger)
-            or (context.main_scoring and context.cardarea == G.play) then
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger) or
+            (context.main_scoring and context.cardarea == G.play)
+        then
             SMODS.calculate_effect(
                 {
                     mult = card.edition.mult,
                     chips = card.edition.mult,
                     xmult = card.edition.xmult,
-                    xchips = card.edition
-                        .xchips
+                    xchips = card.edition.xchips
                 }, card)
+        end
+
+        if context.joker_main then
+            card.config.trigger = true
+        end
+
+        if context.after then
+            card.config.trigger = nil
         end
     end,
     in_pool = function(self, args)
         return true
-    end
+    end,
+    in_shop = true,
 }
 
 SMODS.Shader {
@@ -170,16 +189,28 @@ SMODS.Edition {
     },
     config = { emult = 0.05, },
     calculate = function(self, card, context)
-        if (context.edition and context.cardarea == G.jokers and card.config.trigger)
-            or (context.main_scoring and context.cardarea == G.play) then
-            return {
-                emult = 1 + (self.config.emult * #G.jokers.cards)
-            }
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger) or
+            (context.main_scoring and context.cardarea == G.play)
+        then
+            SMODS.calculate_effect(
+                {
+                    emult = 1 + (card.edition.emult * #G.jokers.cards)
+                }, card)
+        end
+
+        if context.joker_main then
+            card.config.trigger = true
+        end
+
+        if context.after then
+            card.config.trigger = nil
         end
     end,
     weight = 1,
     get_weight = function(self)
-        return G.GAME.edition_rate * self.weight * 1000 ^ #SMODS.find_card("j_valk_lily")
+        local found = SMODS.find_card("j_valk_lily")
+        local n = next(found) and found[1].ability.extra.rate or 1
+        return G.GAME.edition_rate * self.weight * (n ^ #SMODS.find_card("j_valk_lily"))
     end,
     loc_vars = function(self, info_queue, card)
         local em = card and card.edition and card.edition.emult or self.config.emult
@@ -192,13 +223,15 @@ SMODS.Edition {
     end,
     in_pool = function(self, args)
         return true
-    end
+    end,
+    in_shop = true,
 }
 
 SMODS.DrawStep {
     key = "lordly",
     func = function(card, layer)
-        local draw_halo = (card.edition and card.edition.key == "e_valk_lordly") or card.draw_halo or (card.config and card.config.center and card.config.center.has_halo)
+        local draw_halo = (card.edition and card.edition.key == "e_valk_lordly") or card.draw_halo or
+        (card.config and card.config.center and card.config.center.has_halo)
         local allowed = layer == "both" or layer == "card"
         if draw_halo and allowed then
             if not card.children.halo then
