@@ -43,6 +43,78 @@ SMODS.Blind {
 }
 
 SMODS.Blind {
+    key = "thechud",
+    loc_txt = {
+        name = "The Chud",
+        text = {
+            "Hands containing {C:attention}Feminine{}",
+            "cards are not allowed"
+        }
+    },
+    boss_colour = HEX("6E3D15"),
+    dollars = 6,
+    mult = 1,
+    debuff_hand = function(self, cards, hand, handname, check)
+        for i,card in ipairs(cards) do
+            if CardPronouns.has("feminine", card) then
+                return true
+            end
+        end
+        return false
+    end,
+    dependencies = {"cardpronouns"},
+    boss = {min = 2, max = 0}
+}
+
+SMODS.Blind {
+    key = "thesimp",
+    loc_txt = {
+        name = "The Simp",
+        text = {
+            "Hands containing {C:attention}Masculine{}",
+            "cards are not allowed"
+        }
+    },
+    boss_colour = HEX("FFFD85"),
+    dollars = 6,
+    mult = 1,
+    debuff_hand = function(self, cards, hand, handname, check)
+        for i,card in ipairs(cards) do
+            if CardPronouns.has("masculine", card) then
+                return true
+            end
+        end
+        return false
+    end,
+    dependencies = {"cardpronouns"},
+    boss = {min = 2, max = 0}
+}
+
+SMODS.Blind {
+    key = "the_y",
+    loc_txt = {
+        name = "The Y",
+        text = {
+            "Hands must contain at least one",
+            "card with {C:attention}They/Them{} pronouns",
+        }
+    },
+    boss_colour = HEX("DB67BE"),
+    dollars = 6,
+    mult = 2,
+    debuff_hand = function(self, cards, hand, handname, check)
+        for i,card in ipairs(cards) do
+            if CardPronouns.is("they_them", card) then
+                return true
+            end
+        end
+        return false
+    end,
+    dependencies = {"cardpronouns"},
+    boss = {min = 2, max = 0}
+}
+
+SMODS.Blind {
     key = "fuck",
     boss_colour = HEX("344245"),
     mult = 0.0001,
