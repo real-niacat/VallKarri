@@ -75,7 +75,7 @@ SMODS.Blind {
             "cards are not allowed"
         }
     },
-    boss_colour = HEX("FFFD85"),
+    boss_colour = HEX("DB67BE"),
     dollars = 6,
     mult = 1,
     debuff_hand = function(self, cards, hand, handname, check)
@@ -99,7 +99,7 @@ SMODS.Blind {
             "card with {C:attention}They/Them{} pronouns",
         }
     },
-    boss_colour = HEX("DB67BE"),
+    boss_colour = HEX("FFFD8F"),
     dollars = 6,
     mult = 2,
     debuff_hand = function(self, cards, hand, handname, check)
