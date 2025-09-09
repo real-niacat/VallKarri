@@ -1,9 +1,7 @@
-
-
 function vallkarri.calculate_power()
     local base = (G.GAME.current_level or 1) ^ 0.5
 
-    -- ex. 
+    -- ex.
     -- vallkarri.add_power_modifier(function(m) return m^2 end)
 
     local mfd = {}
@@ -19,14 +17,13 @@ function vallkarri.calculate_power()
         end
     end
 
-    for _,val in pairs(mfd) do
+    for _, val in pairs(mfd) do
         local i = find_index(val, vallkarri.run_power_modifiers)
         if i then
             table.remove(vallkarri.run_power_modifiers, i)
         end
     end
     return base
-
 end
 
 function create_UIBox_metaprog()
@@ -50,7 +47,7 @@ function create_UIBox_metaprog()
                                     { n = G.UIT.T, config = { text = "Level ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true } },
                                     { n = G.UIT.T, config = { id = "curlvl_text", ref_table = G.GAME, ref_value = "current_level_disp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     { n = G.UIT.T, config = { id = "that_fucking_space_that_i_hate", text = "  ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
-                                    { n = G.UIT.T, config = { id = "buff", ref_table = G.GAME, ref_value = "xp_exponent_disp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.8, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "buff", ref_table = G.GAME, ref_value = "xp_exponent_disp", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.8, shadow = true, prev_value = "nil" } },
                                 }
                             },
                             {
@@ -69,8 +66,14 @@ function create_UIBox_metaprog()
                                 n = G.UIT.R,
                                 config = { align = "tl", padding = 0.01, maxw = 2 },
                                 nodes = {
-                                    { n = G.UIT.T, config = { text = "Power: ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.85, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "curpow_text", ref_table = G.GAME, ref_value = "valk_power", colour = G.C.UI.TEXT_LIGHT, scale = text_scale*0.85, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { text = "Power: ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true } },
+                                    { n = G.UIT.T, config = { id = "curpow_text", ref_table = G.GAME, ref_value = "valk_power", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.T, config = { id = "that_fucking_space_that_i_hate_2", text = " ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    { n = G.UIT.C, config = { button = "toggle_level_effects", colour = G.C.RED, minh = 0.175, minw = 1.2, r = 0.01 }, 
+                                        nodes = {
+                                            { n = G.UIT.T, config = { text = "See effects", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true  } }
+                                        }
+                                    }
                                 }
 
                             }
@@ -84,6 +87,75 @@ function create_UIBox_metaprog()
 
         }
     }
+end
+
+function create_UIBox_level_effects()
+    local text_scale = 0.3
+    return {
+        n = G.UIT.ROOT,
+        config = { align = "cm", padding = 0.03, colour = G.C.UI.TRANSPARENT_DARK },
+        nodes = {
+            {
+                n = G.UIT.R,
+                config = { align = "cm", padding = 0.05, colour = { 0.215, 0.258, 0.267, 1 }, r = 0.1 },
+                nodes = {
+                    {
+                        n = G.UIT.R,
+                        config = { align = "tl", colour = G.C.DYN_UI.BOSS_DARK, r = 0.1, minh = 0.25, minw = 3, padding = 0.08 },
+                        nodes = {
+                            {
+                                n = G.UIT.R,
+                                config = { align = "tl", padding = 0.01 },
+                                nodes = {
+                                    { n = G.UIT.T, config = { text = "Your level is currently giving:", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 1, shadow = true, prev_value = "nil" } },
+                                }
+
+                            },
+                            {
+                                n = G.UIT.R,
+                                config = { align = "tl", padding = 0.01, maxw = 2 },
+                                nodes = {
+                                    { n = G.UIT.T, config = { id = "money_multiplier_text", ref_table = G.GAME, ref_value = "money_mod_disp", colour = G.C.MONEY, scale = text_scale * 0.85, shadow = true, prev_value = "nil" } },
+                                }
+                            },
+                            {
+                                n = G.UIT.R,
+                                config = { align = "cl", padding = 0.01, maxw = 2 },
+                                nodes = {
+                                    { n = G.UIT.T, config = { id = "blindsize_multiplier_text", ref_table = G.GAME, ref_value = "blindsize_mod_disp", colour = G.C.ORANGE, scale = text_scale * 0.85, shadow = true, prev_value = "nil" } },
+                                },
+
+                            },
+                            {
+                                n = G.UIT.R,
+                                config = { align = "cl", padding = 0.01, maxw = 2 },
+                                nodes = {
+                                    { n = G.UIT.T, config = { id = "tauic_chance_text", ref_table = G.GAME, ref_value = "tauic_chance_boost_disp", colour = G.C.GREEN, scale = text_scale * 0.85, shadow = true, prev_value = "nil" } },
+                                },
+
+                            },
+                            
+                        }
+                    },
+
+
+                }
+            },
+
+
+        }
+    }
+end
+
+function G.FUNCS.toggle_level_effects(e)
+    G.GAME.money_mod_disp = "X" .. string.format("%.3f", vallkarri.get_level_money_multiplier()) .. " Money Gain"
+    G.GAME.blindsize_mod_disp = "X" .. string.format("%.3f", vallkarri.get_level_blind_size_multiplier()) .. " Blind Size"
+    G.GAME.tauic_chance_boost_disp = string.format("%.3f", (1 / G.GAME.base_tau_replace) * 100) .. "% Base Tauic Chance"
+
+
+
+    G.GAME.level_effects_open = not G.GAME.level_effects_open
+    G.HUD_LEVEL_EFFECTS.config.offset.x = G.ROOM.T.w + (G.GAME.level_effects_open and -2.2 or 5)
 end
 
 local upd = Game.update
@@ -102,6 +174,9 @@ function Game:update(dt)
         G.GAME.required_xp_disp = number_format(G.GAME.required_xp)
     end
 
+    if G.GAME.base_tau_replace and G.GAME.current_level then
+        G.GAME.base_tau_replace = vallkarri.get_level_tauic_boost()
+    end
 end
 
 local fakestart = Game.start_run
@@ -121,8 +196,14 @@ function Game:start_run(args)
 
     self.HUD_META = UIBox {
         definition = create_UIBox_metaprog(),
-        config = { align = ('cli'), offset = { x = 19, y = -2.15 }, major = G.ROOM_ATTACH }
+        config = { align = ('cli'), offset = { x = G.ROOM.T.w - 1, y = -2.15 }, major = G.ROOM_ATTACH }
     }
+
+    self.HUD_LEVEL_EFFECTS = UIBox {
+        definition = create_UIBox_level_effects(),
+        config = { align = ('cli'), offset = { x = G.ROOM.T.w + 5, y = -0.85 }, major = G.ROOM_ATTACH }
+    }
+    self.GAME.level_effects_open = false
 end
 
 vallkarri.run_xp_modifiers = {}
@@ -133,9 +214,7 @@ vallkarri.run_power_modifiers = {}
 ---@param storage table
 ---@param destruction function
 function vallkarri.add_xp_modifier(func, storage, destruction)
-    
-    vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers+1] = {run = func, store = storage or {}, dest = destruction}
-
+    vallkarri.run_xp_modifiers[#vallkarri.run_xp_modifiers + 1] = { run = func, store = storage or {}, dest = destruction }
 end
 
 ---Add a power modifier to the run, which can optionally be removed upon a destruction condition
@@ -143,13 +222,12 @@ end
 ---@param storage table
 ---@param destruction function
 function vallkarri.add_power_modifier(func, storage, destruction)
-    
-    vallkarri.run_power_modifiers[#vallkarri.run_power_modifiers+1] = {run = func, store = storage or {}, dest = destruction}
-
+    vallkarri.run_power_modifiers[#vallkarri.run_power_modifiers + 1] = { run = func, store = storage or {}, dest =
+    destruction }
 end
 
 function vallkarri.get_base_xp_exponent()
-    return (G.GAME.stake ^ 0.25) * (1+(G.GAME.round/20))
+    return (G.GAME.stake ^ 0.25) * (1 + (G.GAME.round / 20))
 end
 
 -- gets the xp required for the specified level
@@ -166,16 +244,12 @@ function vallkarri.mod_level(amount, from_xp)
     if from_xp then
         G.GAME.current_xp = G.GAME.current_xp - req
     end
-    
-    
 end
+
 local compress_events = false
 local active_xp_queue = 0
 local xp_queued = 0
 function vallkarri.mod_xp(mod, relevant_card)
-    
-
-
     if (not Talisman or (Talisman and not Talisman.config_file.disable_anims)) and active_xp_queue < 128 then --prevent excessive retriggers or whatever from causing problems
         active_xp_queue = active_xp_queue + 1
         -- print("+1 event, now " .. active_xp_queue)
@@ -194,7 +268,7 @@ function vallkarri.mod_xp(mod, relevant_card)
                 -- print("-1 event, now " .. active_xp_queue)
                 return true
             end,
-            
+
         }), 'other')
     else
         -- emergency optimization
@@ -203,14 +277,9 @@ function vallkarri.mod_xp(mod, relevant_card)
             xp_queued = xp_queued + mod
         else
             vallkarri.animationless_mod_xp(mod)
-        end 
-        
-
-        
+        end
     end
 end
-
-
 
 function vallkarri.reset_levels()
     G.GAME.current_level = 1
@@ -240,7 +309,7 @@ function vallkarri.animationless_mod_xp(mod)
         end
     end
 
-    for _,val in pairs(mfd) do
+    for _, val in pairs(mfd) do
         local i = find_index(val, vallkarri.run_xp_modifiers)
         if i then
             table.remove(vallkarri.run_xp_modifiers, i)
@@ -253,8 +322,9 @@ function vallkarri.animationless_mod_xp(mod)
     G.GAME.current_xp = math.floor(G.GAME.current_xp)
     G.GAME.required_xp = math.floor(G.GAME.required_xp)
 
-    if to_big(G.GAME.current_xp) > to_big(G.GAME.required_xp)*16 then
-        vallkarri.mod_level(math.floor(vallkarri.xp_to_level(G.GAME.current_xp + vallkarri.level_to_xp(G.GAME.current_level)) - G.GAME.current_level))
+    if to_big(G.GAME.current_xp) > to_big(G.GAME.required_xp) * 16 then
+        vallkarri.mod_level(math.floor(vallkarri.xp_to_level(G.GAME.current_xp +
+        vallkarri.level_to_xp(G.GAME.current_level)) - G.GAME.current_level))
         G.GAME.current_xp = 0
     end
 
@@ -265,7 +335,7 @@ function vallkarri.animationless_mod_xp(mod)
 end
 
 function vallkarri.xp_to_level(x)
-    return math.sqrt(0.25 + (x/50)) - 0.5
+    return math.sqrt(0.25 + (x / 50)) - 0.5
 end
 
 function vallkarri.level_to_xp(l)
@@ -288,16 +358,14 @@ function card_eval_status_text(card, eval_type, amt, percent, dir, extra)
     if not card.area then return end
     local ind = find_index(card, card.area.cards)
     if ind then
-        vallkarri.mod_xp(ind, nil, nil, card)
+        vallkarri.mod_xp((ind^0.5)*5, nil, nil, card)
     end
 end
 
 local easemoneyhook = ease_dollars
 function ease_dollars(mod, x)
-    
-
     if to_big(mod) > to_big(0) then
-        local multiplier = math.max(1,math.log(G.GAME.current_level,2))
+        local multiplier = vallkarri.get_level_money_multiplier()
         local final = mod * multiplier
         final = math.max(math.floor(final), mod)
         easemoneyhook(final, x)
@@ -306,7 +374,7 @@ function ease_dollars(mod, x)
     end
 
     if to_big(mod) < to_big(0) then
-        vallkarri.mod_xp(-mod)
+        vallkarri.mod_xp(-mod*2)
     end
 end
 
@@ -321,11 +389,10 @@ end
 
 local levelhandhook = level_up_hand
 function level_up_hand(card, hand, instant, amount)
-    
     levelhandhook(card, hand, instant, amount)
 
     if to_big(amount or 1) > to_big(0) then
-        vallkarri.mod_xp((amount or 1) * 25,  card)
+        vallkarri.mod_xp((amount or 1) * 25, card)
     end
 end
 
@@ -335,9 +402,22 @@ function get_old_blind_amount(ante)
     return blindamounthook(ante)
 end
 
+function vallkarri.get_level_money_multiplier()
+    return math.max(1, math.log((G.GAME.current_level or 0) ^ 0.6, 1.5))
+end
+
+function vallkarri.get_level_blind_size_multiplier(ante)
+    ante = ante or G.GAME.round_resets.ante
+    return (((1 + (0.02 * ante)) ^ (1 + (0.2 * (math.max((G.GAME.current_level or 0) - 5, 0) ^ 0.9))))) ^ 0.9
+end
+
+function vallkarri.get_level_tauic_boost()
+    return math.min(150 - math.log(G.GAME.current_level,2), G.GAME.base_tau_replace)
+end
+
 function get_blind_amount(ante)
     local amount = blindamounthook(ante)
-    local multiplier = (((1 + (0.02 * ante)) ^ (1 + (0.2 * (math.max((G.GAME.current_level or 0)-5, 0) ^ 0.9))))) ^ 0.9
+    local multiplier = vallkarri.get_level_blind_size_multiplier(ante)
     -- print(multiplier .. " at level " ..  (G.GAME.current_level or 0))
     amount = amount * multiplier
 
@@ -347,13 +427,13 @@ function get_blind_amount(ante)
 
     local nearest = math.floor(math.log10(amount)) - 1
     -- round to 2 sigfigs
-    nearest = 10^nearest 
-    return math.floor((amount / nearest)+0.5)*nearest
+    nearest = 10 ^ nearest
+    return math.floor((amount / nearest) + 0.5) * nearest
 
     -- x1+(0.02*ante) ^ 1+(0.2*level)
 end
 
-local amt = 2
+local amt = 1
 SMODS.Voucher {
     key = "alphaboosterator",
     atlas = "main",
@@ -378,7 +458,7 @@ SMODS.Voucher {
     end,
 
     redeem = function(self, card)
-        vallkarri.add_xp_modifier(function(x,t) return x*card.ability.extra.xp end)
+        vallkarri.add_xp_modifier(function(x, t) return x * card.ability.extra.xp end)
     end,
 
 
@@ -410,7 +490,7 @@ SMODS.Voucher {
     end,
 
     redeem = function(self, card)
-        vallkarri.add_xp_modifier(function(x,t) return x^card.ability.extra.xp end)
+        vallkarri.add_xp_modifier(function(x, t) return x ^ card.ability.extra.xp end)
     end,
 
 
@@ -441,7 +521,7 @@ SMODS.Voucher {
     end,
 
     redeem = function(self, card)
-        vallkarri.add_xp_modifier(function(x,t) return x^card.ability.extra.xp end)
+        vallkarri.add_xp_modifier(function(x, t) return x ^ card.ability.extra.xp end)
     end,
 
 
