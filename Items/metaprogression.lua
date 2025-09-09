@@ -383,7 +383,7 @@ function ease_ante(x)
     easeantehook(x)
 
     if x > 0 then
-        vallkarri.mod_xp((5 * x) ^ G.GAME.round_resets.ante)
+        vallkarri.mod_xp(25 * x * G.GAME.round_resets.ante)
     end
 end
 
