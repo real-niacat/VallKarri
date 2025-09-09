@@ -1,4 +1,4 @@
-vallkarri.merged_tarot_rate = 0.01
+vallkarri.merged_tarot_rate = 0.05
 
 
 
@@ -36,6 +36,7 @@ SMODS.Consumable {
         end)
     end,
     soul_rate = vallkarri.merged_tarot_rate,
+    hidden = true,
     
 }
 
@@ -78,6 +79,7 @@ SMODS.Consumable {
         end)
     end,
     soul_rate = vallkarri.merged_tarot_rate,
+    hidden = true,
     
 }
 
@@ -124,6 +126,7 @@ SMODS.Consumable {
         }))
     end,
     soul_rate = vallkarri.merged_tarot_rate,
+    hidden = true,
     
 }
 
@@ -193,6 +196,7 @@ SMODS.Consumable {
 
     end,
     soul_rate = vallkarri.merged_tarot_rate,
+    hidden = true,
     
 }
 
@@ -236,6 +240,7 @@ SMODS.Consumable {
 
     end,
     soul_rate = vallkarri.merged_tarot_rate,
+    hidden = true,
     
 }
 
@@ -274,5 +279,6 @@ SMODS.Consumable {
 
     end,
     soul_rate = vallkarri.merged_tarot_rate,
+    hidden = true,
     
 }
