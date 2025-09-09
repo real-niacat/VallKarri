@@ -403,7 +403,7 @@ function get_old_blind_amount(ante)
 end
 
 function vallkarri.get_level_money_multiplier()
-    return math.max(1, math.log((G.GAME.current_level or 0) ^ 0.6, 1.5))
+    return math.max(1, math.log((G.GAME.current_level or 0) ^ 0.2, 1.5))
 end
 
 function vallkarri.get_level_blind_size_multiplier(ante)
@@ -412,7 +412,7 @@ function vallkarri.get_level_blind_size_multiplier(ante)
 end
 
 function vallkarri.get_level_tauic_boost()
-    return math.min(150 - math.log(G.GAME.current_level,2), G.GAME.base_tau_replace)
+    return math.min(150 - (G.GAME.current_level ^ 0.8), G.GAME.base_tau_replace)
 end
 
 function get_blind_amount(ante)
