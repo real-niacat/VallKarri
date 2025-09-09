@@ -66,9 +66,9 @@ function create_UIBox_metaprog()
                                 n = G.UIT.R,
                                 config = { align = "tl", padding = 0.01, maxw = 2 },
                                 nodes = {
-                                    { n = G.UIT.T, config = { text = "Power: ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true } },
-                                    { n = G.UIT.T, config = { id = "curpow_text", ref_table = G.GAME, ref_value = "valk_power", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true, prev_value = "nil" } },
-                                    { n = G.UIT.T, config = { id = "that_fucking_space_that_i_hate_2", text = " ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
+                                    -- { n = G.UIT.T, config = { text = "Power: ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true } },
+                                    -- { n = G.UIT.T, config = { id = "curpow_text", ref_table = G.GAME, ref_value = "valk_power", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true, prev_value = "nil" } },
+                                    -- { n = G.UIT.T, config = { id = "that_fucking_space_that_i_hate_2", text = " ", colour = G.C.UI.TEXT_LIGHT, scale = text_scale, shadow = true, prev_value = "nil" } },
                                     { n = G.UIT.C, config = { button = "toggle_level_effects", colour = G.C.RED, minh = 0.175, minw = 1.2, r = 0.01 }, 
                                         nodes = {
                                             { n = G.UIT.T, config = { text = "See effects", colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true  } }
