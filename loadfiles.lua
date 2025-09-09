@@ -8,10 +8,7 @@ assert(SMODS.load_file("Items/badges.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/hand_buffs.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/operator_stuff.lua", "vallkarri"))()
 
-
-if vallkarri.config.overscoring then
-    assert(SMODS.load_file("Items/ante.lua", "vallkarri"))()
-end
+assert(SMODS.load_file("Items/ante.lua", "vallkarri"))()
 
 if vallkarri.config.metaprogression then
     assert(SMODS.load_file("Items/metaprogression.lua", "vallkarri"))()

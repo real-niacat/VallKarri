@@ -102,7 +102,7 @@ function Game:update(dt)
 
         if (G.GAME.blind.boss) then
             local num = number_format(overscore_threshhold())
-            G.GAME.blind.overchips = "Overscoring at " .. num
+            G.GAME.blind.overchips = vallkarri.config.overscoring and ("Overscoring at " .. num) or "Overscoring Disabled"
         else
             G.GAME.blind.overchips = ""
         end
