@@ -12,7 +12,7 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=9, y=3, },
     soul_pos = {x=7, y=3, extra = {x=8, y=3}},
-    soul_rate = 0.02,
+    soul_rate = 0.01,
     cost = 10,
     config = {extra = {eeante = 1.35}},
     can_use = function(self, card)
