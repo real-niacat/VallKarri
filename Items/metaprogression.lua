@@ -148,9 +148,12 @@ function create_UIBox_level_effects()
 end
 
 function G.FUNCS.toggle_level_effects(e)
-    G.GAME.money_mod_disp = "X" .. string.format("%.3f", vallkarri.get_level_money_multiplier()) .. " Money Gain"
-    G.GAME.blindsize_mod_disp = "X" .. string.format("%.3f", vallkarri.get_level_blind_size_multiplier()) .. " Blind Size"
-    G.GAME.tauic_chance_boost_disp = string.format("%.3f", (1 / G.GAME.base_tau_replace) * 100) .. "% Base Tauic Chance"
+    local money = vallkarri.get_level_money_multiplier()
+    local blindsize = vallkarri.get_level_blind_size_multiplier()
+    local tau = (1 / G.GAME.base_tau_replace) * 100
+    G.GAME.money_mod_disp = "X" .. (type(money) == "number" and string.format("%.3f", money) or number_format(money)) .. " Money Gain"
+    G.GAME.blindsize_mod_disp = "X" .. (type(blindsize) == "number" and string.format("%.3f", blindsize) or number_format(blindsize)) .. " Blind Size"
+    G.GAME.tauic_chance_boost_disp = (type(tau) == "number" and string.format("%.3f", tau) or number_format(tau)) .. "% Base Tauic Chance"
 
 
 
@@ -403,16 +406,16 @@ function get_old_blind_amount(ante)
 end
 
 function vallkarri.get_level_money_multiplier()
-    return math.max(1, math.log((G.GAME.current_level or 0) ^ 0.2, 1.5))
+    return math.max(1, math.log((to_big(G.GAME.current_level) or 0) ^ 0.2, 1.5))
 end
 
 function vallkarri.get_level_blind_size_multiplier(ante)
     ante = ante or G.GAME.round_resets.ante
-    return (((1 + (0.02 * ante)) ^ (1 + (0.2 * (math.max((G.GAME.current_level or 0) - 5, 0) ^ 0.9))))) ^ 0.9
+    return (((1 + (0.02 * to_big(ante))) ^ (1 + (0.2 * (math.max((to_big(G.GAME.current_level) or 0) - 5, 0) ^ 0.9))))) ^ 0.9
 end
 
 function vallkarri.get_level_tauic_boost()
-    return math.min(150 - (G.GAME.current_level ^ 0.8), G.GAME.base_tau_replace)
+    return math.min(150 - (to_number(math.min(G.GAME.current_level, 1e100)) ^ 0.8), G.GAME.base_tau_replace)
 end
 
 function get_blind_amount(ante)
@@ -447,7 +450,7 @@ SMODS.Voucher {
         }
     },
     no_doe = true,
-    config = { extra = { xp = 9 } },
+    config = { extra = { xp = 1.9 } },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xp } }
@@ -479,7 +482,7 @@ SMODS.Voucher {
         }
     },
     no_doe = true,
-    config = { extra = { xp = 1.9 } },
+    config = { extra = { xp = 1.09 } },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xp } }
@@ -510,7 +513,7 @@ SMODS.Voucher {
         }
     },
     no_doe = true,
-    config = { extra = { xp = 9.9 } },
+    config = { extra = { xp = 1.9 } },
 
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xp } }
