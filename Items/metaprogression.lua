@@ -186,6 +186,9 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     -- print(args)
     fakestart(self, args)
+    if args.savetext then
+        return
+    end
 
     self.GAME.current_level = 1
     self.GAME.current_xp = 0
