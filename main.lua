@@ -46,15 +46,6 @@ function vallkarri.add_splash_text(text_or_table)
     end
 end
 
-SMODS.current_mod.extra_tabs = function()
-    -- return {
-    --     {
-    --         label = "Blackjack",
-    --         tab_definition_function = vallkarri.blackjack_get_ui_definition
-    --     },
-    -- }
-end
-
 
 SMODS.Atlas {
     key = "main",

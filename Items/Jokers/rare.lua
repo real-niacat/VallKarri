@@ -435,11 +435,53 @@ SMODS.Joker {
             if SMODS.pseudorandom_probability(card, 'coronal', card.ability.extra.num, card.ability.extra.den, 'coronal') then
                 local text = G.FUNCS.get_poker_hand_info(context.full_hand)
                 G.GAME.hands[text].AscensionPower = (G.GAME.hands[text].AscensionPower and G.GAME.hands[text].AscensionPower + card.ability.extra.power) or
-                card.ability.extra.power
+                    card.ability.extra.power
                 quick_card_speak(card, "Upgraded!")
             end
         end
     end,
-    dependencies = {"entr"},
+    dependencies = { "entr" },
+
+}
+
+SMODS.Joker {
+    key = "one_trillion_beavers",
+    rarity = 3,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 8,
+    loc_txt = {
+        name = "One Trillion Beavers",
+        text = {
+            "Prevent death once then {C:red,E:1}Self-Destructs{}",
+            "{C:attention}Doubles{} your current {C:money}money{} when death is prevented",
+            credit("Nobody!"),
+        }
+    },
+    blueprint_compat = true,
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over and context.main_eval then
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.hand_text_area.blind_chips:juice_up()
+                    G.hand_text_area.game_chips:juice_up()
+                    play_sound('tarot1')
+                    card:start_dissolve()
+                    return true
+                end
+            }))
+
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    ease_dollars(G.GAME.dollars)
+                    return true
+                end
+            }))
+            return {
+                message = localize('k_saved_ex'),
+                colour = G.C.RED
+            }
+        end
+    end,
 
 }

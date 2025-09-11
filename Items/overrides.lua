@@ -1,39 +1,31 @@
 if not Talisman then
     SMODS.Joker {
-    key = "lily",
-    loc_txt = {
-        name = "Lily Felli For The Title Screen",
-        text = {
-            "you should not have this"
-        }
-    },
-    config = { extra = {} },
-    loc_vars = function(self, info_queue, card)
+        key = "lily",
+        loc_txt = {
+            name = "Lily Felli For The Title Screen",
+            text = {
+                "you should not have this"
+            }
+        },
+        config = { extra = {} },
+        loc_vars = function(self, info_queue, card)
 
-    end,
-    rarity = "valk_supercursed",
-    atlas = "main",
-    pos = {x = 0, y = 0},
-    soul_pos = {x=3,y=2},
-    in_pool = function(self, args)
-        return false
-    end,
-    no_collection = true,
-}
+        end,
+        rarity = "valk_supercursed",
+        atlas = "main",
+        pos = { x = 0, y = 0 },
+        soul_pos = { x = 3, y = 2 },
+        in_pool = function(self, args)
+            return false
+        end,
+        no_collection = true,
+    }
 end
 
 local mainmenu = Game.main_menu
 Game.main_menu = function(change_context) --code heavily adapted from cryptid
     local ret = mainmenu(change_context)
-    local newcard = Card(
-        G.title_top.T.x,
-        G.title_top.T.y,
-        G.CARD_W,
-        G.CARD_H,
-        G.P_CARDS.empty,
-        G.P_CENTERS.j_valk_lily, --replace this with the p_center of your card, you can keep everything else the same
-        { bypass_discovery_center = true }
-    )
+
     math.randomseed(os.time())
     vallkarri.main_menu_text = vallkarri.choose_main_menu_text()
     vallkarri.main_menu_ui = UIBox({
@@ -66,13 +58,34 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
         }
     })
 
-    G.title_top:emplace(newcard)
-    newcard.T.w = newcard.T.w * 1.1 * 1.2
-    newcard.T.h = newcard.T.h * 1.1 * 1.2
-    -- match scale of vanilla card
-    newcard.no_ui = true
-    -- not able to hover over it, obviously
-    newcard:set_sprites(newcard.config.center)
+
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            local newcard = Card(
+                G.title_top.T.x,
+                G.title_top.T.y,
+                G.CARD_W,
+                G.CARD_H,
+                G.P_CARDS.empty,
+                G.P_CENTERS.j_valk_lily, --replace this with the p_center of your card, you can keep everything else the same
+                { bypass_discovery_center = true }
+            )
+            newcard.click = function(self)
+                G.FUNCS["openModUI_" .. self.config.center.mod.id]()
+            end
+            G.title_top:emplace(newcard)
+            newcard:start_materialize({G.C.BLUE}, false, G.SETTINGS.GAMESPEED * 0.25)
+            newcard.T.w = newcard.T.w * 1.1 * 1.2
+            newcard.T.h = newcard.T.h * 1.1 * 1.2
+            newcard.no_ui = true
+            newcard:set_sprites(newcard.config.center)
+            return true
+        end,
+        trigger = "after",
+        delay = 0.25,
+    }))
+
+
     return ret
 end
 
@@ -224,7 +237,8 @@ function Game:update(dt)
 
     if G.GAME.round_resets and G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
         local operator = G.GAME.round_resets.eante_ante_diff > 0 and "+" or ""
-        G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) .. "(" .. operator .. number_format(G.GAME.round_resets.eante_ante_diff) .. ")"
+        G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) ..
+        "(" .. operator .. number_format(G.GAME.round_resets.eante_ante_diff) .. ")"
     end
 
     fix_decimal_hand_levels()
@@ -264,7 +278,7 @@ function Game:start_run(args)
         G.GAME.base_tau_replace = G.GAME.base_tau_replace / 10
         G.GAME.tau_replace = G.GAME.base_tau_replace
         G.GAME.tau_increase = 2
-        vallkarri.add_effective_ante_mod(function(x) return x^G.GAME.selected_back.effect.config.eeante end)
+        vallkarri.add_effective_ante_mod(function(x) return x ^ G.GAME.selected_back.effect.config.eeante end)
     end
 
 
@@ -646,17 +660,18 @@ function calc_blind_amount(ante)
 
     return original_gba(ante) ^ original_gba(ante)
 end
+
 function get_blind_amount(ante)
     local original_ante = ante
     local to_remove = {}
-    for _,mod in pairs(vallkarri.run_eante_modifiers) do
-        ante = mod.func(ante,mod.data)
+    for _, mod in pairs(vallkarri.run_eante_modifiers) do
+        ante = mod.func(ante, mod.data)
         if mod.dest and mod.dest(mod.data) then
-            to_remove[#to_remove+1] = mod
+            to_remove[#to_remove + 1] = mod
         end
     end
 
-    for _,tab in pairs(to_remove) do
+    for _, tab in pairs(to_remove) do
         table.remove(vallkarri.run_eante_modifiers, find_index(tab, vallkarri.run_eante_modifiers))
     end
 
@@ -667,13 +682,12 @@ function get_blind_amount(ante)
     return calc_blind_amount(ante)
 end
 
-
 function vallkarri.refresh_ante_diff()
     local ante = G.GAME.round_resets.ante
     local original_ante = ante
 
-    for _,mod in pairs(vallkarri.run_eante_modifiers) do
-        ante = mod.func(ante,mod.data)
+    for _, mod in pairs(vallkarri.run_eante_modifiers) do
+        ante = mod.func(ante, mod.data)
         -- dont run destruction conditions on a visual refresh
     end
 
@@ -683,7 +697,6 @@ function vallkarri.refresh_ante_diff()
 end
 
 function vallkarri.add_effective_ante_mod(fn, tab, destruction)
-    vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers+1] = {func = fn, data = tab, dest = destruction}
+    vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers + 1] = { func = fn, data = tab, dest = destruction }
     vallkarri.refresh_ante_diff()
 end
-
