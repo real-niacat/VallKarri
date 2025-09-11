@@ -257,7 +257,7 @@ SMODS.Consumable {
         }
     },
     key = "testosterone",
-    pos = { x = 0, y = 6 },
+    pos = { x = 1, y = 6 },
     atlas = "atlas2",
 
     config = { extra = { convert = 3, destroy = 3 } },
@@ -297,7 +297,7 @@ SMODS.Consumable {
         }
     },
     key = "estrogen",
-    pos = { x = 1, y = 6 },
+    pos = { x = 0, y = 6 },
     atlas = "atlas2",
 
     config = { extra = { convert = 3, destroy = 3 } },
