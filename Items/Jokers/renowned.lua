@@ -113,6 +113,13 @@ SMODS.Joker {
     pools = { ["Meme"] = true },
     demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
+
+        for key,cen in pairs(G.P_CENTER_POOLS.Joker) do
+            if math.random(1,7) == 1 then
+                info_queue[#info_queue+1] = cen
+            end
+        end
+
         return { vars = { card.ability.extra.zulu } }
     end,
 
