@@ -186,6 +186,16 @@ local fakestart = Game.start_run
 function Game:start_run(args)
     -- print(args)
     fakestart(self, args)
+
+    self.HUD_META = UIBox {
+        definition = create_UIBox_metaprog(),
+        config = { align = ('cli'), offset = { x = G.ROOM.T.w - 1, y = -2.15 }, major = G.ROOM_ATTACH }
+    }
+
+    self.HUD_LEVEL_EFFECTS = UIBox {
+        definition = create_UIBox_level_effects(),
+        config = { align = ('cli'), offset = { x = G.ROOM.T.w + 5, y = -0.85 }, major = G.ROOM_ATTACH }
+    }
     if args.savetext then
         return
     end
@@ -200,15 +210,7 @@ function Game:start_run(args)
 
 
 
-    self.HUD_META = UIBox {
-        definition = create_UIBox_metaprog(),
-        config = { align = ('cli'), offset = { x = G.ROOM.T.w - 1, y = -2.15 }, major = G.ROOM_ATTACH }
-    }
-
-    self.HUD_LEVEL_EFFECTS = UIBox {
-        definition = create_UIBox_level_effects(),
-        config = { align = ('cli'), offset = { x = G.ROOM.T.w + 5, y = -0.85 }, major = G.ROOM_ATTACH }
-    }
+    
     self.GAME.level_effects_open = false
 end
 
