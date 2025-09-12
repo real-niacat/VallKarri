@@ -90,29 +90,29 @@ SMODS.Blind {
     boss = {min = 2, max = 0}
 }
 
-SMODS.Blind {
-    key = "the_y",
-    loc_txt = {
-        name = "The Y",
-        text = {
-            "Hands must contain at least one",
-            "card with {C:attention}They/Them{} pronouns",
-        }
-    },
-    boss_colour = HEX("FFFD8F"),
-    dollars = 6,
-    mult = 2,
-    debuff_hand = function(self, cards, hand, handname, check)
-        for i,card in ipairs(cards) do
-            if CardPronouns.is("they_them", card) then
-                return true
-            end
-        end
-        return false
-    end,
-    dependencies = {"cardpronouns"},
-    boss = {min = 2, max = 0}
-}
+-- SMODS.Blind {
+--     key = "the_y",
+--     loc_txt = {
+--         name = "The Y",
+--         text = {
+--             "Hands must contain at least one",
+--             "card with {C:attention}They/Them{} pronouns",
+--         }
+--     },
+--     boss_colour = HEX("FFFD8F"),
+--     dollars = 6,
+--     mult = 2,
+--     debuff_hand = function(self, cards, hand, handname, check)
+--         for i,card in ipairs(cards) do
+--             if CardPronouns.is("they_them", card) then
+--                 return true
+--             end
+--         end
+--         return false
+--     end,
+--     dependencies = {"cardpronouns"},
+--     boss = {min = 2, max = 0}
+-- }
 
 SMODS.Blind {
     key = "fuck",
