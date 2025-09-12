@@ -14,7 +14,7 @@ SMODS.Consumable {
     soul_pos = {x=7, y=3, extra = {x=8, y=3}},
     soul_rate = 0.01,
     cost = 10,
-    config = {extra = {eeante = 1.35}},
+    config = {extra = {eeante = 1.25}},
     can_use = function(self, card)
         return true
     end,
