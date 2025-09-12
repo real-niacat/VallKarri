@@ -152,6 +152,9 @@ function Card.add_to_deck(self, from_debuff)
     hookref_atd(self, from_debuff)
     local allow = true
     owned_keys = {}
+    if not G.jokers then
+        return
+    end
 
     for i, j in ipairs(G.jokers.cards) do
         table.insert(owned_keys, j.config.center_key)
