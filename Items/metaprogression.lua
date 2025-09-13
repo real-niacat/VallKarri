@@ -158,7 +158,7 @@ function G.FUNCS.toggle_level_effects(e)
 
 
     G.GAME.level_effects_open = not G.GAME.level_effects_open
-    G.HUD_LEVEL_EFFECTS.config.offset.x = G.ROOM.T.w + (G.GAME.level_effects_open and -2.2 or 5)
+    G.HUD_LEVEL_EFFECTS.config.offset.x = G.ROOM.T.w + (G.GAME.level_effects_open and -2.2 or 500)
 end
 
 local upd = Game.update
@@ -194,7 +194,7 @@ function Game:start_run(args)
 
     self.HUD_LEVEL_EFFECTS = UIBox {
         definition = create_UIBox_level_effects(),
-        config = { align = ('cli'), offset = { x = G.ROOM.T.w + 5, y = -0.85 }, major = G.ROOM_ATTACH }
+        config = { align = ('cli'), offset = { x = G.ROOM.T.w + 500, y = -0.85 }, major = G.ROOM_ATTACH }
     }
     if args.savetext then
         return
