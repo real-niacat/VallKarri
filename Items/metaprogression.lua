@@ -235,7 +235,7 @@ function vallkarri.add_power_modifier(func, storage, destruction)
 end
 
 function vallkarri.get_base_xp_exponent()
-    return (G.GAME.stake ^ 0.25) * (1 + (G.GAME.round / 20))
+    return (G.GAME.stake ^ 0.25) * (1 + (G.GAME.round / 100))
 end
 
 -- gets the xp required for the specified level
@@ -302,7 +302,7 @@ function vallkarri.metacalc(context)
     if context.end_of_round and context.main_eval then
         local overscore_margin = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
 
-        vallkarri.mod_xp(math.log(overscore_margin,2))
+        vallkarri.mod_xp(vallkarri.hypercap(overscore_margin, G.GAME.blind.chips))
     end
 end
 
