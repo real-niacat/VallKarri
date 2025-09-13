@@ -79,6 +79,14 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
             newcard.T.h = newcard.T.h * 1.1 * 1.2
             newcard.no_ui = true
             newcard:set_sprites(newcard.config.center)
+
+            if #G.title_top.cards == 2 then
+                for _,card in pairs(G.title_top.cards) do
+                    if card.base.id then 
+                        card:start_dissolve({G.C.BLUE}, false, G.SETTINGS.GAMESPEED * 0.25)
+                    end
+                end
+            end
             return true
         end,
         trigger = "after",

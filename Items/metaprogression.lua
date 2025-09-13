@@ -298,6 +298,12 @@ end
 function vallkarri.metacalc(context)
     G.GAME.xp_exponent_disp = "(^" .. vallkarri.get_base_xp_exponent() .. " XP)"
     G.GAME.valk_power = vallkarri.calculate_power()
+
+    if context.end_of_round and context.main_eval then
+        local overscore_margin = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
+
+        vallkarri.mod_xp(math.log(overscore_margin,2))
+    end
 end
 
 function vallkarri.animationless_mod_xp(mod)
@@ -400,7 +406,7 @@ function level_up_hand(card, hand, instant, amount)
     levelhandhook(card, hand, instant, amount)
 
     if to_big(amount or 1) > to_big(0) then
-        vallkarri.mod_xp((amount or 1) * 25, card)
+        vallkarri.mod_xp(math.log(amount or 1, 2) * 25, card)
     end
 end
 
