@@ -326,7 +326,7 @@ SMODS.Joker {
         text = {
             "All {V:1}#1#{} are forcefully played",
             "Draw {C:attention}two{} replacements for each card forcefully played",
-            credit("Nobody!")
+            credit("mailingway")
         }
     },
     config = { extra = {} },
@@ -337,8 +337,8 @@ SMODS.Joker {
         return { vars = { name, colours = { colour } } }
     end,
     rarity = "valk_renowned",
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "main",
+    pos = { x = 12, y = 7 },
     -- soul_pos = {x=0, y=0},
     cost = 14,
     immutable = true,

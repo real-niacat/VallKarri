@@ -516,15 +516,15 @@ SMODS.Joker {
 SMODS.Joker {
     key = "roundabout",
     rarity = 2,
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "main",
+    pos = { x = 12, y = 8 },
     cost = 8,
     loc_txt = {
         name = "Roundabout",
         text = {
             "{C:attention}-#1#{} to the next change in ante",
             "{C:red,E:1}Self-destructs{}",
-            credit("Nobody!"),
+            credit("mailingway"),
         }
     },
     loc_vars = function(self, info_queue, card)
@@ -544,31 +544,26 @@ SMODS.Joker {
 SMODS.Joker {
     key = "chipless_cookie",
     rarity = 2,
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "main",
+    pos = { x = 13, y = 7 },
     cost = 8,
     loc_txt = {
         name = "Chipless Cookie",
         text = {
             "{C:attention}+#1#{} Joker Slots",
-            "{C:red,E:1}Self-destructs{} if played hand is not most played {C:attention}poker hand{}",
-            credit("Nobody!"),
+            "{C:red,E:1}Self-destructs{} if played hand is not",
+            "most played {C:attention}Poker Hand{}",
+            "{C:inactive}(Currently #2#)",
+            credit("mailingway"),
         }
     },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.slots } }
+        return { vars = { card.ability.extra.slots, vallkarri.get_most_played_hand() } }
     end,
     config = { extra = { slots = 2 } },
     calculate = function(self, card, context)
         if context.before then
-            local die = true
-            local play_more_than = (G.GAME.hands[context.scoring_name].played or 0)
-            for k, v in pairs(G.GAME.hands) do
-                if k ~= context.scoring_name and v.played >= play_more_than and SMODS.is_poker_hand_visible(k) then
-                    die = false
-                end
-            end
-            if die then
+            if not (context.scoring_name == vallkarri.get_most_played_hand()) then
                 card:start_dissolve({G.C.RED})
             end
         end
