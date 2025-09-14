@@ -24,7 +24,7 @@ vallkarri.librat_vals = { red = 62, blue = 61 }
 vallkarri.last_message =
 "Dear player. Please make sure to drink water and get eight hours of sleep, its really important to me that you guys stay healthy and strong, - love vagabond"
 vallkarri.splash_options = {
-    "Also try Entropy!",
+    Entropy and "Also try Entro- oh, you already are" or "Also try Entropy!",
     "This is so VallKarric!",
     "meow!",
     "VallKarri Yeah!",
