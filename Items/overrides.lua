@@ -275,9 +275,6 @@ function Game:start_run(args)
     G.GAME.tau_increase = 0
     G.GAME.base_tau_replace = 150
     G.GAME.tau_replace = G.GAME.base_tau_replace
-    if load_tauics then
-        load_tauics()
-    end
     if not G.GAME.ante_config and config_reset then
         config_reset()
     end
@@ -710,4 +707,28 @@ end
 function vallkarri.add_effective_ante_mod(fn, tab, destruction)
     vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers + 1] = { func = fn, data = tab, dest = destruction }
     vallkarri.refresh_ante_diff()
+end
+
+local smodsinject = SMODS.injectItems
+
+function SMODS.injectItems(...)
+    smodsinject(...)
+
+    for key,card in pairs(G.P_CENTERS) do
+
+        if card.bases then
+            G.P_CENTERS[key].is_tau = true
+            for i,base in ipairs(card.bases) do
+                -- print(base)
+                G.P_CENTERS[base].tau = key
+            end
+            
+            
+        end
+
+        if (card.bases or card.is_tau) and (not vallkarri.config.tau_collection) then
+            G.P_CENTERS[key].no_collection = true
+        end
+
+    end
 end

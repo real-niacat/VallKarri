@@ -5,21 +5,6 @@ SMODS.Atlas {
     py = 95,
 }
 
-function load_tauics()
-
-    for key,card in pairs(G.P_CENTERS) do
-
-        if card.bases then
-            for i,base in ipairs(card.bases) do
-                -- print(base)
-                G.P_CENTERS[base].tau = key
-            end
-        end
-
-    end
-
-end
-
 function tauic_check()
     for i,joker in ipairs(G.jokers.cards) do
         if joker.config.center.tau then

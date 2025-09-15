@@ -32,6 +32,7 @@ SMODS.Joker {
 
     end,
     dependencies = {"Talisman"},
+    is_tau = true,
 }
 
 SMODS.Joker {
@@ -65,6 +66,7 @@ SMODS.Joker {
 
     end,
     dependencies = {"Talisman"},
+    is_tau = true,
 }
 
 SMODS.Joker {
@@ -104,6 +106,7 @@ SMODS.Joker {
 
     end,
     dependencies = {"Talisman"},
+    is_tau = true,
 }
 
 SMODS.Joker {
@@ -148,6 +151,7 @@ SMODS.Joker {
 
     end,
     dependencies = {"Talisman"},
+    is_tau = true,
 }
 
 SMODS.Joker {
@@ -203,4 +207,5 @@ SMODS.Joker {
 
     end,
     dependencies = {"Talisman"},
+    is_tau = true,
 }
