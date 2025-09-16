@@ -302,7 +302,7 @@ function vallkarri.metacalc(context)
     if context.end_of_round and context.main_eval then
         local overscore_margin = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
         G.GAME.hypercap_level = G.GAME.hypercap_level or 1
-        vallkarri.mod_xp(vallkarri.hypercap(overscore_margin, vallkarri.level_to_xp(G.GAME.current_level+G.GAME.hypercap_level)))
+        vallkarri.mod_xp(vallkarri.hypercap(overscore_margin, vallkarri.level_to_xp(G.GAME.current_level+G.GAME.hypercap_level) ^ 0.5))
     end
 end
 
@@ -417,7 +417,7 @@ function get_old_blind_amount(ante)
 end
 
 function vallkarri.get_level_money_multiplier()
-    return math.max(1, math.log((to_big(G.GAME.current_level) or 0) ^ 0.2, 1.5))
+    return math.max(1, math.log((to_big(G.GAME.current_level) or 0) ^ 0.25, 2)) ^ 0.5
 end
 
 function vallkarri.get_level_blind_size_multiplier(ante)
@@ -426,7 +426,7 @@ function vallkarri.get_level_blind_size_multiplier(ante)
 end
 
 function vallkarri.get_level_tauic_boost()
-    return math.min(150 - (to_number(math.min(G.GAME.current_level, 1e100)) ^ 0.8), G.GAME.base_tau_replace)
+    return math.min(150 - (to_number(math.log(G.GAME.current_level, 2))), G.GAME.base_tau_replace)
 end
 
 function get_blind_amount(ante)
