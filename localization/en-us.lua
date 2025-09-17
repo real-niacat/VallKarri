@@ -132,6 +132,12 @@ return {
             ch_c_valk_shop_sucks = {
                 "The shop sells {C:red,E:1,s:1.2}nothing{}"
             },
+            ch_c_valk_tag_end_round = {
+                "At end of round, create a {C:attention}Charm Tag{}, {C:attention}Meteor Tag{},"
+            },
+            ch_c_valk_tag_end_round2 = {
+                "{C:attention}Buffoon Tag{}, or {C:attention}Standard Tag{}"
+            },
         }
 
     }

@@ -53,6 +53,13 @@ function CardArea:emplace(card, ...)
     emplace(self,card,...)
 end
 
+function vallkarri.challenge_calc(context)
+    if context.end_of_round and context.main_eval and G.GAME.modifiers.valk_tag_end_round then
+        local options = {"tag_standard", "tag_charm", "tag_meteor", "tag_buffoon"}
+        add_tag(Tag(options[pseudorandom("valk_endround_tag", 1, #options)]))
+    end
+end
+
 SMODS.Challenge {
     key = "c1",
     loc_txt = {
@@ -100,16 +107,10 @@ SMODS.Challenge {
     button_colour = G.C.VALK_PRESTIGIOUS,
     rules = {
         custom = {
-            {id = "valk_shop_sucks"}
+            {id = "valk_shop_sucks"},
+            {id = "valk_tag_end_round"},
+            {id = "valk_tag_end_round2"},
             -- cardareas: g.shop_jokers, g.shop_booster, g.shop_vouchers
         }
     },
-    jokers = {
-        {id = "j_riff_raff", edition = "negative"}
-    },
-    consumeables = {
-        {id = "c_judgement", edition = "negative"},
-        {id = "c_judgement", edition = "negative"},
-        {id = "c_judgement", edition = "negative"},
-    }
 }

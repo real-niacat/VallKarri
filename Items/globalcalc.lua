@@ -12,6 +12,10 @@ vallkarri.calculate = function(self, context)
         vallkarri.metacalc(context)
     end
 
+    if vallkarri.challenge_calc then
+        vallkarri.challenge_calc(context)
+    end
+
     -- HAND BUFF CODE BELOW:
     if not vallkarri.add_hand_buff then
         return
