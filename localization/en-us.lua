@@ -1,6 +1,6 @@
 return {
     descriptions = {
-        Other ={
+        Other = {
             red = {
                 name = "Red Deck",
                 text = {
@@ -114,6 +114,25 @@ return {
                 }
             }
 
+        },
+
+
+    },
+    misc = {
+        v_text = {
+            ch_c_valk_chips_expo = {
+                "{X:dark_edition,C:white}^0.85{} All Chip effects"
+            },
+            ch_c_valk_mult_expo = {
+                "{X:dark_edition,C:white}^0.7{} All Mult effects"
+            },
+            ch_c_valk_money_expo = {
+                "{X:dark_edition,C:white}^0.8{} Money Gain"
+            },
+            ch_c_valk_shop_sucks = {
+                "The shop sells {C:red,E:1,s:1.2}nothing{}"
+            },
         }
+
     }
 }

@@ -51,6 +51,7 @@ assert(SMODS.load_file("Items/enhancements.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/editions.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/globalcalc.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/stickers.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/challenges.lua", "vallkarri"))()
 
 assert(SMODS.load_file("Items/quips.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/deckskin.lua", "vallkarri"))()
