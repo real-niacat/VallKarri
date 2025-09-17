@@ -83,7 +83,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Bags",
         text = {
-            "{C:chips}+#1#{} chips",
+            "{C:chips}+#1#{} Chips",
             "Increases by {C:attention}#2#{} at end of round",
             "Scales {C:dark_edition,E:1}quadratically{}",
             credit("Scraptake")
@@ -376,7 +376,7 @@ SMODS.Joker {
         name = "Uttered Chaos",
         text = {
             "{C:mult}+#1#{} Mult for every character in the",
-            "most recent message sent in the {C:attention}Vallkarri{} discord server",
+            "most recent message sent in the {C:attention}VallKarri{} discord server",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
             "{C:inactive,s:0.6,E:1}\"#3#\"",
             credit("mailingway")
@@ -552,7 +552,7 @@ SMODS.Joker {
         text = {
             "{C:attention}+#1#{} Joker Slots",
             "{C:red,E:1}Self-destructs{} if played hand is not",
-            "most played {C:attention}Poker Hand{}",
+            "most played {C:attention}poker pand{}",
             "{C:inactive}(Currently #2#)",
             credit("mailingway"),
         }

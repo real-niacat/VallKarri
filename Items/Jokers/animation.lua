@@ -83,7 +83,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:attention}Orange{}",
         text = {
-            "Create a random {C:dark_edition}negative{} Consumable for each unscoring card played",
+            "Create a random {C:dark_edition}Negative{} {C:attention}Consumable{} for each unscoring card played",
             credit("Scraptake")
         }
     },

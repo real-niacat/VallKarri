@@ -3,8 +3,8 @@ SMODS.Joker {
     loc_txt = {
         name = "raxdflipnote",
         text = {
-            "When {C:attention}Boss Blind{} is defeated, create a {C:dark_edition,T:e_negative}Negative{} {C:rare}Rare{} Joker",
-            "{C:green}#1# in #2#{} chance to spawn an {C:purple}Eternal{} {C:common}Common{} Joker instead",
+            "When {C:attention}Boss Blind{} is defeated, create a {C:dark_edition,T:e_negative}Negative{} {C:rare}Rare Joker{}",
+            "{C:green}#1# in #2#{} chance to spawn an {C:purple}Eternal{} {C:common}Common Joker{} instead",
             "{C:inactive}(Must have room){}",
             quote("raxd"),
             credit("Scraptake")
@@ -56,7 +56,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Cascading Chain",
         text = {
-            "{X:dark_edition,C:white}X#1#{} Blind Size for every other Joker owned",
+            "{X:dark_edition,C:white}X#1#{} Blind Size for every other {C:attention}Joker{} owned",
             credit("Scraptake")
         }
     },
@@ -143,7 +143,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_gay}Wokegoe{}",
         text = {
-            "Apply {C:dark_edition}Polychrome{} to a random joker at end of round",
+            "Apply {C:dark_edition}Polychrome{} to a random Joker at end of round",
             "{C:dark_edition}Polychrome{} Jokers give an additional {X:mult,C:white}X#2#{} Mult when triggered",
             "{C:inactive}(Does not include self){}",
             credit("Poker the Poker (Edit by Lily)")

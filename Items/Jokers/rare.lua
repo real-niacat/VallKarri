@@ -4,7 +4,7 @@ SMODS.Joker {
         name = "Femtanyl",
         text = {
             "Prevent death at the cost of {C:attention}#1#{} Joker slot",
-            "Restore {C:attention}#1#{} taken joker slot when {C:attention}boss{} defeated on an odd ante",
+            "Restore {C:attention}#1#{} taken Joker slot when {C:attention}boss{} defeated on an odd ante",
             "{C:inactive}(Does not work below {C:attention}#2#{C:inactive} Joker slots)",
             quote("femtanyl"),
             credit("Scraptake")
@@ -42,7 +42,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Planetarium",
         text = {
-            "When {C:attention}hand{} played, increase {C:chips}chips{} and {C:mult}mult{} per level",
+            "When {C:attention}hand{} played, increase {C:chips}Chips{} and {C:mult}Mult{} per level",
             "of played {C:attention}poker hand{} by {C:attention}#1#{}",
             credit("Grahkon")
         }
@@ -385,7 +385,7 @@ SMODS.Joker {
     loc_txt = {
         name = "The :3",
         text = {
-            "{X:mult,C:white}X#1#{} Mult if the last message in the {C:attention}Vallkarri{}",
+            "{X:mult,C:white}X#1#{} Mult if the last message in the {C:attention}VallKarri{}",
             "discord server contains {E:1}\":3\"{}",
             "{C:inactive,s:0.8}(#2#)",
             credit("notmario"),
@@ -453,7 +453,7 @@ SMODS.Joker {
     loc_txt = {
         name = "One Trillion Beavers",
         text = {
-            "Prevent death once then {C:red,E:1}Self-Destructs{}",
+            "Prevent death once then {C:red,E:1}self destructs{}",
             "{C:attention}Doubles{} your current {C:money}money{} when death is prevented",
             credit("Nobody!"),
         }

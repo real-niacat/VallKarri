@@ -320,7 +320,7 @@ SMODS.Joker {
         name = "{C:valk_fire}Oops! All six point two eights!{}",
         text = {
             "Quadruples all {C:attention}listed{} {C:green}probabilities{}",
-            "{C:green}#1# in #2#{} chance to earn {C:dark_edition}+#3#{} joker slot and {C:money}$#4#{} when {C:attention}consumable{} used",
+            "{C:green}#1# in #2#{} chance to earn {C:dark_edition}+#3#{} Joker slot and {C:money}$#4#{} when {C:attention}consumable{} used",
             credit("Scraptake")
         }
     },

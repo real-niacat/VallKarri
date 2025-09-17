@@ -256,7 +256,7 @@ SMODS.Joker {
         text = {
             "{C:attention}+#1#{} Card Selection Limit and Hand Size.",
             "{C:planet}Planet{} cards have a {C:green}#2# in #3#{} chance",
-            "to level up your most played Poker Hand {C:attention}#4#{} Times",
+            "to level up your most played {C:attention}poker hand #4#{} Times",
             credit("Grahkon")
         }
     },
