@@ -121,11 +121,19 @@ return {
     misc = {
         v_text = {
             ch_c_valk_chips_expo = {
-                "{X:dark_edition,C:white}^0.85{} All Chip effects"
+                "{X:dark_edition,C:white}^0.6{} All Chip effects"
             },
             ch_c_valk_mult_expo = {
-                "{X:dark_edition,C:white}^0.7{} All Mult effects"
+                "{X:dark_edition,C:white}^0.6{} All Mult effects"
             },
+
+            ch_c_valk_chips_expo_positive = {
+                "{X:dark_edition,C:white}^1.15{} All Chip effects"
+            },
+            ch_c_valk_mult_expo_positive = {
+                "{X:dark_edition,C:white}^1.2{} All Mult effects"
+            },
+
             ch_c_valk_money_expo = {
                 "{X:dark_edition,C:white}^0.8{} Money Gain"
             },

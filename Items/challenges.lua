@@ -18,8 +18,8 @@ function Game:start_run(args)
     start_run(self,args)
 
     if not args.savetext then
-        G.GAME.mult_exponent = G.GAME.mult_exponent or G.GAME.modifiers.valk_mult_expo
-        G.GAME.chips_exponent = G.GAME.chips_exponent or G.GAME.modifiers.valk_chips_expo
+        G.GAME.mult_exponent = G.GAME.mult_exponent or G.GAME.modifiers.valk_mult_expo or G.GAME.modifiers.valk_mult_expo_positive
+        G.GAME.chips_exponent = G.GAME.chips_exponent or G.GAME.modifiers.valk_chips_expo or G.GAME.modifiers.valk_chips_expo_positive
         G.GAME.money_exponent = G.GAME.money_exponent or G.GAME.modifiers.valk_money_expo
     end
 end
@@ -68,7 +68,8 @@ SMODS.Challenge {
     button_colour = G.C.VALK_PRESTIGIOUS,
     rules = {
         custom = {
-            {id = "valk_chips_expo", value = 0.85}
+            {id = "valk_chips_expo", value = 0.6},
+            {id = "valk_mult_expo_positive", value = 1.2},
         }
     },
 }
@@ -81,7 +82,8 @@ SMODS.Challenge {
     button_colour = G.C.VALK_PRESTIGIOUS,
     rules = {
         custom = {
-            {id = "valk_mult_expo", value = 0.7}
+            {id = "valk_mult_expo", value = 0.6},
+            {id = "valk_chips_expo_positive", value = 1.15}
         }
     },
 }
