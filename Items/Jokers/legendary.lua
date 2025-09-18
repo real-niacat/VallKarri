@@ -120,8 +120,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Cass None",
         text = {
-            "Gains {X:mult,C:white}X#1#{} Mult",
-            "for each card under {C:attention}#2#{} in {C:attention}Scoring{} hand",
+            "Gains {X:mult,C:white}X#1#{} Mult when hand is played",
+            "Lose {X:mult,C:white}X#4#{} for each card played",
             "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
             credit("unexian")
         }
@@ -130,9 +130,10 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                card.ability.extra.gx,
+                card.ability.extra.gx*5,
                 card.ability.extra.thresh,
-                card.ability.extra.x
+                card.ability.extra.x,
+                card.ability.extra.gx
             }
         }
     end,

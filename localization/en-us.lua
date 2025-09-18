@@ -146,6 +146,18 @@ return {
             ch_c_valk_tag_end_round2 = {
                 "{C:attention}Buffoon Tag{}, or {C:attention}Standard Tag{}"
             },
+
+            ch_c_valk_start_late = {
+                "Start {C:attention}3{} antes later"
+            },
+
+            ch_c_valk_free_money = {
+                "Start with an extra {C:money}$50{}"
+            },
+
+            ch_c_valk_start_in_shop = {
+                "Begin the run in the shop"
+            },
         }
 
     }

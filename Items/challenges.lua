@@ -21,6 +21,12 @@ function Game:start_run(args)
         G.GAME.mult_exponent = G.GAME.mult_exponent or G.GAME.modifiers.valk_mult_expo or G.GAME.modifiers.valk_mult_expo_positive
         G.GAME.chips_exponent = G.GAME.chips_exponent or G.GAME.modifiers.valk_chips_expo or G.GAME.modifiers.valk_chips_expo_positive
         G.GAME.money_exponent = G.GAME.money_exponent or G.GAME.modifiers.valk_money_expo
+
+        ease_ante(G.GAME.modifiers.valk_start_late or 0)
+        ease_dollars(G.GAME.modifiers.valk_free_money or 0)
+        if G.GAME.modifiers.valk_start_in_shop then
+            G.STATE = G.STATES.SHOP
+        end
     end
 end
 
@@ -113,6 +119,21 @@ SMODS.Challenge {
             {id = "valk_tag_end_round"},
             {id = "valk_tag_end_round2"},
             -- cardareas: g.shop_jokers, g.shop_booster, g.shop_vouchers
+        }
+    },
+}
+
+SMODS.Challenge {
+    key = "c5",
+    loc_txt = {
+        name = "C5"
+    },
+    button_colour = G.C.VALK_PRESTIGIOUS,
+    rules = {
+        custom = {
+            {id = "valk_start_late", value = 3},
+            {id = "valk_free_money", value = 50},
+            {id = "valk_start_in_shop"},
         }
     },
 }
