@@ -127,6 +127,13 @@ return {
                 "{X:dark_edition,C:white}^0.6{} All Mult effects"
             },
 
+            ch_c_valk_chips_expo_weak = {
+                "{X:dark_edition,C:white}^0.85{} All Chip effects"
+            },
+            ch_c_valk_mult_expo_weak = {
+                "{X:dark_edition,C:white}^0.85{} All Mult effects"
+            },
+
             ch_c_valk_chips_expo_positive = {
                 "{X:dark_edition,C:white}^1.15{} All Chip effects"
             },
@@ -135,7 +142,7 @@ return {
             },
 
             ch_c_valk_money_expo = {
-                "{X:dark_edition,C:white}^0.8{} Money Gain"
+                "{X:dark_edition,C:white}^0.9{} Money Gain"
             },
             ch_c_valk_shop_sucks = {
                 "The shop sells {C:red,E:1,s:1.2}nothing{}"
@@ -143,8 +150,14 @@ return {
             ch_c_valk_tag_end_round = {
                 "At end of round, create a {C:attention}Charm Tag{}, {C:attention}Meteor Tag{},"
             },
+
+            
             ch_c_valk_tag_end_round2 = {
                 "{C:attention}Buffoon Tag{}, or {C:attention}Standard Tag{}"
+            },
+
+            ch_c_valk_random_tags = {
+                "At end of round, create {C:attention}two random Tags{}"
             },
 
             ch_c_valk_start_late = {
@@ -157,6 +170,14 @@ return {
 
             ch_c_valk_start_in_shop = {
                 "Begin the run in the shop"
+            },
+
+            ch_c_valk_all_previous = {
+                "Applies {C:red}All previous{} challenges (see below)"
+            },
+
+            ch_c_valk_all_previous2 = {
+                "{C:inactive}(Does not apply C5 starting Ante){}"
             },
         }
 

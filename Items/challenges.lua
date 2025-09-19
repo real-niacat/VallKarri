@@ -18,12 +18,12 @@ function Game:start_run(args)
     start_run(self,args)
 
     if not args.savetext then
-        G.GAME.mult_exponent = G.GAME.mult_exponent or G.GAME.modifiers.valk_mult_expo or G.GAME.modifiers.valk_mult_expo_positive
-        G.GAME.chips_exponent = G.GAME.chips_exponent or G.GAME.modifiers.valk_chips_expo or G.GAME.modifiers.valk_chips_expo_positive
+        G.GAME.mult_exponent = G.GAME.mult_exponent or G.GAME.modifiers.valk_mult_expo or G.GAME.modifiers.valk_mult_expo_positive or G.GAME.modifiers.valk_mult_expo_weak
+        G.GAME.chips_exponent = G.GAME.chips_exponent or G.GAME.modifiers.valk_chips_expo or G.GAME.modifiers.valk_chips_expo_positive or G.GAME.modifiers.valk_chips_expo_weak
         G.GAME.money_exponent = G.GAME.money_exponent or G.GAME.modifiers.valk_money_expo
 
-        ease_ante(G.GAME.modifiers.valk_start_late or 0)
-        ease_dollars(G.GAME.modifiers.valk_free_money or 0)
+        if G.GAME.modifiers.valk_start_late then ease_ante(G.GAME.modifiers.valk_start_late) end
+        if G.GAME.modifiers.valk_free_money then ease_dollars(G.GAME.modifiers.valk_free_money) end
         if G.GAME.modifiers.valk_start_in_shop then
             G.STATE = G.STATES.SHOP
         end
@@ -61,8 +61,15 @@ end
 
 function vallkarri.challenge_calc(context)
     if context.end_of_round and context.main_eval and G.GAME.modifiers.valk_tag_end_round then
-        local options = {"tag_standard", "tag_charm", "tag_meteor", "tag_buffoon"}
-        add_tag(Tag(options[pseudorandom("valk_endround_tag", 1, #options)]))
+        if G.GAME.modifiers.valk_tag_end_round then
+            local options = {"tag_standard", "tag_charm", "tag_meteor", "tag_buffoon"}
+            add_tag(Tag(options[pseudorandom("valk_endround_tag", 1, #options)]))
+        end
+
+        if G.GAME.modifiers.valk_random_tags then
+
+        end
+        
     end
 end
 
@@ -102,7 +109,7 @@ SMODS.Challenge {
     button_colour = G.C.VALK_PRESTIGIOUS,
     rules = {
         custom = {
-            {id = "valk_money_expo", value = 0.8}
+            {id = "valk_money_expo", value = 0.9}
         }
     },
 }
@@ -134,6 +141,27 @@ SMODS.Challenge {
             {id = "valk_start_late", value = 3},
             {id = "valk_free_money", value = 50},
             {id = "valk_start_in_shop"},
+        }
+    },
+}
+
+SMODS.Challenge {
+    key = "c6",
+    loc_txt = {
+        name = "C6"
+    },
+    button_colour = G.C.VALK_PRESTIGIOUS,
+    rules = {
+        custom = {
+            {id = "valk_all_previous"},
+            {id = "valk_all_previous2"},
+            {id = "valk_chips_expo_weak", value = 0.85},
+            {id = "valk_mult_expo_weak", value = 0.85},
+            {id = "valk_money_expo", value = 0.9},
+            {id = "valk_shop_sucks"},
+            {id = "valk_free_money", value = 50},
+            {id = "valk_start_in_shop"},
+            {id = "valk_random_tags"},
         }
     },
 }
