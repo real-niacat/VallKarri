@@ -60,14 +60,21 @@ function CardArea:emplace(card, ...)
 end
 
 function vallkarri.challenge_calc(context)
-    if context.end_of_round and context.main_eval and G.GAME.modifiers.valk_tag_end_round then
+    if context.end_of_round and context.main_eval then
         if G.GAME.modifiers.valk_tag_end_round then
             local options = {"tag_standard", "tag_charm", "tag_meteor", "tag_buffoon"}
             add_tag(Tag(options[pseudorandom("valk_endround_tag", 1, #options)]))
         end
 
-        if G.GAME.modifiers.valk_random_tags then
+        if G.GAME.blind.boss and G.GAME.modifiers.valk_tag_end_ante then
+            local options = {"tag_standard", "tag_charm", "tag_meteor", "tag_buffoon"}
+            add_tag(Tag(options[pseudorandom("valk_endround_tag", 1, #options)]))
+        end
 
+        if G.GAME.modifiers.valk_random_tags then
+            for i=1,G.GAME.modifiers.valk_random_tags do
+                add_random_tag("valk_challenge_mod")
+            end
         end
         
     end
@@ -161,7 +168,11 @@ SMODS.Challenge {
             {id = "valk_shop_sucks"},
             {id = "valk_free_money", value = 50},
             {id = "valk_start_in_shop"},
-            {id = "valk_random_tags"},
+            {id = "valk_tag_end_round"},
+            {id = "valk_tag_end_round2"},
+            {id = "valk_tag_end_ante"},
+            -- {id = "valk_random_tags", value = 3},
+
         }
     },
 }

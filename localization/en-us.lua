@@ -150,6 +150,9 @@ return {
             ch_c_valk_tag_end_round = {
                 "At end of round, create a {C:attention}Charm Tag{}, {C:attention}Meteor Tag{},"
             },
+            ch_c_valk_tag_end_ante = {
+                "Create an extra tag at end of ante"
+            },
 
             
             ch_c_valk_tag_end_round2 = {
@@ -157,7 +160,7 @@ return {
             },
 
             ch_c_valk_random_tags = {
-                "At end of round, create {C:attention}two random Tags{}"
+                "At end of round, create {C:attention}3 random Tags{}"
             },
 
             ch_c_valk_start_late = {
