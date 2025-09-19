@@ -479,6 +479,7 @@ SMODS.Joker {
             }))
             return {
                 message = localize('k_saved_ex'),
+                saved = 'ph_valk_beavers',
                 colour = G.C.RED
             }
         end

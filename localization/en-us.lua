@@ -182,6 +182,9 @@ return {
             ch_c_valk_all_previous2 = {
                 "{C:inactive}(Does not apply C5 starting Ante){}"
             },
+        },
+        dictionary = {
+            ph_valk_beavers = "The beavers ravage the blind."
         }
 
     }
