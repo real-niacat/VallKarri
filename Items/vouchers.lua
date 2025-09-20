@@ -310,3 +310,80 @@ SMODS.Voucher {
     requires = {"v_valk_exquisite_perkup"},
 }
 
+local draw = G.FUNCS.draw_from_deck_to_hand
+function G.FUNCS.draw_from_deck_to_hand(e)
+
+    local hand_space = e
+    local cards_to_draw = {}
+    if not hand_space then
+        local limit = G.hand.config.card_limit - #G.hand.cards
+        local unfixed = not G.hand.config.fixed_limit
+        local n = 0
+        while n < #G.deck.cards do
+            local card = G.deck.cards[#G.deck.cards-n]
+            local mod = unfixed and (card.ability.card_limit - card.ability.extra_slots_used) or 0
+            if limit - 1 + mod < 0 then
+            else    
+                limit = limit - 1 + mod
+                table.insert(cards_to_draw, card)
+                if limit <= 0 then break end
+            end
+            n = n + 1
+        end
+        hand_space = #cards_to_draw
+    end
+
+    hand_space = hand_space and hand_space > 0 and (hand_space + (G.GAME.bonus_draw or 0)) or hand_space
+    hand_space = hand_space + (G.GAME.force_bonus_draw or 0)
+
+    draw(hand_space)
+end
+
+
+SMODS.Voucher {
+    key = "reptilian",
+    atlas = "phold",
+    pos = {x=0, y=0},
+    loc_txt = {
+        name = "Reptilian",
+        text = {
+            "Always draw {C:attention}#1#{} more card(s) when drawing cards",
+            credit("Nobody!")
+        }
+    },
+
+    cost = 10,
+    config = {extra = {cards = 1}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = { card.ability.extra.cards }}
+    end,
+
+    redeem = function(self, card)
+        G.GAME.bonus_draw = G.GAME.bonus_draw and (G.GAME.bonus_draw + card.ability.extra.cards) or card.ability.extra.cards 
+    end,
+}
+
+SMODS.Voucher {
+    key = "reptoid",
+    atlas = "phold",
+    pos = {x=0, y=0},
+    loc_txt = {
+        name = "Reptoid",
+        text = {
+            "Always draw at least {C:attention}#1#{} cards, even if you",
+            "wouldn't have drawn cards",
+            credit("Nobody!")
+        }
+    },
+
+    cost = 10,
+    config = {extra = {cards = 2}},
+    loc_vars = function(self, info_queue, card)
+        return {vars = { card.ability.extra.cards }}
+    end,
+
+    redeem = function(self, card)
+        G.GAME.force_bonus_draw = G.GAME.force_bonus_draw and (G.GAME.force_bonus_draw + card.ability.extra.cards) or card.ability.extra.cards 
+    end,
+}
+
