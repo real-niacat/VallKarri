@@ -92,7 +92,7 @@ SMODS.Back {
     calculate = function(self, card, context)
         if context.buying_card then
             -- print("joker obtained")
-            vallkarri.add_effective_ante_mod(function(x) return x * self.config.eante end) --no data to store, no self-destruct condition
+            vallkarri.add_effective_ante_mod(self.config.eante, "*") --no data to store, no self-destruct condition
         end
     end,
 }

@@ -258,12 +258,13 @@ end
 local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
+    G.GAME.run_ante_modifiers = G.GAME.run_ante_modifiers or {}
 
     if args.savetext then
         return
     end
 
-    vallkarri.run_eante_modifiers = {}
+    G.GAME.run_ante_modifiers = {}
 
     if not G.GAME.vallkarri then
         G.GAME.vallkarri = {}
@@ -286,7 +287,7 @@ function Game:start_run(args)
         G.GAME.base_tau_replace = G.GAME.base_tau_replace / 10
         G.GAME.tau_replace = G.GAME.base_tau_replace
         G.GAME.tau_increase = 2
-        vallkarri.add_effective_ante_mod(function(x) return x ^ G.GAME.selected_back.effect.config.eeante end)
+        vallkarri.add_effective_ante_mod(G.GAME.selected_back.effect.config.eeante, "^")
     end
 
 
@@ -650,8 +651,6 @@ end
 --     self.cost = new
 -- end
 
-vallkarri.run_eante_modifiers = {}
-
 local original_gba = get_blind_amount
 
 function calc_blind_amount(ante)
@@ -672,15 +671,9 @@ end
 function get_blind_amount(ante)
     local original_ante = ante
     local to_remove = {}
-    for _, mod in pairs(vallkarri.run_eante_modifiers) do
-        ante = mod.func(ante, mod.data)
-        if mod.dest and mod.dest(mod.data) then
-            to_remove[#to_remove + 1] = mod
-        end
-    end
-
-    for _, tab in pairs(to_remove) do
-        table.remove(vallkarri.run_eante_modifiers, find_index(tab, vallkarri.run_eante_modifiers))
+    G.GAME.run_ante_modifiers = G.GAME.run_ante_modifiers or {}
+    for _, mod in pairs(G.GAME.run_ante_modifiers) do
+        ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or (mod.o == "^" and (ante ^ mod.v)) or ante
     end
 
     ante = math.floor(ante) --prevent issues with decimal antes
@@ -694,9 +687,8 @@ function vallkarri.refresh_ante_diff()
     local ante = G.GAME.round_resets.ante
     local original_ante = ante
 
-    for _, mod in pairs(vallkarri.run_eante_modifiers) do
-        ante = mod.func(ante, mod.data)
-        -- dont run destruction conditions on a visual refresh
+    for _, mod in pairs(G.GAME.run_ante_modifiers) do
+        ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or (mod.o == "^" and (ante ^ mod.v)) or ante
     end
 
     ante = math.floor(ante)
@@ -704,8 +696,8 @@ function vallkarri.refresh_ante_diff()
     G.GAME.round_resets.eante_ante_diff = (ante - original_ante)
 end
 
-function vallkarri.add_effective_ante_mod(fn, tab, destruction)
-    vallkarri.run_eante_modifiers[#vallkarri.run_eante_modifiers + 1] = { func = fn, data = tab, dest = destruction }
+function vallkarri.add_effective_ante_mod(amount, operator)
+    G.GAME.run_ante_modifiers[#G.GAME.run_ante_modifiers+1] = {v = amount, o = operator}
     vallkarri.refresh_ante_diff()
 end
 

@@ -37,7 +37,7 @@ SMODS.Consumable {
 				c:add_to_deck()
 				G.jokers:emplace(c)
 				c:juice_up(0.3, 0.5)
-                vallkarri.add_effective_ante_mod(function(x) return x^card.ability.extra.eeante end)
+                vallkarri.add_effective_ante_mod(card.ability.extra.eeante, "^")
 				return true
 			end,
 		}))

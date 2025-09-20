@@ -177,8 +177,6 @@ SMODS.Consumable {
         for i,joker in ipairs(G.jokers.cards) do
             joker:set_edition(poll_edition("valk_revitalism", 1, false, true))
         end
-        vallkarri.add_effective_ante_mod(function(x)
-            return x+card.ability.extra.ante
-        end)
+        vallkarri.add_effective_ante_mod(card.ability.extra.ante, "+")
     end,
 }

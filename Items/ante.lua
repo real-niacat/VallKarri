@@ -30,7 +30,7 @@ function ease_ante(x)
         anteChange = math.ceil(anteChange)
         display_ante_changes(anteChange)
         easeantecopy(x)
-        vallkarri.add_effective_ante_mod(function(ante) return ante+to_number(anteChange) end)
+        vallkarri.add_effective_ante_mod(to_number(anteChange), "+")
         
         return
     end
@@ -57,9 +57,7 @@ end
 function get_ante_change(theoretical_score, debug)
 
     local win_pot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
-    print(win_pot)
     local ovsc = overscore_threshhold()
-    print(ovsc)
     win_pot = (theoretical_score and to_big(theoretical_score)) or win_pot 
 
     if to_big(win_pot) < to_big(ovsc) then
