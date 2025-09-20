@@ -15,9 +15,7 @@ end
 
 local function set_last_message(code, body, headers)
     if body and code == 200 then
-        -- print(body)
-        local message_content = string.match(body, '"content"%s*:%s*"([^"]+)"')
-		vallkarri.last_message = message_content or ""
+		vallkarri.last_message = body or ""
     end
 end
 
