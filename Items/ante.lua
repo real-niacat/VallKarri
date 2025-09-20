@@ -15,7 +15,6 @@ function ease_ante(x)
 
     x = to_number(x)
 
-
     if (x < 1) or (not vallkarri.config.overscoring) then
         easeantecopy(to_number(x))
         return
@@ -27,7 +26,6 @@ function ease_ante(x)
     -- print(G.GAME.chips and G.GAME.blind.chips)
 
     if (G.GAME.chips and G.GAME.blind.chips) then
-        
         local anteChange = get_ante_change()
         anteChange = math.ceil(anteChange)
         display_ante_changes(anteChange)
@@ -36,7 +34,6 @@ function ease_ante(x)
         
         return
     end
-    
 
     easeantecopy(x)
 end
@@ -60,9 +57,12 @@ end
 function get_ante_change(theoretical_score, debug)
 
     local win_pot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
-    win_pot = to_big(theoretical_score) or win_pot 
+    print(win_pot)
+    local ovsc = overscore_threshhold()
+    print(ovsc)
+    win_pot = (theoretical_score and to_big(theoretical_score)) or win_pot 
 
-    if to_big(win_pot) < to_big(overscore_threshhold()) then
+    if to_big(win_pot) < to_big(ovsc) then
         return 0
     end
 
