@@ -447,15 +447,15 @@ SMODS.Joker {
 SMODS.Joker {
     key = "one_trillion_beavers",
     rarity = 3,
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "atlas2",
+    pos = { x = 4, y = 2 },
     cost = 8,
     loc_txt = {
         name = "One Trillion Beavers",
         text = {
             "Prevent death once then {C:red,E:1}self destructs{}",
             "{C:attention}Doubles{} your current {C:money}money{} when death is prevented",
-            credit("Nobody!"),
+            credit("mailingway"),
         }
     },
     blueprint_compat = true,

@@ -342,13 +342,13 @@ end
 
 SMODS.Voucher {
     key = "reptilian",
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "atlas2",
+    pos = {x=5, y=2},
     loc_txt = {
         name = "Reptilian",
         text = {
             "Always draw {C:attention}#1#{} more card(s) when drawing cards",
-            credit("Nobody!")
+            credit("mailingway")
         }
     },
 
@@ -365,14 +365,14 @@ SMODS.Voucher {
 
 SMODS.Voucher {
     key = "reptoid",
-    atlas = "phold",
-    pos = {x=0, y=0},
+    atlas = "atlas2",
+    pos = {x=6, y=2},
     loc_txt = {
         name = "Reptoid",
         text = {
             "Always draw at least {C:attention}#1#{} cards, even if you",
             "wouldn't have drawn cards",
-            credit("Nobody!")
+            credit("mailingway")
         }
     },
 
