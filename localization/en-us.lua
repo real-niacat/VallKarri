@@ -154,6 +154,9 @@ return {
                 "Create an extra tag at end of ante"
             },
 
+            ch_c_valk_shop_sucks_booster = {
+                "The shop {C:red,E:1}does not{} sell Booster Packs"
+            },
             
             ch_c_valk_tag_end_round2 = {
                 "{C:attention}Buffoon Tag{}, or {C:attention}Standard Tag{}"
