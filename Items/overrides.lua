@@ -687,6 +687,7 @@ function vallkarri.refresh_ante_diff()
     local ante = G.GAME.round_resets.ante
     local original_ante = ante
 
+    G.GAME.run_ante_modifiers = G.GAME.run_ante_modifiers or {}
     for _, mod in pairs(G.GAME.run_ante_modifiers) do
         ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or (mod.o == "^" and (ante ^ mod.v)) or ante
     end
