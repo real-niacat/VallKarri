@@ -258,7 +258,8 @@ local compress_events = false
 local active_xp_queue = 0
 local xp_queued = 0
 function vallkarri.mod_xp(mod, relevant_card)
-    if (not Talisman or (Talisman and not Talisman.config_file.disable_anims)) and active_xp_queue < 128 then --prevent excessive retriggers or whatever from causing problems
+    local thresh = 128
+    if (not Talisman or (Talisman and not Talisman.config_file.disable_anims)) and active_xp_queue < thresh then --prevent excessive retriggers or whatever from causing problems
         active_xp_queue = active_xp_queue + 1
         -- print("+1 event, now " .. active_xp_queue)
         G.E_MANAGER:add_event(Event({
@@ -277,7 +278,7 @@ function vallkarri.mod_xp(mod, relevant_card)
                 return true
             end,
 
-        }), 'other')
+        }), active_xp_queue < thresh / 2 and nil or 'other')
     else
         -- emergency optimization
         -- print("!!QUEUEING SLOWLY")

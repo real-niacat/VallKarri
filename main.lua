@@ -46,7 +46,6 @@ function vallkarri.add_splash_text(text_or_table)
     end
 end
 
-
 SMODS.Atlas {
     key = "main",
     path = "assets.png",
@@ -107,6 +106,15 @@ SMODS.Scoring_Parameter:take_ownership("chips", {
         hand[self.key] = math.max(v, 0)
     end
 })
+
+SMODS.current_mod.extra_tabs = function()
+    return {
+        {
+            label = "Credits",
+            tab_definition_function = vallkarri.credits_ui_def
+        },
+    }
+end
 
 
 -- for lily(me)

@@ -8,6 +8,9 @@ assert(SMODS.load_file("Items/badges.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/hand_buffs.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/operator_stuff.lua", "vallkarri"))()
 
+assert(SMODS.load_file("Items/configui.lua", "vallkarri"))()
+assert(SMODS.load_file("Items/credits_ui.lua", "vallkarri"))()
+
 assert(SMODS.load_file("Items/ante.lua", "vallkarri"))()
 
 if vallkarri.config.metaprogression then
@@ -46,7 +49,6 @@ assert(SMODS.load_file("Items/blinds.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/tags.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/decks.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/vouchers.lua", "vallkarri"))()
-assert(SMODS.load_file("Items/configui.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/enhancements.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/editions.lua", "vallkarri"))()
 assert(SMODS.load_file("Items/globalcalc.lua", "vallkarri"))()
