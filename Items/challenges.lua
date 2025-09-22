@@ -34,7 +34,7 @@ end
 local moneyhook = ease_dollars
 
 function ease_dollars(amount, instant)
-    amount = amount ^ (G.GAME.money_exponent or 1)
+    amount = (math.abs(amount) ^ (G.GAME.money_exponent or 1)) * (amount / math.abs(amount))
     moneyhook(amount, instant)
 end
 
