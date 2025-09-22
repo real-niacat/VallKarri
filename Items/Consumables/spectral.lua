@@ -123,7 +123,7 @@ SMODS.Consumable {
 
             local copy = copy_card(c)
             copy:set_edition("e_negative", true)
-            copy.ability.perishable = true
+            copy:add_sticker("perishable", true)
             G.jokers:emplace(copy)
 
         end
