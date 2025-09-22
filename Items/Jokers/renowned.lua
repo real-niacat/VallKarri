@@ -422,3 +422,48 @@ SMODS.Joker {
     end,
 
 }
+
+SMODS.Joker {
+    key = "callie",
+    loc_txt = {
+        name = "Callie",
+        text = {
+            "{X:dark_edition,C:white}^#1#{} Mult for each scoring {C:attention}Wild Card{}",
+            credit("mailingway")
+        }
+    },
+    config = { extra = { per = 0.05 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.per } }
+    end,
+    atlas = "main",
+    pos = { x = 11, y = 4 },
+    cost = 6,
+    rarity = "valk_renowned",
+    pools = { ["Kitties"] = true },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            local amount = 0
+            for i, pcard in ipairs(context.scoring_hand) do
+                if SMODS.has_enhancement(pcard, "m_wild") then
+                    amount = amount + 1
+                end
+            end
+            return { emult = 1 + (card.ability.extra.per * amount) }
+        end
+    end,
+    blueprint_compat = true,
+    in_pool = function()
+        local wild = 0
+        local total = 0
+        for _,card in pairs(G.playing_cards) do
+            if SMODS.has_enhancement(card, "m_wild") then 
+                wild = wild + 1
+            end
+            total = total + 1
+        end
+
+        return (wild / total) > 0.1
+        --need at least 10% of deck to be wild cards 
+    end
+}
