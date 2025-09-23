@@ -727,3 +727,44 @@ function vallkarri.hypercap(n, cap)
 
     return math.max(n, math.min(initial_n, initial_cap))
 end
+
+function vallkarri.index(card)
+    local area = card.area
+
+    if not area then
+        return false
+    end
+    for i,c in ipairs(area.cards) do 
+        if c == card then
+            return i
+        end
+    end
+    return false
+end
+
+function vallkarri.adjacent_aesthetijoker(card)
+    local left = card.area.cards[vallkarri.index(card)-1]
+    local right = card.area.cards[vallkarri.index(card)+1]
+    local ret_value = nil
+    if left and Cryptid.safe_get(left.config.center, "pools", "aesthetijoker") then
+        ret_value = left
+    end
+
+    if right and Cryptid.safe_get(right.config.center, "pools", "aesthetijoker") then
+        ret_value = right
+    end
+
+    return ret_value
+
+end
+
+function Card:apply_aesthetijoker_edition()
+    local aesthetijoker = vallkarri.adjacent_aesthetijoker(self)
+    if aesthetijoker then
+        local ed = aesthetijoker.ability.extra.edition
+        local reset = ed == (self.edition and self.edition.key)
+        self:set_edition(ed, reset, reset)
+    else
+        self:set_edition(nil, self.edition == nil, self.edition == nil)
+    end
+end

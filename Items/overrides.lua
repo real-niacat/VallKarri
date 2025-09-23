@@ -742,3 +742,22 @@ function Game:draw()
         love.graphics.rectangle("fill", 0, love.graphics.getHeight() - width, love.graphics.getWidth(), width)
     end
 end
+
+local olddrag = Card.stop_drag
+function Card:stop_drag()
+    olddrag(self)
+
+    SMODS.calculate_context({valk_rearrange = true, card = self})
+end
+
+
+local olddebuff = Card.set_debuff
+function Card:set_debuff(...)
+    
+    if next(SMODS.find_card("j_valk_frutiger")) and self.edition and self.edition.key == "e_foil" then
+        olddebuff(self, false)
+        quick_card_speak(self, localize("k_nope_ex"))
+        return
+    end
+    olddebuff(self,...)
+end
