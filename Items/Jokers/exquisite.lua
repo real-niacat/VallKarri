@@ -229,7 +229,14 @@ SMODS.Joker {
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.before then
-            ease_dollars(-G.GAME.dollars)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    ease_dollars(-G.GAME.dollars)
+                    G.GAME.dollars = 0
+                    return true
+                end
+            }))
+            
         end
     end,
 
