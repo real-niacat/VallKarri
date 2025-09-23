@@ -725,3 +725,20 @@ function SMODS.injectItems(...)
 
     end
 end
+
+local old_draw = Game.draw
+function Game:draw()
+    old_draw(self)
+
+    local found = next(SMODS.find_card("j_valk_borderline_joker"))
+    if found then
+        local scott_blue = HEX("3b56ff")
+        local width = SMODS.find_card("j_valk_borderline_joker")[1].ability.extra.border_width
+
+        love.graphics.setColor(scott_blue)
+        love.graphics.rectangle("fill", 0, 0, width, love.graphics.getHeight())
+        love.graphics.rectangle("fill", love.graphics.getWidth() - width, 0, width, love.graphics.getHeight())
+        love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), width)
+        love.graphics.rectangle("fill", 0, love.graphics.getHeight() - width, love.graphics.getWidth(), width)
+    end
+end

@@ -64,4 +64,4 @@ function vallkarri.credits_ui_def()
     return ui
 end
 
-return vallkarri.credits_ui_def()
+-- return vallkarri.credits_ui_def()

@@ -486,3 +486,41 @@ SMODS.Joker {
     end,
 
 }
+
+SMODS.Joker {
+    key = "borderline_joker",
+    rarity = 3,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 8,
+    loc_txt = {
+        name = "Borderline Joker",
+        text = {
+            "{X:chips,C:white}X#1#{} Chips",
+            "Increase by {X:chips,C:white}X#2#{} at end of round",
+            "Adds a {C:chips}blue border{} which gets {C:attention}#3# pixel(s){}",
+            "thicker at end of round",
+            "{C:inactive}(Currently {C:attention}#4#{C:inactive} Pixels wide)",
+            credit("Nobody!"),
+        }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.xchips, card.ability.extra.gain, card.ability.extra.border_width_gain, card.ability.extra.border_width} }
+    end,
+    config = { extra = { xchips = 1, gain = 0.2, border_width = 2, border_width_gain = 2 } },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                xchips = card.ability.extra.xchips
+            }
+        end
+
+        if context.end_of_round and context.main_eval then
+            card.ability.extra.xchips = card.ability.extra.xchips + card.ability.extra.gain
+            card.ability.extra.border_width = card.ability.extra.border_width + 1
+            quick_card_speak(card, localize("k_upgrade_ex"))
+            --i'll use scale_card when it's actually documented <3
+        end
+    end
+
+}
