@@ -553,7 +553,6 @@ SMODS.Joker {
                     G.HUD_blind:recalculate()
                     G.hand_text_area.blind_chips:juice_up()
                     context.other_card:juice_up()
-                    quick_card_speak(context.other_card, "X" .. card.ability.extra.blind_size)
                     return true
                 end
             }))

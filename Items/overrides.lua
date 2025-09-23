@@ -752,12 +752,12 @@ end
 
 
 local olddebuff = Card.set_debuff
-function Card:set_debuff(...)
+function Card:set_debuff(debuff)
     
-    if next(SMODS.find_card("j_valk_frutiger")) and self.edition and self.edition.key == "e_foil" then
+    if debuff and next(SMODS.find_card("j_valk_frutiger")) and self.edition and self.edition.key == "e_foil" then
         olddebuff(self, false)
         quick_card_speak(self, localize("k_nope_ex"))
         return
     end
-    olddebuff(self,...)
+    olddebuff(self,debuff)
 end

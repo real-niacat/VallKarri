@@ -336,27 +336,27 @@ SMODS.Joker {
     end,
 }
 
--- SMODS.Joker {
---     key = "phylactequila",
---     loc_txt = {
---         name = "Phylactequila",
---         text = {
---             "",
---             credit("Pangaea")
---         }
---     },
---     config = { extra = {  } },
---     loc_vars = function(self, info_queue, card)
---         return {vars = {} }
---     end,
---     rarity = "valk_exquisite",
---     atlas = "main",
---     pos = {x = 7, y = 12},
---     soul_pos = {x = 7, y = 13, extra = {x = 7, y = 14}},
---     cost = 50,
+SMODS.Joker {
+    key = "phylactequila",
+    loc_txt = {
+        name = "Phylactequila",
+        text = {
+            "",
+            credit("Pangaea")
+        }
+    },
+    config = { extra = {  } },
+    loc_vars = function(self, info_queue, card)
+        return {vars = {} }
+    end,
+    rarity = "valk_exquisite",
+    atlas = "main",
+    pos = {x = 7, y = 12},
+    soul_pos = {x = 7, y = 13, extra = {x = 7, y = 14}},
+    cost = 50,
 
---     calculate = function(self, card, context)
+    calculate = function(self, card, context)
         
---     end,
+    end,
     
--- }
+}

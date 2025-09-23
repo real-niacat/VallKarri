@@ -385,5 +385,6 @@ SMODS.Voucher {
     redeem = function(self, card)
         G.GAME.force_bonus_draw = G.GAME.force_bonus_draw and (G.GAME.force_bonus_draw + card.ability.extra.cards) or card.ability.extra.cards 
     end,
+    requires = {"v_valk_reptillian"}
 }
 
