@@ -43,7 +43,7 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     float sintime = (1.+(sin(cosmic.y+(uv.y*half_pi))+1.)/2.) * 1.5;
     
 
-    tex.r = tex.r * (sintime * 0.45);
+    tex.r = tex.r * (sintime * 0.3);
     tex.g = tex.g * (1.0 / (sintime * 0.75));
     tex.b = tex.b * (sintime * 0.80);
 

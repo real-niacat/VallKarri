@@ -39,11 +39,9 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
 
     // For all vectors (vec2, vec3, vec4), .rgb is equivalent of .xyz, so uv.y == uv.g
     // .a is last parameter for vec4 (usually the alpha channel - transparency)
-    float n = 1.5;
-    tex.r = floor((tex.r/n)+0.5)*n;
-    tex.g = floor((tex.g/n)+0.5)*n;
-    tex.b = floor((tex.b/n)+0.5)*n;
-    tex *= 1. + (0.001 * sin(lowqual.y));
+    tex *= 1. + (0.*lowqual.y); // required to compile because i have to use lowqual somwhere
+    // uv is 0-1 on the sprite's position. good to know
+
 
     // required
     return dissolve_mask(tex*colour, texture_coords, uv);
