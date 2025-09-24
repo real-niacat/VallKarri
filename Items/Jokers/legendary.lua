@@ -407,13 +407,6 @@ SMODS.Joker {
     pools = { ["aesthetijoker"] = true },
 
     calculate = function(self, card, context)
-        
-        
-        if context.valk_rearrange and context.card == card then
-            for _, joker in pairs(G.jokers.cards) do
-                joker:apply_aesthetijoker_edition()
-            end
-        end
 
         if context.post_trigger and context.other_card.edition and context.other_card.edition.key == card.ability.extra.edition then
             return {
@@ -450,11 +443,6 @@ SMODS.Joker {
     pools = { ["aesthetijoker"] = true },
 
     calculate = function(self, card, context)
-        if context.valk_rearrange and context.card == card then
-            for _, joker in pairs(G.jokers.cards) do
-                joker:apply_aesthetijoker_edition()
-            end
-        end
 
         if context.post_trigger and context.other_card.edition and context.other_card.edition.key == card.ability.extra.edition then
             return {
@@ -490,11 +478,6 @@ SMODS.Joker {
     pools = { ["aesthetijoker"] = true },
 
     calculate = function(self, card, context)
-        if context.valk_rearrange and context.card == card then
-            for _, joker in pairs(G.jokers.cards) do
-                joker:apply_aesthetijoker_edition()
-            end
-        end
 
         if context.post_trigger and context.other_card.edition and context.other_card.edition.key == card.ability.extra.edition then
             return {
@@ -538,11 +521,6 @@ SMODS.Joker {
     pools = { ["aesthetijoker"] = true },
 
     calculate = function(self, card, context)
-        if context.valk_rearrange and context.card == card then
-            for _, joker in pairs(G.jokers.cards) do
-                joker:apply_aesthetijoker_edition()
-            end
-        end
 
         if context.post_trigger and context.other_card.edition and context.other_card.edition.key == card.ability.extra.edition then
             G.E_MANAGER:add_event(Event({

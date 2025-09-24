@@ -74,16 +74,16 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
                 G.FUNCS["openModUI_" .. self.config.center.mod.id]()
             end
             G.title_top:emplace(newcard)
-            newcard:start_materialize({G.C.BLUE}, false, G.SETTINGS.GAMESPEED * 0.25)
+            newcard:start_materialize({ G.C.BLUE }, false, G.SETTINGS.GAMESPEED * 0.25)
             newcard.T.w = newcard.T.w * 1.1 * 1.2
             newcard.T.h = newcard.T.h * 1.1 * 1.2
             newcard.no_ui = true
             newcard:set_sprites(newcard.config.center)
 
             if #G.title_top.cards == 2 then
-                for _,card in pairs(G.title_top.cards) do
-                    if card.base.id then 
-                        card:start_dissolve({G.C.BLUE}, false, G.SETTINGS.GAMESPEED * 0.25)
+                for _, card in pairs(G.title_top.cards) do
+                    if card.base.id then
+                        card:start_dissolve({ G.C.BLUE }, false, G.SETTINGS.GAMESPEED * 0.25)
                     end
                 end
             end
@@ -249,7 +249,7 @@ function Game:update(dt)
     if G.GAME.round_resets and G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
         local operator = G.GAME.round_resets.eante_ante_diff > 0 and "+" or ""
         G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) ..
-        "(" .. operator .. number_format(G.GAME.round_resets.eante_ante_diff) .. ")"
+            "(" .. operator .. number_format(G.GAME.round_resets.eante_ante_diff) .. ")"
     end
 
     fix_decimal_hand_levels()
@@ -673,7 +673,8 @@ function get_blind_amount(ante)
     local to_remove = {}
     G.GAME.run_ante_modifiers = G.GAME.run_ante_modifiers or {}
     for _, mod in pairs(G.GAME.run_ante_modifiers) do
-        ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or (mod.o == "^" and (ante ^ mod.v)) or ante
+        ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or
+        (mod.o == "^" and (ante ^ mod.v)) or ante
     end
 
     ante = math.floor(ante) --prevent issues with decimal antes
@@ -689,7 +690,8 @@ function vallkarri.refresh_ante_diff()
 
     G.GAME.run_ante_modifiers = G.GAME.run_ante_modifiers or {}
     for _, mod in pairs(G.GAME.run_ante_modifiers) do
-        ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or (mod.o == "^" and (ante ^ mod.v)) or ante
+        ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or
+        (mod.o == "^" and (ante ^ mod.v)) or ante
     end
 
     ante = math.floor(ante)
@@ -698,7 +700,7 @@ function vallkarri.refresh_ante_diff()
 end
 
 function vallkarri.add_effective_ante_mod(amount, operator)
-    G.GAME.run_ante_modifiers[#G.GAME.run_ante_modifiers+1] = {v = amount, o = operator}
+    G.GAME.run_ante_modifiers[#G.GAME.run_ante_modifiers + 1] = { v = amount, o = operator }
     vallkarri.refresh_ante_diff()
 end
 
@@ -707,22 +709,18 @@ local smodsinject = SMODS.injectItems
 function SMODS.injectItems(...)
     smodsinject(...)
 
-    for key,card in pairs(G.P_CENTERS) do
-
+    for key, card in pairs(G.P_CENTERS) do
         if card.bases then
             G.P_CENTERS[key].is_tau = true
-            for i,base in ipairs(card.bases) do
+            for i, base in ipairs(card.bases) do
                 -- print(base)
                 G.P_CENTERS[base].tau = key
             end
-            
-            
         end
 
         if (card.bases or card.is_tau) and (not vallkarri.config.tau_collection) then
             G.P_CENTERS[key].no_collection = true
         end
-
     end
 end
 
@@ -747,17 +745,33 @@ local olddrag = Card.stop_drag
 function Card:stop_drag()
     olddrag(self)
 
-    SMODS.calculate_context({valk_rearrange = true, card = self})
-end
+    -- SMODS.calculate_context({valk_rearrange = true, card = self})
+    if not G.jokers then
+        return
+    end
 
+    local has_aesthetijoker = false
+
+    for _, joker in pairs(G.jokers.cards) do
+        has_aesthetijoker = has_aesthetijoker or Cryptid.safe_get(joker.config.center, "pools", "aesthetijoker")
+    end
+
+    if not has_aesthetijoker then
+        return
+    end
+
+
+    for _, joker in pairs(G.jokers.cards) do
+        joker:apply_aesthetijoker_edition()
+    end
+end
 
 local olddebuff = Card.set_debuff
 function Card:set_debuff(debuff)
-    
     if debuff and next(SMODS.find_card("j_valk_frutiger")) and self.edition and self.edition.key == "e_foil" then
         olddebuff(self, false)
         quick_card_speak(self, localize("k_nope_ex"))
         return
     end
-    olddebuff(self,debuff)
+    olddebuff(self, debuff)
 end
