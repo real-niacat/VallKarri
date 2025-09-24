@@ -341,13 +341,16 @@ SMODS.Joker {
     loc_txt = {
         name = "Phylactequila",
         text = {
-            "",
+            "Create a {C:spectral}Spectral{} card when any other {C:attention}Consumable{} is used",
+            "Fill empty {C:attention}Consumable{} slots with random {C:planet}Planet{} cards if",
+            "played {C:attention}poker hand{} is a {C:attention}#1#{}",
+            "{C:inactive}(Poker Hand changes at end of round)",
             credit("Pangaea")
         }
     },
-    config = { extra = {  } },
+    config = { extra = { hand = "Four of a Kind" } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {} }
+        return {vars = {localize(card.ability.extra.hand, "poker_hands")} }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
@@ -356,7 +359,21 @@ SMODS.Joker {
     cost = 50,
 
     calculate = function(self, card, context)
-        
+        if context.before and context.scoring_name == card.ability.extra.hand then
+            for i=1,(G.consumeables.config.card_limit - G.consumeables.config.card_count) do
+                local c = SMODS.add_card({set = "Planet", area = G.consumeables})
+                quick_card_speak(card, localize("k_plus_planet"))
+            end
+        end
+
+        if context.using_consumeable and context.consumeable.config.center.set ~= "Spectral" then
+            SMODS.add_card({set = "Spectral", area = G.consumeables})
+            quick_card_speak(card, localize("k_plus_spectral"))
+        end
+
+        if context.end_of_round and context.main_eval then
+            card.ability.extra.hand = pseudorandom_element(G.handlist, "valk_phylactequila")
+        end
     end,
     
 }
