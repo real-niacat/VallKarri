@@ -108,6 +108,7 @@ SMODS.Scoring_Parameter:take_ownership("chips", {
     end
 })
 
+
 SMODS.current_mod.extra_tabs = function()
     return {
         {
