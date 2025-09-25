@@ -224,12 +224,12 @@ SMODS.Joker {
     loc_txt = {
         name = "Sin E.P. Scarlett",
         text = {
-            "When hand played, increase the values on a random ",
-            "{C:attention}Joker{} between {C:attention}X#1#{} and {C:attention}X#2#{}",
+            "Cards permanently gain between",
+            "{X:chips,C:white}X#1#{} and {X:chips,C:white}X#2#{} Chips when scored",
             credit("mailingway")
         }
     },
-    config = { extra = { min = 1.1, max = 6.9 } },
+    config = { extra = { min = 0.69, max = 4.2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.min, card.ability.extra.max } }
     end,
@@ -241,17 +241,10 @@ SMODS.Joker {
     blueprint_compat = false,
     immutable = true,
     calculate = function(self, card, context)
-        if context.before and not context.blueprint then
-            local chosen = G.jokers.cards[pseudorandom("valk_sinep", 1, #G.jokers.cards)]
-            if not Card.no(chosen, "immutable", true) then
-                Cryptid.with_deck_effects(chosen, function(cards)
-                    Cryptid.manipulate(chosen,
-                        {
-                            value = math.map(pseudorandom("valk_sinep"), 0, 1, card.ability.extra.min,
-                                card.ability.extra.max)
-                        })
-                end)
-            end
+        if context.individual and context.cardarea == G.play then
+            local num = card.ability.extra.min + (pseudorandom("valk_sinep") * (card.ability.extra.max - card.ability.extra.min))
+            context.other_card.ability.perma_x_chips = math.max(1+num, context.other_card.ability.perma_x_chips+num)
+            quick_card_speak(context.other_card, localize("k_upgrade_ex"))
         end
     end,
 }
