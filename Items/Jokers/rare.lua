@@ -388,7 +388,7 @@ SMODS.Joker {
             "{X:mult,C:white}X#1#{} Mult if the last message in the {C:attention}VallKarri{}",
             "discord server contains {E:1}\":3\"{}",
             "{C:inactive,s:0.8}(#2#)",
-            "{V:1,S:0.7}https://discord.gg/5d3HWu88yn{}",
+            "{V:1,S:0.5}https://discord.gg/5d3HWu88yn{}",
             credit("notmario"),
         }
     },

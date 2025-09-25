@@ -379,7 +379,7 @@ SMODS.Joker {
             "most recent message sent in the {C:attention}VallKarri{} discord server",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
             "{C:inactive,s:0.6,E:1}\"#3#\"",
-            "{V:1,S:0.7}https://discord.gg/5d3HWu88yn{}",
+            "{V:1,S:0.5}https://discord.gg/5d3HWu88yn{}",
             credit("mailingway")
         }
     },

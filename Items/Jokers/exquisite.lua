@@ -178,7 +178,7 @@ SMODS.Joker {
             "{X:dark_edition,C:white}^#1#{} Chips per {C:blue}blue team{} member in the {C:attention}VallKarri{} discord server",
             "{X:dark_edition,C:white}^#2#{} Mult per {C:red}red team{} member in the {C:attention}VallKarri{} discord server",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Chips and {X:dark_edition,C:white}^#4#{C:inactive} Mult)",
-            "{V:1,S:0.7}https://discord.gg/5d3HWu88yn{}",
+            "{V:1,S:0.5}https://discord.gg/5d3HWu88yn{}",
             credit("Scraptake")
         }
     },
