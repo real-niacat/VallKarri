@@ -401,8 +401,8 @@ SMODS.Joker {
     end,
     rarity = 4,
     atlas = "atlas2",
-    pos = { x = 5, y = 0 },
-    soul_pos = { x = 5, y = 1 },
+    pos = { x = 7, y = 0 },
+    soul_pos = { x = 7, y = 1 },
     cost = 20,
     pools = { ["aesthetijoker"] = true },
 
@@ -437,8 +437,8 @@ SMODS.Joker {
     end,
     rarity = 4,
     atlas = "atlas2",
-    pos = { x = 6, y = 0 },
-    soul_pos = { x = 6, y = 1 },
+    pos = { x = 8, y = 0 },
+    soul_pos = { x = 8, y = 1 },
     cost = 20,
     pools = { ["aesthetijoker"] = true },
 
@@ -472,8 +472,8 @@ SMODS.Joker {
     end,
     rarity = 4,
     atlas = "atlas2",
-    pos = { x = 4, y = 0 },
-    soul_pos = { x = 4, y = 1 },
+    pos = { x = 9, y = 0 },
+    soul_pos = { x = 9, y = 1 },
     cost = 20,
     pools = { ["aesthetijoker"] = true },
 
@@ -515,8 +515,8 @@ SMODS.Joker {
     end,
     rarity = 4,
     atlas = "atlas2",
-    pos = { x = 7, y = 0 },
-    soul_pos = { x = 7, y = 1 },
+    pos = { x = 10, y = 0 },
+    soul_pos = { x = 10, y = 1 },
     cost = 20,
     pools = { ["aesthetijoker"] = true },
 
