@@ -243,7 +243,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             local num = card.ability.extra.min + (pseudorandom("valk_sinep") * (card.ability.extra.max - card.ability.extra.min))
-            context.other_card.ability.perma_x_chips = math.max(1+num, context.other_card.ability.perma_x_chips+num)
+            context.other_card.ability.perma_x_chips = context.other_card.ability.perma_x_chips+num
             quick_card_speak(context.other_card, localize("k_upgrade_ex"))
         end
     end,
