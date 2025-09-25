@@ -379,12 +379,15 @@ SMODS.Joker {
             "most recent message sent in the {C:attention}VallKarri{} discord server",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
             "{C:inactive,s:0.6,E:1}\"#3#\"",
+            "{V:1,S:0.7}https://discord.gg/5d3HWu88yn{}",
             credit("mailingway")
         }
     },
     config = { extra = { per = 1 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.per, #vallkarri.last_message * card.ability.extra.per, vallkarri.last_message } }
+        return { vars = { card.ability.extra.per, #vallkarri.last_message * card.ability.extra.per, vallkarri.last_message, colours = {
+                HEX("7289DA")
+            } } }
     end,
     atlas = "main",
     pos = { x = 12, y = 5 },

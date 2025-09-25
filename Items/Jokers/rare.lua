@@ -388,12 +388,15 @@ SMODS.Joker {
             "{X:mult,C:white}X#1#{} Mult if the last message in the {C:attention}VallKarri{}",
             "discord server contains {E:1}\":3\"{}",
             "{C:inactive,s:0.8}(#2#)",
+            "{V:1,S:0.7}https://discord.gg/5d3HWu88yn{}",
             credit("notmario"),
         }
     },
     loc_vars = function(self, info_queue, card)
         local active = string.find(vallkarri.last_message, ":3") and "Active!" or "Inactive"
-        return { vars = { card.ability.extra.mult, active } }
+        return { vars = { card.ability.extra.mult, active, colours = {
+                HEX("7289DA")
+            } } }
     end,
     demicoloncompat = true,
     config = { extra = { mult = 5 } },

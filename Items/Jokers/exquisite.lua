@@ -178,13 +178,22 @@ SMODS.Joker {
             "{X:dark_edition,C:white}^#1#{} Chips per {C:blue}blue team{} member in the {C:attention}VallKarri{} discord server",
             "{X:dark_edition,C:white}^#2#{} Mult per {C:red}red team{} member in the {C:attention}VallKarri{} discord server",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Chips and {X:dark_edition,C:white}^#4#{C:inactive} Mult)",
+            "{V:1,S:0.7}https://discord.gg/5d3HWu88yn{}",
             credit("Scraptake")
         }
     },
     config = { extra = { perblue = 0.02, perred = 0.02 } },
     loc_vars = function(self, info_queue, card)
         
-        return {vars = { card.ability.extra.perblue, card.ability.extra.perred, 1 + (card.ability.extra.perblue * vallkarri.librat_vals.blue), 1 + (card.ability.extra.perred * vallkarri.librat_vals.red)} }
+        return {vars = {
+            card.ability.extra.perblue,
+            card.ability.extra.perred,
+            1 + (card.ability.extra.perblue * vallkarri.librat_vals.blue),
+            1 + (card.ability.extra.perred * vallkarri.librat_vals.red),
+            colours = {
+                HEX("7289DA")
+            }
+        }}
     end,
     rarity = "valk_exquisite",
     atlas = "main",
