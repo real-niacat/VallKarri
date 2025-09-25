@@ -91,7 +91,8 @@ SMODS.Joker {
             }))
             quick_card_speak(context.other_joker, "X" .. card.ability.extra.mul)
         end
-    end
+    end,
+    blueprint_compat = true,
 }
 
 SMODS.Joker {
