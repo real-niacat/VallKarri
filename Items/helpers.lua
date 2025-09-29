@@ -91,8 +91,14 @@ function basic_text_announce(txt, duration, size, col, snd, sndpitch, sndvol)
         func = (function()
             if snd then play_sound(snd, sndpitch, sndvol) end
             attention_text({
-                scale = size or 1.4, text = txt, hold = duration or 2, colour = col or G.C.WHITE, align = 'cm', offset = { x = 0, y = -2.7 }, major =
-            G.play
+                scale = size or 1.4,
+                text = txt,
+                hold = duration or 2,
+                colour = col or G.C.WHITE,
+                align = 'cm',
+                offset = { x = 0, y = -2.7 },
+                major =
+                    G.play
             })
             return true
         end)
@@ -101,9 +107,20 @@ end
 
 function vallkarri.quick_hand_text(name, chip, mul, lv, notif, snd, vol, pit, de)
     update_hand_text(
-    { sound = type(snd) == 'string' and snd or type(snd) == 'nil' and 'button', volume = vol or 0.7, pitch = pit or 0.8, delay =
-    de or 0.3 }, { handname = name or '????', chips = chip or '?', mult = mul or '?', level = lv or '?', StatusText =
-    notif })
+        {
+            sound = type(snd) == 'string' and snd or type(snd) == 'nil' and 'button',
+            volume = vol or 0.7,
+            pitch = pit or 0.8,
+            delay =
+                de or 0.3
+        }, {
+            handname = name or '????',
+            chips = chip or '?',
+            mult = mul or '?',
+            level = lv or '?',
+            StatusText =
+                notif
+        })
 end
 
 function vallkarri.simple_hand_text(hand, notify)
@@ -407,7 +424,7 @@ end
 
 function qdvi(val, growth, arrows)
     for i, card in ipairs(G.jokers.cards) do
-        Cryptid.manipulate(card, { value = val } )
+        Cryptid.manipulate(card, { value = val })
     end
 end
 
@@ -595,7 +612,7 @@ end
 
 function kitty_count(base)
     local c = base or 0
-    for i,joker in ipairs((G.jokers and G.jokers.cards) or {}) do
+    for i, joker in ipairs((G.jokers and G.jokers.cards) or {}) do
         if joker:is_kitty() then
             c = c + 1
         end
@@ -605,57 +622,53 @@ end
 
 function vallkarri.count_kitty_tags()
     local c = 0
-    for i,tag in ipairs(G.GAME.tags or {}) do
+    for i, tag in ipairs(G.GAME.tags or {}) do
         if tag.key == "tag_valk_kitty" then
             c = c + 1
         end
-    end 
+    end
     return c
 end
 
 function lerpcolour(c1, c2, percent)
-
-    local new = { }
+    local new = {}
 
     if not lerp then
-        return {(c1[1]+c2[1])/2, (c1[2]+c2[2])/2, (c1[3]+c2[3])/2, 1 }
+        return { (c1[1] + c2[1]) / 2, (c1[2] + c2[2]) / 2, (c1[3] + c2[3]) / 2, 1 }
     end
 
-    new[1] = lerp(c1[1], c2[1], math.log10(percent/10)) --strange, i know.
-    new[2] = lerp(c1[2], c2[2], math.log10(percent/10))
-    new[3] = lerp(c1[3], c2[3], math.log10(percent/10))
-    return {new[1], new[2], new[3], 1}
+    new[1] = lerp(c1[1], c2[1], math.log10(percent / 10)) --strange, i know.
+    new[2] = lerp(c1[2], c2[2], math.log10(percent / 10))
+    new[3] = lerp(c1[3], c2[3], math.log10(percent / 10))
+    return { new[1], new[2], new[3], 1 }
 end
 
 function CardArea:check_individual(func)
-
-    for i,card in ipairs(self.cards) do
+    for i, card in ipairs(self.cards) do
         if func(card) then
             return true
         end
     end
     return false
-
 end
 
 function vallkarri.create_all_jokers_from(mod)
-
-    for i,joker in ipairs(G.P_CENTER_POOLS.Joker) do
+    for i, joker in ipairs(G.P_CENTER_POOLS.Joker) do
         if joker.original_mod and joker.original_mod.id == mod then
-            local jkr = SMODS.create_card({key = joker.key})
+            local jkr = SMODS.create_card({ key = joker.key })
             jkr:add_to_deck()
             G.jokers:emplace(jkr)
         end
     end
-
 end
 
 function vallkarri.reset_hand_text()
-    update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0 },
+        { mult = 0, chips = 0, handname = '', level = '' })
 end
 
 function vallkarri.search(search_table, find)
-    for name,value in pairs(search_table) do
+    for name, value in pairs(search_table) do
         if string.find(name, find) then
             print(name .. ": " .. tostring(value))
         end
@@ -663,7 +676,7 @@ function vallkarri.search(search_table, find)
 end
 
 function vallkarri.list_banned_keys()
-    for key,is_banned in pairs(G.GAME.banned_keys) do
+    for key, is_banned in pairs(G.GAME.banned_keys) do
         if is_banned then
             print(key .. " is banned. Set: " .. G.P_CENTERS[key].set)
         end
@@ -673,10 +686,10 @@ end
 function vallkarri.get_ordered_highlighted(cardarea)
     local ordered = {}
 
-    for _,card in pairs(cardarea.cards) do
-        for _,highlighted_card in pairs(cardarea.highlighted) do
+    for _, card in pairs(cardarea.cards) do
+        for _, highlighted_card in pairs(cardarea.highlighted) do
             if highlighted_card == card then
-                ordered[#ordered+1] = card
+                ordered[#ordered + 1] = card
             end
         end
     end
@@ -687,13 +700,13 @@ end
 function vallkarri.get_adjacent_cards(card)
     local index = get_index(card.area.cards, card)
 
-    return {card.area.cards[index-1], card.area.cards[index+1]}
+    return { card.area.cards[index - 1], card.area.cards[index + 1] }
 end
 
 function vallkarri.for_each(tab, func)
     local cards = tab.cards and tab.cards or tab
 
-    for _,card in pairs(cards) do
+    for _, card in pairs(cards) do
         func(card)
     end
 end
@@ -707,12 +720,11 @@ function vallkarri.hypercap(n, cap)
     while run and i < limit do
         local exponent = 0.95 ^ i
         local oldcap = cap
-        if Talisman and i > (limit/10) then
-            local arrows = math.floor(i^0.5)
+        if Talisman and i > (limit / 10) then
+            local arrows = math.floor(i ^ 0.5)
             n = to_big(n):arrow(arrows, exponent)
             --talisman broken :wilted_rose: so it also does htis too
-            n = n ^ (0.5^i)
-            
+            n = n ^ (0.5 ^ i)
         else
             n = n ^ exponent
         end
@@ -723,7 +735,6 @@ function vallkarri.hypercap(n, cap)
         -- print(n .. "^" .. exponent .. ">" .. cap)
 
         run = to_big(n) > to_big(cap)
-
     end
 
     return math.max(n, math.min(initial_n, initial_cap))
@@ -735,7 +746,7 @@ function vallkarri.index(card)
     if not area then
         return false
     end
-    for i,c in ipairs(area.cards) do 
+    for i, c in ipairs(area.cards) do
         if c == card then
             return i
         end
@@ -744,8 +755,8 @@ function vallkarri.index(card)
 end
 
 function vallkarri.adjacent_aesthetijoker(card)
-    local left = card.area.cards[vallkarri.index(card)-1]
-    local right = card.area.cards[vallkarri.index(card)+1]
+    local left = card.area.cards[vallkarri.index(card) - 1]
+    local right = card.area.cards[vallkarri.index(card) + 1]
     local ret_value = nil
     if left and Cryptid.safe_get(left.config.center, "pools", "aesthetijoker") then
         ret_value = left
@@ -756,7 +767,6 @@ function vallkarri.adjacent_aesthetijoker(card)
     end
 
     return ret_value
-
 end
 
 function Card:apply_aesthetijoker_edition()
@@ -782,11 +792,14 @@ SMODS.DrawStep {
             return
         end
 
-        local scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) + 0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
+        local scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) +
+        0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) *
+        (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
 
-        local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) + 0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
+        local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) +
+        0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
 
-        for _,child in pairs(card.inf_layers) do
+        for _, child in pairs(card.inf_layers) do
             if child.override_scale then
                 child.T.h = child.T.h * child.override_scale
                 child.T.w = child.T.w * child.override_scale
@@ -797,7 +810,8 @@ SMODS.DrawStep {
             end
             child.states.hover.can = false
             child.states.click.can = false
-            child:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
+            child:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil,
+                0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
             child:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
         end
     end,
@@ -805,7 +819,19 @@ SMODS.DrawStep {
 }
 
 function Card:valk_add_layer(atlas, position, scale)
-    local next_index = #self.inf_layers+1
-    self.inf_layers[next_index] = Sprite(self.T.x, self.T.y, self.T.w*scale, self.T.h*scale, G.ASSET_ATLAS[atlas], position)
+    local next_index = #self.inf_layers + 1
+    self.inf_layers[next_index] = Sprite(self.T.x, self.T.y, self.T.w * scale, self.T.h * scale, G.ASSET_ATLAS[atlas],
+        position)
     self.inf_layers[next_index].override_scale = scale
+end
+
+function vallkarri.random_key_from_pool(pool)
+    local _pool, _pool_key = get_current_pool(pool, nil, nil, "valk_rand")
+    local center = pseudorandom_element(_pool, pseudoseed(_pool_key))
+    local it = 1
+    while center == 'UNAVAILABLE' do
+        it = it + 1
+        center = pseudorandom_element(_pool, pseudoseed(_pool_key .. '_resample' .. it))
+    end
+    return center
 end
