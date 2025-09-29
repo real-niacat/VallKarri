@@ -67,7 +67,7 @@ function SMODS.create_mod_badges(obj, badges)
         end
         local scale_fac = {}
         local min_scale_fac = 1
-        local strings = { vallkarri.display_name, "Art : " .. obj.valk_artist }
+        local strings = { vallkarri.display_name, "Art: " .. obj.valk_artist }
         for i = 1, #strings do
             scale_fac[i] = calc_scale_fac(strings[i])
             min_scale_fac = math.min(min_scale_fac, scale_fac[i])
