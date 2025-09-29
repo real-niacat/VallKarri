@@ -49,20 +49,6 @@ end
 function vallkarri.artist_credit_ui()
     local built = {
         { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Artists", colour = colours.art, scale = text_scale * 2, shadow = true, align = "tm" } } } },
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Lily Felli", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Scraptake", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "mailingway", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Pangaea", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Lil Mr. Slipstream", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "lord.ruby", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Grahkon", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Nerxiana", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "notmario", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "triangle_snack", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Poker the Poker", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Aikoyori", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Aduckted", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "gudusername", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
     }
     vallkarri.refresh_artist_credit_buttons()
     for artist, _ in pairs(vallkarri.credited_artists) do
