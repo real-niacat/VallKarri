@@ -7,7 +7,7 @@ SMODS.Joker {
             "{C:inactive}Suck it.{}",
         }
     },
-    valk_artist = "Lily Felli",
+    valk_artist = "Pangaea",
     config = { extra = {} },
     rarity = 1,
     atlas = "main",
