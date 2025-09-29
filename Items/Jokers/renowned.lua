@@ -7,9 +7,9 @@ SMODS.Joker {
             "{C:green}#1# in #2#{} chance to spawn an {C:purple}Eternal{} {C:common}Common Joker{} instead",
             "{C:inactive}(Must have room){}",
             quote("raxd"),
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { state = 1, ctr = 0, num = 1, den = 10 } },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "raxd")
@@ -57,9 +57,9 @@ SMODS.Joker {
         name = "Cascading Chain",
         text = {
             "{X:dark_edition,C:white}X#1#{} Blind Size for every other {C:attention}Joker{} owned",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { mul = 0.95 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mul } }
@@ -103,9 +103,9 @@ SMODS.Joker {
             "{X:mult,C:white}X1{} Mult",
             "{C:valk_prestigious,s:3,f:5}+π/10{C:valk_prestigious,s:3} Zulu",
             "{C:red,s:3.14159265}annihilates{}  a  few other cards",
-            credit("Lily Felli")
         }
     },
+    valk_artist = "Lily Felli",
     config = { extra = { zulu = math.pi / 10 } },
     rarity = "valk_renowned",
     atlas = "main",
@@ -147,9 +147,9 @@ SMODS.Joker {
             "Apply {C:dark_edition}Polychrome{} to a random Joker at end of round",
             "{C:dark_edition}Polychrome{} Jokers give an additional {X:mult,C:white}X#2#{} Mult when triggered",
             "{C:inactive}(Does not include self){}",
-            credit("Poker the Poker (Edit by Lily)")
         }
     },
+    valk_artist = "Poker The Poker",
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -194,9 +194,9 @@ SMODS.Joker {
             "Retrigger the {C:attention}Joker{} to the left {C:attention}#1#{} time(s)",
             "Increase retrigger amount by {C:attention}#2#{} for",
             "every {C:attention}#3#{} {C:inactive}[#4#]{} played cards",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -245,9 +245,9 @@ SMODS.Joker {
         text = {
             "When blind selected, add a random",
             "{C:attention}Mirrored{} card to deck",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -287,9 +287,9 @@ SMODS.Joker {
         text = {
             "Forcefully play your {C:attention}full{} hand",
             "{C:attention}+#1#{} Hand Size",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
@@ -327,9 +327,9 @@ SMODS.Joker {
         text = {
             "All {V:1}#1#{} are forcefully played",
             "Draw {C:attention}two{} replacements for each card forcefully played",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = {} },
     loc_vars = function(self, info_queue, card)
         local suit = G.GAME.current_round.ancient_card.suit
@@ -385,9 +385,9 @@ SMODS.Joker {
         text = {
             "Retrigger all {C:attention}Kitty{} Jokers once",
             "for each {C:attention}Kitty{} Joker owned",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = {} },
     loc_vars = function(self, info_queue, card)
         return { vars = {} }
@@ -430,9 +430,9 @@ SMODS.Joker {
         name = "Callie",
         text = {
             "{X:dark_edition,C:white}^#1#{} Mult for each scoring {C:attention}Wild Card{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { per = 0.05 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.per } }

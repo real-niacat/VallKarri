@@ -7,9 +7,9 @@ SMODS.Joker {
             "Gains {X:dark_edition,C:white}^#1#{} Mult per scored card if",
             "played hand is not your most played {C:attention}poker hand{}",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
-            credit("Scraptake")
         }
     },
+	valk_artist = "Scraptake",
     config = { extra = { gain = 0.2, current = 1 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.gain, card.ability.extra.current}}
@@ -47,9 +47,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Blueprint{}",
         text = {
             "Copies abilities the 3 {C:attention}Jokers{} to the right",
-            credit("Scraptake")
         }
     },
+	valk_artist = "Scraptake",
     blueprint_compat = true,
     config = { extra = {} },
     	loc_vars = function(self, info_queue, card)

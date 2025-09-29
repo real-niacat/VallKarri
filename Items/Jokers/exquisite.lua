@@ -7,9 +7,9 @@ local orivander = {
             "Creates an Eternal {C:attention}Gravity Well{} when obtained.",
             "Allows for building up score and releasing it all across multiple hands.",
             quote("orivander"),
-            credit("Scraptake")
         },
     },
+    valk_artist = "Scraptake",
     config = { extra = {} },
     loc_vars = function(self, info_queue, card)
 
@@ -53,9 +53,9 @@ SMODS.Joker {
             "Multiply all Joker values by {C:attention}X#2#{} when any playing card scored.",
             "{C:inactive}(Does not include Illena Vera){}",
             quote("illena"),
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { strong = 1.4444, mid = 1.04444 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.strong, card.ability.extra.mid} }
@@ -105,9 +105,9 @@ SMODS.Joker {
             "{C:valk_superplanet}Superplanets{} appear {C:attention}X#1#{} more frequently in the shop",
             "Using a {C:valk_superplanet}Superplanet{} generates {C:attention}#2#{} random {C:planet}Planetoids{}",
             "Using a {C:planet}Planetoid{} generates {C:attention}#2#{} random {C:planet}Planets{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = {rate = 200, copies = 2} },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.rate, card.ability.extra.copies} }
@@ -179,9 +179,9 @@ SMODS.Joker {
             "{X:dark_edition,C:white}^#2#{} Mult per {C:red}red team{} member in the {C:attention}VallKarri{} discord server",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Chips and {X:dark_edition,C:white}^#4#{C:inactive} Mult)",
             "{V:1,S:0.5}https://discord.gg/5d3HWu88yn{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { perblue = 0.02, perred = 0.02 } },
     loc_vars = function(self, info_queue, card)
         
@@ -223,9 +223,9 @@ SMODS.Joker {
             "{C:red}Lose all money{} when hand played",
             "Earn {C:money}$#1#{} for each hand played this run at end of round",
             quote("scraptake"),
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { per = 3 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.per} }
@@ -262,9 +262,9 @@ SMODS.Joker {
             "When a booster pack is skipped, create a {C:dark_edition}Negative{} {C:attention}The Fool{}",
             "When {C:attention}The Fool{} is used, create {C:attention}#1#{} random tag",
             "Increase by {C:attention}#2#{} when {C:attention}Boss Blind{} defeated",
-            credit("Pangaea")
         }
     },
+    valk_artist = "Pangaea",
     config = { extra = { tags = 1, increase = 1 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.tags, card.ability.extra.increase} }
@@ -305,9 +305,9 @@ SMODS.Joker {
             "Increase tags by {C:attention}#2#{} when a {C:planet}Planet{} card is used",
             "At {C:attention}#3#{} tags, reset back to {C:attention}#4#{} and increase",
             "Chips and Mult per level on all hands by {C:attention}X#5#{}",
-            credit("Pangaea")
         }
     },
+    valk_artist = "Pangaea",
     config = { extra = { tags = 2, tags_base = 2, inc = 1, max = 5, mult = 5 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_TAGS.tag_meteor
@@ -354,9 +354,9 @@ SMODS.Joker {
             "Fill empty {C:attention}Consumable{} slots with random {C:planet}Planet{} cards if",
             "played {C:attention}poker hand{} is a {C:attention}#1#{}",
             "{C:inactive}(Poker Hand changes at end of round)",
-            credit("Pangaea")
         }
     },
+    valk_artist = "Pangaea",
     config = { extra = { hand = "Four of a Kind" } },
     loc_vars = function(self, info_queue, card)
         return {vars = {localize(card.ability.extra.hand, "poker_hands")} }

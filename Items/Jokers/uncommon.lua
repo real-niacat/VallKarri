@@ -7,9 +7,9 @@ SMODS.Joker {
             "Loses {X:mult,C:white}X#2#{} Mult when a {C:attention}Consumable{} is used",
             "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult){}",
             "{C:inactive}Where do I click, Drago?{}",
-            credit("Lily Felli")
         }
     },
+    valk_artist = "Lily Felli",
     config = { extra = { cur = 1, gain = 0.2, loss = -0.1 } },
     rarity = 2,
     atlas = "main",
@@ -43,9 +43,9 @@ SMODS.Joker {
         text = {
             "Gains {X:mult,C:white}X#1#{} Mult when a {C:attention}Mirrored{} card scores",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { cur = 1, gain = 0.2, cap = 5 } },
     rarity = 2,
     atlas = "main",
@@ -86,9 +86,9 @@ SMODS.Joker {
             "{C:chips}+#1#{} Chips",
             "Increases by {C:attention}#2#{} at end of round",
             "Scales {C:dark_edition,E:1}quadratically{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { curchips = 1, inc = 1, incsq = 1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.curchips, card.ability.extra.inc } }
@@ -126,9 +126,9 @@ SMODS.Joker {
         name = "Periapt Beer",
         text = {
             "Create a {C:tarot}Charm Tag{} and {C:attention}The Fool{} when sold",
-            credit("Pangaea")
         }
     },
+    valk_artist = "Pangaea",
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.c_fool
         info_queue[#info_queue + 1] = G.P_TAGS.tag_charm
@@ -154,9 +154,9 @@ SMODS.Joker {
         name = "Stellar Yogurt",
         text = {
             "Create a {C:planet}Meteor Tag{} and {C:attention}The Fool{} when sold",
-            credit("Pangaea")
         }
     },
+    valk_artist = "Pangaea",
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.c_fool
         info_queue[#info_queue + 1] = G.P_TAGS.tag_meteor
@@ -182,9 +182,9 @@ SMODS.Joker {
         name = "Hexed Spirit",
         text = {
             "Create two {C:spectral}Ethereal Tags{} when sold",
-            credit("Pangaea")
         }
     },
+    valk_artist = "Pangaea",
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_TAGS.tag_ethereal
     end,
@@ -207,9 +207,9 @@ SMODS.Joker {
         name = "Amber",
         text = {
             "{X:mult,C:white}X#1#{} Mult for each scoring {C:diamonds}Diamond{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.per } }
@@ -239,9 +239,9 @@ SMODS.Joker {
         name = "Blackjack",
         text = {
             "{X:mult,C:white}X#1#{} Mult for each scoring {C:spades}Spade{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.per } }
@@ -271,9 +271,9 @@ SMODS.Joker {
         name = "Troupe",
         text = {
             "{X:mult,C:white}X#1#{} Mult for each scoring {C:spades}Club{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.per } }
@@ -303,9 +303,9 @@ SMODS.Joker {
         name = "Valentine",
         text = {
             "{X:mult,C:white}X#1#{} Mult for each scoring {C:hearts}Heart{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.per } }
@@ -335,9 +335,9 @@ SMODS.Joker {
         name = "Rocky",
         text = {
             "{X:mult,C:white}X#1#{} Mult for each scoring {C:attention}Suitless{} card",
-            credit("lord.ruby")
         }
     },
+    valk_artist = "lord.ruby",
     config = { extra = { per = 0.4 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.per } }
@@ -380,9 +380,9 @@ SMODS.Joker {
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
             "{C:inactive,s:0.6,E:1}\"#3#\"",
             "{V:1,S:0.5}https://discord.gg/5d3HWu88yn{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { per = 1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.per, #vallkarri.last_message * card.ability.extra.per, vallkarri.last_message, colours = {
@@ -415,9 +415,9 @@ SMODS.Joker {
         text = {
             "{C:planet}Planet{} cards have a {C:green}#1#%{} chance",
             "to replace any other spawned card",
-            credit("triangle_snack")
         }
     },
+    valk_artist = "triangle_snack",
     config = { extra = { chance = 15 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chance } }
@@ -442,9 +442,9 @@ SMODS.Joker {
         text = {
             "{C:tarot}Tarot{} cards have a {C:green}#1#%{} chance",
             "to replace any other spawned card",
-            credit("triangle_snack")
         }
     },
+    valk_artist = "triangle_snack",
     config = { extra = { chance = 10 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chance } }
@@ -469,9 +469,9 @@ SMODS.Joker {
         text = {
             "{C:spectral}Spectral{} cards have a {C:green}#1#%{} chance",
             "to replace any other spawned card",
-            credit("triangle_snack")
         }
     },
+    valk_artist = "triangle_snack",
     config = { extra = { chance = 5 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chance } }
@@ -499,9 +499,9 @@ SMODS.Joker {
         name = "Merchant Cat",
         text = {
             "Create a {C:attention}Kitty Tag{} when a card is bought",
-            credit("Lil Mr. Slipstream"),
         }
     },
+    valk_artist = "Lil Mr. Slipstream",
     loc_vars = function(self, info_queue, card)
         return { vars = {} }
     end,
@@ -527,9 +527,9 @@ SMODS.Joker {
         text = {
             "{C:attention}-#1#{} to the next change in ante",
             "{C:red,E:1}Self-destructs{}",
-            credit("mailingway"),
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.change } }
     end,
@@ -557,9 +557,9 @@ SMODS.Joker {
             "{C:red,E:1}Self-destructs{} if played hand is not",
             "most played {C:attention}poker pand{}",
             "{C:inactive}(Currently #2#)",
-            credit("mailingway"),
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.slots, vallkarri.get_most_played_hand() } }
     end,

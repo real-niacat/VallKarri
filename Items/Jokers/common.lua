@@ -5,9 +5,9 @@ SMODS.Joker {
         text = {
             "Creates itself when removed",
             "{C:inactive}Suck it.{}",
-            credit("Lily Felli")
         }
     },
+    valk_artist = "Lily Felli",
     config = { extra = {} },
     rarity = 1,
     atlas = "main",
@@ -32,9 +32,9 @@ SMODS.Joker {
         name = "Antithesis",
         text = {
             "{C:mult}+#1#{} Mult for every {C:attention}unscoring{} card",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { per = 2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.per } }
@@ -62,9 +62,9 @@ SMODS.Joker {
         text = {
             "At end of round, {C:green}#1# in #2#{} chance",
             "to create a {C:attention}Kitty Tag{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { num = 1, den = 2 } },
     loc_vars = function(self, info_queue, card)
         local n,d = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, "kitty")

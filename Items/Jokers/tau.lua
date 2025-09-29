@@ -36,9 +36,9 @@ SMODS.Joker {
             "{C:valk_fire}Tauic{} Joker variants have their spawn",
             "chances increased whenever their roll fails",
             "{C:inactive}(Currently a {C:green}#1#%{C:inactive} chance to replace)",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
         local c = 0
@@ -74,9 +74,9 @@ SMODS.Consumable {
         name = "Absolute Tau",
         text = {
             "Create a random {C:valk_fire}Tauic{} {C:legendary}Legendary{} Joker",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
 
     can_use = function(self, card)
         return true
@@ -99,35 +99,6 @@ SMODS.Consumable {
     end,
     dependencies = {"Talisman"},
 }
-
--- SMODS.Joker {
---     key = "",
---     loc_txt = {
---         name = "{C:valk_fire}Tauic {}",
---         text = {
---             "",
---             "",
---             credit("Scraptake")
---         }
---     },
---     config = { extra = { } },
---     loc_vars = function(self, info_queue, card)
---         return { vars = {  } }
---     end,
---     rarity = "valk_tauic",
---     atlas = "tau",
---     pos = {x=0, y=0},
---     soul_pos = {x=0, y=1},
---     cost = 4,
---     no_doe = true,
---     calculate = function(self, card, context)
-        
---     end
--- }
-
-
-
-
 
 
 

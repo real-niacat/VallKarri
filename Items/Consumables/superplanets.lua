@@ -47,11 +47,9 @@ SMODS.Consumable {
         text = {
             "All hands gain " .. expochips("#1#") .. " Chips,",
             "plus another " .. expochips("#1#") .. " Chips for every 5 levels on any hand",
-            credit("mailingway"),
-            concept("arris")
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
 
     config = { extra = { echips = 1.02 } },
@@ -104,11 +102,9 @@ SMODS.Consumable {
             "All hands gain " .. expomult("#1#") .. " Mult,",
             "plus another " .. expomult("#1#") .. " Mult for every 5 levels on",
             "{C:attention}High Card{}, {C:attention}Pair{}, and {C:attention}Two Pair{}",
-            credit("mailingway"),
-            concept("arris")
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
 
     config = { extra = { emult = 1.1 } },
@@ -157,11 +153,9 @@ SMODS.Consumable {
             "All hands gain " .. expochips("#1#") .. " Chips,",
             "plus another " .. expochips("#1#") .. " Chips for every 5 levels on",
             "{C:attention}Five of a Kind{}, {C:attention}Flush House{}, and {C:attention}Flush Five{}",
-            credit("mailingway"),
-            concept("arris")
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
 
     config = { extra = { echips = 1.1 } },
@@ -211,11 +205,9 @@ SMODS.Consumable {
             "All hands gain " .. expomult("#1#") .. " Mult,",
             "plus another " .. expomult("#1#") .. " Mult for every 5 levels on",
             "{C:attention}Three of a Kind{}, {C:attention}Straight{}, and {C:attention}Flush{}",
-            credit("mailingway"),
-            concept("arris")
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
 
     config = { extra = { echips = 1.1 } },
@@ -265,11 +257,9 @@ SMODS.Consumable {
             "All hands gain " .. expomult("#1#") .. " Chips & Mult,",
             "plus another " .. expomult("#1#") .. " Chips & Mult for",
             "every {C:attention}Jolly Joker{} owned",
-            credit("mailingway"),
-            concept("arris")
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
 
     config = { extra = { eeall = 1.25 } },
@@ -319,10 +309,9 @@ SMODS.Consumable {
             "Level up all hands {C:attention}once{},",
             "then multiply all hand levels by {C:attention}#1#{}.",
             "Double this value for each {C:attention,f:6}#2#{} used in run",
-            credit("mailingway"),
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
 
     config = { extra = {} },
@@ -358,10 +347,9 @@ SMODS.Consumable {
         name = "Barnard 68",
         text = {
             expochips("#1#") .. " Chips on {C:attention}Full Mansion{}",
-            credit("mailingway"),
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
     config = { extra = { evalue = 9 } },
     loc_vars = function(self, info_queue, card)
@@ -402,10 +390,9 @@ SMODS.Consumable {
         name = "Bootes Void",
         text = {
             expochips("#1#") .. " Mult on {C:attention}Full Mansion{}",
-            credit("mailingway"),
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
     config = { extra = { evalue = 9 } },
     loc_vars = function(self, info_queue, card)
@@ -447,10 +434,9 @@ SMODS.Consumable {
         text = {
             expochips("#1#") .. " Chips & Mult on {C:attention}All hands{}",
             "for each {C:attention}Kitty{} Joker owned",
-            credit("mailingway"),
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
     soul_rate = 5,
     config = { extra = { evalue = 1.9 } },
@@ -509,11 +495,9 @@ SMODS.Consumable {
         name = "LMC X-1",
         text = {
             "Raise all hand levels to their respective {C:gold}Ascension Power{}",
-            credit("mailingway"),
-            concept("arris")
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
 
     config = { extra = {} },
@@ -553,11 +537,9 @@ SMODS.Consumable {
             "Multiply {C:chips}chips{} and {C:mult}mult{} of all hands by {C:attention}#1#{}",
             "{X:dark_edition,C:white}^^#2#{} Chips and Mult on all hands",
             "{X:gold,C:white}^#3#{} Ascension Power of all hands",
-            credit("mailingway"),
-            concept("arris")
         }
     },
-
+    valk_artist = "mailingway",
     no_doe = true,
 
     config = { extra = { mult = 5, tet = 1.05, exp = 1.5 } },

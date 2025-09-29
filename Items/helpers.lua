@@ -1,4 +1,5 @@
 function credit(artist)
+    vallkarri.credited_artists[artist] = vallkarri.credited_artists[artist] or {}
     return ('{C:dark_edition,s:0.6,E:2}Art by : ' .. artist .. '{}')
 end
 

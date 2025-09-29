@@ -6,9 +6,9 @@ SMODS.Joker {
             "When blind selected, {C:red}debuff{} leftmost Joker and {C:attention}double{} its values",
             "Remove {C:red}debuff{} from all Jokers at end of round",
             quote("niko"),
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { saved_joker = nil } },
     loc_vars = function(self, info_queue, card)
 
@@ -46,9 +46,9 @@ SMODS.Joker {
             "{X:dark_edition,C:white}^#1#{} Mult for every day since {C:attention}Hollow Knight Silksong{} was released",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
             quote("hornet"),
-            credit("Scraptake"),
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { gain = 0.05 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain, 1 + (card.ability.extra.gain * days_since(2025, 9, 4)) } }
@@ -76,9 +76,9 @@ SMODS.Joker {
             "When boss blind defeated, Increase ",
             "{C:attention}sell value{} of all Food Jokers by {C:attention}X#1#{}.",
             quote("lilac"),
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { money = 5.4 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
@@ -123,9 +123,9 @@ SMODS.Joker {
             "Gains {X:mult,C:white}X#1#{} Mult when hand is played",
             "Lose {X:mult,C:white}X#4#{} for each card played",
             "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
-            credit("unexian")
         }
     },
+    valk_artist = "unexian",
     config = { extra = { gx = 0.05, x = 1, thresh = 5 } },
     loc_vars = function(self, info_queue, card)
         return {
@@ -172,9 +172,9 @@ SMODS.Joker {
             "{C:attention}CCD{} {C:planet}Planet{} cards to {C:attention}Hand{}",
             "When {C:attention}Boss Blind{} defeated, add {C:attention}#2#{} editioned",
             "{C:attention}CCD{} {C:planet}Planet{} cards with {C:attention}Seals{} to {C:attention}Deck{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { cards = 5, sealed = 2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cards, card.ability.extra.sealed } }
@@ -226,9 +226,9 @@ SMODS.Joker {
         text = {
             "Cards permanently gain between",
             "{X:chips,C:white}X#1#{} and {X:chips,C:white}X#2#{} Chips when scored",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { min = 0.69, max = 4.2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.min, card.ability.extra.max } }
@@ -257,9 +257,9 @@ SMODS.Joker {
             "{C:attention}+#1#{} Card Selection Limit and Hand Size.",
             "{C:planet}Planet{} cards have a {C:green}#2# in #3#{} chance",
             "to level up your most played {C:attention}poker hand #4#{} Times",
-            credit("Grahkon")
         }
     },
+    valk_artist = "Grahkon",
     config = { extra = { csl = 3, num = 1, den = 3, levels = 3 } },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den)
@@ -305,9 +305,9 @@ SMODS.Joker {
             "{X:blue,C:white}X#1#{} Chips and {X:red,C:white}X#1#{} Mult",
             "{C:blue}+#1#{} Hands and {C:red}+#1#{} Discards",
             "When playing card is scored, earn {C:money}$#1#{}",
-            credit("Scraptake"),
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { meow = 3 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.meow } }
@@ -342,9 +342,9 @@ SMODS.Joker {
         text = {
             "All{C:attention} Aces, Kings, 4s{} and {C:attention}7s{} increase",
             "chips and mult of played hand type by {C:attention}X1+(rank/100){}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { inc = 0 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.inc } }
@@ -390,9 +390,9 @@ SMODS.Joker {
             "All {C:attention}other Jokers{} have their Editions {C:red}removed{}",
             "{C:dark_edition}Foil{} cards additionally give {X:chips,C:white}X#1#{} Chips",
             "when triggered, and cannot be {C:red}debuffed{}",
-            credit("Lil Mr. Slipstream"),
         }
     },
+    valk_artist = "Lil Mr. Slipstream",
     config = { extra = { edition = "e_foil", xchips = 1.25 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.edition]
@@ -426,9 +426,9 @@ SMODS.Joker {
             "All {C:attention}other Jokers{} have their Editions {C:red}removed{}",
             "{C:dark_edition}Holographic{} Jokers additionally give {X:mult,C:white}X#1#{} Mult",
             "when triggered",
-            credit("Lil Mr. Slipstream")
         }
     },
+    valk_artist = "Lil Mr. Slipstream",
     config = { extra = { edition = "e_holo", xmult = 1.5 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.edition]
@@ -461,9 +461,9 @@ SMODS.Joker {
             "All {C:attention}other Jokers{} have their Editions {C:red}removed{}",
             "{C:dark_edition}Polychrome{} Jokers are retriggered {C:attention}once{} and",
             "give an additional {X:mult,C:white}X#1#{} Mult",
-            credit("Lil Mr. Slipstream")
         }
     },
+    valk_artist = "Lil Mr. Slipstream",
     config = { extra = { edition = "e_polychrome", xmult = 1.5 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.edition]
@@ -504,9 +504,9 @@ SMODS.Joker {
             "All {C:attention}other Jokers{} have their Editions {C:red}removed{}",
             "{C:dark_edition}Negative{} Jokers additionally give {X:dark_edition,C:white}X#1#{}",
             "Blind Size when triggered",
-            credit("Lil Mr. Slipstream")
         }
     },
+    valk_artist = "Lil Mr. Slipstream",
     config = { extra = { edition = "e_negative", blind_size = 0.9 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.edition]

@@ -721,6 +721,11 @@ function SMODS.injectItems(...)
         if (card.bases or card.is_tau) and (not vallkarri.config.tau_collection) then
             G.P_CENTERS[key].no_collection = true
         end
+
+        if card.valk_artist then
+            vallkarri.credited_artists[card.valk_artist] = vallkarri.credited_artists[card.valk_artist] or {}
+            table.insert(vallkarri.credited_artists[card.valk_artist], card.key) 
+        end
     end
 end
 

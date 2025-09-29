@@ -31,6 +31,8 @@ vallkarri.splash_options = {
     "VallKarri Yeah!",
     "Now with 50% more cats!",
 }
+
+vallkarri.credited_artists = {}
 function vallkarri.choose_main_menu_text()
     return vallkarri.splash_options[math.random(1, #vallkarri.splash_options)]
 end

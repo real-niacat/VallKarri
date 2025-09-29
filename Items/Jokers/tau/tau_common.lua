@@ -6,9 +6,9 @@ SMODS.Joker {
         text = {
             "{X:dark_edition,C:white}^#1#{} Mult for every Tauic card",
             "{C:inactive}Includes this card{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { mult = 1.4444} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult } }
@@ -35,9 +35,9 @@ SMODS.Joker {
             "{C:attention}#1#{} free {C:green}rerolls{} in shop",
             "When blind selected, gain {C:attention}#2#{} {C:blue}hand{} and {C:red}discard{} per {C:green}reroll{} in last shop",
             "{C:inactive}Currently +#3# hands and discards{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { rerolls = 2, bonus = 1, current = 0} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.rerolls, card.ability.extra.bonus, card.ability.extra.current } }
@@ -78,9 +78,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Sin Joker{}",
         text = {
             "{X:dark_edition,C:white}^#1#{} Chips for every playing card with a vanilla suit",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { chips = 1.03} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.chips } }
@@ -109,9 +109,9 @@ SMODS.Joker {
             "{X:dark_edition,C:white}+^#1#{} Chips for each",
             "remaining card in {C:attention}deck{}",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Chips)",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { per = 0.15 } },
     loc_vars = function(self, info_queue, card)
         local n = 52
@@ -150,9 +150,9 @@ SMODS.Joker {
         text = {
             "All scored number cards give {X:mult,C:white}XMult{}",
             "equal to their rank",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
 
@@ -181,9 +181,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Egg{}",
         text = {
             "Gains {X:dark_edition,C:white}^#1#{} of {C:attention}sell value{} at end of round",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { evalue = 1.5 } },
     loc_vars = function(self, info_queue, card)
 
@@ -213,9 +213,9 @@ SMODS.Joker {
         text = {
             "When {C:red}discarding{}, multiply all hand levels by the amount",
             "of discards remaining",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = {  } },
     loc_vars = function(self, info_queue, card)
 
@@ -245,9 +245,9 @@ SMODS.Joker {
         text = {
             "{X:dark_edition,C:white}+^#1#{} Chips per discard remaining",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Chips)",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { per = 2 } },
     loc_vars = function(self, info_queue, card)
         local d = 4
@@ -280,9 +280,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Credit Card{}",
         text = {
             "Refund {C:attention}#1#%{} of all money spent",
-            credit("Lily Felli")
         }
     },
+    valk_artist = "Lily Felli",
     config = { immutable = {refund = 75} }, --value is pointless, it's always a 3/4 refund
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.immutable.refund } }
@@ -303,9 +303,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Emotional Joker{}",
         text = {
             "{X:dark_edition,C:white}^#1#{} Chips & Mult per {C:attention}poker hand{} contained in played hand",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { gain = 2} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain } }
@@ -348,9 +348,9 @@ SMODS.Joker {
         text = {
             "At end of round, multiply all {C:attention}Joker values{}",
             "by amount of {C:attention}empty Joker slots{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
         return { vars = {  } }
@@ -380,9 +380,9 @@ SMODS.Joker {
         text = {
             "When an {C:attention}8{} is scored, create a random {C:tarot}Tarot{} card",
             "with {C:attention}X#1#{} values",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { vmult = 8 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.vmult } }
@@ -412,9 +412,9 @@ SMODS.Joker {
         text = {
             "{C:attention}Non-face{} cards are converted into a random {C:attention}face{} card when {C:attention}scored{}",
             "{C:attention}Face{} cards give {X:dark_edition,C:white}^#1#{} Mult",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { emult = 1.55 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.emult } }
@@ -451,9 +451,9 @@ SMODS.Joker {
         text = {
             "{X:mult,C:white}X#1#{} Mult",
             "{C:green}#2# in #3#{} chance to convert into {C:valk_fire}Tauic Cavendish{} at end of round",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { xmult = 15, outof = 15, num = 1 } },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.outof, 'valk_tgm')
@@ -487,9 +487,9 @@ SMODS.Joker {
         text = {
             "{X:dark_edition,C:white}^#1#{} Mult",
             "{C:green}#2# in #3#{} chance to",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { emult = 3.33, outof = 1000 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.emult, G.GAME.probabilities.normal, card.ability.extra.outof } }
@@ -517,9 +517,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Delayed Gratification{}",
         text = {
             "At end of round, multiply your money by remaining {C:red}discards{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.emult, G.GAME.probabilities.normal, card.ability.extra.outof } }
@@ -546,9 +546,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Hanging Chad{}",
         text = {
             "Retrigger the {C:attention}first{} played card {C:attention}once{} for each card played",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
         return { vars = { } }
@@ -578,9 +578,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Misprint{}",
         text = {
             "{X:dark_edition,C:white}#1##2#{}#3#",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     immutable = true,
     config = { extra = {min = 105, max = 113 } },
     loc_vars = function(self, info_queue, card)
@@ -619,9 +619,9 @@ SMODS.Joker {
         text = {
             "The first scored {C:attention}face{} card gives",
             "{X:dark_edition,C:white}^^#1#{} Mult",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     immutable = true,
     config = { extra = { amount = 1.2 } },
     loc_vars = function(self, info_queue, card)
@@ -657,9 +657,9 @@ SMODS.Joker {
         text = {
             "{X:dark_edition,C:white}^#1#{} Chips",
             "{X:dark_edition,C:white}+^#2#{} per hand played",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     immutable = true,
     config = { extra = {cur = 1, gain = 0.25 } },
     loc_vars = function(self, info_queue, card)
@@ -694,9 +694,9 @@ SMODS.Joker {
         text = {
             "Non {C:attention}face{} cards give",
             "{X:dark_edition,C:white}^#1#{} Mult",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = {powmult = 1.25 } },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.powmult} }
@@ -725,9 +725,9 @@ SMODS.Joker {
         text = {
             "The lowest ranked card {C:attention}held in hand{} gives",
             "{X:dark_edition,C:white}^Mult{} equal to its rank",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { emult = 1.2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.emult} }

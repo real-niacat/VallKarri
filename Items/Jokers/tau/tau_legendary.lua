@@ -5,9 +5,9 @@ SMODS.Joker {
         text = {
             "{X:dark_edition,C:white}+^^#1#{} Mult when any card destroyed",
             "{C:inactive}Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { gain = 0.2, cur = 1} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain, card.ability.extra.cur } }
@@ -42,9 +42,9 @@ SMODS.Joker {
         text = {
             "{X:dark_edition,C:white}^^#1#{} Mult when any face card or Ace is scored",
             "Increases by {X:dark_edition,C:white}+^^#2#{} when any face card or Ace is scored",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { gain = 0.05, cur = 1} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cur, card.ability.extra.gain } }
@@ -77,9 +77,9 @@ SMODS.Joker {
             "{X:dark_edition,C:white}^^#1#{} Mult",
             "Increases by {X:dark_edition,C:white}+^#2#{} when any card discarded",
             "Scales {C:dark_edition,E:1}Quadratically{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { gainsq = 0.01, gain = 0.01, cur = 1} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cur, card.ability.extra.gain } }
@@ -117,9 +117,9 @@ SMODS.Joker {
             "Disables effect of every {C:attention}Boss Blind{}",
             "{X:dark_edition,C:white}^^(1 / #1#){} blind size",
             "{C:attention}+#2#{} to denominator when {C:attention}blind{} selected",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { antitetration = 50, inc = 10} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.antitetration, card.ability.extra.inc } }
@@ -161,9 +161,9 @@ SMODS.Joker {
         text = {
             "Create {C:attention}#1#{} {C:dark_edition}Negative{} copies of the leftmost consumable when exiting shop",
             "Remove {C:dark_edition}Negative{} from rightmost consumable at end of round",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { copies = 2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.copies, card.ability.extra.reverse } }

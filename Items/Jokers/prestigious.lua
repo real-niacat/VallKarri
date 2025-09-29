@@ -6,9 +6,9 @@ SMODS.Joker {
             "{X:dark_edition,C:white}^^#1#{} Mult for every piece of content that {B:1,E:2,C:white}Vall-karri{} adds",
             "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
             quote("valklua"),
-            credit("Grahkon"),
         }
     },
+    valk_artist = "Grahkon",
     config = { extra = { mult = 1 } },
     loc_vars = function(self, info_queue, card)
         local total = valk_additions()
@@ -68,9 +68,9 @@ SMODS.Joker {
             "Create a random {C:attention}perishable{} ",
             "{C:valk_exquisite}Exquisite{} Joker at end of round",
             quote("phicer"),
-            credit("Nerxiana"),
         }
     },
+    valk_artist = "Nerxiana",
     config = { extra = { nchips = 2 } },
     rarity = "valk_prestigious",
     atlas = "main",
@@ -116,9 +116,9 @@ SMODS.Joker {
         text = {
             "When {C:attention}Blind{} selected, create {C:attention}#1#{} {C:dark_edition}Negative{} {C:colourcard}Colour{} cards",
             "All {C:colourcard}Colour{} cards gain {C:attention}+#2#{} rounds when {C:attention}3{} scored",
-            credit("notmario"),
         }
     },
+    valk_artist = "notmario",
     config = { extra = { rounds = 3, cards = 3 }, immutable = { buffer = 0 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cards, card.ability.extra.rounds } }
@@ -178,9 +178,9 @@ SMODS.Joker {
             "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult)",
             quote("lily"),
             quote("lily2"),
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { per = 0.05, rate = 50 } },
     loc_vars = function(self, info_queue, card)
         local jkrs = G.jokers and #G.jokers.cards or 0

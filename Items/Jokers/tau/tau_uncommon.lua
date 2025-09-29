@@ -8,9 +8,9 @@ SMODS.Joker {
             "Earn {C:money}$#1#{} at end of round",
             "Multiply dollars earned by {X:money,C:white}$x#2#{} when {C:attention}Boss Blind{} defeated",
             "Gives {X:mult,C:white}Xmult{} equal to money",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { cur = 1, mult = 2} },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.cur, card.ability.extra.mult}}
@@ -49,9 +49,9 @@ SMODS.Joker {
         text = {
             "{C:attention}Double{} this Jokers {{X:dark_edition,C:white}^Mult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Mult)",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { emult = 1}, immutable = { hands = 6, req = 6 } },
     loc_vars = function(self, info_queue, card)
 
@@ -91,9 +91,9 @@ SMODS.Joker {
         text = {
             "All scored cards are converted into {C:attention}stone{} cards",
             "{C:attention}Stone{} cards give {X:chips,C:white}X#1#{} Chips when scored",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { xchip = 4.2 } },
     loc_vars = function(self, info_queue, card)
 
@@ -136,9 +136,9 @@ SMODS.Joker {
             "{C:attention}+#1#{} Joker slots, double this value when Joker sold",
             "Gives {X:mult,C:white}Xmult{} equal to total Joker slots",
             "{C:inactive}(Caps at {C:attention}+#2#{C:inactive} Joker Slots){}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { slots = 2 }, immutable = {cap = 1e100} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.slots, card.ability.immutable.cap } }
@@ -182,9 +182,9 @@ SMODS.Joker {
             "{C:attention}Flushes{} and {C:attention}Straights{} can be made with {C:attention}3{} cards", --booo hardcoding. whatever. go complain to smods.
             "Level up all hands by {C:attention}#1#{} when consumable used",
             "Increases {C:dark_edition,E:1}Quadratically{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { levels = 1, inc = 1} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.levels } }
@@ -216,9 +216,9 @@ SMODS.Joker {
             "When {C:attention}blind{} selected, {C:red,E:1}destroy{} Joker to the right and",
             "added its sell value to this Jokers {X:dark_edition,C:white}^Mult{}",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#1#{C:inactive} Mult)",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { mult = 1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult } }
@@ -271,9 +271,9 @@ SMODS.Joker {
             "Convert hand size beyond {C:attention}#2#{} to consumable slots at a {C:attention}#3# : 1{} ratio",
             "Convert consumable slots beyond {C:attention}#2#{} to Joker slots at a {C:attention}#3# : 1{} ratio",
             "Convert Joker slots beyond {C:attention}#2#{} to shop slots at a {C:attention}#3# : 1{} ratio",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { max = 100, gain = 1, ratio = 5} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain, card.ability.extra.max, card.ability.extra.ratio } }
@@ -321,9 +321,9 @@ SMODS.Joker {
         text = {
             "Quadruples all {C:attention}listed{} {C:green}probabilities{}",
             "{C:green}#1# in #2#{} chance to earn {C:dark_edition}+#3#{} Joker slot and {C:money}$#4#{} when {C:attention}consumable{} used",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { base = 1, chance = 40, slots = 1, money = 8 } },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.base, card.ability.extra.chance, 'oa6.28')
@@ -366,9 +366,9 @@ SMODS.Joker {
             "Earn {C:money}$#1#{} at end of round",
             "Increases by {C:money}$#2#{} when planet card used",
             "Scales {C:dark_edition,E:1}Quadratically{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { cur = 1, inc = 1, incsq = 1 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.cur, card.ability.extra.inc, card.ability.extra.incsq}}
@@ -411,9 +411,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Cartomancer{}",
         text = {
             "{C:green}#1# in #2#{} chance to create a {C:tarot}tarot{} card when a {C:attention}consumable{} is used",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { min = 1, prob = 2 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.min, card.ability.extra.prob}}
@@ -443,9 +443,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Mime{}",
         text = {
             "Retrigger all playing cards {C:attention}#1#{} times",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { triggers = 3 } },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.triggers}}
@@ -479,9 +479,9 @@ SMODS.Joker {
         text = {
             "{X:dark_edition,C:white}+^#1#{} Mult for each {C:attention}Steel card{} in deck",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { gain = 0.15 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -515,9 +515,9 @@ SMODS.Joker {
         text = {
             "{C:attention}Retrigger{} each played card {C:attention}once{}",
             "for each hand played this round",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
     end,
@@ -550,9 +550,9 @@ SMODS.Joker {
         text = {
             "Adds {C:mult}Mult{} equal to n-th entry in the",
             "{C:attention}fibonacci sequence{}, where n is the current {C:mult}Mult{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { } },
     loc_vars = function(self, info_queue, card)
     end,

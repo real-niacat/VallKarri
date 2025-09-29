@@ -7,9 +7,9 @@ SMODS.Joker {
             "Restore {C:attention}#1#{} taken Joker slot when {C:attention}boss{} defeated on an odd ante",
             "{C:inactive}(Does not work below {C:attention}#2#{C:inactive} Joker slots)",
             quote("femtanyl"),
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { cost = 1, req = 4, taken = 0 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.cost, card.ability.extra.req } }
@@ -44,9 +44,9 @@ SMODS.Joker {
         text = {
             "When {C:attention}hand{} played, increase {C:chips}Chips{} and {C:mult}Mult{} per level",
             "of played {C:attention}poker hand{} by {C:attention}#1#{}",
-            credit("Grahkon")
         }
     },
+    valk_artist = "Grahkon",
     config = { extra = { inc = 1 } },
     loc_vars = function(self, info_queue, card)
         return {
@@ -78,10 +78,9 @@ SMODS.Joker {
             "{C:attention}consecutive{} hand played larger than blind size",
             "{C:inactive}(Does not reset on Boss Blinds){}",
             "{C:inactive}(Currently {X:red,C:white}X#2#{C:inactive} Mult){}",
-
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { cur = 1, gain = 0.3 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain, card.ability.extra.cur } }
@@ -121,9 +120,9 @@ SMODS.Joker {
         text = {
             "Creates a copy of the {C:attention}topmost{} tag when blind selected",
             "Lose {C:money}$#1#{} when this happens",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { money = 2 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
@@ -150,9 +149,9 @@ SMODS.Joker {
             "Scored {C:attention}9s{} give {X:mult,C:white}X#1#{} Mult",
             "Scored {C:attention}Mirrored{} cards give {X:chips,C:white}X#2#{} Chips",
             "{C:inactive,s:0.7}hm, where have i seen this face before?",
-            credit("aduckted")
         }
     },
+    valk_artist = "aduckted",
     config = { extra = { xmult = 1.09, xchips = 2.9 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS.m_valk_mirrored
@@ -191,10 +190,10 @@ SMODS.Joker {
         text = {
             "{X:mult,C:white}X#1#{} Mult",
             "Lose {X:mult,C:white}X#2#{} for every other {C:attention}Kitty{} Joker owned",
-            credit("mailingway"),
             catby("cg")
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.base - math.max(kitty_count(-1) * card.ability.extra.loss, 0), card.ability.extra.loss } }
     end,
@@ -223,10 +222,10 @@ SMODS.Joker {
             "Cards in hand are {C:attention}flipped{} when cards are drawn",
             "Gain {X:mult,C:white}X#1#{} Mult for each card drawn",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
-            credit("mailingway"),
             catby("Ren")
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain, card.ability.extra.xmult } }
     end,
@@ -266,9 +265,9 @@ SMODS.Joker {
             "Create a {C:attention}Kitty Tag{} when rerolling the shop",
             "{C:mult}+#1#{} Mult for each {C:attention}Kitty Tag{} owned",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
-            credit("mailingway"),
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult, card.ability.extra.mult * vallkarri.count_kitty_tags() } }
     end,
@@ -301,9 +300,9 @@ SMODS.Joker {
             "At end of round, each {C:attention}Kitty Tag{} has a {C:green}#1# in #2#{}",
             "chance to create another {C:attention}Kitty Tag{}",
             "Increase denominator by {C:attention}#3#{} for every {C:attention}#4# Kitty Tags{} owned",
-            credit("mailingway"),
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.base_num,
             card.ability.extra.base_den + math.floor(vallkarri.count_kitty_tags() / card.ability.extra.thresh))
@@ -344,9 +343,9 @@ SMODS.Joker {
         text = {
             "At end of round, gain {X:mult,C:white}X#1#{} Mult for each {C:attention}Kitty Tag{} owned",
             "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult){}",
-            credit("mailingway"),
         }
     },
+    valk_artist = "mailingway",
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain, card.ability.extra.mult } }
     end,
@@ -389,9 +388,9 @@ SMODS.Joker {
             "discord server contains {E:1}\":3\"{}",
             "{C:inactive,s:0.8}(#2#)",
             "{V:1,S:0.5}https://discord.gg/5d3HWu88yn{}",
-            credit("notmario"),
         }
     },
+    valk_artist = "notmario",
     loc_vars = function(self, info_queue, card)
         local active = string.find(vallkarri.last_message, ":3") and "Active!" or "Inactive"
         return { vars = { card.ability.extra.mult, active, colours = {
@@ -418,9 +417,9 @@ SMODS.Joker {
         name = "Coronal Ejection",
         text = {
             "{C:green}#1# in #2#{} chance to increase {C:gold}Ascension Power{} of played {C:attention}poker hand{} by {X:gold,C:white}+#3#{}",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     config = { extra = { num = 1, den = 10, power = 10 } },
     loc_vars = function(self, info_queue, card)
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den, 'coronal')
@@ -458,9 +457,9 @@ SMODS.Joker {
         text = {
             "Prevent death once then {C:red,E:1}self destructs{}",
             "{C:attention}Doubles{} your current {C:money}money{} when death is prevented",
-            credit("mailingway"),
         }
     },
+    valk_artist = "mailingway",
     blueprint_compat = true,
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over then
@@ -504,7 +503,6 @@ SMODS.Joker {
             "Adds a {C:chips}blue border{} which gets {C:attention}#3# pixel(s){}",
             "thicker at end of round",
             "{C:inactive}(Currently {C:attention}#4#{C:inactive} Pixels wide)",
-            credit("Nobody!"),
         }
     },
     loc_vars = function(self, info_queue, card)

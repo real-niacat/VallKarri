@@ -6,9 +6,9 @@ SMODS.Joker {
             "Permanently disables {C:mult}Mult{} in {C:attention}#1#{} rounds",
             "{C:inactive,s:0.6}(Yes, this does everything you think it does.)",
             "{C:red,E:1}Dramatically{} set money to {C:money}-$#2#{} when removed",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { rounds = 7 }, immutable = {drama = 66} },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.rounds, card.ability.immutable.drama}}
@@ -65,9 +65,9 @@ SMODS.Joker {
         name = "Hexaract",
         text = {
             "All Jokers give {X:dark_edition,C:white}^#1#{} Chips & Mult",
-            credit("Scraptake (2px edit by Lily :3)")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { echips = 1 - (1/6) } },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.echips}}
@@ -107,9 +107,9 @@ SMODS.Joker {
         name = "Joker of None",
         text = {
             "Playing cards are {C:red,E:1}destroyed{} when scored",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = {}, immutable = {} },
     loc_vars = function(self, info_queue, card)
         return { vars = {}}

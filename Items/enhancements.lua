@@ -6,9 +6,9 @@ SMODS.Enhancement {
             "Copies the {C:attention}Suit, Rank{} and {C:attention}Modifications{}",
             "of the card to the right",
             "{C:inactive}(Can replace self){}",
-            credit("mailingway")
         },
     },
+    valk_artist = "mailingway",
     atlas = "main",
     pos = {x = 10, y = 3},
     config = { immutable = { counter = 5 } },

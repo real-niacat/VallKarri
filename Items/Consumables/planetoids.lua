@@ -69,9 +69,9 @@ for i,planetoid in ipairs(planetoid_cards) do
                 "for each time {C:attention}#4#{} has been",
                 "used this run",
                 "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-                credit("mailingway"),
             }
         },
+        valk_artist = "mailingway",
         pos = planetoid.pos,
         atlas = "oid",
         display_size = {w=64, h=78},

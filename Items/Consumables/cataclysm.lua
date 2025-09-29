@@ -63,7 +63,6 @@ SMODS.ConsumableType {
 --         name = "",
 --         text = {
 --             "",
---             credit("Pangaea"),
 --         }
 --     },
 --     pos = { x = 0, y = 0 },
@@ -97,9 +96,9 @@ SMODS.Consumable {
         text = {
             "{C:planet}-#1#{} levels on all hands",
             "{X:planet,C:white}X#2#{} hand level scaling on all hands",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 0, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -137,9 +136,9 @@ SMODS.Consumable {
             "{C:attention}X#1#{} Joker values at end of round for the next {C:attention}#2#{} rounds",
             "Once this has hit {C:attention}0{} rounds,",
             "use this card to increase all Joker values by {C:attention}X#3#{}",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 1, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -193,9 +192,9 @@ SMODS.Consumable {
         text = {
             "{C:red}Debuff{} all owned Jokers. All future instances",
             "of those Jokers will have {C:attention}X#1#{} values",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 2, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -238,9 +237,9 @@ SMODS.Consumable {
         text = {
             "{C:red}-#1#{} discards",
             "{C:attention}+#1#{} consumable slots",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 3, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -274,9 +273,9 @@ SMODS.Consumable {
         text = {
             "Turn all owned Jokers into one random {C:attention}Joker{},",
             "then apply {C:purple}Eternal{} to all Jokers",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 4, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -312,9 +311,9 @@ SMODS.Consumable {
         text = {
             "{C:attention}Duplicate{} all cards in deck, then {C:attention}randomize{}",
             "all {C:attention}duplicated{} cards",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 5, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -359,9 +358,9 @@ SMODS.Consumable {
         text = {
             "{C:attention}-#1#{} Hand Size",
             "{C:attention}X#1#{} all Joker values",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 6, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -397,9 +396,9 @@ SMODS.Consumable {
             "Randomly {C:red}Banish{} each {C:planet}Planet{} card with",
             "a {C:green}#2# in #3#{} chance",
             "All tarot cards have {C:attention}X#1#{} values",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 7, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -448,9 +447,9 @@ local DISABLED_ONE = {
         name = "Takeover",
         text = {
             "TO REWORK",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 8, y = 0 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -480,9 +479,9 @@ local DISABLED_TWO = {
         name = "Maleficence",
         text = {
             "TO REWORK",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 0, y = 1 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -514,9 +513,9 @@ SMODS.Consumable {
         text = {
             "{C:red}Banish{} {C:attention}Jumbo{} and {C:attention}Mega{} {C:planet}Planet{} packs",
             "{C:attention}X#1#{} Chips and mult per level on all hands",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 1, y = 1 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -554,9 +553,9 @@ SMODS.Consumable {
         text = {
             "{C:red}Banish{} {C:attention}Jumbo{} and {C:attention}Mega{} {C:tarot}Tarot{} packs",
             "{C:attention}X#1#{} to all future {C:tarot}Tarot{} values",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 2, y = 1 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -603,9 +602,9 @@ SMODS.Consumable {
             "{C:red}Banish{} {C:attention}Jumbo{} and {C:attention}Mega{} {C:spectral}Spectral{} packs",
             "{C:attention}Hidden{} {C:spectral}Spectrals{} have a flat {C:green}5%{}",
             "chance to replace {C:attention}non-hidden{} {C:spectral}Spectral{} cards",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 3, y = 1 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -647,9 +646,9 @@ SMODS.Consumable {
         text = {
             "{C:red}Banish{} all owned {C:attention}Jokers{}, then create",
             "a {C:rare}Rare{} {C:attention}Joker{} for each banished {C:attention}Joker{}",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 4, y = 1 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -692,9 +691,9 @@ SMODS.Consumable {
         text = {
             "{C:attention}Tags{} are no longer obtainable,",
             "All future {C:spectral}Spectral{} cards have {C:attention}X#1#{} values",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 5, y = 1 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -739,9 +738,9 @@ SMODS.Consumable {
             "Randomly {C:red}Banish{} each {C:tarot}Tarot{} card with",
             "a {C:green}#1# in #2#{} chance,",
             "{C:spectral}Spectral{} cards can be found in shop",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 6, y = 1 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -783,9 +782,9 @@ SMODS.Consumable {
             "All owned Jokers are made {C:purple}Eternal{}",
             "Jokers have a {C:green}5%{} chance to be",
             "replaced by an {C:valk_exquisite}Exquisite{} Joker",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     pos = { x = 7, y = 1 },
     atlas = "cata",
     display_size = {w=83, h=103},
@@ -819,7 +818,6 @@ SMODS.Consumable {
 --         name = "Torrentuous",
 --         text = {
 --             "",
---             credit("Pangaea"),
 --         }
 --     },
 --     pos = { x = 8, y = 1 },
@@ -852,13 +850,12 @@ SMODS.Consumable {
         name = "Phoenix",
         text = {
             "{C:red}Unbanish{} a random used {C:valk_cataclysm}Cataclysm{} card",
-            credit("Pangaea"),
         }
     },
     pos = { x = 4, y = 2 },
     atlas = "cata",
     display_size = {w=83, h=103},
-
+    valk_artist = "Pangaea",
     config = { extra = { } },
 
     loc_vars = function(self, info_queue, card)
@@ -902,11 +899,10 @@ SMODS.Booster {
         text = {
             "Pick {C:attention}#1#{} of up to {C:attention}#2#{} {C:valk_cataclysm}Cataclysm{} cards",
             "to use immediately",
-            credit("Pangaea")
         },
         group_name = "Pack of Revelations"
     },
-
+    valk_artist = "Pangaea",
     draw_hand = false,
     config = {choose = 1, extra = 3},
 
@@ -937,10 +933,9 @@ SMODS.Consumable {
         text = {
             "All hands gain {X:dark_edition,C:white}^^#1#{} Chips & Mult for",
             "each used {C:valk_cataclysm}cataclysm{} card",
-            credit("Pangaea"),
         }
     },
-
+    valk_artist = "Pangaea",
     no_doe = true,
 
     config = { extra = {increase = 1.1} },
@@ -998,15 +993,10 @@ SMODS.Voucher {
         name = "Seven Trumpets",
         text = {
             "The {C:valk_cataclysm}Pack of Revelations{} can now appear in the shop",
-            credit("Pangaea")
         }
     },
-
+    valk_artist = "Pangaea",
     in_pool = function()
         return G.GAME.round_resets.ante > 2
     end,
-
-    
-
-
 }

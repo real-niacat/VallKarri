@@ -5,9 +5,9 @@ SMODS.Consumable {
         text = {
             "Create a random {C:valk_exquisite}Exquisite{} Joker",
             "{X:dark_edition,C:white}^#1#{} Effective Ante",
-            credit("Pangaea"),
         }
     },
+    valk_artist = "Pangaea",
     key = "freeway",
     atlas = "main",
     pos = {x=9, y=3, },
@@ -53,9 +53,9 @@ SMODS.Consumable {
         text = {
             "Select up to {C:attention}#1#{} Jokers, multiply all",
             "values on selected Jokers by between {C:attention}X#2#{} and {C:attention}X#3#{}",
-            credit("mailingway"),
         }
     },
+    valk_artist = "mailingway",
     key = "luck",
     pos = { x = 4, y = 4 },
     atlas = "main",
@@ -95,9 +95,9 @@ SMODS.Consumable {
         text = {
             "Select {C:attention}#1#{} Joker, create a {C:dark_edition}Negative{}",
             "and {C:attention}Perishable{} copy.",
-            credit("mailingway"),
         }
     },
+    valk_artist = "mailingway",
     key = "faker",
     pos = { x = 5, y = 10 },
     atlas = "main",
@@ -138,9 +138,9 @@ SMODS.Consumable {
         text = {
             "Randomize enhancement of all cards {C:attention}held-in-hand{}",
             "{C:inactive}(Vanilla enhancements only){}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Lil Mr. Slipstream",
     key = "gaster",
     pos = { x = 8, y = 9 },
     atlas = "main",
@@ -173,9 +173,9 @@ SMODS.Consumable {
         text = {
             "Randomize edition of all cards {C:attention}held-in-hand{}",
             "{C:inactive}(Vanilla editions only){}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     key = "missingno",
     pos = { x = 1, y = 9 },
     atlas = "main",
@@ -214,9 +214,9 @@ SMODS.Consumable {
             "{C:attention}#4#{} Hand Size",
             "May only be used {C:attention}#2#{} times per run",
             "{C:inactive}(#3# Uses remain)",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     key = "succor",
     pos = { x = 0, y = 5 },
     atlas = "atlas2",
@@ -253,9 +253,9 @@ SMODS.Consumable {
         text = {
             "Convert up to {C:attention}#1#{} selected cards to {C:attention}Polychrome Kings{}",
             "Destroy {C:attention}#2#{} random cards in deck",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     key = "testosterone",
     pos = { x = 1, y = 6 },
     atlas = "atlas2",
@@ -293,9 +293,9 @@ SMODS.Consumable {
         text = {
             "Convert up to {C:attention}#1#{} selected cards to {C:attention}Polychrome Queens{}",
             "Destroy {C:attention}#2#{} random cards in deck",
-            credit("mailingway")
         }
     },
+    valk_artist = "mailingway",
     key = "estrogen",
     pos = { x = 0, y = 6 },
     atlas = "atlas2",

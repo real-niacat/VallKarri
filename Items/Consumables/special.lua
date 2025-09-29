@@ -27,9 +27,9 @@ SMODS.Consumable {
         text = {
             "Useless alone, part of a bigger picture.",
             "Can {C:attention}combine{} with other cards",
-            credit("Scraptake"),
         }
     },
+    valk_artist = "Scraptake",
     atlas = "main",
     pos = {x=13, y=0, },
     soul_pos = {x=14, y=0},
@@ -61,9 +61,9 @@ SMODS.Consumable {
         text = {
             "Useless alone, part of a bigger picture.",
             "Can {C:attention}combine{} with other cards",
-            credit("Scraptake"),
         }
     },
+    valk_artist = "Scraptake",
     atlas = "main",
     pos = {x=13, y=1, },
     soul_pos = {x=14, y=1},
@@ -95,9 +95,9 @@ SMODS.Consumable {
         text = {
             "Useless alone, part of a bigger picture.",
             "Can {C:attention}combine{} with other cards",
-            credit("Scraptake"),
         }
     },
+    valk_artist = "Scraptake",
     atlas = "main",
     pos = {x=13, y=4, },
     soul_pos = {x=14, y=4},
@@ -129,9 +129,9 @@ SMODS.Consumable {
         text = {
             "Useless alone, part of a bigger picture.",
             "Can {C:attention}combine{} with other cards",
-            credit("Scraptake"),
         }
     },
+    valk_artist = "Scraptake",
     atlas = "main",
     pos = {x=13, y=3, },
     soul_pos = {x=14, y=3},
@@ -163,9 +163,9 @@ SMODS.Consumable {
         text = {
             "Useless alone, part of a bigger picture.",
             "Can {C:attention}combine{} with other cards",
-            credit("Scraptake"),
         }
     },
+    valk_artist = "Scraptake",
     atlas = "main",
     pos = {x=13, y=2, },
     soul_pos = {x=14, y=2},

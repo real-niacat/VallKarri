@@ -11,13 +11,13 @@ SMODS.Consumable {
             "Select up to {C:attention}#1#{} cards, convert",
             "all selected cards into the {C:attention}leftmost{} card, then",
             "apply {C:attention}steel{} to all of them",
-            credit("Scraptake")
         }
     },
     config = { extra = { cards = 5 } },
     atlas = "main",
     pos = {x=10, y=0, },
     no_grc = true,
+    valk_artist = "Scraptake",
 
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_steel
@@ -49,9 +49,9 @@ SMODS.Consumable {
         text = {
             "Give all cards {C:attention}held-in-hand{}",
             "the same random {C:attention}vanilla enhancement{} and {C:attention}edition{}",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { } },
     atlas = "main",
     pos = {x=11, y=0, },
@@ -92,9 +92,9 @@ SMODS.Consumable {
             "Select up to {C:attention}#1#{} cards,",
             "{C:red}destroy{} all selected cards and create a ",
             "{C:dark_edition}Negative{} {C:rare}rare{} {C:attention}Joker{} for each card destroyed",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { extra = { cards = 3 } },
     atlas = "main",
     pos = {x=12, y=0, },
@@ -139,14 +139,13 @@ SMODS.Consumable {
             "Create {C:attention}#1#{} Negative consumable for every {C:attention}#2#{}",
             "{C:tarot}tarot{} cards used in run",
             "{C:inactive}(Currently #3#){}",
-            credit("Pangaea")
         }
     },
     config = { extra = { per = 1, req = 2 } },
     atlas = "main",
     pos = {x=10, y=1, },
     no_grc = true,
-
+    valk_artist = "Pangaea",
     loc_vars = function(self, info_queue, card)
         local sum = 0
         for i,amt in pairs(G.GAME.consumeable_usage) do
@@ -208,14 +207,13 @@ SMODS.Consumable {
         text = {
             "Each Joker has a {C:green}#1# in [Sell Value]{} chance to",
             "multiply all its values by its {C:money}Sell Value{}",
-            credit("Pangaea")
         }
     },
     config = { extra = { } },
     atlas = "main",
     pos = {x=11, y=1, },
     no_grc = true,
-
+    valk_artist = "Pangaea",
     loc_vars = function(self, info_queue, card)
         local num, blank = SMODS.get_probability_vars(card, 1, 1, 'valk_gameshow')
         return {vars = {
@@ -252,14 +250,13 @@ SMODS.Consumable {
         text = {
             "Select up to {C:attention}#1#{} cards,",
             "apply a random {C:attention}CCD{} to all selected cards",
-            credit("Pangaea")
         }
     },
     config = { extra = { cards = 5 } },
     atlas = "main",
     pos = {x=12, y=1, },
     no_grc = true,
-
+    valk_artist = "Pangaea",
     loc_vars = function(self, info_queue, card)
         return {vars = {
             card.ability.extra.cards

@@ -5,10 +5,9 @@ SMODS.Joker {
         text = {
             "Increase the values of all {C:attention}Food Jokers{} by {C:attention}X#1#{}",
             "at end of round",
-            credit("Scraptake")
         }
     },
-
+    valk_artist = "Scraptake",
     loc_vars = function(self, info_queue, card )
         return {vars = {card.ability.extra.change}}
     end,
@@ -50,10 +49,9 @@ SMODS.Joker {
         text = {
             "Create a {C:dark_edition}Negative{} {C:attention}Consumable{} when any",
             "{C:tarot}Tarot{} card is sold",
-            credit("Scraptake")
         }
     },
-
+    valk_artist = "Scraptake",
     loc_vars = function(self, info_queue, card )
         
     end,
@@ -84,10 +82,9 @@ SMODS.Joker {
         name = "{C:attention}Orange{}",
         text = {
             "Create a random {C:dark_edition}Negative{} {C:attention}Consumable{} for each unscoring card played",
-            credit("Scraptake")
         }
     },
-
+    valk_artist = "Scraptake",
     loc_vars = function(self, info_queue, card )
 
     end,

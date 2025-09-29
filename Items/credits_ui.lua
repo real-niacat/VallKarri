@@ -1,12 +1,14 @@
+local colours = {
+    code = HEX("FCA0FF"),
+    art = HEX("A0CCFF"),
+    shader = HEX("A1FF9E")
+}
+local text_scale = 0.30
+local scale = 0.5
 function vallkarri.credits_ui_def()
-    local text_scale = 0.30
-    local scale = 0.5
+    
 
-    local colours = {
-        code = HEX("FCA0FF"),
-        art = HEX("A0CCFF"),
-        shader = HEX("A1FF9E")
-    }
+    
 
     local ui = {
         n = G.UIT.ROOT,
@@ -28,23 +30,7 @@ function vallkarri.credits_ui_def()
                     {
                         n = G.UIT.C,
                         config = { align = "cm", minw = 3, padding = 0.1 },
-                        nodes = {
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Artists", colour = colours.art, scale = text_scale * 2, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Lily Felli", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Scraptake", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "mailingway", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Pangaea", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Lil Mr. Slipstream", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "lord.ruby", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Grahkon", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Nerxiana", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "notmario", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "triangle_snack", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Poker the Poker", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Aikoyori", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Aduckted", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                            { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "gudusername", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
-                        }
+                        nodes = vallkarri.artist_credit_ui()
                     },
                     {
                         n = G.UIT.C,
@@ -62,6 +48,34 @@ function vallkarri.credits_ui_def()
     }
 
     return ui
+end
+
+function vallkarri.artist_credit_ui()
+    local built = {
+        { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Artists", colour = colours.art, scale = text_scale * 2, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Lily Felli", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Scraptake", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "mailingway", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Pangaea", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Lil Mr. Slipstream", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "lord.ruby", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Grahkon", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Nerxiana", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "notmario", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "triangle_snack", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Poker the Poker", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Aikoyori", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "Aduckted", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+        -- { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = "gudusername", colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}},
+    }
+
+    for artist,_ in pairs(vallkarri.credited_artists) do
+        table.insert(built, 
+        { n = G.UIT.R, config = {}, nodes = {{ n = G.UIT.T, config = { text = artist, colour = colours.art, scale = text_scale, shadow = true, align = "tm" } }}}
+        )
+    end
+
+    return built
 end
 
 -- return vallkarri.credits_ui_def()

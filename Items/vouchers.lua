@@ -241,10 +241,9 @@ SMODS.Voucher {
         text = {
             "{C:attention}Jokers{} have a {C:green}5%{} chance to be replaced by",
             "a {C:legendary}Legendary{} Joker when created",
-            credit("Pangaea")
         }
     },
-
+    valk_artist = "Pangaea",
     cost = 20,
 
     loc_vars = function(self, info_queue, card)
@@ -269,10 +268,9 @@ SMODS.Voucher {
         text = {
             "{C:attention}Jokers{} have a {C:green}2%{} chance to be replaced by",
             "an {C:valk_exquisite}Exquisite{} Joker when created",
-            credit("Pangaea")
         }
     },
-
+    valk_artist = "Pangaea",
     cost = 20,
 
     loc_vars = function(self, info_queue, card)
@@ -294,10 +292,9 @@ SMODS.Voucher {
         text = {
             "{C:attention}Jokers{} have a {C:green}1%{} chance to be replaced by",
             "a {C:valk_prestigious}Prestigious{} Joker when created",
-            credit("Pangaea")
         }
     },
-
+    valk_artist = "Pangaea",
     cost = 20,
 
     loc_vars = function(self, info_queue, card)
@@ -348,10 +345,9 @@ SMODS.Voucher {
         name = "Reptilian",
         text = {
             "Always draw {C:attention}#1#{} more card(s) when drawing cards",
-            credit("mailingway")
         }
     },
-
+    valk_artist = "mailingway",
     cost = 10,
     config = {extra = {cards = 1}},
     loc_vars = function(self, info_queue, card)
@@ -372,10 +368,9 @@ SMODS.Voucher {
         text = {
             "Always draw at least {C:attention}#1#{} cards, even if you",
             "wouldn't have drawn cards",
-            credit("mailingway")
         }
     },
-
+    valk_artist = "mailingway",
     cost = 10,
     config = {extra = {cards = 2}},
     loc_vars = function(self, info_queue, card)

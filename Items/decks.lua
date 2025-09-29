@@ -5,9 +5,9 @@ SMODS.Back {
         text = {
             "Normal ante gain is {C:red,E:1}disabled{}",
             "{C:attention}Overscoring{} is substantially harsher",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     pos = {x=7, y=7},
     atlas = "main",
     apply = function()
@@ -25,9 +25,9 @@ SMODS.Back {
             "After hand scores,",
             "all Joker {C:attention}end-of-round{}",
             "effects are triggered",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     pos = {x=7, y=8},
     atlas = "main",
     calculate = function(center, back, context)
@@ -55,10 +55,9 @@ SMODS.Back {
             "and have their {C:green}chance{} increase when the roll fails",
             "{X:dark_edition,C:white}^#1#{} Effective Ante",
             -- "{C:attention}X3{} Blind Size",
-            credit("Scraptake")
         }
     },
-
+    valk_artist = "Scraptake",
     config = { rate = 2, inc = 0.5, eeante = 1.5, tauic_deck = true },
     pos = {x=7, y=9},
     atlas = "main",
@@ -80,9 +79,9 @@ SMODS.Back {
             "{C:attention,T:v_valk_exquisite_perkup}Exquisite PERK-UP{}, and ",
             "{C:attention,T:v_valk_prestige_up}PRESTIGE-UP{}",
             "{C:attention}X#1#{} Effective Ante when a card is bought",
-            credit("Scraptake")
         }
     },
+    valk_artist = "Scraptake",
     config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exquisite_perkup", "v_valk_prestige_up" }, eante = 1.05 },
     pos = {x=9, y=8},
     atlas = "main",
@@ -111,9 +110,9 @@ if AKYRS then
                 "{C:attention}Infinite{} card selection limit",
                 "Spelling a card {C:attention}creates it{}",
                 "{C:red}Pointer blacklist{} applies to spelled words",
-                credit("aikoyori")
             }
         },
+        valk_artist = "Aikoyori",
         pos = {x=10, y=8},
         atlas = "main",
         calculate = function(center, back, context)

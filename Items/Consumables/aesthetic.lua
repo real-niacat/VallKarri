@@ -71,9 +71,9 @@ for _, edit in ipairs(aesthetic_cards) do
             text = {
                 "Enhance up to {C:attention}#1#{} selected",
                 "Joker with {C:attention}#2#{}",
-                credit("Pangaea"),
             }
         },
+        valk_artist = "Pangaea",
         cost = 7,
         pos = edit.pos,
         atlas = "aes",
@@ -111,12 +111,11 @@ SMODS.Consumable {
         text = {
             "{C:attention}Editions{} of all owned jokers are {C:red}banished{}",
             "{C:attention}Editions{} appear {C:attention}X#1#{} more often",
-            credit("Pangaea"),
         }
     },
     pos = { x = 4, y = 0 },
     atlas = "aes",
-
+    valk_artist = "Pangaea",
     config = { extra = { mult = 10 } },
 
     loc_vars = function(self, info_queue, card)
@@ -159,12 +158,11 @@ SMODS.Consumable {
         text = {
             "Give all jokers a random {C:attention}Edition{}",
             "{C:attention}+#1#{} Effective Ante",
-            credit("Pangaea"),
         }
     },
     pos = { x = 4, y = 1 },
     atlas = "aes",
-
+    valk_artist = "Pangaea",
     config = { extra = { ante = 2 } },
 
     loc_vars = function(self, info_queue, card)
