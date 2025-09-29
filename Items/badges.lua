@@ -175,7 +175,7 @@ valk_badgetypes = {
         color = G.C.RED,
         text_color = G.C.WHITE,
         func = function(center)
-            return center.no_grc
+            return center.no_grc and (SMODS.Mods["Cryptid"] or {}).can_load
         end,
         excessive = true,
     },
@@ -184,7 +184,7 @@ valk_badgetypes = {
         color = G.C.GOLD,
         text_color = G.C.WHITE,
         func = function(center)
-            return center.no_doe
+            return center.no_doe and (SMODS.Mods["Cryptid"] or {}).can_load
         end
     },
     kitty = {
