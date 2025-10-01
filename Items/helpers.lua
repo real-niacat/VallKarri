@@ -793,11 +793,11 @@ SMODS.DrawStep {
         end
 
         local scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) +
-        0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) *
-        (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
+            0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) *
+            (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
 
         local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) +
-        0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
+            0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
 
         for _, child in pairs(card.inf_layers) do
             if child.override_scale then
@@ -834,4 +834,27 @@ function vallkarri.random_key_from_pool(pool)
         center = pseudorandom_element(_pool, pseudoseed(_pool_key .. '_resample' .. it))
     end
     return center
+end
+
+function vallkarri.load(save_name)
+    if G.GAME and G.GAME.vallkarri_saves and G.GAME.vallkarri_saves[save_name] then
+        G.E_MANAGER:add_event(
+        Event({
+            trigger = "after",
+            delay = G.SETTINGS.GAMESPEED,
+            func = function()
+                G:delete_run()
+                G:start_run({
+                    savetext = STR_UNPACK(G.GAME.vallkarri_saves[save_name]),
+                })
+            end,
+        }),
+        "other"
+    )
+    end
+end
+
+function vallkarri.save(save_name)
+    G.GAME.vallkarri_saves = G.GAME.vallkarri_saves or {}
+    G.GAME.vallkarri_saves[save_name] = STR_PACK(G.culled_table)
 end
