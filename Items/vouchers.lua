@@ -172,6 +172,7 @@ SMODS.Voucher {
             "{C:inactive,s:0.8}(Is #1##2# on current deck)",
         }
     },
+    valk_artist = "Scraptake",
 
     loc_vars = function(self, info_queue, card)
 

@@ -28,35 +28,6 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
 
     math.randomseed(os.time())
     vallkarri.main_menu_text = vallkarri.choose_main_menu_text()
-    vallkarri.main_menu_ui = UIBox({
-        definition = {
-            n = G.UIT.ROOT,
-            config = {
-                align = "cm",
-                colour = G.C.UI.TRANSPARENT_DARK
-            },
-            nodes = {
-                {
-                    n = G.UIT.T,
-                    config = {
-                        scale = 0.5,
-                        ref_table = vallkarri,
-                        ref_value = "main_menu_text",
-                        colour = G.C.UI.TEXT_LIGHT
-                    }
-                }
-            }
-        },
-        config = {
-            align = "tri",
-            bond = "Weak",
-            offset = {
-                x = (-G.title_top.T.x) + 2,
-                y = G.title_top.T.y + 3.2
-            },
-            major = G.ROOM_ATTACH
-        }
-    })
 
 
     G.E_MANAGER:add_event(Event({
@@ -87,6 +58,8 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
                     end
                 end
             end
+
+            vallkarri.initialize_splashtext()
             return true
         end,
         trigger = "after",

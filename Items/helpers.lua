@@ -839,18 +839,18 @@ end
 function vallkarri.load(save_name)
     if G.GAME and G.GAME.vallkarri_saves and G.GAME.vallkarri_saves[save_name] then
         G.E_MANAGER:add_event(
-        Event({
-            trigger = "after",
-            delay = G.SETTINGS.GAMESPEED,
-            func = function()
-                G:delete_run()
-                G:start_run({
-                    savetext = STR_UNPACK(G.GAME.vallkarri_saves[save_name]),
-                })
-            end,
-        }),
-        "other"
-    )
+            Event({
+                trigger = "after",
+                delay = G.SETTINGS.GAMESPEED,
+                func = function()
+                    G:delete_run()
+                    G:start_run({
+                        savetext = STR_UNPACK(G.GAME.vallkarri_saves[save_name]),
+                    })
+                end,
+            }),
+            "other"
+        )
     end
 end
 
@@ -861,4 +861,32 @@ end
 
 function vallkarri.best_hand_chips()
     return G.GAME.round_scores["hand"].amt
+end
+
+function vallkarri.initialize_splashtext()
+    G.valk_splash = DynaText {
+        colours = { G.C.VALK_PRESTIGIOUS },
+        shadow = true,
+        spacing = 1.5,
+        bump = true,
+        scale = 0.5,
+        -- string = {ref_table = vallkarri, ref_value = "main_menu_text"},
+        string = vallkarri.main_menu_text
+    }
+    G.valk_splash.VT.r = -0.1
+    G.valk_splash.T.r = -0.1
+    G.valk_splash.T.scale = 0
+    G.valk_splash:update_text(true)
+    G.valk_splash:set_alignment({
+        major = G.title_top,
+        type = 'cm',
+        bond = 'Strong',
+        offset = { x = 3.5, y = 3 }
+    })
+    G.E_MANAGER:add_event(Event({
+        func = function()
+            ease_value(G.valk_splash.T, "scale", 1)
+            return true
+        end
+    }))
 end
