@@ -1,5 +1,6 @@
 vallkarri.custom_colours = {
 	VALK_PRESTIGIOUS = { HEX("60f542"), HEX("5efaff") },
+	VALK_PRESTIGIOUS_LIGHTER = { HEX("A5FF93"), HEX("A1FCFF") },
 	VALK_UNPLEASANT = { HEX("22d71d"), HEX("7a9374"), HEX("fd2ef6"), HEX("c24462"), HEX("9b5300"), },
 	VALK_RENOWNED = { HEX("FF6FF8"), HEX("7810FF") },
 	VALK_EXQUISITE = { HEX("2B2EFF"), HEX("62EDFF"), HEX("0061CF") },

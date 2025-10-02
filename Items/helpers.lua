@@ -864,8 +864,10 @@ function vallkarri.best_hand_chips()
 end
 
 function vallkarri.initialize_splashtext()
+    --credit to JTEM from Hot Potato for Making This code Most.ly
+    --  but it is also dyantext shenanigans so  its not that complicated
     G.valk_splash = DynaText {
-        colours = { G.C.VALK_PRESTIGIOUS },
+        colours = { G.C.VALK_PRESTIGIOUS_LIGHTER },
         shadow = true,
         spacing = 1.5,
         bump = true,
@@ -875,7 +877,6 @@ function vallkarri.initialize_splashtext()
     }
     G.valk_splash.VT.r = -0.1
     G.valk_splash.T.r = -0.1
-    G.valk_splash.T.scale = 0
     G.valk_splash:update_text(true)
     G.valk_splash:set_alignment({
         major = G.title_top,
@@ -883,10 +884,4 @@ function vallkarri.initialize_splashtext()
         bond = 'Strong',
         offset = { x = 3.5, y = 3 }
     })
-    G.E_MANAGER:add_event(Event({
-        func = function()
-            ease_value(G.valk_splash.T, "scale", 1)
-            return true
-        end
-    }))
 end

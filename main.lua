@@ -30,6 +30,8 @@ vallkarri.splash_options = {
     "meow!",
     "VallKarri Yeah!",
     "Now with 50% more cats!",
+    "Play the game.",
+    "Tell your friends!",
 }
 
 vallkarri.credited_artists = {}
