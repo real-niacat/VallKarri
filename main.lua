@@ -32,6 +32,9 @@ vallkarri.splash_options = {
     "Now with 50% more cats!",
     "Play the game.",
     "Tell your friends!",
+    "ahahaha it would be really funny if i just had an extremely long splash text that went off the screen wouldn't it??????? laugh at my joke you fucking loser i swear to god",
+    "RIP Quilla",
+    "+4 Zulu",
 }
 
 vallkarri.credited_artists = {}

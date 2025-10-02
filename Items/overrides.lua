@@ -706,12 +706,7 @@ local old_draw = Game.draw
 function Game:draw()
     old_draw(self)
 
-    if G.valk_splash then
-        love.graphics.push()
-        G.valk_splash:translate_container()
-        G.valk_splash:draw()
-        love.graphics.pop()
-    end
+    
 
     local found = next(SMODS.find_card("j_valk_borderline_joker"))
     if found then

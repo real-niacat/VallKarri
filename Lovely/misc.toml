@@ -32,3 +32,20 @@ if G.GAME.blind and G.GAME.blind.name == "bl_valk_fuck" then
 end
 '''
 match_indent = true
+
+# copied from jtem again
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+position = 'before'
+pattern = "if G.debug_splash_size_toggle then "
+payload = '''
+if G.valk_splash then
+    love.graphics.push()
+    G.valk_splash:translate_container()
+    G.valk_splash:draw()
+    love.graphics.pop()
+end
+'''
+match_indent = true
+
