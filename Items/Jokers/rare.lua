@@ -285,7 +285,7 @@ SMODS.Joker {
         end
     end,
     pools = { ["Kitties"] = true },
-
+    blueprint_compat = true,
 }
 
 SMODS.Joker {

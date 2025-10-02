@@ -858,3 +858,7 @@ function vallkarri.save(save_name)
     G.GAME.vallkarri_saves = G.GAME.vallkarri_saves or {}
     G.GAME.vallkarri_saves[save_name] = STR_PACK(G.culled_table)
 end
+
+function vallkarri.best_hand_chips()
+    return G.GAME.round_scores["hand"].amt
+end

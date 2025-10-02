@@ -14,21 +14,22 @@ local quips = {
         },
         ["j_valk_illena"] = {
             { "the magic illena-ball says:", "you lose! maybe next time?" },
-            { "it's okay, you", "tried your best" }
+            { "it's okay, you",              "tried your best" }
         }
     },
     win = {
         ["j_valk_lily"] = {
-            { "i believed in you", "from the start"},
-            { "that was", "stressful, huh?" },
+            { "i believed in you",    "from the start" },
+            { "that was",             "stressful, huh?" },
             { "you alright?" },
-            { "can i go", "see Quilla now?" },
-            { "well, that was", "entropious" }
-
+            { "can i go",             "see Quilla now?" },
+            { "well, that was",       "entropious" },
+            { "was it possible",      "for you to lose?" },
+            { "numbersloppers these", "days..." },
         },
         ["j_valk_illena"] = {
             { "the magic illena-ball says:", "you win! congrats!" },
-            { "smile, i'll hang", "it up on my wall!" }
+            { "smile, i'll hang",            "it up on my wall!" }
         }
 
     }
@@ -37,7 +38,6 @@ local quips = {
 
 local iter = 0
 for name, character in pairs(quips.lose) do
-    
     for i, txt in ipairs(character) do
         iter = iter + 1
         -- print("initializing " .. tostring(txt))

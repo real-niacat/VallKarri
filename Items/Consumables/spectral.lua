@@ -366,6 +366,12 @@ SMODS.Consumable {
                     for _,to_destroy in pairs(self.area.cards) do
                         to_destroy:start_dissolve({G.C.RED}, G.SETTINGS.GAMESPEED*0.5)
                     end
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            G.FUNCS.exit_overlay_menu()
+                            return true
+                        end
+                    }))
                 end
             end
         end
@@ -376,7 +382,7 @@ G.FUNCS.open_void_potential = function(centers, choices)
     -- G.SETTINGS.paused = true
     G.GAME.void_potential_choices_left = choices
     G.FUNCS.overlay_menu {
-        definition = SMODS.card_collection_UIBox(centers, { #centers }, {back_func = "exit_overlay_menu"}),
+        definition = SMODS.card_collection_UIBox(centers, {#centers}, {back_func = "exit_overlay_menu"}),
     }
 end
 
