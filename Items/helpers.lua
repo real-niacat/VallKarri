@@ -871,17 +871,17 @@ function vallkarri.initialize_splashtext()
         shadow = true,
         spacing = 1.5,
         bump = true,
-        scale = 0.5,
+        scale = 0.55,
         -- string = {ref_table = vallkarri, ref_value = "main_menu_text"},
         string = vallkarri.main_menu_text
     }
-    G.valk_splash.VT.r = -0.1
-    G.valk_splash.T.r = -0.1
+    G.valk_splash.VT.r = -0.07
+    G.valk_splash.T.r = -0.07
     G.valk_splash:update_text(true)
     G.valk_splash:set_alignment({
         major = G.title_top,
         type = 'cm',
         bond = 'Strong',
-        offset = { x = 3.5, y = 3 }
+        offset = { x = 2.3, y = 2.4 }
     })
 end
