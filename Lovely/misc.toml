@@ -40,6 +40,15 @@ target = 'game.lua'
 position = 'before'
 pattern = "if G.debug_splash_size_toggle then "
 payload = '''
+if G.STAGE ~= G.STAGES.MAIN_MENU and G.valk_splash then
+    G.valk_splash:remove()
+    G.valk_splash = nil
+end
+
+if G.STAGE == G.STAGES.MAIN_MENU and not G.valk_splash then
+    vallkarri.initialize_splashtext()
+end
+
 if G.valk_splash then
     love.graphics.push()
     G.valk_splash:translate_container()

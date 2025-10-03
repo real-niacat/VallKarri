@@ -873,7 +873,7 @@ function vallkarri.initialize_splashtext()
         bump = true,
         scale = 0.55,
         -- string = {ref_table = vallkarri, ref_value = "main_menu_text"},
-        string = vallkarri.main_menu_text
+        string = vallkarri.main_menu_text or ""
     }
     G.valk_splash.VT.r = -0.07
     G.valk_splash.T.r = -0.07
