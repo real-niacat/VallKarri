@@ -1,3 +1,7 @@
+if not SMODS.DynaTextEffect then
+    return
+end
+
 SMODS.DynaTextEffect {
     key = "floaty",
     func = function(dynatext, index, letter)
