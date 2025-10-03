@@ -171,7 +171,7 @@ SMODS.Joker {
 SMODS.Joker {
     key = "lily",
     loc_txt = {
-        name = "Lily Felli",
+        name = "{E:valk_floaty}Lily Felli",
         text = {
             "{X:dark_edition,C:white}^^#1#{} Mult for each Joker owned",
             "{C:attention}Lordly{} Edition is {C:attention}#3#{} times more common",
