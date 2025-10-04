@@ -90,6 +90,29 @@ SMODS.Blind {
     boss = {min = 2, max = 0}
 }
 
+SMODS.Blind {
+    key = "jokers_in_deck",
+    loc_txt = {
+        name = "The Flipside",
+        text = {
+            "Jokers and Consumables swap places"
+        }
+    },
+    boss_colour = HEX("FFC04C"),
+    dollars = 6,
+    mult = 1,
+    boss = {min = 9, max = 0},
+    set_blind = function(self)
+        for _,card in pairs(G.jokers.cards) do
+            vallkarri.simple_draw(card, G.consumeables)
+        end
+
+        for _,card in pairs(G.consumeables.cards) do
+            vallkarri.simple_draw(card, G.jokers)
+        end
+    end
+}
+
 -- SMODS.Blind {
 --     key = "the_y",
 --     loc_txt = {

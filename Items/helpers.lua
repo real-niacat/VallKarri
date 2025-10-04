@@ -885,3 +885,7 @@ function vallkarri.initialize_splashtext()
         offset = { x = 2.3, y = 2.4 }
     })
 end
+
+function vallkarri.simple_draw(card, to)
+    draw_card(card.area, to, nil,  nil, nil, card, nil, nil, false)
+end
