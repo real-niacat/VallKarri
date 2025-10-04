@@ -1,4 +1,5 @@
-SMODS.Joker {
+-- SMODS.Joker {
+local dumb = {
     key = "killmult",
     loc_txt = {
         name = "Avulsion",
