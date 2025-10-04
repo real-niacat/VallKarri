@@ -169,5 +169,13 @@ SMODS.Joker {
     no_doe = true,
 
     calculate = function(self, card, context)
+		local my_ind = vallkarri.index(card)
+		local card_1,card_2,card_3 = G.jokers.cards[my_ind+1],G.jokers.cards[my_ind+2],G.jokers.cards[my_ind+3]
+
+		return SMODS.merge_effects({
+			SMODS.blueprint_effect(card, card_1, context),
+			SMODS.blueprint_effect(card, card_2, context),
+			SMODS.blueprint_effect(card, card_3, context),
+			})
     end
 }
