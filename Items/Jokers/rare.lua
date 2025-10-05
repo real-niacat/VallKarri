@@ -508,7 +508,7 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xchips, card.ability.extra.gain, card.ability.extra.border_width_gain, card.ability.extra.border_width} }
     end,
-    config = { extra = { xchips = 1, gain = 0.2, border_width = 2, border_width_gain = 2 } },
+    config = { extra = { xchips = 1, gain = 0.2, border_width = 5, border_width_gain = 1 } },
     calculate = function(self, card, context)
         if context.joker_main then
             return {
