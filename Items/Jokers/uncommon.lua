@@ -579,3 +579,31 @@ SMODS.Joker {
     end,
 
 }
+
+SMODS.Joker {
+    key = "take_your_age",
+    rarity = 2,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 8,
+    loc_txt = {
+        name = "Take your age",
+        text = {
+            "{C:mult}+#1#{} Mult for each Mod installed",
+            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
+        }
+    },
+    valk_artist = nil,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.total / vallkarri.mods_installed(), card.ability.extra.total } }
+    end,
+    config = { extra = { total = 25 } },
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.total
+            }
+        end
+    end,
+
+}

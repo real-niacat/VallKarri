@@ -889,3 +889,11 @@ end
 function vallkarri.simple_draw(card, to)
     draw_card(card.area, to, nil,  nil, nil, card, nil, nil, false)
 end
+
+function vallkarri.mods_installed()
+    local mods = 0
+    for _,mod in pairs(SMODS.Mods) do
+        mods = mods + (mod.can_load and 1 or 0)
+    end
+    return mods
+end

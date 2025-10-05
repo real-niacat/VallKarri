@@ -492,8 +492,8 @@ SMODS.Joker {
 SMODS.Joker {
     key = "borderline_joker",
     rarity = 3,
-    atlas = "phold",
-    pos = { x = 0, y = 1 },
+    atlas = "main",
+    pos = { x = 12, y = 9 },
     cost = 8,
     loc_txt = {
         name = "Borderline Joker",
