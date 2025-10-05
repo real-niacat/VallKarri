@@ -246,7 +246,7 @@ function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, h
         tab.main[#tab.main + 1] = { {
             n = 1,
             config = {
-                scale = 0.315,
+                scale = 0.25,
                 outline_colour = G.C.UI.OUTLINE_LIGHT,
                 text_drawable = love.graphics.newText(ex_lang.font.FONT, { G.C.UI.TEXT_INACTIVE, line }),
                 colour = G.C.UI.TEXT_INACTIVE,
