@@ -9,7 +9,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Grahkon",
-    config = { extra = { mult = 0.05 } },
+    config = { extra = { mult = 0.01 } },
     loc_vars = function(self, info_queue, card)
         local total = valk_additions()
 
@@ -22,7 +22,6 @@ SMODS.Joker {
     pos = { x = 8, y = 11 },
     soul_pos = { extra = { x = 9, y = 11 }, x = 10, y = 11 },
     cost = 500,
-    immutable = true,
     demicoloncompat = true,
     calculate = function(self, card, context)
         if context.joker_main or context.forcetrigger then
