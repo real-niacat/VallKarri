@@ -897,3 +897,29 @@ function vallkarri.mods_installed()
     end
     return mods
 end
+
+function vallkarri.poll_face(seed)
+    local faces = {"Jack", "Queen", "King"}
+    return pseudorandom_element(faces, seed)
+end
+
+function vallkarri.poll_number(seed)
+    return pseudorandom(seed, 2, 10)
+end
+
+function Card:is_in_collection()
+    for _,area in pairs(G.your_collection) do
+        if self.area == area then
+            return true
+        end
+    end
+    return false
+end
+
+function vallkarri.get_cards(area)
+    local cards = {}
+    for _,card in pairs(area.cards) do
+        table.insert(cards, card)
+    end
+    return cards
+end

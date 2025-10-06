@@ -112,6 +112,13 @@ return {
                     "This card will {C:red}Banish{}",
                     "itself when used"
                 }
+            },
+            tauic_info = {
+                name = "Tauic Variant",
+                text = {
+                    "This card has a {C:valk_fire}Tauic{} variant",
+                    "Click it to swap between the two!",
+                }
             }
 
         },

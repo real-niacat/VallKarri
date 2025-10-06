@@ -35,6 +35,8 @@ vallkarri.splash_options = {
     "ahahaha it would be really funny if i just had an extremely long splash text that went off the screen wouldn't it??????? laugh at my joke you fucking loser i swear to god",
     "RIP Quilla",
     "+4 Zulu",
+    "Not very Oblivious!",
+    "i  s e e  y o u ",
 }
 
 vallkarri.credited_artists = {}

@@ -29,7 +29,6 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
     math.randomseed(os.time())
     vallkarri.main_menu_text = vallkarri.choose_main_menu_text()
 
-
     G.E_MANAGER:add_event(Event({
         func = function()
             local newcard = Card(
@@ -593,7 +592,7 @@ function get_blind_amount(ante)
     G.GAME.run_ante_modifiers = G.GAME.run_ante_modifiers or {}
     for _, mod in pairs(G.GAME.run_ante_modifiers) do
         ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or
-        (mod.o == "^" and (ante ^ mod.v)) or ante
+            (mod.o == "^" and (ante ^ mod.v)) or ante
     end
 
     ante = math.floor(ante) --prevent issues with decimal antes
@@ -610,7 +609,7 @@ function vallkarri.refresh_ante_diff()
     G.GAME.run_ante_modifiers = G.GAME.run_ante_modifiers or {}
     for _, mod in pairs(G.GAME.run_ante_modifiers) do
         ante = (mod.o == "+" and (ante + mod.v)) or (mod.o == "*" and (ante * mod.v)) or
-        (mod.o == "^" and (ante ^ mod.v)) or ante
+            (mod.o == "^" and (ante ^ mod.v)) or ante
     end
 
     ante = math.floor(ante)
@@ -643,7 +642,20 @@ function SMODS.injectItems(...)
 
         if card.valk_artist then
             vallkarri.credited_artists[card.valk_artist] = vallkarri.credited_artists[card.valk_artist] or {}
-            table.insert(vallkarri.credited_artists[card.valk_artist], card.key) 
+            table.insert(vallkarri.credited_artists[card.valk_artist], card.key)
+        end
+    end
+
+    for name, center in pairs(G.P_CENTER_POOLS.Cataclysm) do
+        G.P_CENTER_POOLS.Cataclysm[name].cost = 16
+        G.P_CENTER_POOLS.Cataclysm[name].in_pool = function(self, args)
+            return not (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count)
+        end
+        -- info_queue[#info_queue + 1] = {set = "Other", key = first}
+        local original_locvar = G.P_CENTER_POOLS.Cataclysm[name].loc_vars
+        G.P_CENTER_POOLS.Cataclysm[name].loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue + 1] = { set = "Other", key = "cata_self_banish" }
+            return original_locvar(self, info_queue, card)
         end
     end
 end
@@ -652,7 +664,7 @@ local old_draw = Game.draw
 function Game:draw()
     old_draw(self)
 
-    
+
 
     local found = next(SMODS.find_card("j_valk_borderline_joker"))
     if found then

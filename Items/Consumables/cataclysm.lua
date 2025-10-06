@@ -1,22 +1,3 @@
-local fakestart = Game.main_menu
-function Game:main_menu(...)
-    fakestart(self, ...)
-
-    for name,center in pairs(G.P_CENTER_POOLS.Cataclysm) do
-        G.P_CENTER_POOLS.Cataclysm[name].cost = 16
-        G.P_CENTER_POOLS.Cataclysm[name].in_pool = function(self, args)
-            return not (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count)
-        end
-        -- info_queue[#info_queue + 1] = {set = "Other", key = first}
-        local original_locvar = G.P_CENTER_POOLS.Cataclysm[name].loc_vars
-        G.P_CENTER_POOLS.Cataclysm[name].loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue + 1] = {set = "Other", key = "cata_self_banish"}
-            return original_locvar(self, info_queue, card)
-        end
-    end
-
-end
-
 local lc = loc_colour
 function loc_colour(_c, _default)
 	if not G.ARGS.LOC_COLOURS then
