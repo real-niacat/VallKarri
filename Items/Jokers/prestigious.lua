@@ -85,7 +85,6 @@ SMODS.Joker {
     pos = { x = 2, y = 13 },
     soul_pos = { x = 3, y = 13 },
     cost = 500,
-    immutable = true,
     demicoloncompat = true,
     blueprint_compat = true,
     calculate = function(self, card, context)
