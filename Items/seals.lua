@@ -29,13 +29,6 @@ SMODS.Seal {
             SMODS.calculate_effect({ dollars = card.ability.seal.extra.money, extra = { chips = G.GAME.dollars*2 } }, card)
         end
     end,
-    draw = function(self, card, layer)
-        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
-            G.shared_seals[card.seal].role.draw_major = card
-            G.shared_seals[card.seal]:draw_shader('dissolve', nil, nil, nil, card.children.center)
-            G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
-        end
-    end,
     pos = { x = 0, y = 0 }, --vanilla gold seal, change when sprite
     atlas = "seals"
 }
@@ -85,13 +78,6 @@ SMODS.Seal {
             }
         end
     end,
-    draw = function(self, card, layer)
-        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
-            G.shared_seals[card.seal].role.draw_major = card
-            G.shared_seals[card.seal]:draw_shader('dissolve', nil, nil, nil, card.children.center)
-            G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
-        end
-    end,
     pos = { x = 2, y = 0 }, --vanilla gold seal, change when sprite
     atlas = "seals"
 }
@@ -121,13 +107,6 @@ SMODS.Seal {
                 end
             }))
             return { message = "+1 " .. localize{type="name_text",set="Spectral",key="c_black_hole"}, colour = G.C.SECONDARY_SET.Spectral}
-        end
-    end,
-    draw = function(self, card, layer)
-        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
-            G.shared_seals[card.seal].role.draw_major = card
-            G.shared_seals[card.seal]:draw_shader('dissolve', nil, nil, nil, card.children.center)
-            G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
         end
     end,
     pos = { x = 3, y = 0 }, --vanilla gold seal, change when sprite
@@ -174,13 +153,6 @@ SMODS.Seal {
                 end
             }))
             return { message = localize('k_plus_spectral'), colour = G.C.SECONDARY_SET.Spectral }
-        end
-    end,
-    draw = function(self, card, layer)
-        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
-            G.shared_seals[card.seal].role.draw_major = card
-            G.shared_seals[card.seal]:draw_shader('dissolve', nil, nil, nil, card.children.center)
-            G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
         end
     end,
     pos = { x = 1, y = 0 }, --vanilla gold seal, change when sprite
