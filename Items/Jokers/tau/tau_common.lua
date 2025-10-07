@@ -4,8 +4,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Joker{}",
         text = {
-            "{X:dark_edition,C:white}^#1#{} Mult for every Tauic card",
-            "{C:inactive}Includes this card{}",
+            "{X:mult,C:white}X#1#{} Mult for every {C:valk_fire}Tauic{} Joker owned",
+            "{C:inactive}(Includes self){}",
         }
     },
     valk_artist = "Scraptake",
@@ -21,7 +21,7 @@ SMODS.Joker {
     no_doe = true,
     calculate = function(self, card, context)
         if (context.other_joker and context.other_joker.config.center.rarity == "valk_tauic") then
-            return {e_mult = card.ability.extra.mult}
+            return {xmult = card.ability.extra.mult}
         end
     end
 }
@@ -34,7 +34,7 @@ SMODS.Joker {
         text = {
             "{C:attention}#1#{} free {C:green}rerolls{} in shop",
             "When blind selected, gain {C:attention}#2#{} {C:blue}hand{} and {C:red}discard{} per {C:green}reroll{} in last shop",
-            "{C:inactive}Currently +#3# hands and discards{}",
+            "{C:inactive}(Currently +#3# {C:blue}Hands{C:inactive} and {C:red}Discards{C:inactive})",
         }
     },
     valk_artist = "Scraptake",
@@ -77,13 +77,17 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Sin Joker{}",
         text = {
-            "{X:dark_edition,C:white}^#1#{} Chips for every playing card with a vanilla suit",
+            "{X:mult,C:white}X#1#{} Mult when a card is scored",
+            "Increase by {X:mult,C:white}X#2#{} for every consecutive card of the same Suit scored",
+            "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult, gaining on {V:1}#4#{C:inactive})",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { chips = 1.03} },
+    config = { extra = { base = 1, cur = 1, gain = 0.05, current_suit = "Spades"} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.chips } }
+        return { vars = { card.ability.extra.base, card.ability.extra.gain, card.ability.extra.cur, card.ability.extra.current_suit, colours = {
+            G.C.SUITS[card.ability.extra.current_suit]
+        } } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -92,10 +96,19 @@ SMODS.Joker {
     cost = 4,
     no_doe = true,
     calculate = function(self, card, context)
-        if (context.individual and context.other_card and not context.end_of_round) then
-            if (context.other_card:is_suit("Spades") or context.other_card:is_suit("Hearts") or context.other_card:is_suit("Clubs") or context.other_card:is_suit("Diamonds")) then
-                return {e_chips = card.ability.extra.chips}
+        if (context.individual and context.cardarea == G.play) then
+            if context.other_card:is_suit(card.ability.extra.current_suit) then
+                card.ability.extra.cur = card.ability.extra.cur + card.ability.extra.gain
+                quick_card_speak(card, localize("k_upgrade_ex"))
+            else
+                card.ability.extra.cur = card.ability.extra.base
+                card.ability.extra.current_suit = context.other_card.base.suit
+                quick_card_speak(card, localize("k_reset_ex"))
             end
+
+            return {
+                xmult = card.ability.extra.cur
+            }
         end
     end
 }
@@ -106,9 +119,9 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Blue Joker{}",
         text = {
-            "{X:dark_edition,C:white}+^#1#{} Chips for each",
+            "{X:chips,C:white}X#1#{} Chips for each",
             "remaining card in {C:attention}deck{}",
-            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Chips)",
+            "{C:inactive}(Currently {X:chips,C:white}X#2#{C:inactive} Chips)",
         }
     },
     valk_artist = "Scraptake",
@@ -135,7 +148,7 @@ SMODS.Joker {
         
         if context.joker_main then
             return {
-                echips = card.ability.extra.per * #G.deck.cards
+                xchips = card.ability.extra.per * #G.deck.cards
             }
         end
 
@@ -180,14 +193,16 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Egg{}",
         text = {
-            "Gains {X:dark_edition,C:white}^#1#{} of {C:attention}sell value{} at end of round",
+            "Gains {C:money}$#1#{} of Sell Value at end of round",
+            "{C:green}#2# in #3#{} Chance to come back after being removed",
+            "{C:attention}Doubles{} Sell Value gain at end of round",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { evalue = 1.5 } },
+    config = { extra = { gain = 3, num = 3, den = 5 } },
     loc_vars = function(self, info_queue, card)
-
-        return { vars = { card.ability.extra.evalue } }
+        local num,den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den)
+        return { vars = { card.ability.extra.gain, num, den } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -198,10 +213,20 @@ SMODS.Joker {
     calculate = function(self, card, context)
         
         if context.end_of_round and context.main_eval then
-            quick_card_speak(card, "Upgraded!")
-            card.sell_cost = math.ceil(card.sell_cost ^ card.ability.extra.evalue)
+            card.ability.extra_value = card.ability.extra_value + card.ability.extra.gain
+            card.ability.extra.gain = card.ability.extra.gain * 2
+            card:set_cost()
+            return {
+                message = localize("k_val_up"),
+                colour = G.C.MONEY
+            }
         end
 
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        if (not from_debuff) and SMODS.pseudorandom_probability(card, "valk_tau_egg", card.ability.extra.num, card.ability.extra.den) then
+            SMODS.add_card({key = "j_valk_tau_egg"})
+        end 
     end
 }
 
@@ -211,8 +236,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Summit{}",
         text = {
-            "When {C:red}discarding{}, multiply all hand levels by the amount",
-            "of discards remaining",
+            "Level up {C:attention}All Hands{} when a card is {C:red}Discarded{}",
+            "{C:inactive,s:0.7}(You probably want Handy for this one!)",
         }
     },
     valk_artist = "Scraptake",
@@ -229,9 +254,8 @@ SMODS.Joker {
     no_doe = true,
     calculate = function(self, card, context)
         
-        if context.pre_discard then
-
-            level_all_hands(card, 0, to_number(G.GAME.current_round.discards_left))
+        if context.discard then
+            level_all_hands(context.card, 1)
         end
 
     end
@@ -243,12 +267,12 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Banner{}",
         text = {
-            "{X:dark_edition,C:white}+^#1#{} Chips per discard remaining",
-            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Chips)",
+            "{X:chips,C:white}X#1#{} Chips per discard remaining",
+            "{C:inactive}(Currently {X:chips,C:white}X#2#{C:inactive} Chips)",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { per = 2 } },
+    config = { extra = { per = 3 } },
     loc_vars = function(self, info_queue, card)
         local d = 4
         if G and G.GAME and G.GAME.current_round then
@@ -266,7 +290,7 @@ SMODS.Joker {
         
         if context.joker_main then
 
-            return {echips = 1 + (card.ability.extra.per * G.GAME.current_round.discards_left)}
+            return {xchips = 1 + (card.ability.extra.per * G.GAME.current_round.discards_left)}
 
         end
 
@@ -279,13 +303,13 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Credit Card{}",
         text = {
-            "Refund {C:attention}#1#%{} of all money spent",
+            "Refund {C:attention}#1#%{} of all money lost",
         }
     },
     valk_artist = "Lily Felli",
-    config = { immutable = {refund = 75} }, --value is pointless, it's always a 3/4 refund
+    config = { extra = {refund = 50} }, --value is pointless, it's always a 3/4 refund//not anymore!
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.immutable.refund } }
+        return { vars = { card.ability.extra.refund } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -293,6 +317,11 @@ SMODS.Joker {
     soul_pos = {x=9, y=0},
     cost = 4,
     no_doe = true,
+    calculate = function(self, card, context)
+        if context.money_altered and to_big(context.amount) < to_big(0) then
+            ease_dollars(context.amount * -(card.ability.extra.refund / 100))
+        end
+    end
 }
 
 SMODS.Joker {
@@ -302,7 +331,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Emotional Joker{}",
         text = {
-            "{X:dark_edition,C:white}^#1#{} Chips & Mult per {C:attention}poker hand{} contained in played hand",
+            "{X:chips,C:white}X#1#{} Chips and {X:mult,C:white}X#1#{} Mult",
+            "per {C:attention}poker hand{} contained in played hand",
         }
     },
     valk_artist = "Scraptake",
@@ -332,8 +362,9 @@ SMODS.Joker {
 
 
             if (context.joker_main) then
-                local amount = 2 ^ count
-                return {e_mult = amount, e_chips = amount}
+                for i=1,count do
+                    SMODS.calculate_effect({xmult = card.ability.extra.gain, xchips = card.ability.extra.gain}, card)
+                end
             end
         end
 

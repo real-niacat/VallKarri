@@ -28,7 +28,7 @@ cryptid - create 1 copy of each card held in hand, then randomly destroy half of
 soul - create a random legendary joker from vallkarri
 
 black hole:
-Level up all hands once, the hand with the lowest level has its level doubled
+Level up all hands once, then double the level of the hand with the lowest level
 repeat this until all hands have the same amount of digits as your highest level hand,
 multiply all hand levels by the amount of jokers owned, then divide it by the amount of consumables owned
 then banish half of all planet cards randomly, x1.5 chips and mult per level on all hands for each planet card banished
@@ -80,8 +80,14 @@ SMODS.DrawStep {
     key = "tauspec_shader",
     order = 11,
     func = function(card, layer)
-        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' and card.config.center.set == "TauSpec" then
-            card.children.center:draw_shader('valk_inverse_booster', nil, card.ARGS.send_to_shader)
+        if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
+            
+            if card.config.center.set == "TauSpec" then
+                card.children.center:draw_shader('valk_inverse_booster', nil, card.ARGS.send_to_shader)
+            elseif card.config.center.is_tau then
+                card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
+            end
+            
         end
     end
 }
@@ -231,8 +237,8 @@ local tauspecs = {
             end
         end,
         loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue + 1] = G.P_SEALS.valk_Gilded
             info_queue[#info_queue + 1] = G.P_SEALS.Gold
+            info_queue[#info_queue + 1] = G.P_SEALS.valk_Gilded
             return {
                 vars = {
                     card.ability.extra.max, card.ability.extra.min
@@ -282,10 +288,10 @@ local tauspecs = {
             return (#G.jokers.cards + G.GAME.joker_buffer) < G.jokers.config.card_limit
         end,
         use = function(self, card, area, copier)
-            G.GAME.joker_buffer = G.GAME.joker_buffer + 1 
+            G.GAME.joker_buffer = G.GAME.joker_buffer + 1
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    SMODS.add_card({set = "Joker", rarity = "valk_renowned"})
+                    SMODS.add_card({ set = "Joker", rarity = "valk_renowned" })
                     G.GAME.joker_buffer = G.GAME.joker_buffer - 1
                     return true
                 end,
@@ -293,8 +299,7 @@ local tauspecs = {
 
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    for _,joker in pairs(G.jokers.cards) do
-
+                    for _, joker in pairs(G.jokers.cards) do
                         G.E_MANAGER:add_event(Event({
                             func = function()
                                 joker:juice_up()
@@ -304,13 +309,10 @@ local tauspecs = {
                             trigger = "after",
                             delay = 0.25,
                         }))
-
                     end
                     return true
                 end
             }))
-            
-        
         end,
         loc_vars = function(self, info_queue, card)
             return {
@@ -319,6 +321,145 @@ local tauspecs = {
                 }
             }
         end
+    },
+    {
+        original = "c_sigil",
+        desc = {
+            "{C:attention}Randomize{} the Suit of all playing cards in deck, then",
+            "{C:attention}re-randomize{} the Suit of all playing cards that are",
+            "part of the {C:attention}most populated Suit{}",
+        },
+        config = { extra = {} },
+        can_use = function(self, card)
+            return #G.playing_cards > 0
+        end,
+        use = function(self, card, area, copier)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    for _, c in pairs(G.playing_cards) do
+                        G.E_MANAGER:add_event(Event({
+
+                            func = function()
+                                SMODS.change_base(c, pseudorandom_element(SMODS.Suits, "valk_tau_sigil").key)
+                                c:juice_up()
+
+                                return true
+                            end
+
+                        }))
+                    end
+
+                    return true
+                end
+            }))
+
+            G.E_MANAGER:add_event(Event({
+
+                func = function()
+                    local mps = nil
+                    local counts = {}
+                    for _, c in pairs(G.playing_cards) do
+                        counts[c.base.suit] = counts[c.base.suit] or 0
+                        counts[c.base.suit] = counts[c.base.suit] + 1
+                    end
+                    local biggest = 0
+                    for key, count in pairs(counts) do
+                        if count > biggest then
+                            mps = key
+                            biggest = count
+                        end
+                    end
+
+                    for _, c in pairs(G.playing_cards) do
+                        if c:is_suit(mps) then
+                            G.E_MANAGER:add_event(Event({
+
+                                func = function()
+                                    SMODS.change_base(c,
+                                        pseudorandom_element(SMODS.Suits, "valk_tau_sigil_rerandomize").key)
+                                    c:juice_up()
+
+                                    return true
+                                end
+
+                            }))
+                        end
+                    end
+
+                    return true
+                end
+
+            }))
+        end,
+    },
+    {
+        original = "c_ouija",
+        desc = {
+            "{C:attention}Randomize{} the Rank of all playing cards in deck, then",
+            "{C:attention}re-randomize{} the Rank of all playing cards that are",
+            "part of the {C:attention}most populated Rank{}",
+        },
+        config = { extra = {} },
+        can_use = function(self, card)
+            return #G.playing_cards > 0
+        end,
+        use = function(self, card, area, copier)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    for _, c in pairs(G.playing_cards) do
+                        G.E_MANAGER:add_event(Event({
+
+                            func = function()
+                                SMODS.change_base(c, nil, pseudorandom_element(SMODS.Ranks, "valk_tau_ouija").key)
+                                c:juice_up()
+
+                                return true
+                            end
+
+                        }))
+                    end
+
+                    return true
+                end
+            }))
+
+            G.E_MANAGER:add_event(Event({
+
+                func = function()
+                    local mpr = nil
+                    local counts = {}
+                    for _, c in pairs(G.playing_cards) do
+                        counts[c.base.value] = counts[c.base.value] or 0
+                        counts[c.base.value] = counts[c.base.value] + 1
+                    end
+                    local biggest = 0
+                    for key, count in pairs(counts) do
+                        if count > biggest then
+                            mpr = key
+                            biggest = count
+                        end
+                    end
+
+                    for _, c in pairs(G.playing_cards) do
+                        if c.base.value == mpr then
+                            G.E_MANAGER:add_event(Event({
+
+                                func = function()
+                                    SMODS.change_base(c, nil, pseudorandom_element(SMODS.Ranks, "valk_tau_ouija_rerandomize").key)
+                                    c:juice_up()
+
+                                    return true
+                                end
+
+                            }))
+                        end
+                    end
+
+                    return true
+                end
+
+            }))
+        end,
     },
 }
 

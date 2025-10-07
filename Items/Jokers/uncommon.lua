@@ -587,7 +587,7 @@ SMODS.Joker {
     pos = { x = 0, y = 1 },
     cost = 8,
     loc_txt = {
-        name = "Take your age",
+        name = "Take your age...",
         text = {
             "{C:mult}+#1#{} Mult for each Mod installed",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",

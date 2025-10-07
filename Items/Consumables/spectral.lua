@@ -235,7 +235,7 @@ SMODS.Consumable {
 SMODS.Consumable {
     set = "Spectral",
     loc_txt = {
-        name = "C{s:0.4}19{}H{s:0.4}28{}O{s:0.4}2",
+        name = "Testosterone (C{s:0.5}19{})",
         text = {
             "Convert up to {C:attention}#1#{} selected cards to {C:attention}Polychrome Kings{}",
             "Destroy {C:attention}#2#{} random cards in deck",
@@ -277,7 +277,7 @@ SMODS.Consumable {
 SMODS.Consumable {
     set = "Spectral",
     loc_txt = {
-        name = "C{s:0.4}18{}H{s:0.4}24{}O{s:0.4}2",
+        name = "Estrogen (C{s:0.5}18{})",
         text = {
             "Convert up to {C:attention}#1#{} selected cards to {C:attention}Polychrome Queens{}",
             "Destroy {C:attention}#2#{} random cards in deck",

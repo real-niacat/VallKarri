@@ -81,6 +81,15 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     // lily change
     float desat = 0.8;
     tex = vec4(1.05*desat,0.75*desat,1.25*desat,1) * tex;
+
+    float total = (tex.r+tex.g+tex.b)/3.0;
+    float factor2 = 2;
+    float power = 1.25;
+    tex.rgb *= factor2;
+    tex.r = pow(tex.r, power);
+    tex.g = pow(tex.g, power);
+    tex.b = pow(tex.b, power);
+    tex.rgb /= factor2*0.75;
     // end lily change
 
     return dissolve_mask(tex*colour, texture_coords, uv);
