@@ -73,7 +73,7 @@ SMODS.Consumable {
         text = {
             "{C:mult}+#2#{} Mult and {C:chips}+#2#{} Chips on all hands",
             "Increase by {C:attention}#2#{} for each {C:attention}#3#{} used this run",
-            "{C:inactive}(Currently {C:attention}+#1#{C:inactive})",
+            "{C:inactive}(Currently {C:attention}+#1#{C:inactive} Chips and Mult)",
         }
     },
     valk_artist = "mailingway",
@@ -93,8 +93,12 @@ SMODS.Consumable {
         return true
     end,
     use = function(self, card, area, copier)
-        local v = 1 + (times_used(self.key) * card.ability.extra.increase)
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0 }, { chips = "+" .. v, mult = "+" .. v, handname = localize("k_all_hands") })
+        local v = (times_used(self.key) * card.ability.extra.increase)
+        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0 }, { handname = localize("k_all_hands") })
+        -- chips = "+" .. v, mult = "+" .. v,
+
+        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0.5 }, { chips = "+" .. v, })
+        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1.1, delay = 0.5 }, { mult = "+" .. v, })
         for key,hand in pairs(G.GAME.hands) do
             G.GAME.hands[key].mult = hand.mult+v
             G.GAME.hands[key].chips = hand.chips+v
@@ -102,7 +106,7 @@ SMODS.Consumable {
         vallkarri.reset_hand_text()
     end,
     in_pool = function(self)
-        return true
+        return false
     end,
 }
 
