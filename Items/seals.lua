@@ -36,7 +36,8 @@ SMODS.Seal {
             G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
         end
     end,
-    pos = { x = 2, y = 0 } --vanilla gold seal, change when sprite
+    pos = { x = 0, y = 0 }, --vanilla gold seal, change when sprite
+    atlas = "seals"
 }
 
 SMODS.Seal {
@@ -91,7 +92,8 @@ SMODS.Seal {
             G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
         end
     end,
-    pos = { x = 2, y = 0 } --vanilla gold seal, change when sprite
+    pos = { x = 2, y = 0 }, --vanilla gold seal, change when sprite
+    atlas = "seals"
 }
 
 SMODS.Seal {
@@ -128,7 +130,8 @@ SMODS.Seal {
             G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
         end
     end,
-    pos = { x = 2, y = 0 } --vanilla gold seal, change when sprite
+    pos = { x = 3, y = 0 }, --vanilla gold seal, change when sprite
+    atlas = "seals"
 }
 
 SMODS.Seal {
@@ -180,5 +183,6 @@ SMODS.Seal {
             G.shared_seals[card.seal]:draw_shader('booster', nil, card.ARGS.send_to_shader, nil, card.children.center)
         end
     end,
-    pos = { x = 2, y = 0 } --vanilla gold seal, change when sprite
+    pos = { x = 1, y = 0 }, --vanilla gold seal, change when sprite
+    atlas = "seals"
 }
