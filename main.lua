@@ -37,6 +37,7 @@ vallkarri.splash_options = {
     "+4 Zulu",
     "Not very Oblivious!",
     "i  s e e  y o u ",
+    "made by a real girl!",
 }
 
 vallkarri.credited_artists = {}
