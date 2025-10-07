@@ -81,7 +81,7 @@ SMODS.Consumable {
     atlas = "oid_micro",
     display_size = { w = 64, h = 78 },
     cost = 0,
-    config = { extra = { increase = 1 } },
+    config = { extra = { increase = 0.5 } },
 
     loc_vars = function(self, info_queue, card)
         return {
