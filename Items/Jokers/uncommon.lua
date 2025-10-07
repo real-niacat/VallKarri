@@ -351,7 +351,7 @@ SMODS.Joker {
         if context.joker_main then
             local amount = 0
             for i, pcard in ipairs(context.scoring_hand) do
-                if Entropy.true_suitless(pcard) then
+                if Entropy and Entropy.true_suitless(card) or SMODS.has_no_suit(card) then
                     amount = amount + 1
                 end
             end
@@ -360,14 +360,13 @@ SMODS.Joker {
     end,
     in_pool = function(self, args)
         for i,card in ipairs(G.playing_cards) do
-            if Entropy.true_suitless(card) then
+            if Entropy and Entropy.true_suitless(card) or SMODS.has_no_suit(card) then
                 return true
             end
         end
         return false
     end,
     blueprint_compat = true,
-    dependencies = {"entr"}
 }
 
 SMODS.Joker {
