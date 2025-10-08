@@ -427,7 +427,7 @@ end
 
 function vallkarri.get_level_blind_size_multiplier(ante)
     ante = ante or G.GAME.round_resets.ante
-    return math.min(G.GAME.current_level ^ 0.02, G.GAME.round)
+    return math.min(G.GAME.current_level ^ 0.02, G.GAME.round^2)
 end
 
 function vallkarri.get_level_tauic_boost()
