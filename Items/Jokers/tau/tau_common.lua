@@ -687,7 +687,7 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Ice Cream{}",
         text = {
-            "Gains {X:dark_edition,C:white}X#2#{} per hand played",
+            "Gains {X:chips,C:white}X#2#{} per hand played",
             "{C:inactive}(Currently {X:chips,C:white}X#1#{C:inactive} Chips)",
         }
     },
@@ -757,7 +757,7 @@ SMODS.Joker {
         text = {
             "The lowest ranked card {C:attention}held in hand{} gives",
             "{X:dark_edition,C:white}^Mult{} equal to {C:attention}#1#x{} its value",
-            "{C:inactive,s:0.8}(Cannot go below ^1 Mult)",
+            "{C:inactive,s:0.8}(Cannot go below {X:dark_edition,C:white,s:0.8}^1{s:0.8,C:inactive} Mult)",
         }
     },
     valk_artist = "Scraptake",
