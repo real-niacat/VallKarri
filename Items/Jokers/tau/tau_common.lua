@@ -447,7 +447,7 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Smiley Face{}",
         text = {
             "{C:attention}Non-face{} cards are converted into a random {C:attention}face{} card when {C:attention}scored{}",
-            "{C:attention}Face{} cards give {X:dark_edition,C:white}X#1#{} Mult",
+            "{C:attention}Face{} cards give {X:mult,C:white}X#1#{} Mult",
         }
     },
     valk_artist = "Scraptake",
