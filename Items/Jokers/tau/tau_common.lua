@@ -619,10 +619,10 @@ SMODS.Joker {
     },
     valk_artist = "Scraptake",
     immutable = true,
-    config = { extra = {min = 105, max = 113 } },
+    config = { extra = {min = 1.01, max = 9.99 } },
     loc_vars = function(self, info_queue, card)
-        local text = corrupt_text("^^1.", 0.2)
-        local text1 = corrupt_text("xxx", 1, "01234567890123456789012345678901234567890123456789!@#$%^&*()-_=+[];:',.<>/?|")
+        local text = corrupt_text("^", 0.2)
+        local text1 = corrupt_text("xxx", 1, "01234567890123456789012345678901234567890123456789")
         local text2 = corrupt_text(" Mult", 0.2)
         return { vars = { text, text1, text2 } }
     end,
@@ -635,16 +635,12 @@ SMODS.Joker {
     blueprint_compat = true,
     calculate = function(self, card, context)
         if context.joker_main then
-            local temp_Mult = pseudorandom('tau misprint',card.ability.extra.min, card.ability.extra.max)/100
+            local temp = (pseudorandom("valk_tau_misprint") * (card.ability.extra.max - card.ability.extra.min)) + card.ability.extra.min
             return {
-                EEmult_mod = temp_Mult,
-				message =  '^^' .. number_format(temp_Mult) .. ' Mult',
-				colour = { 0.8, 0.45, 0.85, 1 },
-                
+                emult = temp
             }
         end
     end,
-    dependencies = {"Talisman"},
 }
 
 
@@ -655,12 +651,12 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Photograph{}",
         text = {
             "The first scored {C:attention}face{} card gives",
-            "{X:dark_edition,C:white}^^#1#{} Mult",
+            "{X:dark_edition,C:white}^#1#{} Mult",
         }
     },
     valk_artist = "Scraptake",
     immutable = true,
-    config = { extra = { amount = 1.2 } },
+    config = { extra = { amount = 1.1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.amount} }
     end,
@@ -678,11 +674,10 @@ SMODS.Joker {
                 if context.scoring_hand[i]:is_face() then first_face = context.scoring_hand[i]; break end
             end
             if context.other_card == first_face then
-                return {eemult = card.ability.extra.amount}
+                return {emult = card.ability.extra.amount}
             end
         end
     end,
-    dependencies = {"Talisman"},
 }
 
 
@@ -692,8 +687,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Ice Cream{}",
         text = {
-            "{X:dark_edition,C:white}^#1#{} Chips",
-            "{X:dark_edition,C:white}+^#2#{} per hand played",
+            "Gains {X:dark_edition,C:white}X#2#{} per hand played",
+            "{C:inactive}(Currently {X:chips,C:white}X#1#{C:inactive} Chips)",
         }
     },
     valk_artist = "Scraptake",
@@ -717,7 +712,7 @@ SMODS.Joker {
 
         if context.joker_main then
             return {
-                echips = card.ability.extra.cur
+                xchips = card.ability.extra.cur
             }
         end
     end
@@ -729,12 +724,12 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Ride the Bus{}",
         text = {
-            "Non {C:attention}face{} cards give",
-            "{X:dark_edition,C:white}^#1#{} Mult",
+            "{C:attention}Non-face{} cards give",
+            "{X:dark_edition,C:white}^#1#{} Mult when scored",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = {powmult = 1.25 } },
+    config = { extra = {powmult = 1.05 } },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.powmult} }
     end,
@@ -761,13 +756,14 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Raised Fist{}",
         text = {
             "The lowest ranked card {C:attention}held in hand{} gives",
-            "{X:dark_edition,C:white}^Mult{} equal to its rank",
+            "{X:dark_edition,C:white}^Mult{} equal to {C:attention}#1#x{} its value",
+            "{C:inactive,s:0.8}(Cannot go below ^1 Mult)",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { emult = 1.2 } },
+    config = { extra = { percent = 0.2 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {card.ability.extra.emult} }
+        return { vars = {card.ability.extra.percent} }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -789,7 +785,7 @@ SMODS.Joker {
                 end
             end
             if context.other_card == raised_card then
-                return {emult = nominal}
+                return {emult = math.max(nominal*card.ability.extra.percent,1)}
             end
         end
     end
