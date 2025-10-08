@@ -483,7 +483,7 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 
     if out.config.center.tau then
         local roll = pseudorandom("valk_roll_tauic", 1, G.GAME.tau_replace)
-        if roll <= vallkarri.get_level_tauic_boost and vallkarri.get_level_tauic_boost() or 1 then
+        if roll <= (vallkarri.get_level_tauic_boost and vallkarri.get_level_tauic_boost()) or 1 then
             out:set_ability(out.config.center.tau)
             out:juice_up()
             play_sound("explosion_release1", 1, 3)

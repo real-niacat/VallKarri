@@ -568,7 +568,7 @@ SMODS.Joker {
     no_doe = true,
     calculate = function(self, card, context)
         if context.setting_blind then
-            ease_discard(G.GAME.dollars)
+            ease_discard(to_number(math.min(G.GAME.dollars, 1e100)))
         end
     end,
     calc_dollar_bonus = function(self, card)
