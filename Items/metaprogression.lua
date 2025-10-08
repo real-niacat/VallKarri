@@ -150,10 +150,10 @@ end
 function G.FUNCS.toggle_level_effects(e)
     local money = vallkarri.get_level_money_multiplier()
     local blindsize = vallkarri.get_level_blind_size_multiplier()
-    local tau = (1 / G.GAME.base_tau_replace) * 100
+    local tau = vallkarri.get_level_tauic_boost()
     G.GAME.money_mod_disp = "X" .. (type(money) == "number" and string.format("%.3f", money) or number_format(money)) .. " Money Gain"
     G.GAME.blindsize_mod_disp = "X" .. (type(blindsize) == "number" and string.format("%.3f", blindsize) or number_format(blindsize)) .. " Blind Size"
-    G.GAME.tauic_chance_boost_disp = (type(tau) == "number" and string.format("%.3f", tau) or number_format(tau)) .. "% Base Tauic Chance"
+    G.GAME.tauic_chance_boost_disp = (type(tau) == "number" and string.format("%.3f", tau) or number_format(tau)) .. "X Tauic Spawnrate"
 
 
 
@@ -175,10 +175,6 @@ function Game:update(dt)
 
     if G.GAME.required_xp then
         G.GAME.required_xp_disp = number_format(G.GAME.required_xp)
-    end
-
-    if G.GAME.base_tau_replace and G.GAME.current_level then
-        G.GAME.base_tau_replace = vallkarri.get_level_tauic_boost()
     end
 end
 
@@ -418,16 +414,16 @@ function get_old_blind_amount(ante)
 end
 
 function vallkarri.get_level_money_multiplier()
-    return math.max(1, math.log((to_big(G.GAME.current_level) or 0) ^ 0.25, 2)) ^ 0.5
+    return math.max(G.GAME.current_level ^ 0.02, G.GAME.money_mult_cap or 3)
 end
 
 function vallkarri.get_level_blind_size_multiplier(ante)
     ante = ante or G.GAME.round_resets.ante
-    return (((1 + (0.02 * to_big(ante))) ^ (1 + (0.2 * (math.max((to_big(G.GAME.current_level) or 0) - 5, 0) ^ 0.9))))) ^ 0.9
+    return math.min(G.GAME.current_level ^ 0.02, G.GAME.round)
 end
 
 function vallkarri.get_level_tauic_boost()
-    return math.min(150 - (to_number(math.log(G.GAME.current_level, 2))), G.GAME.base_tau_replace)
+    return math.min(G.GAME.current_level ^ 0.01, 3) --3x boost max
 end
 
 function get_blind_amount(ante)
