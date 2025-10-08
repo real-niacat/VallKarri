@@ -384,7 +384,7 @@ SMODS.Joker {
     valk_artist = "Scraptake",
     config = { extra = { mult = 20, req = 3 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = {  } }
+        return { vars = { card.ability.extra.mult, card.ability.extra.req } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
