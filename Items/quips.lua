@@ -10,7 +10,8 @@ local quips = {
             { "ugh, i feel weak" },
             { "this is what you",            "wanted to show me?" },
             { "god, give me the controller " },
-            { "you need to be killed" },
+            { "you need to be {E:valk_censor}kill{}ed"},
+            { "{E:valk_glitch}i don't feel great" },
         },
         ["j_valk_illena"] = {
             { "the magic illena-ball says:", "you lose! maybe next time?" },
@@ -70,7 +71,7 @@ for name, character in pairs(quips.lose) do
             extra = { center = name },
             loc_txt = txt,
             filter = function(self, quip_type)
-                return true, { weight = vallkarri.quip_weight }
+                return true, { weight = vallkarri.quip_weight * (txt.weight or 1) }
             end
         }
     end
