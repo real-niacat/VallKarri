@@ -307,6 +307,14 @@ function vallkarri.animationless_mod_xp(mod)
     -- stake mods
     mod = mod ^ vallkarri.get_base_xp_exponent()
 
+    if type(G.GAME.current_xp) == "table" then
+        G.GAME.required_xp = to_big(G.GAME.required_xp)
+    end
+
+    if type(G.GAME.required_xp) == "table" then
+        G.GAME.current_xp = to_big(G.GAME.current_xp)
+    end
+
     local mfd = {}
     for i, tab in ipairs(vallkarri.run_xp_modifiers) do
         -- tab = {run = func, store = storage, dest = destruction}
