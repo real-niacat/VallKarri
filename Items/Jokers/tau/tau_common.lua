@@ -377,12 +377,12 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Half Joker{}",
         text = {
-            "At end of round, multiply all {C:attention}Joker values{}",
-            "by amount of {C:attention}empty Joker slots{}",
+            "{C:mult}+#1#{} Mult",
+            "{C:attention}Doubles{} when you play {C:attention}#2#{} or less cards ",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { } },
+    config = { extra = { mult = 20, req = 3 } },
     loc_vars = function(self, info_queue, card)
         return { vars = {  } }
     end,
@@ -393,12 +393,19 @@ SMODS.Joker {
     cost = 4,
     no_doe = true,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval then
+        if context.before and context.scoring_hand then
 
-            local n = G.jokers.config.card_limit - #G.jokers.cards
-            for i,joker in ipairs(G.jokers.cards) do
-                Cryptid.manipulate(joker, {value=n} )
+            if #context.scoring_hand <= card.ability.extra.req then
+                card.ability.extra.mult = card.ability.extra.mult * 2
+                quick_card_speak(card, localize("k_upgrade_ex"))
             end
+
+        end
+
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.mult
+            }   
         end
     end
 }
@@ -410,7 +417,7 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic 8 Ball{}",
         text = {
             "When an {C:attention}8{} is scored, create a random {C:tarot}Tarot{} card",
-            "with {C:attention}X#1#{} values",
+            "with {C:attention}Octuple{} values",
         }
     },
     valk_artist = "Scraptake",
@@ -427,9 +434,7 @@ SMODS.Joker {
     blueprint_compat = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play and context.other_card.base.id == 8 and #G.consumeables.cards < G.consumeables.config.card_limit then
-            local tarot = create_card("Tarot", G.consumeables, nil, nil, nil, nil, nil, "valk_tau_8ball")
-            tarot:add_to_deck()
-            G.consumeables:emplace(tarot)
+            local tarot = SMODS.add_card({set = "Tarot"})
             Cryptid.manipulate(tarot, {value = card.ability.extra.vmult})
         end
     end
@@ -442,13 +447,13 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Smiley Face{}",
         text = {
             "{C:attention}Non-face{} cards are converted into a random {C:attention}face{} card when {C:attention}scored{}",
-            "{C:attention}Face{} cards give {X:dark_edition,C:white}^#1#{} Mult",
+            "{C:attention}Face{} cards give {X:dark_edition,C:white}X#1#{} Mult",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { emult = 1.55 } },
+    config = { extra = { xmult = 2 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.emult } }
+        return { vars = { card.ability.extra.xmult } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -465,8 +470,7 @@ SMODS.Joker {
                 SMODS.change_base(context.other_card, nil, faces[pseudorandom("valk_tau_smiley", 1, #faces)])
             else    
                 return {
-                    emult = card.ability.extra.emult,
-                    card = card
+                    xmult = card.ability.extra.xmult,
                 }
             end
 
@@ -523,7 +527,7 @@ SMODS.Joker {
     valk_artist = "Scraptake",
     config = { extra = { emult = 3.33, outof = 1000 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.emult, G.GAME.probabilities.normal, card.ability.extra.outof } }
+        return { vars = { card.ability.extra.emult, 1, card.ability.extra.outof } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -547,13 +551,14 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Delayed Gratification{}",
         text = {
-            "At end of round, multiply your money by remaining {C:red}discards{}",
+            "Gain {C:money}current money{} as discards",
+            "Earn {C:money}$#1#{} for every {C:red}#2#{} Discards left at end of round",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { } },
+    config = { extra = { dollar = 1, per = 3 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.emult, G.GAME.probabilities.normal, card.ability.extra.outof } }
+        return { vars = { card.ability.extra.dollar, card.ability.extra.per } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -562,11 +567,12 @@ SMODS.Joker {
     cost = 4,
     no_doe = true,
     calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval and not context.blueprint then
-            local mult = math.max(1, G.GAME.current_round.discards_left)
-            ease_dollars(G.GAME.dollars*(mult-1))
-
+        if context.setting_blind then
+            ease_discard(G.GAME.dollars)
         end
+    end,
+    calc_dollar_bonus = function(self, card)
+        return math.floor(G.GAME.current_round.discards_left / card.ability.extra.per)
     end
 }
 
