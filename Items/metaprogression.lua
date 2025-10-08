@@ -153,7 +153,7 @@ function G.FUNCS.toggle_level_effects(e)
     local tau = vallkarri.get_level_tauic_boost()
     G.GAME.money_mod_disp = "X" .. (type(money) == "number" and string.format("%.3f", money) or number_format(money)) .. " Money Gain"
     G.GAME.blindsize_mod_disp = "X" .. (type(blindsize) == "number" and string.format("%.3f", blindsize) or number_format(blindsize)) .. " Blind Size"
-    G.GAME.tauic_chance_boost_disp = (type(tau) == "number" and string.format("%.3f", tau) or number_format(tau)) .. "X Tauic Spawnrate"
+    G.GAME.tauic_chance_boost_disp = "X" .. (type(tau) == "number" and string.format("%.3f", tau) or number_format(tau)) .. " Tauic Spawnrate"
 
 
 
