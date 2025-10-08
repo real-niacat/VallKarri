@@ -422,7 +422,7 @@ function get_old_blind_amount(ante)
 end
 
 function vallkarri.get_level_money_multiplier()
-    return math.max(G.GAME.current_level ^ 0.02, G.GAME.money_mult_cap or 3)
+    return math.min(G.GAME.current_level ^ 0.02, G.GAME.money_mult_cap or 3)
 end
 
 function vallkarri.get_level_blind_size_multiplier(ante)
