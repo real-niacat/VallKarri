@@ -432,7 +432,7 @@ function vallkarri.get_level_blind_size_multiplier(ante)
 end
 
 function vallkarri.get_level_tauic_boost()
-    return math.min(G.GAME.current_level ^ 0.01, 3) --3x boost max
+    return to_number(math.min(G.GAME.current_level ^ 0.01, 3)) --3x boost max
 end
 
 function get_blind_amount(ante)

@@ -461,6 +461,21 @@ local tauspecs = {
             }))
         end,
     },
+    {
+        original = "c_ectoplasm",
+        desc = {
+            "{C:attention}Double{} your Joker Slots",
+            "{C:attention}Half{} your Hand Size",
+        },
+        config = { extra = {} },
+        can_use = function(self, card)
+            return true
+        end,
+        use = function(self, card, area, copier)
+            G.jokers:change_size(G.jokers.config.card_limit)
+            G.hand:change_size(-(G.hand.config.card_limit / 2))
+        end,
+    },
 }
 
 
