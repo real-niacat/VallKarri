@@ -62,3 +62,13 @@ end
 '''
 match_indent = true
 
+
+
+[[patches]]
+[patches.pattern]
+target = 'engine/event.lua'
+position = 'after'
+pattern = "Event = Object:extend()"
+payload = "--dummy patch"
+match_indent = true
+
