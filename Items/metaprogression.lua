@@ -337,6 +337,7 @@ function vallkarri.animationless_mod_xp(mod)
 
     G.GAME.current_xp = G.GAME.current_xp + mod
 
+    vallkarri.xp_safety_check()
 
     G.GAME.current_xp = math.floor(G.GAME.current_xp)
     G.GAME.required_xp = math.floor(G.GAME.required_xp)
@@ -351,6 +352,12 @@ function vallkarri.animationless_mod_xp(mod)
     while to_big(G.GAME.current_xp) >= to_big(G.GAME.required_xp) do
         vallkarri.mod_level(1, true)
     end
+end
+
+function vallkarri.xp_safety_check()
+    G.GAME.current_xp = to_big(G.GAME.current_xp) or 0
+    G.GAME.required_xp = to_big(G.GAME.required_xp) or 0
+    G.GAME.current_level = to_big(G.GAME.current_level) or 1
 end
 
 function vallkarri.xp_to_level(x)
