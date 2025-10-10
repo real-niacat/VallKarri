@@ -388,7 +388,7 @@ SMODS.Joker {
         text = {
             "Adjacent Jokers are given {C:dark_edition}Foil{}",
             "All {C:attention}other Jokers{} have their Editions {C:red}removed{}",
-            "{C:dark_edition}Foil{} cards additionally give {X:chips,C:white}X#1#{} Chips",
+            "{C:dark_edition}Foil{} Jokers additionally give {X:chips,C:white}X#1#{} Chips",
             "when triggered, and cannot be {C:red}debuffed{}",
         }
     },
