@@ -193,8 +193,6 @@ SMODS.Consumable {
         text = {
             "{C:attention}+#1#{} Card Selection Limit",
             "{C:attention}#4#{} Hand Size",
-            "May only be used {C:attention}#2#{} times per run",
-            "{C:inactive}(#3# Uses remain)",
         }
     },
     valk_artist = "mailingway",
@@ -217,8 +215,7 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key] < self.config.extra.uses) or
-        true
+        return true
     end,
 
     use = function(self, card, area, copier)
