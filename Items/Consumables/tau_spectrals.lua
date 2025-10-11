@@ -476,6 +476,152 @@ local tauspecs = {
             G.hand:change_size(-(G.hand.config.card_limit / 2))
         end,
     },
+    {
+        original = "c_immolate",
+        desc = {
+            "Select {C:attention}one{} card",
+            "{C:red}Destroy{} all cards in deck that share",
+            "{C:attention}any{} properties with the selected card",
+            "Earn {C:money}$#1#{} for each destroyed card",
+        },
+        config = { extra = {money = 3} },
+        can_use = function(self, card)
+            return #G.hand.highlighted == 1 --hardcoded to be one, sorry </3
+        end,
+        use = function(self, card, area, copier)
+            local selected = G.hand.highlighted[1]
+            local suit = selected.base.suit
+            local rank = selected.base.value
+            local enh = next(SMODS.get_enhancements(selected))
+            local edition = selected.edition and selected.edition.key
+
+            local to_destroy = {}
+            for _,playing_card in pairs(G.playing_cards) do
+
+                if playing_card:is_suit(suit) or playing_card.base.value == rank or enh and (next(SMODS.get_enhancements(playing_card)) == enh) or (edition and edition == (playing_card.edition and playing_card.edition.key)) then
+                    table.insert(to_destroy, playing_card)
+                end
+
+            end
+            ease_dollars(card.ability.extra.money * #to_destroy)
+            SMODS.destroy_cards(to_destroy)
+            
+        end,
+        loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.money}}
+        end
+    },
+    {
+        original = "c_ankh",
+        desc = {
+            "Select {C:attention}one{} Joker",
+            "{C:red}Destroy{} all other Jokers",
+            "Create a {C:attention}new version{} of the selected Joker for each {C:red}destroyed{} Joker",
+        },
+        config = { extra = {} },
+        can_use = function(self, card)
+            return #G.jokers.highlighted == 1 --hardcoded to be one, sorry </3
+        end,
+        use = function(self, card, area, copier)
+            local to_destroy = {}
+            local sel = G.jokers.highlighted[1]
+            for _,jkr in pairs(G.jokers.cards) do
+                if jkr ~= sel then
+                    table.insert(to_destroy, jkr)
+                end
+            end
+            for i=1,#to_destroy do
+                SMODS.add_card({key = sel.config.center.key, area = G.jokers})
+            end
+            SMODS.destroy_cards(to_destroy)
+            
+        end,
+        loc_vars = function(self, info_queue, card)
+            return {vars = {card.ability.extra.money}}
+        end
+    },
+    {
+        original = "c_deja_vu",
+        desc = {
+            "Add a {C:attention}Red Seal{} to up to {C:attention}#1#{} selected cards",
+            "If only {C:attention}#2#{} card is selected, add an {C:attention}Entropic Seal{} instead",
+        },
+        config = { extra = { max = 3, min = 1 } },
+        can_use = function(self, card)
+            return #G.hand.highlighted >= card.ability.extra.min and #G.hand.highlighted <= card.ability.extra.max
+        end,
+        use = function(self, card, area, copier)
+            if #G.hand.highlighted <= card.ability.extra.min then
+                for _, c in pairs(G.hand.highlighted) do
+                    c:set_seal("valk_Entropic")
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            c.area:remove_from_highlighted(c)
+                            return true
+                        end,
+                        trigger = "after"
+                    }))
+                end
+            else
+                for _, c in pairs(G.hand.highlighted) do
+                    c:set_seal("Red")
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            c.area:remove_from_highlighted(c)
+                            return true
+                        end,
+                        trigger = "after"
+                    }))
+                end
+            end
+        end,
+        loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue + 1] = G.P_SEALS.Red
+            info_queue[#info_queue + 1] = G.P_SEALS.valk_Entropic
+            return {
+                vars = {
+                    card.ability.extra.max, card.ability.extra.min
+                }
+            }
+        end
+    },
+    {
+        original = "c_hex",
+        desc = {
+            "Apply {C:attention}Cosmic, Lordly{} or {C:attention}R.G.B.{} to",
+            "a random Joker, {C:red}destroy{} another random other Joker",
+        },
+        config = { extra = { } },
+        can_use = function(self, card)
+            for _,joker in pairs(G.jokers.cards) do
+                if not joker.edition then
+                    return true
+                end
+            end
+            return false
+        end,
+        use = function(self, card, area, copier)
+            local allowed = {}
+            local notallowed = {}
+            for _,joker in pairs(G.jokers.cards) do
+                if not joker.edition then
+                    table.insert(allowed, joker)
+                end
+            end
+            local chosen_edition = pseudorandom_element({"e_valk_lordly", "e_valk_cosmic", "e_valk_rgb"}, "valk_tau_hex_edition")
+            local chosen_joker = pseudorandom_element(allowed, "valk_tau_hex")
+
+            for _,joker in pairs(G.jokers.cards) do
+                if joker ~= chosen_joker then
+                    table.insert(notallowed, joker)
+                end
+            end
+
+            local to_kill = pseudorandom_element(notallowed, "valk_tau_hex_kill")
+            chosen_joker:set_edition(chosen_edition)
+            SMODS.destroy_cards({to_kill})
+        end,
+    },
 }
 
 
