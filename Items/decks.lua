@@ -127,6 +127,38 @@ SMODS.Back {
     end
 }
 
+SMODS.Back {
+    key = "airtight",
+    loc_txt = {
+        name = "Airtight Deck",
+        text = {
+            "Cards are given a random",
+            "{C:attention}Seal{} when {C:attention}held-in-hand{}",
+            "Cards have their seals",
+            "{C:red}removed{} when scored",
+        }
+    },
+    valk_artist = nil,
+    config = { },
+    pos = {x=4, y=0},
+    atlas = "phold",
+    loc_vars = function(self, info_queue, card)
+        return { vars = {  } }
+    end,
+    calculate = function(self, back, context)
+        if context.individual then
+
+            if context.cardarea == G.play then
+                context.other_card:set_seal(nil)
+            elseif context.cardarea == G.hand then
+                context.other_card:set_seal(SMODS.poll_seal({guaranteed = true, key = "valk_airtight_seal"}), true)
+            end
+
+
+        end
+    end
+}
+
 if AKYRS then
 
     SMODS.Back {
