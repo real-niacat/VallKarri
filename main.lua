@@ -128,43 +128,43 @@ SMODS.current_mod.extra_tabs = function()
     }
 end
 
+local function is_legal(str)
+    -- must NOT start with .
+    -- must NOT end with .png
+    -- must NOT end with .pdn
+    -- must NOT end with .ogg
+    if (not string.find(str, "^%.")) and
+        (not string.find(str, "%.png$")) and
+        (not string.find(str, "%.pdn$")) and
+        (not string.find(str, "%.ogg$")) then
+        return true
+    end
+    return false
+end
 
--- for lily(me)
+function vallkarri.recursive_concat_directory(path)
+    local read = NFS.read(path)
+    if read then
+        return read
+    else
+        if (not string.find(path, "/$")) and (not string.find(path, "\\$")) then
+            path = path .. "/"
+        end
 
--- to-do
+        local str = ""
+        for _, entry in pairs(NFS.getDirectoryItems(path)) do
+            if is_legal(entry) then
+                local res = vallkarri.recursive_concat_directory(path .. entry)
+                str = str .. tostring(res)
+                print(path .. entry)
+                print(#tostring(res))
+            end
+        end
+        -- may need results in the future, not right now
+        return str
+    end
+end
 
--- cat costume
--- legendary joker
--- +1 to adjacent joker values at end of round, increase by 0.1x for each level on every cat tag owned
-
--- pawprints
--- rare
--- create a cat tag for every kitty joker owned when a blind is skipped
-
--- assassin kitty
--- epic
--- when a cat tag is levelled to level 5 or beyond, destroy it and gain +^0.1 mult
-
--- jonh meowk
--- rare
--- x1 mult
--- +0.1x for each cat tag owned
--- increase by +0.05x for every sly joker sold this run
-
--- the :3
--- rare
--- x3 mult if last chat message contains :3
--- (hidden effect, gives x9 if message contains :3c)
-
--- chipless cookie
--- uncommon joker
--- +2 joker slots
--- if played poker hand is not the same as the previously played poker hand, self destruct
-
--- .
--- uncommon joker
--- x0.3 mult for each scoring rankless card
-
--- callie
--- epic joker
--- ^0.05 for each scoring wild card
+local hash_thread = love.thread.newThread(NFS.read(vallkarri.path .. "sha1.lua"))
+local res = vallkarri.recursive_concat_directory(vallkarri.path)
+hash_thread:start(res)

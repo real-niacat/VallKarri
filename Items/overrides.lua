@@ -143,6 +143,12 @@ function Game:update(dt)
         G.PROFILES[G.SETTINGS.profile].cry_intro_complete = true
     end
 
+    local popped = love.thread.getChannel("hash"):pop()
+    if popped then
+        vallkarri.HASH = popped
+        vallkarri.debug_info = {["MOD_HASH"] = vallkarri.HASH}
+    end
+
     if (count > 30) then
         count = 0
         vallkarri.update_last_message()

@@ -1,3 +1,7 @@
+if not vallkarri.config.metaprogression then
+    return
+end
+
 function vallkarri.calculate_power()
     local base = (G.GAME.current_level or 1) ^ 0.5
 
