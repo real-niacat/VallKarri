@@ -147,6 +147,7 @@ function Game:update(dt)
     if popped then
         vallkarri.HASH = popped
         vallkarri.debug_info = {["MOD_HASH"] = vallkarri.HASH}
+        vallkarri.hashing_completed()
     end
 
     if (count > 30) then

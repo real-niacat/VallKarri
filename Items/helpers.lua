@@ -923,3 +923,35 @@ function vallkarri.get_cards(area)
     end
     return cards
 end
+
+function vallkarri.hashing_completed()
+    G.valk_hash_complete_text = DynaText {
+        colours = { HEX("00FF00") },
+        shadow = true,
+        spacing = 1.5,
+        bump = true,
+        scale = 0.4,
+        -- string = {ref_table = vallkarri, ref_value = "main_menu_text"},
+        string = "Hashing complete!"
+    }
+    G.valk_hash_complete_text:update_text(true)
+    G.valk_hash_complete_text:set_alignment({
+        major = G.ROOM_ATTACH,
+        type = 'cm',
+        bond = 'Strong',
+        offset = { x = 9, y = -5 }
+    })
+    ease_value(G.valk_hash_complete_text.colours[1], 4, -1)
+
+    G.E_MANAGER:add_event(Event({
+        func = function()
+           
+            if G.valk_hash_complete_text.colours[1][4] <= 0 then
+                G.valk_hash_complete_text:remove()
+                G.valk_hash_complete_text = nil
+                return true
+            end
+
+        end
+    }), "other")
+end

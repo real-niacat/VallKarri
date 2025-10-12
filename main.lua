@@ -156,8 +156,8 @@ function vallkarri.recursive_concat_directory(path)
             if is_legal(entry) then
                 local res = vallkarri.recursive_concat_directory(path .. entry)
                 str = str .. tostring(res)
-                print(path .. entry)
-                print(#tostring(res))
+                -- print(path .. entry)
+                -- print(#tostring(res))
             end
         end
         -- may need results in the future, not right now
