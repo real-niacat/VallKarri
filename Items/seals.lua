@@ -103,6 +103,7 @@ SMODS.Seal {
                 trigger = "before",
                 func = function()
                     SMODS.add_card({key = "c_black_hole"})
+                    G.GAME.consumealbe_buffer = G.GAME.consumeable_buffer - 1
                     return true
                 end
             }))
