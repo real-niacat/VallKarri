@@ -173,6 +173,7 @@ SMODS.Joker {
             card.children.floating_sprite:set_sprite_pos(new)
         end
     end,
+    pronouns = "she_they",
 }
 
 SMODS.Joker {
