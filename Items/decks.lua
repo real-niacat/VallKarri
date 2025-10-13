@@ -132,10 +132,9 @@ SMODS.Back {
     loc_txt = {
         name = "Airtight Deck",
         text = {
-            "Cards are given a random",
-            "{C:attention}Seal{} when {C:attention}held-in-hand{}",
-            "Cards have their seals",
-            "{C:red}removed{} when scored",
+            "Give a random {C:attention}Seal{} to",
+            "the leftmost card {C:attention}held-in-hand{}",
+            "when hand is played",
         }
     },
     valk_artist = nil,
@@ -146,15 +145,8 @@ SMODS.Back {
         return { vars = {  } }
     end,
     calculate = function(self, back, context)
-        if context.individual then
-
-            if context.cardarea == G.play then
-                context.other_card:set_seal(nil)
-            elseif context.cardarea == G.hand then
-                context.other_card:set_seal(SMODS.poll_seal({guaranteed = true, key = "valk_airtight_seal"}), true)
-            end
-
-
+        if context.after and G.hand.cards[1] then
+            G.hand.cards[1]:set_seal(SMODS.poll_seal({key = "valk_airtight_deck", guaranteed = true}))
         end
     end
 }

@@ -65,11 +65,18 @@ SMODS.Edition {
     },
     config = { extra = {} },
     calculate = function(self, card, context)
-        if (context.edition and context.cardarea == G.jokers and card.config.trigger)
-            or (context.main_scoring and context.cardarea == G.play) then
-            local c = SMODS.create_card({ set = "Consumeables", edition = "e_negative", area = G.consumeables })
-            c:add_to_deck()
-            G.consumeables:emplace(c)
+        if (context.edition and context.cardarea == G.jokers and card.config.trigger) or
+            (context.main_scoring and context.cardarea == G.play)
+        then
+            SMODS.add_card({set = "Consumeables", area = G.consumeables, edition = "e_negative"})
+        end
+
+        if context.joker_main then
+            card.config.trigger = true
+        end
+
+        if context.after then
+            card.config.trigger = nil
         end
     end,
     weight = 1,
