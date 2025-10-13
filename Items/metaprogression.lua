@@ -365,11 +365,11 @@ function vallkarri.xp_safety_check()
 end
 
 function vallkarri.xp_to_level(x)
-    return math.sqrt(0.25 + (x / 50)) - 0.5
+    return to_big(math.sqrt(0.25 + (x / 50)) - 0.5)
 end
 
 function vallkarri.level_to_xp(l)
-    return 50 * (l + (l ^ 2))
+    return to_big(50 * (l + (l ^ 2)))
 end
 
 function vallkarri.xp_required(level)

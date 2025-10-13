@@ -15,3 +15,12 @@ SMODS.Scoring_Calculation {
     colour = G.C.YELLOW,
     text = "AND"
 }
+
+SMODS.Scoring_Calculation {
+    key = "e",
+    func = function(self, chips, mult, flames)
+        return to_big(chips) * (to_big(10)^mult)
+    end,
+    colour = G.C.PURPLE,
+    text = "e"
+}
