@@ -216,8 +216,8 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Invasion",
         text = {
-            "{C:red}-#1#{} discards",
-            "{C:attention}+#1#{} consumable slots",
+            "Set {C:red}Discards{} to {C:attention}0{}",
+            "Gain a {C:attention}Consumable{} Slot for every {C:red}Discard{} taken ",
         }
     },
     valk_artist = "Pangaea",
@@ -225,7 +225,7 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { change = 20 } },
+    config = { extra = { } },
 
     loc_vars = function(self, info_queue, card)
 
@@ -238,9 +238,9 @@ SMODS.Consumable {
     use = function(self, card, area, copier)
         
 
-        ease_discard(-card.ability.extra.change)
-        G.GAME.round_resets.discards = G.GAME.round_resets.discards - 20 
-        G.consumeables:change_size(card.ability.extra.change)
+        ease_discard(-G.GAME.round_resets.discards)
+        G.consumeables:change_size(G.GAME.round_resets.discards)
+        G.GAME.round_resets.discards = 0
     end
 }
 
@@ -346,7 +346,7 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { change = 3} },
+    config = { extra = { change = 2 } },
 
     loc_vars = function(self, info_queue, card)
 
@@ -384,7 +384,7 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { vm = 5, num = 1, den = 2} },
+    config = { extra = { vm = 2, num = 1, den = 2} },
 
     loc_vars = function(self, info_queue, card)
 
@@ -541,7 +541,7 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { mult = 3 } },
+    config = { extra = { mult = 2 } },
 
     loc_vars = function(self, info_queue, card)
 
@@ -581,7 +581,7 @@ SMODS.Consumable {
         name = "Big Chill",
         text = {
             "{C:red}Banish{} {C:attention}Jumbo{} and {C:attention}Mega{} {C:spectral}Spectral{} packs",
-            "{C:attention}Hidden{} {C:spectral}Spectrals{} have a flat {C:green}5%{}",
+            "{C:attention}Hidden{} {C:spectral}Spectrals{} have a flat {C:green}#1#%{}",
             "chance to replace {C:attention}non-hidden{} {C:spectral}Spectral{} cards",
         }
     },
@@ -590,11 +590,11 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = {  } },
+    config = { extra = { chance = 10 } },
 
     loc_vars = function(self, info_queue, card)
 
-        return {vars = {  }}
+        return {vars = { card.ability.extra.chance }}
         
     end,
     can_use = function(self, card)
@@ -609,9 +609,9 @@ SMODS.Consumable {
         end
 
         if not G.GAME.hidden_override then
-            G.GAME.hidden_override = 5
+            G.GAME.hidden_override = card.ability.extra.chance
         else 
-            G.GAME.hidden_override = G.GAME.hidden_override + 5
+            G.GAME.hidden_override = G.GAME.hidden_override + card.ability.extra.chance
         end
 
     end
@@ -654,9 +654,7 @@ SMODS.Consumable {
             joker:quick_dissolve()
         end
         for i=1,to_make do
-            local c = create_card("Joker", G.jokers, nil, 3, nil, nil, nil, "valk_cata_slurp")
-            c:add_to_deck()
-            G.jokers:emplace(c)
+            SMODS.add_card({rarity = "Rare", key_append = "valk_bigslurp"})
         end
 
     end
@@ -679,7 +677,7 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { mult = 2 } },
+    config = { extra = { mult = 3 } },
 
     loc_vars = function(self, info_queue, card)
 
@@ -718,7 +716,8 @@ SMODS.Consumable {
         text = {
             "Randomly {C:red}Banish{} each {C:tarot}Tarot{} card with",
             "a {C:green}#1# in #2#{} chance,",
-            "{C:spectral}Spectral{} cards can be found in shop",
+            "{C:spectral}Spectral{} spawn in the shop more often",
+            "{C:inactive}(Allows Spectral cards to spawn in shop)",
         }
     },
     valk_artist = "Pangaea",
@@ -761,7 +760,7 @@ SMODS.Consumable {
         name = "Stagnancy",
         text = {
             "All owned Jokers are made {C:purple}Eternal{}",
-            "Jokers have a {C:green}5%{} chance to be",
+            "Jokers have a {C:green}#1#%{} chance to be",
             "replaced by an {C:valk_exquisite}Exquisite{} Joker",
         }
     },
@@ -770,11 +769,11 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { } },
+    config = { extra = { change = 5 } },
 
     loc_vars = function(self, info_queue, card)
 
-        return {vars = { }}
+        return {vars = { card.ability.extra.change }}
         
     end,
     can_use = function(self, card)
@@ -787,7 +786,7 @@ SMODS.Consumable {
             joker.ability.eternal = true 
         end
 
-        G.GAME.exquisite_replace = 5 --no stacking :)
+        G.GAME.exquisite_replace = G.GAME.exquisite_replace and (G.GAME.exquisite_replace + card.ability.extra.change) or card.ability.extra.change --no stacking :) --yes stacking
 
     end
 }
