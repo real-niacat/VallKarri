@@ -84,7 +84,7 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { loss = 20, scaling = 10} },
+    config = { extra = { loss = 5, scaling = 3} },
 
     loc_vars = function(self, info_queue, card)
 
@@ -132,7 +132,7 @@ SMODS.Consumable {
         
     end,
     can_use = function(self, card)
-        return card.ability.extra.rounds <= 0
+        return card.ability.extra.rounds <= 0 or (card.area ~= G.consumeables)
     end,
     use = function(self, card, area, copier)
         if card.area ~= G.consumeables then
