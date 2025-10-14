@@ -76,7 +76,7 @@ function get_ante_change(theoretical_score, debug)
         -- print(anteChange, theochange)
     end
 
-    return math.max(anteChange ^ 0.75, anteChange / 2)
+    return math.max(anteChange ^ 0.6, anteChange / 2)
 end
 
 function overscore_threshhold()
