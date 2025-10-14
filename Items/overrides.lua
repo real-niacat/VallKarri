@@ -146,7 +146,8 @@ function Game:update(dt)
     local popped = love.thread.getChannel("hash"):pop()
     if popped then
         vallkarri.HASH = popped
-        vallkarri.debug_info = {["MOD_HASH"] = vallkarri.HASH}
+        vallkarri.debug_info = vallkarri.debug_info or {}
+        vallkarri.debug_info.MOD_HASH = vallkarri.HASH
         vallkarri.hashing_completed()
     end
 

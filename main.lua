@@ -168,3 +168,8 @@ end
 local hash_thread = love.thread.newThread(NFS.read(vallkarri.path .. "sha1.lua"))
 local res = vallkarri.recursive_concat_directory(vallkarri.path)
 hash_thread:start(res)
+
+if string.find(vallkarri.version, "d") then
+    vallkarri.debug_info = vallkarri.debug_info or {}
+    vallkarri.debug_info.OMEGA_WARNING = "\nYOU ARE ON A DEVELOPMENT VERSION OF VALLKARRI\n\nIF YOU DO NOT KNOW WHAT YOU ARE DOING, INSTALL THE LATEST RELEASE\n"
+end
