@@ -160,13 +160,14 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Perkeo{}",
         text = {
             "Create {C:attention}#1#{} {C:dark_edition}Negative{} copies of the leftmost consumable when exiting shop",
-            "Remove {C:dark_edition}Negative{} from rightmost consumable at end of round",
+            "{C:green}#2# in #3#{} chance to make a copy of all used {C:attention}Consumables{}",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { copies = 2 } },
+    config = { extra = { copies = 2, num = 1, den = 4 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.copies, card.ability.extra.reverse } }
+        local num,den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den)
+        return { vars = { card.ability.extra.copies, num,den } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -195,14 +196,8 @@ SMODS.Joker {
 
         end
 
-        if context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
-
-            if (#G.consumeables.cards > 0) then
-
-                G.consumeables.cards[#G.consumeables.cards]:set_edition("e_base", true)
-
-            end
-            
+        if context.using_consumeable and SMODS.pseudorandom_probability(card, "valk_tau_perkeo", card.ability.extra.num, card.ability.extra.den) then
+            SMODS.add_card({key = context.consumeable.config.center_key, edition = context.consumeable.edition and context.consumeable.edition.key})
         end
 
     end,
