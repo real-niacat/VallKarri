@@ -127,6 +127,14 @@ return {
                 }
             },
 
+            fibonacci_sequence = {
+                name = "Fibonacci Sequence",
+                text = {
+                    "Fib(N) = Fib(N-1) + Fib(N-2)",
+                    "Fib(N) = N, if N <= 1"
+                }
+            },
+
         },
 
 

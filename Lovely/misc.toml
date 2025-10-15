@@ -71,3 +71,16 @@ position = 'after'
 pattern = "Event = Object:extend()"
 payload = "--dummy patch"
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = 'functions/common_events.lua'
+position = 'after'
+pattern = "local info_queue = {}"
+payload = '''
+if _c.tau then
+    info_queue[#info_queue + 1] = { set = "Other", key = "tauic_info" }
+end
+'''
+match_indent = true
+

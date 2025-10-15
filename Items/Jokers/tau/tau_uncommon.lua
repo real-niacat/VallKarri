@@ -50,7 +50,7 @@ SMODS.Joker {
     config = { extra = { xmult = 1}, immutable = { hands = 6, req = 6 } },
     loc_vars = function(self, info_queue, card)
 
-        return { vars = { card.ability.immutable.req, card.ability.immutable.hands, card.ability.extra.emult } }
+        return { vars = { card.ability.immutable.req, card.ability.immutable.hands, card.ability.extra.xmult } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -136,8 +136,8 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Joker Stencil{}",
         text = {
             "{C:attention}+#1#{} Joker Slots",
-            "At end of round, gains {C:attention}+#2#{}",
-            "Joker Slot if no other Jokers are owned",
+            "At end of round, gains {C:attention}+#2#{} Joker Slot",
+            "if no other Jokers are owned",
             "Gives {X:mult,C:white}Xmult{} equal to total Joker slots",
             
         }
@@ -266,9 +266,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Troubadour{}",
         text = {
             "{C:attention}+#1#{} hand size when card scored",
-            "Convert every {C:attention}#3#{} Hand Size beyond {C:attention}#2#{} to {C:attention}1{} Consumable Slot",
-            "Convert every {C:attention}#3#{} Consumable slots beyond {C:attention}#2#{} to {C:attention}1{} Joker Slot",
-            "Convert every {C:attention}#3#{} Joker Slots beyond {C:attention}#2#{} to {C:attention}1{} Shop Slot",
+            "Convert every {C:attention}#3#{} Hand Size beyond {C:attention}#2#{} to {C:attention}#1#{} Consumable Slot",
+            "Convert every {C:attention}#3#{} Consumable slots beyond {C:attention}#2#{} to {C:attention}#1#{} Joker Slot",
+            "Convert every {C:attention}#3#{} Joker Slots beyond {C:attention}#2#{} to {C:attention}#1#{} Shop Slot",
         }
     },
     valk_artist = "Scraptake",
@@ -286,7 +286,7 @@ SMODS.Joker {
         
         if context.individual and context.cardarea == G.play then
 
-            G.hand.config.card_limit = G.hand.config.card_limit + card.ability.extra.gain
+            G.hand:change_size(card.ability.extra.gain)
             -- change_shop_size(center_table.extra)
 
             -- oops? why the FUCK
@@ -411,13 +411,15 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Cartomancer{}",
         text = {
-            "{C:green}#1# in #2#{} chance to create a {C:tarot}tarot{} card when a {C:attention}consumable{} is used",
+            "{C:green}#1# in #2#{} chance to create a {C:dark_edition}Negative{} {C:tarot}Tarot{} card",
+            "when a {C:attention}Consumable{} is used",
         }
     },
     valk_artist = "Scraptake",
     config = { extra = { min = 1, prob = 2 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.min, card.ability.extra.prob}}
+        local num,den = SMODS.get_probability_vars(card, card.ability.extra.min, card.ability.extra.prob)
+        return {vars = {num,den}}
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -428,10 +430,8 @@ SMODS.Joker {
 
     calculate = function(self, card, context)
 
-        if (context.using_consumeable and pseudorandom("tau_cartomancer", 1, card.ability.extra.prob) <= (card.ability.extra.min * G.GAME.probabilities.normal) ) then
-            local tarot = create_card("Tarot", G.consumeables, nil, nil, nil, nil, nil, "tauic_cartomancer")
-            tarot:add_to_deck()
-            G.consumeables:emplace(tarot)
+        if (context.using_consumeable and SMODS.pseudorandom_probability(card, "valk_tau_carto", card.ability.extra.min, card.ability.extra.prob) ) then
+            SMODS.add_card({set = "Tarot", area = G.consumeables, edition = "e_negative"})
         end
 
     end
@@ -543,19 +543,31 @@ SMODS.Joker {
     end
 }
 
+local function fib(n)
+    n = to_big(n)
+    local Phi = 1.6180399
+    local phi = Phi - 1
+    local fibn = ((Phi^n) - (-phi^n)) / math.sqrt(5) 
+    return fibn
+end
+
 SMODS.Joker {
     bases = {"j_fibonacci"},
     key = "tau_fibonacci",
     loc_txt = {
         name = "{C:valk_fire}Tauic Fibonacci{}",
         text = {
-            "Adds {C:mult}Mult{} equal to n-th entry in the",
-            "{C:attention}fibonacci sequence{}, where n is the current {C:mult}Mult{}",
+            "Playing cards give {C:mult}Mult{} equal to the {C:attention}Nth Fibonacci number{}",
+            "Increase N by {C:attention}#1#{} at end of round",
+            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { } },
+    config = { extra = { n = 1, gain = 1 } },
     loc_vars = function(self, info_queue, card)
+        return {vars = {
+            card.ability.extra.gain, fib(card.ability.extra.n)
+        }}
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -566,14 +578,15 @@ SMODS.Joker {
     blueprint_compat = true,
     calculate = function(self, card, context)
 
-		if context.joker_main then
-            local Phi = 1.6180399
-            local phi = Phi - 1
-            local n = mult
-            local fibn = ((Phi^n) - (-phi^n)) / math.sqrt(5) 
+		if context.individual and context.cardarea == G.play then
             return {
-                mult = fibn
+                mult = fib(card.ability.extra.n)
             }
+        end
+
+        if context.end_of_round and context.main_eval then
+            card.ability.extra.n = card.ability.extra.n + card.ability.extra.gain
+            quick_card_speak(card, localize("k_upgrade_ex"))
         end
 
     end

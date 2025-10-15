@@ -58,7 +58,7 @@ function vallkarri.artist_credit_ui()
                 config = {},
                 nodes = { {
                     n = G.UIT.C,
-                    config = { button = "vallkarri_artist_" .. artist, colour = G.C.UI.OUTLINE_DARK, minh = 0.25, minw = 2, r = 0.05, align = "tm" },
+                    config = { button = "vallkarri_artist_" .. artist, colour = G.C.UI.OUTLINE_DARK, minh = 0.3, minw = 2, r = 0.05, align = "tm" },
                     nodes = {
                         { n = G.UIT.T, config = { text = artist, colour = G.C.UI.TEXT_LIGHT, scale = text_scale * 0.85, shadow = true } }
                     }
