@@ -117,9 +117,14 @@ return {
                 name = "Tauic Variant",
                 text = {
                     "This card has a {C:valk_fire}Tauic{} variant",
-                    "Click it to swap between the two!",
                 }
-            }
+            },
+            tau_number = {
+                name = "Tau",
+                text = {
+                    "{C:valk_fire,s:1.25}6.28318530718{}"
+                }
+            },
 
         },
 

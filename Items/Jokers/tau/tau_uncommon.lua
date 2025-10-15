@@ -6,12 +6,11 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Rocket{}",
         text = {
             "Earn {C:money}$#1#{} at end of round",
-            "Multiply dollars earned by {X:money,C:white}$x#2#{} when {C:attention}Boss Blind{} defeated",
-            "Gives {X:mult,C:white}Xmult{} equal to money",
+            "Multiply dollars earned by {X:money,C:white}$X#2#{} when {C:attention}Boss Blind{} defeated",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { cur = 1, mult = 2} },
+    config = { extra = { cur = 2, mult = 2} },
     loc_vars = function(self, info_queue, card)
         return {vars = {card.ability.extra.cur, card.ability.extra.mult}}
     end,
@@ -34,10 +33,6 @@ SMODS.Joker {
 
         end
 
-        if context.joker_main then
-            return {x_mult = G.GAME.dollars}
-        end
-
     end
 }
 
@@ -47,12 +42,12 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Loyalty Card{}",
         text = {
-            "{C:attention}Double{} this Jokers {{X:dark_edition,C:white}^Mult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
-            "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Mult)",
+            "{C:attention}Triple{} this Jokers {{X:mult,C:white}XMult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
+            "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { emult = 1}, immutable = { hands = 6, req = 6 } },
+    config = { extra = { xmult = 1}, immutable = { hands = 6, req = 6 } },
     loc_vars = function(self, info_queue, card)
 
         return { vars = { card.ability.immutable.req, card.ability.immutable.hands, card.ability.extra.emult } }
@@ -70,14 +65,14 @@ SMODS.Joker {
             card.ability.immutable.hands = card.ability.immutable.hands - 1
             if card.ability.immutable.hands < 1 then
                 card.ability.immutable.hands = card.ability.immutable.req
-                Cryptid.manipulate(card, {value = 2})
+                card.ability.extra.xmult = to_big(card.ability.extra.xmult)*2
                 -- self misprintizing! how could this ever go wrong!
             end
 
         end
 
         if context.joker_main then
-            return {emult = card.ability.extra.emult}
+            return {xmult = card.ability.extra.xmult}
         end
 
     end
@@ -89,14 +84,14 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Marble Joker{}",
         text = {
-            "All scored cards are converted into {C:attention}stone{} cards",
+            "First scoring card is converted into a {C:attention}Stone{} card",
             "{C:attention}Stone{} cards give {X:chips,C:white}X#1#{} Chips when scored",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { xchip = 4.2 } },
+    config = { extra = { xchip = 1.42 } },
     loc_vars = function(self, info_queue, card)
-
+        info_queue[#info_queue+1] = G.P_CENTERS.m_stone
         return { vars = { card.ability.extra.xchip } }
     end,
     rarity = "valk_tauic",
@@ -107,10 +102,17 @@ SMODS.Joker {
     no_doe = true,
     calculate = function(self, card, context)
         
-        if context.before then
+        if context.after then
 
-            for i,c in ipairs(context.scoring_hand) do
-                c:set_ability("m_stone")
+            if context.scoring_hand and context.scoring_hand[1] then
+                local first = context.scoring_hand[1]
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        first:set_ability("m_stone")
+                        first:juice_up()
+                    end,
+                }))
+                
             end
 
         end
@@ -133,15 +135,17 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Joker Stencil{}",
         text = {
-            "{C:attention}+#1#{} Joker slots, double this value when Joker sold",
+            "{C:attention}+#1#{} Joker Slots",
+            "At end of round, gains {C:attention}+#2#{}",
+            "Joker Slot if no other Jokers are owned",
             "Gives {X:mult,C:white}Xmult{} equal to total Joker slots",
-            "{C:inactive}(Caps at {C:attention}+#2#{C:inactive} Joker Slots){}",
+            
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { slots = 2 }, immutable = {cap = 1e100} },
+    config = { extra = { slots = 2, gain = 1 }, immutable = {cap = 1e100} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.slots, card.ability.immutable.cap } }
+        return { vars = { card.ability.extra.slots, card.ability.extra.gain } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -151,23 +155,18 @@ SMODS.Joker {
     no_doe = true,
 
     add_to_deck = function(self ,card, from_debuff)
-        G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.slots
+        G.jokers:change_size(card.ability.extra.slots)
     end,
 
     calculate = function(self, card, context)
         
-        if context.selling_card and context.card and context.card.ability.set == "Joker" then
-            local new = card.ability.extra.slots * 2
-            if to_big(new) > to_big(card.ability.immutable.cap) then
-                new = card.ability.extra.slots
-            end
-            G.jokers.config.card_limit = to_number(G.jokers.config.card_limit + (new) - card.ability.extra.slots)
-            card.ability.extra.slots = new
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = "Upgraded!"})
+        if context.end_of_round and #G.jokers == 1 then
+            G.jokers:change_size(card.ability.extra.gain)
+            card.ability.extra.slots = card.ability.extra.slots + card.ability.extra.gain
         end
 
-        if (context.joker_main) then
-            return {x_mult = G.jokers.config.card_limit}
+        if context.joker_main then
+            return {xmult = G.jokers.config.card_limit}
         end
 
     end
@@ -179,13 +178,12 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Four Fingers{}",
         text = {
-            "{C:attention}Flushes{} and {C:attention}Straights{} can be made with {C:attention}3{} cards", --booo hardcoding. whatever. go complain to smods.
+            "{C:attention}Flushes{} and {C:attention}Straights{} can be made with {C:attention}3{} cards", --booo hardcoding. whatever. go complain to smods. --i will! not! . its fine here
             "Level up all hands by {C:attention}#1#{} when consumable used",
-            "Increases {C:dark_edition,E:1}Quadratically{}",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { levels = 1, inc = 1} },
+    config = { extra = { levels = 1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.levels } }
     end,
@@ -268,9 +266,9 @@ SMODS.Joker {
         name = "{C:valk_fire}Tauic Troubadour{}",
         text = {
             "{C:attention}+#1#{} hand size when card scored",
-            "Convert hand size beyond {C:attention}#2#{} to consumable slots at a {C:attention}#3# : 1{} ratio",
-            "Convert consumable slots beyond {C:attention}#2#{} to Joker slots at a {C:attention}#3# : 1{} ratio",
-            "Convert Joker slots beyond {C:attention}#2#{} to shop slots at a {C:attention}#3# : 1{} ratio",
+            "Convert every {C:attention}#3#{} Hand Size beyond {C:attention}#2#{} to {C:attention}1{} Consumable Slot",
+            "Convert every {C:attention}#3#{} Consumable slots beyond {C:attention}#2#{} to {C:attention}1{} Joker Slot",
+            "Convert every {C:attention}#3#{} Joker Slots beyond {C:attention}#2#{} to {C:attention}1{} Shop Slot",
         }
     },
     valk_artist = "Scraptake",
@@ -293,17 +291,17 @@ SMODS.Joker {
 
             -- oops? why the FUCK
             if (to_big(G.hand.config.card_limit) > to_big(card.ability.extra.max)) then
-                G.hand.config.card_limit = G.hand.config.card_limit - card.ability.extra.ratio
-                G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.gain
+                G.hand:change_size(-card.ability.extra.ratio)
+                G.consumeables:change_size(card.ability.extra.gain)
             end
 
             if (to_big(G.consumeables.config.card_limit) > to_big(card.ability.extra.max)) then
-                G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.ratio
-                G.jokers.config.card_limit = G.jokers.config.card_limit + card.ability.extra.gain
+                G.consumeables:change_size(-card.ability.extra.ratio)
+                G.jokers:change_size(card.ability.extra.gain)
             end
 
             if (to_big(G.jokers.config.card_limit) > to_big(card.ability.extra.max)) then
-                G.jokers.config.card_limit = G.jokers.config.card_limit - card.ability.extra.ratio
+                G.jokers:change_size(-card.ability.extra.ratio)
                 change_shop_size(card.ability.extra.gain)
             end
 
@@ -319,13 +317,14 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Oops! All six point two eights!{}",
         text = {
-            "Quadruples all {C:attention}listed{} {C:green}probabilities{}",
+            "Multiplies all {C:attention}listed{} {C:green}probabilities{} by {C:attention}Tau{}",
             "{C:green}#1# in #2#{} chance to earn {C:dark_edition}+#3#{} Joker slot and {C:money}$#4#{} when {C:attention}consumable{} used",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { base = 1, chance = 40, slots = 1, money = 8 } },
+    config = { extra = { base = 1, chance = 62.831853, slots = 1, money = 8 } },
     loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = { set = "Other", key = "tau_number" }
         local num, den = SMODS.get_probability_vars(card, card.ability.extra.base, card.ability.extra.chance, 'oa6.28')
         return {vars = {num, den, card.ability.extra.slots, card.ability.extra.money}}
     end,
@@ -339,12 +338,12 @@ SMODS.Joker {
     calculate = function(self, card, context)
 
         if context.mod_probability then
-            return {numerator = context.numerator * 4}
+            return {numerator = context.numerator * 6.2831853}
         end
 
         if (context.using_consumeable) and SMODS.pseudorandom_probability(card, 'valk_oa6', card.ability.extra.base, card.ability.extra.chance, 'oa6.28') then
 
-            G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+            G.joker:change_size(card.ability.extra.slots)
             ease_dollars(card.ability.extra.money)
 
         end
@@ -356,6 +355,8 @@ SMODS.Joker {
     end,
 
 }
+
+--CONTINUE FROM HERE
 
 SMODS.Joker {
     bases = {"j_satellite"},
