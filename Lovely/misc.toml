@@ -71,4 +71,3 @@ position = 'after'
 pattern = "Event = Object:extend()"
 payload = "--dummy patch"
 match_indent = true
-

@@ -116,7 +116,8 @@ return {
             tauic_info = {
                 name = "Tauic Variant",
                 text = {
-                    "This card has a {C:valk_fire}Tauic{} variant",
+                    "This card has a",
+                    "{C:valk_fire}Tauic{} variant",
                 }
             },
             tau_number = {

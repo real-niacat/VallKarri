@@ -230,7 +230,9 @@ function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, h
     glcui = tab
     local center = G.P_CENTERS[_c.key]
 
-
+    if _c.tau then
+        info_queue[#info_queue + 1] = { set = "Other", key = "tauic_info" }
+    end
 
     if not center then
         return tab
