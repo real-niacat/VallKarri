@@ -33,6 +33,7 @@ SMODS.Joker {
     end,
     dependencies = {"Talisman"},
     is_tau = true,
+    bases = {"j_canio"},
 }
 
 SMODS.Joker {
@@ -67,6 +68,7 @@ SMODS.Joker {
     end,
     dependencies = {"Talisman"},
     is_tau = true,
+    bases = {"j_triboulet"},
 }
 
 SMODS.Joker {
@@ -107,6 +109,7 @@ SMODS.Joker {
     end,
     dependencies = {"Talisman"},
     is_tau = true,
+    bases = {"j_yorick"},
 }
 
 SMODS.Joker {
@@ -152,6 +155,7 @@ SMODS.Joker {
     end,
     dependencies = {"Talisman"},
     is_tau = true,
+    bases = {"j_chicot"},
 }
 
 SMODS.Joker {
@@ -159,8 +163,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_fire}Tauic Perkeo{}",
         text = {
-            "Create {C:attention}#1#{} {C:dark_edition}Negative{} copies of the leftmost consumable when exiting shop",
-            "{C:green}#2# in #3#{} chance to make a copy of all used {C:attention}Consumables{}",
+            "Create {C:attention}#1#{} {C:dark_edition}Negative{} copies of the leftmost {C:attention}Consumable{} when exiting shop",
+            "{C:green}#2# in #3#{} chance to make a copy of used {C:attention}Consumables{}",
         }
     },
     valk_artist = "Scraptake",
@@ -197,10 +201,13 @@ SMODS.Joker {
         end
 
         if context.using_consumeable and SMODS.pseudorandom_probability(card, "valk_tau_perkeo", card.ability.extra.num, card.ability.extra.den) then
-            SMODS.add_card({key = context.consumeable.config.center_key, edition = context.consumeable.edition and context.consumeable.edition.key})
+            local copy = copy_card(context.consumeable)
+            copy:set_edition("e_negative", true)
+            G.consumeables:emplace(copy)
         end
 
     end,
     dependencies = {"Talisman"},
     is_tau = true,
+    bases = {"j_perkeo"},
 }
