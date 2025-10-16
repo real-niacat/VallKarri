@@ -33,7 +33,7 @@ SMODS.Joker {
     end,
     dependencies = {"Talisman"},
     is_tau = true,
-    bases = {"j_canio"},
+    bases = {"j_caino"},
 }
 
 SMODS.Joker {
