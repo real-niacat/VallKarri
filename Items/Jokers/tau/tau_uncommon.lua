@@ -3,7 +3,7 @@ SMODS.Joker {
     bases = {"j_rocket"},
     key = "tau_rocket",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Rocket{}",
+        name = "{C:valk_tauic}Tauic Rocket{}",
         text = {
             "Earn {C:money}$#1#{} at end of round",
             "Multiply dollars earned by {X:money,C:white}$X#2#{} when {C:attention}Boss Blind{} defeated",
@@ -40,7 +40,7 @@ SMODS.Joker {
     bases = {"j_loyalty_card"},
     key = "tau_loyalty",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Loyalty Card{}",
+        name = "{C:valk_tauic}Tauic Loyalty Card{}",
         text = {
             "{C:attention}Triple{} this Jokers {{X:mult,C:white}XMult{} every {C:attention}#1#{} {C:inactive}[#2#]{} hands played",
             "{C:inactive}(Currently {X:mult,C:white}X#3#{C:inactive} Mult)",
@@ -82,7 +82,7 @@ SMODS.Joker {
     bases = {"j_marble"},
     key = "tau_marble",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Marble Joker{}",
+        name = "{C:valk_tauic}Tauic Marble Joker{}",
         text = {
             "First scoring card is converted into a {C:attention}Stone{} card",
             "{C:attention}Stone{} cards give {X:chips,C:white}X#1#{} Chips when scored",
@@ -133,7 +133,7 @@ SMODS.Joker {
     bases = {"j_stencil"},
     key = "tau_stencil",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Joker Stencil{}",
+        name = "{C:valk_tauic}Tauic Joker Stencil{}",
         text = {
             "{C:attention}+#1#{} Joker Slots",
             "At end of round, gains {C:attention}+#2#{} Joker Slot",
@@ -176,7 +176,7 @@ SMODS.Joker {
     bases = {"j_four_fingers"},
     key = "tau_fingers",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Four Fingers{}",
+        name = "{C:valk_tauic}Tauic Four Fingers{}",
         text = {
             "{C:attention}Flushes{} and {C:attention}Straights{} can be made with {C:attention}3{} cards", --booo hardcoding. whatever. go complain to smods. --i will! not! . its fine here
             "Level up all hands by {C:attention}#1#{} when consumable used",
@@ -209,7 +209,7 @@ SMODS.Joker {
     bases = {"j_ceremonial"},
     key = "tau_dagger",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Ceremonial Dagger{}",
+        name = "{C:valk_tauic}Tauic Ceremonial Dagger{}",
         text = {
             "When {C:attention}blind{} selected, {C:red,E:1}destroy{} Joker to the right and",
             "added its sell value to this Jokers {X:dark_edition,C:white}^Mult{}",
@@ -263,7 +263,7 @@ SMODS.Joker {
     bases = {"j_troubadour"},
     key = "tau_troubadour",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Troubadour{}",
+        name = "{C:valk_tauic}Tauic Troubadour{}",
         text = {
             "{C:attention}+#1#{} hand size when card scored",
             "Convert every {C:attention}#3#{} Hand Size beyond {C:attention}#2#{} to {C:attention}#1#{} Consumable Slot",
@@ -315,7 +315,7 @@ SMODS.Joker {
     bases = {"j_oops"},
     key = "tau_oops",
     loc_txt = {
-        name = "{C:valk_fire}Oops! All six point two eights!{}",
+        name = "{C:valk_tauic}Oops! All six point two eights!{}",
         text = {
             "Multiplies all {C:attention}listed{} {C:green}probabilities{} by {C:attention}Tau{}",
             "{C:green}#1# in #2#{} chance to earn {C:dark_edition}+#3#{} Joker slot and {C:money}$#4#{} when {C:attention}consumable{} used",
@@ -362,7 +362,7 @@ SMODS.Joker {
     bases = {"j_satellite"},
     key = "tau_satellite",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Satellite{}",
+        name = "{C:valk_tauic}Tauic Satellite{}",
         text = {
             "Earn {C:money}$#1#{} at end of round",
             "Increases by {C:money}$#2#{} when planet card used",
@@ -409,7 +409,7 @@ SMODS.Joker {
     bases = {"j_cartomancer"},
     key = "tau_cartomancer",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Cartomancer{}",
+        name = "{C:valk_tauic}Tauic Cartomancer{}",
         text = {
             "{C:green}#1# in #2#{} chance to create a {C:dark_edition}Negative{} {C:tarot}Tarot{} card",
             "when a {C:attention}Consumable{} is used",
@@ -441,7 +441,7 @@ SMODS.Joker {
     bases = {"j_mime"},
     key = "tau_mime",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Mime{}",
+        name = "{C:valk_tauic}Tauic Mime{}",
         text = {
             "Retrigger all playing cards {C:attention}#1#{} times",
         }
@@ -476,7 +476,7 @@ SMODS.Joker {
     bases = {"j_steel_joker"},
     key = "tau_steel_joker",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Steel Joker{}",
+        name = "{C:valk_tauic}Tauic Steel Joker{}",
         text = {
             "{X:dark_edition,C:white}+^#1#{} Mult for each {C:attention}Steel card{} in deck",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
@@ -512,7 +512,7 @@ SMODS.Joker {
     bases = {"j_dusk"},
     key = "tau_dusk",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Dusk{}",
+        name = "{C:valk_tauic}Tauic Dusk{}",
         text = {
             "{C:attention}Retrigger{} each played card {C:attention}once{}",
             "for each hand played this round",
@@ -555,7 +555,7 @@ SMODS.Joker {
     bases = {"j_fibonacci"},
     key = "tau_fibonacci",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Fibonacci{}",
+        name = "{C:valk_tauic}Tauic Fibonacci{}",
         text = {
             "Playing cards give {C:mult}Mult{} equal to the {C:attention}Nth Fibonacci number{}",
             "Increase N by {C:attention}#1#{} at end of round",

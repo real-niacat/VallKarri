@@ -117,13 +117,13 @@ return {
                 name = "Tauic Variant",
                 text = {
                     "This card has a",
-                    "{C:valk_fire}Tauic{} variant",
+                    "{C:valk_tauic}Tauic{} variant",
                 }
             },
             tau_number = {
                 name = "Tau",
                 text = {
-                    "{C:valk_fire,s:1.25}6.28318530718{}"
+                    "{C:valk_tauic,s:1.25}6.28318530718{}"
                 }
             },
 

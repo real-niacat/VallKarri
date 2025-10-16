@@ -2,9 +2,9 @@ SMODS.Joker {
     bases = {"j_joker"},
     key = "tau_joker",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Joker{}",
+        name = "{C:valk_tauic}Tauic Joker{}",
         text = {
-            "{X:mult,C:white}X#1#{} Mult for every {C:valk_fire}Tauic{} Joker owned",
+            "{X:mult,C:white}X#1#{} Mult for every {C:valk_tauic}Tauic{} Joker owned",
             "{C:inactive}(Includes self){}",
         }
     },
@@ -30,7 +30,7 @@ SMODS.Joker {
     bases = {"j_chaos"},
     key = "tau_clown",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Chaos the Clown{}",
+        name = "{C:valk_tauic}Tauic Chaos the Clown{}",
         text = {
             "{C:attention}#1#{} free {C:green}rerolls{} in shop",
             "When blind selected, gain {C:attention}#2#{} {C:blue}hand{} and {C:red}discard{} per {C:green}reroll{} in last shop",
@@ -75,7 +75,7 @@ SMODS.Joker {
     bases = {"j_lusty_joker", "j_greedy_joker", "j_wrathful_joker", "j_gluttenous_joker"},
     key = "tau_sins",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Sin Joker{}",
+        name = "{C:valk_tauic}Tauic Sin Joker{}",
         text = {
             "{X:mult,C:white}X#1#{} Mult when a card is scored",
             "Increase by {X:mult,C:white}X#2#{} for every consecutive card of the same Suit scored",
@@ -117,7 +117,7 @@ SMODS.Joker {
     bases = {"j_blue_joker"},
     key = "tau_blue",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Blue Joker{}",
+        name = "{C:valk_tauic}Tauic Blue Joker{}",
         text = {
             "{X:chips,C:white}X#1#{} Chips for each",
             "remaining card in {C:attention}deck{}",
@@ -159,7 +159,7 @@ SMODS.Joker {
     bases = {"j_even_steven", "j_odd_todd"},
     key = "tau_brothers",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Number Brothers{}",
+        name = "{C:valk_tauic}Tauic Number Brothers{}",
         text = {
             "All scored number cards give {X:mult,C:white}XMult{}",
             "equal to their rank",
@@ -191,7 +191,7 @@ SMODS.Joker {
     bases = {"j_egg"},
     key = "tau_egg",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Egg{}",
+        name = "{C:valk_tauic}Tauic Egg{}",
         text = {
             "Gains {C:money}$#1#{} of Sell Value at end of round",
             "{C:green}#2# in #3#{} Chance to come back after being removed",
@@ -234,7 +234,7 @@ SMODS.Joker {
     bases = {"j_mystic_summit"},
     key = "tau_summit",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Summit{}",
+        name = "{C:valk_tauic}Tauic Summit{}",
         text = {
             "Level up {C:attention}All Hands{} when a card is {C:red}Discarded{}",
             "{C:inactive,s:0.7}(You probably want Handy for this one!)",
@@ -265,7 +265,7 @@ SMODS.Joker {
     bases = {"j_banner"},
     key = "tau_banner",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Banner{}",
+        name = "{C:valk_tauic}Tauic Banner{}",
         text = {
             "{X:chips,C:white}X#1#{} Chips per discard remaining",
             "{C:inactive}(Currently {X:chips,C:white}X#2#{C:inactive} Chips)",
@@ -301,7 +301,7 @@ SMODS.Joker {
     bases = {"j_credit_card"},
     key = "tau_creditcard",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Credit Card{}",
+        name = "{C:valk_tauic}Tauic Credit Card{}",
         text = {
             "Refund {C:attention}#1#%{} of all money lost",
         }
@@ -329,7 +329,7 @@ SMODS.Joker {
             "j_sly", "j_wily", "j_clever", "j_devious", "j_crafty"},
     key = "tau_emotion",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Emotional Joker{}",
+        name = "{C:valk_tauic}Tauic Emotional Joker{}",
         text = {
             "{X:chips,C:white}X#1#{} Chips and {X:mult,C:white}X#1#{} Mult",
             "per {C:attention}poker hand{} contained in played hand",
@@ -375,7 +375,7 @@ SMODS.Joker {
     bases = {"j_half"},
     key = "tau_half",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Half Joker{}",
+        name = "{C:valk_tauic}Tauic Half Joker{}",
         text = {
             "{C:mult}+#1#{} Mult",
             "{C:attention}Doubles{} when you play {C:attention}#2#{} or less cards ",
@@ -414,7 +414,7 @@ SMODS.Joker {
     bases = {"j_8_ball"},
     key = "tau_8_ball",
     loc_txt = {
-        name = "{C:valk_fire}Tauic 8 Ball{}",
+        name = "{C:valk_tauic}Tauic 8 Ball{}",
         text = {
             "When an {C:attention}8{} is scored, create a random {C:tarot}Tarot{} card",
             "with {C:attention}Octuple{} values",
@@ -444,7 +444,7 @@ SMODS.Joker {
     bases = {"j_smiley"},
     key = "tau_smiley",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Smiley Face{}",
+        name = "{C:valk_tauic}Tauic Smiley Face{}",
         text = {
             "{C:attention}Non-face{} cards are converted into a random {C:attention}face{} card when {C:attention}scored{}",
             "{C:attention}Face{} cards give {X:mult,C:white}X#1#{} Mult",
@@ -482,10 +482,10 @@ SMODS.Joker {
     bases = {"j_gros_michel"},
     key = "tau_gros_michel",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Gros Michel{}",
+        name = "{C:valk_tauic}Tauic Gros Michel{}",
         text = {
             "{X:mult,C:white}X#1#{} Mult",
-            "{C:green}#2# in #3#{} chance to convert into {C:valk_fire}Tauic Cavendish{} at end of round",
+            "{C:green}#2# in #3#{} chance to convert into {C:valk_tauic}Tauic Cavendish{} at end of round",
         }
     },
     valk_artist = "Scraptake",
@@ -518,7 +518,7 @@ SMODS.Joker {
     bases = {"j_cavendish"},
     key = "tau_cavendish",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Cavendish{}",
+        name = "{C:valk_tauic}Tauic Cavendish{}",
         text = {
             "{X:dark_edition,C:white}^#1#{} Mult",
             "{C:green}#2# in #3#{} chance to",
@@ -549,7 +549,7 @@ SMODS.Joker {
     bases = {"j_delayed_grat"},
     key = "tau_delayed_grat",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Delayed Gratification{}",
+        name = "{C:valk_tauic}Tauic Delayed Gratification{}",
         text = {
             "Gain {C:money}current money{} as discards",
             "Earn {C:money}$#1#{} for every {C:red}#2#{} Discards left at end of round",
@@ -580,7 +580,7 @@ SMODS.Joker {
     bases = {"j_hanging_chad"},
     key = "tau_hanging_chad",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Hanging Chad{}",
+        name = "{C:valk_tauic}Tauic Hanging Chad{}",
         text = {
             "Retrigger the {C:attention}first{} played card {C:attention}once{} for each card played",
         }
@@ -612,7 +612,7 @@ SMODS.Joker {
     bases = {"j_misprint"},
     key = "tau_misprint",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Misprint{}",
+        name = "{C:valk_tauic}Tauic Misprint{}",
         text = {
             "{X:dark_edition,C:white}#1##2#{}#3#",
         }
@@ -648,7 +648,7 @@ SMODS.Joker {
     bases = {"j_photograph"},
     key = "tau_photograph",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Photograph{}",
+        name = "{C:valk_tauic}Tauic Photograph{}",
         text = {
             "The first scored {C:attention}face{} card gives",
             "{X:dark_edition,C:white}^#1#{} Mult",
@@ -685,7 +685,7 @@ SMODS.Joker {
     bases = {"j_ice_cream"},
     key = "tau_ice_cream",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Ice Cream{}",
+        name = "{C:valk_tauic}Tauic Ice Cream{}",
         text = {
             "Gains {X:chips,C:white}X#2#{} per hand played",
             "{C:inactive}(Currently {X:chips,C:white}X#1#{C:inactive} Chips)",
@@ -722,7 +722,7 @@ SMODS.Joker {
     bases = {"j_ride_the_bus"},
     key = "tau_ride_the_bus",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Ride the Bus{}",
+        name = "{C:valk_tauic}Tauic Ride the Bus{}",
         text = {
             "{C:attention}Non-face{} cards give",
             "{X:dark_edition,C:white}^#1#{} Mult when scored",
@@ -753,7 +753,7 @@ SMODS.Joker {
     bases = {"j_raised_fist"},
     key = "tau_raised_fist",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Raised Fist{}",
+        name = "{C:valk_tauic}Tauic Raised Fist{}",
         text = {
             "The lowest ranked card {C:attention}held in hand{} gives",
             "{X:dark_edition,C:white}^Mult{} equal to {C:attention}#1#x{} its value",

@@ -2,7 +2,7 @@ SMODS.Joker {
     bases = {"j_obelisk"},
     key = "tau_obelisk",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Obelisk{}",
+        name = "{C:valk_tauic}Tauic Obelisk{}",
         text = {
             "Gains {X:dark_edition,C:white}^#1#{} Mult per scored card if",
             "played hand is not your most played {C:attention}poker hand{}",
@@ -44,7 +44,7 @@ SMODS.Joker {
     bases = {"j_blueprint"},
     key = "tau_blueprint",
     loc_txt = {
-        name = "{C:valk_fire}Tauic Blueprint{}",
+        name = "{C:valk_tauic}Tauic Blueprint{}",
         text = {
             "Copies abilities the 3 {C:attention}Jokers{} to the right",
         }
