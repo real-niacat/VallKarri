@@ -34,12 +34,7 @@ SMODS.Back {
 
         if context.after then
             
-            for i,joker in ipairs(G.jokers.cards) do
-
-                local res = eval_card(joker, {end_of_round = true, main_eval = true})
-                card_eval_status_text(joker, "extra", nil, nil, nil, res)
-
-            end
+            SMODS.calculate_context({end_of_round = true, main_eval = true})
 
         end
 
