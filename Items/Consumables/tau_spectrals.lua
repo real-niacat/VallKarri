@@ -81,13 +81,11 @@ SMODS.DrawStep {
     order = 11,
     func = function(card, layer)
         if (layer == 'card' or layer == 'both') and card.sprite_facing == 'front' then
-            
             if card.config.center.set == "TauSpec" then
                 card.children.center:draw_shader('valk_inverse_booster', nil, card.ARGS.send_to_shader)
             elseif card.config.center.is_tau then
                 card.children.center:draw_shader('booster', nil, card.ARGS.send_to_shader)
             end
-            
         end
     end
 }
@@ -445,7 +443,8 @@ local tauspecs = {
                             G.E_MANAGER:add_event(Event({
 
                                 func = function()
-                                    SMODS.change_base(c, nil, pseudorandom_element(SMODS.Ranks, "valk_tau_ouija_rerandomize").key)
+                                    SMODS.change_base(c, nil,
+                                        pseudorandom_element(SMODS.Ranks, "valk_tau_ouija_rerandomize").key)
                                     c:juice_up()
 
                                     return true
@@ -484,7 +483,7 @@ local tauspecs = {
             "{C:attention}any{} properties with the selected card",
             "Earn {C:money}$#1#{} for each destroyed card",
         },
-        config = { extra = {money = 3} },
+        config = { extra = { money = 3 } },
         can_use = function(self, card)
             return #G.hand.highlighted == 1 --hardcoded to be one, sorry </3
         end,
@@ -496,19 +495,16 @@ local tauspecs = {
             local edition = selected.edition and selected.edition.key
 
             local to_destroy = {}
-            for _,playing_card in pairs(G.playing_cards) do
-
+            for _, playing_card in pairs(G.playing_cards) do
                 if playing_card:is_suit(suit) or playing_card.base.value == rank or enh and (next(SMODS.get_enhancements(playing_card)) == enh) or (edition and edition == (playing_card.edition and playing_card.edition.key)) then
                     table.insert(to_destroy, playing_card)
                 end
-
             end
             ease_dollars(card.ability.extra.money * #to_destroy)
             SMODS.destroy_cards(to_destroy)
-            
         end,
         loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.money}}
+            return { vars = { card.ability.extra.money } }
         end
     },
     {
@@ -525,19 +521,18 @@ local tauspecs = {
         use = function(self, card, area, copier)
             local to_destroy = {}
             local sel = G.jokers.highlighted[1]
-            for _,jkr in pairs(G.jokers.cards) do
+            for _, jkr in pairs(G.jokers.cards) do
                 if jkr ~= sel then
                     table.insert(to_destroy, jkr)
                 end
             end
-            for i=1,#to_destroy do
-                SMODS.add_card({key = sel.config.center.key, area = G.jokers})
+            for i = 1, #to_destroy do
+                SMODS.add_card({ key = sel.config.center.key, area = G.jokers })
             end
             SMODS.destroy_cards(to_destroy)
-            
         end,
         loc_vars = function(self, info_queue, card)
-            return {vars = {card.ability.extra.money}}
+            return { vars = { card.ability.extra.money } }
         end
     },
     {
@@ -591,9 +586,9 @@ local tauspecs = {
             "Apply {C:attention}Cosmic, Lordly{} or {C:attention}R.G.B.{} to",
             "a random Joker, {C:red}destroy{} another random other Joker",
         },
-        config = { extra = { } },
+        config = { extra = {} },
         can_use = function(self, card)
-            for _,joker in pairs(G.jokers.cards) do
+            for _, joker in pairs(G.jokers.cards) do
                 if not joker.edition then
                     return true
                 end
@@ -603,15 +598,16 @@ local tauspecs = {
         use = function(self, card, area, copier)
             local allowed = {}
             local notallowed = {}
-            for _,joker in pairs(G.jokers.cards) do
+            for _, joker in pairs(G.jokers.cards) do
                 if not joker.edition then
                     table.insert(allowed, joker)
                 end
             end
-            local chosen_edition = pseudorandom_element({"e_valk_lordly", "e_valk_cosmic", "e_valk_rgb"}, "valk_tau_hex_edition")
+            local chosen_edition = pseudorandom_element({ "e_valk_lordly", "e_valk_cosmic", "e_valk_rgb" },
+                "valk_tau_hex_edition")
             local chosen_joker = pseudorandom_element(allowed, "valk_tau_hex")
 
-            for _,joker in pairs(G.jokers.cards) do
+            for _, joker in pairs(G.jokers.cards) do
                 if joker ~= chosen_joker then
                     table.insert(notallowed, joker)
                 end
@@ -619,8 +615,132 @@ local tauspecs = {
 
             local to_kill = pseudorandom_element(notallowed, "valk_tau_hex_kill")
             chosen_joker:set_edition(chosen_edition)
-            SMODS.destroy_cards({to_kill})
+            SMODS.destroy_cards({ to_kill })
         end,
+    },
+    {
+        original = "c_trance",
+        desc = {
+            "Add a {C:attention}Blue Seal{} to up to {C:attention}#1#{} selected cards",
+            "If only {C:attention}#2#{} card is selected, add a {C:attention}Galactic Seal{} instead",
+        },
+        config = { extra = { max = 3, min = 1 } },
+        can_use = function(self, card)
+            return #G.hand.highlighted >= card.ability.extra.min and #G.hand.highlighted <= card.ability.extra.max
+        end,
+        use = function(self, card, area, copier)
+            if #G.hand.highlighted <= card.ability.extra.min then
+                for _, c in pairs(G.hand.highlighted) do
+                    c:set_seal("valk_Galactic")
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            c.area:remove_from_highlighted(c)
+                            return true
+                        end,
+                        trigger = "after"
+                    }))
+                end
+            else
+                for _, c in pairs(G.hand.highlighted) do
+                    c:set_seal("Blue")
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            c.area:remove_from_highlighted(c)
+                            return true
+                        end,
+                        trigger = "after"
+                    }))
+                end
+            end
+        end,
+        loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue + 1] = G.P_SEALS.Blue
+            info_queue[#info_queue + 1] = G.P_SEALS.valk_Galactic
+            return {
+                vars = {
+                    card.ability.extra.max, card.ability.extra.min
+                }
+            }
+        end
+    },
+    {
+        original = "c_medium",
+        desc = {
+            "Add a {C:attention}Purple Seal{} to up to {C:attention}#1#{} selected cards",
+            "If only {C:attention}#2#{} card is selected, add a {C:attention}Vibrant Seal{} instead",
+        },
+        config = { extra = { max = 3, min = 1 } },
+        can_use = function(self, card)
+            return #G.hand.highlighted >= card.ability.extra.min and #G.hand.highlighted <= card.ability.extra.max
+        end,
+        use = function(self, card, area, copier)
+            if #G.hand.highlighted <= card.ability.extra.min then
+                for _, c in pairs(G.hand.highlighted) do
+                    c:set_seal("valk_Vibrant")
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            c.area:remove_from_highlighted(c)
+                            return true
+                        end,
+                        trigger = "after"
+                    }))
+                end
+            else
+                for _, c in pairs(G.hand.highlighted) do
+                    c:set_seal("Purple")
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            c.area:remove_from_highlighted(c)
+                            return true
+                        end,
+                        trigger = "after"
+                    }))
+                end
+            end
+        end,
+        loc_vars = function(self, info_queue, card)
+            info_queue[#info_queue + 1] = G.P_SEALS.Blue
+            info_queue[#info_queue + 1] = G.P_SEALS.valk_Galactic
+            return {
+                vars = {
+                    card.ability.extra.max, card.ability.extra.min
+                }
+            }
+        end
+    },
+    {
+        original = "c_cryptid",
+        desc = {
+            "Create {C:attention}#1#{} copy of all {C:attention}Selected{} Playing Cards",
+        },
+        config = { extra = { copies = 1 } },
+        can_use = function(self, card)
+            return #G.hand.highlighted >= 1
+        end,
+        use = function(self, card, area, copier)
+            for _, c in pairs(G.hand.highlighted) do
+                
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        for i=1,card.ability.extra.copies do
+                            local copy = copy_card(c)
+                            copy:add_to_deck()
+                            G.hand:emplace(copy)
+                        end
+                        c.area:remove_from_highlighted(c)
+                        return true
+                    end,
+                    trigger = "after"
+                }))
+            end
+        end,
+        loc_vars = function(self, info_queue, card)
+            return {
+                vars = {
+                    card.ability.extra.copies
+                }
+            }
+        end
     },
 }
 
@@ -641,6 +761,10 @@ for _, spectral in ipairs(tauspecs) do
             name = "Tauic " .. localize { type = "name_text", set = "Spectral", key = spectral.original },
             text = spectral.desc
         },
-        config = spectral.config
+        config = spectral.config,
+        in_pool = function()
+            return false
+        end,
+        no_grc = true,
     }
 end
