@@ -726,6 +726,7 @@ local tauspecs = {
                             local copy = copy_card(c)
                             copy:add_to_deck()
                             G.hand:emplace(copy)
+                            table.insert(G.playing_cards, copy)
                         end
                         c.area:remove_from_highlighted(c)
                         return true
