@@ -554,7 +554,7 @@ SMODS.Joker {
         text = {
             "{C:attention}+#1#{} Joker Slots",
             "{C:red,E:1}Self-destructs{} if played hand is not",
-            "most played {C:attention}poker pand{}",
+            "most played {C:attention}poker hand{}",
             "{C:inactive}(Currently #2#)",
         }
     },
@@ -602,6 +602,39 @@ SMODS.Joker {
             return {
                 mult = card.ability.extra.total
             }
+        end
+    end,
+
+}
+
+
+SMODS.Joker {
+    key = "trump_casino",
+    rarity = 2,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 8,
+    loc_txt = {
+        name = "Donald Trump Casino",
+        text = {
+            "Earn {C:money}$#1#{} when a {C:attention}2{} is scored",
+            "Lose {C:money}$#2#{} when entering Shop",
+        }
+    },
+    valk_artist = nil,
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.earn, card.ability.extra.loss } }
+    end,
+    config = { extra = { earn = 2.22, loss = 2 } },
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and context.other_card:get_id() == 2 then
+            return {
+                dollars = card.ability.extra.earn
+            }
+        end
+
+        if context.starting_shop then
+            ease_dollars(card.ability.extra.loss)
         end
     end,
 

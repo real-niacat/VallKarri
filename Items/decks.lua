@@ -183,7 +183,7 @@ if AKYRS then
                         -- print("succeeded against " .. check)
                         -- print("attempting creation")
                         local ar = area_by_key(cen.key)
-                        local blist = Cryptid.pointergetblist(cen.key) or {}
+                        local blist = Cryptid.pointergetblist and Cryptid.pointergetblist(cen.key) or {}
                         if ar and blist and (not blist[1]) then
                             -- print("cardarea exists")
                             local card = create_card(cen.set, ar, nil, nil, nil, nil, cen.key, "valk_hyperalphabetical")
