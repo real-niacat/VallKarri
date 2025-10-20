@@ -84,3 +84,17 @@ end
 '''
 match_indent = true
 
+
+# i wholely, genuinely apologize. this is not the best solution, nor is it close.
+[[patches]]
+[patches.pattern]
+target = 'functions/UI_definitions.lua'
+position = 'at'
+pattern = "SMODS.create_mod_badges(card.config.center, badges)"
+payload = '''
+local cen = card.config.center
+cen.valk_card = card
+SMODS.create_mod_badges(cen, badges)
+'''
+match_indent = true
+
