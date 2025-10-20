@@ -135,6 +135,14 @@ return {
                 }
             },
 
+            valk_transformative = {
+                name = "Transformative",
+                text = {
+                    "Converts into its {C:valk_tauic}Tauic{} variant",
+                    "in {C:attention}#1#{} rounds",
+                }
+            }
+
         },
 
 
@@ -209,6 +217,9 @@ return {
         },
         dictionary = {
             ph_valk_beavers = "The beavers ravage the blind."
+        },
+        labels = {
+            valk_transformative = "Transformative",
         }
 
     }

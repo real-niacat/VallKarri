@@ -111,6 +111,10 @@ local spectral_positions = {
     ["c_soul"] = { x = 2, y = 2 },
 }
 
+local spectral_soul_positions = {
+    ["c_soul"] = { x = 3, y = 2 },
+}
+
 local tauspecs = {
     {
         original = "c_familiar",
@@ -719,10 +723,9 @@ local tauspecs = {
         end,
         use = function(self, card, area, copier)
             for _, c in pairs(G.hand.highlighted) do
-                
                 G.E_MANAGER:add_event(Event({
                     func = function()
-                        for i=1,card.ability.extra.copies do
+                        for i = 1, card.ability.extra.copies do
                             local copy = copy_card(c)
                             copy:add_to_deck()
                             G.hand:emplace(copy)
@@ -743,6 +746,32 @@ local tauspecs = {
             }
         end
     },
+    {
+        original = "c_soul",
+        desc = {
+            "Create a {C:legendary,E:1}Legendary{} Joker",
+            "Apply {C:blue}Transformative{} to all Jokers",
+        },
+        config = { extra = {} },
+        can_use = function(self, card)
+            return (#G.jokers.cards < G.jokers.config.card_limit)
+        end,
+        use = function(self, card, area, copier)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    SMODS.add_card({ rarity = "Legendary", legendary = true --[[no clue what this does]] })
+                end
+            }))
+
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    for _, joker in pairs(G.jokers.cards) do
+                        joker:add_sticker("valk_transformative")
+                    end
+                end
+            }))
+        end,
+    },
 }
 
 
@@ -755,6 +784,7 @@ for _, spectral in ipairs(tauspecs) do
         bases = { spectral.original },
         key = spectral.original .. "_tauic",
         pos = spectral_positions[spectral.original],
+        soul_pos = spectral_soul_positions[spectral.original],
         can_use = spectral.can_use,
         use = spectral.use,
         loc_vars = spectral.loc_vars,

@@ -33,30 +33,30 @@ SMODS.Joker {
     loc_txt = {
         name = "Tauist",
         text = {
-            "{C:valk_fire}Tauic{} Joker variants have their spawn",
-            "chances increased whenever their roll fails",
-            "{C:inactive}(Currently a {C:green}#1#%{C:inactive} chance to replace)",
+            "{C:valk_fire}Tauic{} Jokers are {X:valk_tauic,C:white}X#1#{} more likely to spawn",
+            "Increase by {X:valk_tauic,C:white}X#2#{} at end of round",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { } },
+    config = { extra = { mult = 2, gain = 1} },
     loc_vars = function(self, info_queue, card)
-        local c = 0
-        if G.GAME and G.GAME.tau_replace then
-            c = 100 * (1 / G.GAME.tau_replace)
-        end
-        return { vars = { c } }
+        return { vars = { card.ability.extra.mult, card.ability.extra.gain } }
     end,
     rarity = 3,
     atlas = "main",
     pos = {x=8, y=4},
     soul_pos = {x=8, y=8, extra = {x=9, y=4}},
     cost = 12,
-    add_to_deck = function(self, card, from_debuff)
-        G.GAME.tau_increase = G.GAME.tau_increase + 2
-    end,
-    remove_from_deck = function(self, card, from_debuff)
-        G.GAME.tau_increase = G.GAME.tau_increase - 2
+    calculate = function(self, card, context)
+        if context.valk_tau_probability_mod then
+            return {
+                numerator = context.numerator * card.ability.extra.mult
+            }
+        end
+
+        if context.end_of_round and context.main_eval then
+            SMODS.scale_card(card, {ref_table = card.ability.extra, scalar_value = "gain", ref_value = "mult"})
+        end
     end
 }
 

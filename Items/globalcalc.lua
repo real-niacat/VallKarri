@@ -1,6 +1,13 @@
 vallkarri.calculate = function(self, context)
     vallkarri.refresh_ante_diff()
-    -- print("we originalled")
+    
+    local cen = G.P_CENTERS[context.center]
+    if context.valk_tau_probability_mod and cen and cen.hidden then
+        return {
+            numerator = context.numerator * 10
+        }
+    end
+
     if context.final_scoring_step then
         for i = 1, #G.GAME.tags do
             G.GAME.tags[i]:apply_to_run({type = "valk_final_scoring_step"}) --diff name to avoid morefluff conflict
