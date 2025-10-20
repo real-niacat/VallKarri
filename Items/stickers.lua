@@ -1,3 +1,10 @@
+SMODS.Atlas {
+    key = "stickers",
+    px = 71,
+    py = 95,
+    path = "stickers.png",
+}
+
 SMODS.Sticker {
     key = "transformative",
     config = { rounds = 5 },
@@ -28,5 +35,7 @@ SMODS.Sticker {
         }
     end,
     badge_colour = G.C.VALK_TAUIC,
+    atlas = "stickers",
+    pos = {x=0,y=0},
 
 }
