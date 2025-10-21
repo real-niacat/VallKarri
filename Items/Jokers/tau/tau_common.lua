@@ -34,7 +34,7 @@ SMODS.Joker {
         text = {
             "{C:attention}#1#{} free {C:green}rerolls{} in shop",
             "When blind selected, gain {C:attention}#2#{} {C:blue}hand{} and {C:red}discard{} per {C:green}reroll{} in last shop",
-            "{C:inactive}(Currently +#3# {C:blue}Hands{C:inactive} and {C:red}Discards{C:inactive})",
+            "{C:inactive}(Currently {C:attention}+#3#{} {C:blue}Hands{C:inactive} and {C:red}Discards{C:inactive})",
         }
     },
     valk_artist = "Scraptake",
@@ -83,7 +83,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { base = 1, cur = 1, gain = 0.05, current_suit = "Spades"} },
+    config = { extra = { base = 1, cur = 1, gain = 0.1, current_suit = "Spades"} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.base, card.ability.extra.gain, card.ability.extra.cur, card.ability.extra.current_suit, colours = {
             G.C.SUITS[card.ability.extra.current_suit]
