@@ -589,19 +589,24 @@ SMODS.Joker {
         name = "Take your age...",
         text = {
             "{C:mult}+#1#{} Mult for each Mod installed",
+            "Increase by {C:mult}+#3#{} Mult at end of round",
             "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
         }
     },
     valk_artist = nil,
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.total / vallkarri.mods_installed(), card.ability.extra.total } }
+        return { vars = { card.ability.extra.total / vallkarri.mods_installed(), card.ability.extra.total, card.ability.extra.gain / vallkarri.mods_installed() } }
     end,
-    config = { extra = { total = 25 } },
+    config = { extra = { total = 10, gain = 5 } },
     calculate = function(self, card, context)
         if context.joker_main then
             return {
                 mult = card.ability.extra.total
             }
+        end
+
+        if context.end_of_round and context.main_eval then
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "total", scalar_value = "gain"})
         end
     end,
 
@@ -615,7 +620,7 @@ SMODS.Joker {
     pos = { x = 0, y = 1 },
     cost = 8,
     loc_txt = {
-        name = "Donald Trump Casino",
+        name = {"Joker starts", "giving out", "$2,222 to", "everyone!"},
         text = {
             "Earn {C:money}$#1#{} when a {C:attention}2{} is scored",
             "Lose {C:money}$#2#{} when entering Shop",
@@ -634,7 +639,15 @@ SMODS.Joker {
         end
 
         if context.starting_shop then
-            ease_dollars(card.ability.extra.loss)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+
+                    ease_dollars(card.ability.extra.loss)
+                    card:juice_up()
+                    return true
+                end
+            }))
+            
         end
     end,
 
