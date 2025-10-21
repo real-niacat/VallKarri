@@ -1,7 +1,7 @@
 SMODS.Joker {
     key = "femtanyl",
     loc_txt = {
-        name = "Femtanyl",
+        name = "Token",
         text = {
             "Prevent death at the cost of {C:attention}#1#{} Joker slot",
             "Restore {C:attention}#1#{} taken Joker slot when {C:attention}boss{} defeated on an odd ante",
