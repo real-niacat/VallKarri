@@ -38,7 +38,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { mult = 2, gain = 1} },
+    config = { extra = { mult = 1, gain = 0.25} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.mult, card.ability.extra.gain } }
     end,
