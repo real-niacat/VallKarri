@@ -238,48 +238,6 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
-    key = "copycat",
-    rarity = "valk_renowned",
-    loc_txt = {
-        name = "Copy Cat",
-        text = {
-            "When blind selected, add a random",
-            "{C:attention}Mirrored{} card to deck",
-        }
-    },
-    valk_artist = "mailingway",
-    loc_vars = function(self, info_queue, card)
-        return {
-            vars = {
-
-            }
-        }
-    end,
-    config = { extra = {} },
-    atlas = "atlas2",
-    pos = { x = 3, y = 4 },
-    cost = 12,
-    immutable = true,
-    pools = { ["Kitties"] = true },
-    calculate = function(self, card, context)
-        if context.setting_blind then
-            -- code essentially copied frmo marble joker
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    local c = SMODS.create_card({ key = "m_valk_mirrored" })
-                    SMODS.calculate_effect({ message = "Created!", colour = G.C.SECONDARY_SET.Enhanced },
-                        context.blueprint_card or card)
-
-                    G.deck:emplace(c)
-                    table.insert(G.playing_cards, c)
-                    return true
-                end
-            }))
-        end
-    end,
-}
-
-SMODS.Joker {
     key = "heavyhands",
     rarity = "valk_renowned",
     loc_txt = {
