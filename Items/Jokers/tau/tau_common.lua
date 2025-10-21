@@ -125,7 +125,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { per = 0.15 } },
+    config = { extra = { per = 0.2 } },
     loc_vars = function(self, info_queue, card)
         local n = 52
         if G.deck then
@@ -161,14 +161,14 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_tauic}Tauic Number Brothers{}",
         text = {
-            "All scored number cards give {X:mult,C:white}XMult{}",
-            "equal to their rank",
+            "Scored {C:attention}odd-numbered{} ranks give {X:chips,C:white}X#1#{} Chips",
+            "Scored {C:attention}even-numbered{} ranks give {X:mult,C:white}X#1#{} Mult",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { } },
+    config = { extra = { mul = 2 } },
     loc_vars = function(self, info_queue, card)
-
+        return {vars = {card.ability.extra.mul}}
     end,
     rarity = "valk_tauic",
     atlas = "tau",
@@ -178,9 +178,10 @@ SMODS.Joker {
     no_doe = true,
     calculate = function(self, card, context)
         
-        if context.individual and context.cardarea == G.play and context.other_card.base.id <= 10 then
+        if context.individual and context.cardarea == G.play then
             return {
-                xmult = context.other_card.base.id
+                xmult = (context.other_card:get_id() % 2) == 0 and card.ability.extra.mul,
+                xchips = ((context.other_card:get_id() + 1) % 2) == 0 and card.ability.extra.mul,
             }
         end
 
@@ -236,8 +237,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_tauic}Tauic Summit{}",
         text = {
-            "Level up {C:attention}All Hands{} when a card is {C:red}Discarded{}",
-            "{C:inactive,s:0.7}(You probably want Handy for this one!)",
+            "{C:attention}Double{} Mult of played hand",
+            "if all {C:red}Discards{} have been used",
         }
     },
     valk_artist = "Scraptake",
@@ -254,8 +255,17 @@ SMODS.Joker {
     no_doe = true,
     calculate = function(self, card, context)
         
-        if context.discard then
-            level_all_hands(context.card, 1)
+        if context.after and G.GAME.current_round.discards_left <= 0 then
+            vallkarri.simple_hand_text(context.scoring_name)
+            update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = "X2" })
+            if G.GAME.hands[context.scoring_name] then
+                G.GAME.hands[context.scoring_name].mult = G.GAME.hands[context.scoring_name].mult * 2
+            end
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    update_hand_text({immediate = true, nopulse = true, delay = 0}, {mult = 0, chips = 0, level = '', handname = ''})
+                end
+            }))
         end
 
     end
@@ -451,7 +461,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { xmult = 2 } },
+    config = { extra = { xmult = 1.5 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.xmult } }
     end,
@@ -556,7 +566,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { dollar = 1, per = 3 } },
+    config = { extra = { dollar = 1, per = 10 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.dollar, card.ability.extra.per } }
     end,
@@ -725,11 +735,11 @@ SMODS.Joker {
         name = "{C:valk_tauic}Tauic Ride the Bus{}",
         text = {
             "{C:attention}Non-face{} cards give",
-            "{X:dark_edition,C:white}^#1#{} Mult when scored",
+            "{X:mult,C:white}X#1#{} Mult when scored",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = {powmult = 1.05 } },
+    config = { extra = {powmult = 1.4 } },
     loc_vars = function(self, info_queue, card)
         return { vars = {card.ability.extra.powmult} }
     end,
@@ -743,7 +753,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if (context.individual and context.cardarea == G.play) then
             if not context.other_card:is_face() then
-                return {emult = card.ability.extra.powmult }
+                return { xmult = card.ability.extra.powmult }
             end
         end
     end

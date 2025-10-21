@@ -212,7 +212,7 @@ SMODS.Joker {
         name = "{C:valk_tauic}Tauic Ceremonial Dagger{}",
         text = {
             "When {C:attention}blind{} selected, {C:red,E:1}destroy{} Joker to the right and",
-            "added its sell value to this Jokers {X:dark_edition,C:white}^Mult{}",
+            "add {C:attention}one tenth{} of its sell value to this Jokers {X:dark_edition,C:white}^Mult{}",
             "{C:inactive}(Currently {X:dark_edition,C:white}^#1#{C:inactive} Mult)",
         }
     },
@@ -241,7 +241,7 @@ SMODS.Joker {
                     G.GAME.joker_buffer = G.GAME.joker_buffer - 1
                     G.E_MANAGER:add_event(Event({func = function()
                         G.GAME.joker_buffer = 0
-                        card.ability.extra.mult = card.ability.extra.mult + sliced_card.sell_cost
+                        card.ability.extra.mult = card.ability.extra.mult + (sliced_card.sell_cost/10)
                         card:juice_up(0.8, 0.8)
                         sliced_card:start_dissolve({HEX("57ecab")}, nil, 1.6)
                         play_sound('slice1', 0.96+math.random()*0.08)
@@ -416,7 +416,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { min = 1, prob = 2 } },
+    config = { extra = { min = 1, prob = 3 } },
     loc_vars = function(self, info_queue, card)
         local num,den = SMODS.get_probability_vars(card, card.ability.extra.min, card.ability.extra.prob)
         return {vars = {num,den}}

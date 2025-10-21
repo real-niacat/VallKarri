@@ -27,7 +27,7 @@ local files = {
     "Items/Consumables/cataclysm.lua",
     "Items/Consumables/aesthetic.lua",
     "Items/boosters.lua",
-    "Items/Jokers/cursed.lua",
+    -- "Items/Jokers/cursed.lua",
     "Items/Jokers/animation.lua",
     "Items/Jokers/common.lua",
     "Items/Jokers/uncommon.lua",

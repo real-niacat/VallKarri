@@ -14,6 +14,13 @@ SMODS.Atlas{
     path = "lily_cards.png",
 }
 
+SMODS.Atlas{  
+    key = "lily_cards_hc",
+    px = 71,
+    py = 95,
+    path = "lily_cards_hc.png",
+}
+
 for _, suit in ipairs({"hearts", "clubs", "diamonds", "spades"}) do
     SMODS.DeckSkin{
         key = suit.."_skin",
@@ -21,6 +28,7 @@ for _, suit in ipairs({"hearts", "clubs", "diamonds", "spades"}) do
         ranks = ranks,
 		display_ranks = {"Ace", "King", "Queen", "Jack"},
         lc_atlas = "valk_lily_cards",
+        hc_atlas = "valk_lily_cards_hc",
         loc_txt = {["en-us"] = description[suit]},
         posStyle = 'deck'
     }
