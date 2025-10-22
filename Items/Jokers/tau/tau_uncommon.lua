@@ -272,7 +272,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { max = 100, gain = 1, ratio = 5} },
+    config = { extra = { max = 10, gain = 1, ratio = 5} },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain, card.ability.extra.max, card.ability.extra.ratio } }
     end,
@@ -290,17 +290,17 @@ SMODS.Joker {
             -- change_shop_size(center_table.extra)
 
             -- oops? why the FUCK
-            if (to_big(G.hand.config.card_limit) > to_big(card.ability.extra.max)) then
+            if G.hand.config.card_limit > (card.ability.extra.max + card.ability.extra.ratio) then
                 G.hand:change_size(-card.ability.extra.ratio)
                 G.consumeables:change_size(card.ability.extra.gain)
             end
 
-            if (to_big(G.consumeables.config.card_limit) > to_big(card.ability.extra.max)) then
+            if G.consumeables.config.card_limit > (card.ability.extra.max + card.ability.extra.ratio) then
                 G.consumeables:change_size(-card.ability.extra.ratio)
                 G.jokers:change_size(card.ability.extra.gain)
             end
 
-            if (to_big(G.jokers.config.card_limit) > to_big(card.ability.extra.max)) then
+            if G.jokers.config.card_limit > (card.ability.extra.max + card.ability.extra.ratio) then
                 G.jokers:change_size(-card.ability.extra.ratio)
                 change_shop_size(card.ability.extra.gain)
             end
