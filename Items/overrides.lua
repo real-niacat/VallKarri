@@ -1,27 +1,3 @@
-if not Talisman then
-    SMODS.Joker {
-        key = "lily",
-        loc_txt = {
-            name = "Lily Felli For The Title Screen",
-            text = {
-                "you should not have this"
-            }
-        },
-        config = { extra = {} },
-        loc_vars = function(self, info_queue, card)
-
-        end,
-        rarity = "valk_supercursed",
-        atlas = "main",
-        pos = { x = 0, y = 0 },
-        soul_pos = { x = 3, y = 2 },
-        in_pool = function(self, args)
-            return false
-        end,
-        no_collection = true,
-    }
-end
-
 local mainmenu = Game.main_menu
 Game.main_menu = function(change_context) --code heavily adapted from cryptid
     local ret = mainmenu(change_context)

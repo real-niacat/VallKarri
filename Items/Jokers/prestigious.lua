@@ -116,7 +116,7 @@ SMODS.Atlas {
 }
 
 SMODS.Joker {
-    dependencies = {"MoreFluff"},
+    dependencies = { "MoreFluff" },
     key = "triangle",
     loc_txt = {
         name = "Triangle",
@@ -176,49 +176,77 @@ SMODS.Joker {
     pronouns = "she_they",
 }
 
+local messages = {
+    "???",
+    "uhh..?",
+    "wha..",
+    "oh",
+    "!!!",
+    "..hi",
+    "ehe",
+    "hiiii",
+    ">w<",
+    ":3"
+}
+
 SMODS.Joker {
     key = "lily",
     loc_txt = {
         name = "{E:valk_floaty}Lily Felli",
         text = {
-            "{X:dark_edition,C:white}^^#1#{} Mult for each Joker owned",
+            "{X:dark_edition,C:white}^#1#{} Mult for each Joker owned",
             "{C:attention}Lordly{} Edition is {C:attention}#3#{} times more common",
-            "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult)",
+            "{C:attention}Kitty{} Jokers each give {X:dark_edition,C:white}^#4#{} Chips",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
             quote("lily"),
             quote("lily2"),
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { per = 0.05, rate = 50 } },
+    config = { extra = { per = 2, rate = 50, echip = 1.15 } },
     loc_vars = function(self, info_queue, card)
         local jkrs = G.jokers and #G.jokers.cards or 0
-        info_queue[#info_queue+1] = G.P_CENTERS.e_valk_lordly
+        info_queue[#info_queue + 1] = G.P_CENTERS.e_valk_lordly
         return {
             vars = {
                 card.ability.extra.per,
                 1 + (card.ability.extra.per * jkrs),
-                card.ability.extra.rate
+                card.ability.extra.rate,
+                card.ability.extra.echip
             }
         }
     end,
     rarity = "valk_prestigious",
     atlas = "main",
-    pos = {x = 0, y = 0},
-    soul_pos = {x=1,y=0},
+    pos = { x = 0, y = 0 },
+    soul_pos = { x = 1, y = 0 },
     no_doe = true,
     cost = 500,
     demicoloncompat = true,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
-
         if context.joker_main or context.forcetrigger then
-
             return {
-                eemult = 1 + (card.ability.extra.per * #G.jokers.cards)
+                emult = 1 + (card.ability.extra.per * #G.jokers.cards)
             }
-
         end
-        
+
+        if context.other_joker and context.other_joker:is_kitty() then
+            return {
+                echips = card.ability.extra.echip
+            }
+        end
+
+        if context.amm_pet_card and card.ability.immutable.ready then
+        -- if context.amm_pet_card then
+            card.ability.immutable.ready = false
+            quick_card_speak(card, messages[math.min(card.ability.immutable.love, 10)])
+            card.ability.immutable.love = card.ability.immutable.love + 1
+        end
+
+        if context.end_of_round and context.main_eval and not card.ability.immutable.ready then
+            card.ability.immutable.ready = true
+        end
     end,
     has_halo = true,
     lore = {
@@ -232,6 +260,10 @@ SMODS.Joker {
         "Her entropic lord powers allow for heightened senses,",
         "so it doesn't affect her as much, but she can barely see!"
     },
-    dependencies = {"Talisman"},
     pronouns = "she_her",
+    add_to_deck = function(self, card, from_debuff)
+        card.ability.immutable = card.ability.immutable or {}
+        card.ability.immutable.love = 1
+        card.ability.immutable.ready = true
+    end
 }
