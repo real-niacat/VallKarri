@@ -703,8 +703,8 @@ local tauspecs = {
             end
         end,
         loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue + 1] = G.P_SEALS.Blue
-            info_queue[#info_queue + 1] = G.P_SEALS.valk_Galactic
+            info_queue[#info_queue + 1] = G.P_SEALS.Purple
+            info_queue[#info_queue + 1] = G.P_SEALS.valk_Vibrant
             return {
                 vars = {
                     card.ability.extra.max, card.ability.extra.min
