@@ -3,4 +3,5 @@ return {
     metaprogression = true,
     excessive_badges = true,
     tau_collection = false,
+    hand_buffs = true,
 }

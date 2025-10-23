@@ -1,3 +1,7 @@
+if not vallkarri.config.hand_buffs then
+    return
+end
+
 local fakestart = Game.start_run
 function Game:start_run(args)
     fakestart(self, args)
@@ -16,12 +20,12 @@ vallkarri.hand_buffs = {
     m_wild = { title = "WILD", colour = lerpcolour(G.C.RED, G.C.MONEY, 20) },
     m_gold = { title = "GILDED", colour = G.C.MONEY },
     m_lucky = { title = "CHANCE", colour = G.C.GREEN },
-    m_glass = { title = "SHATTERED", colour = G.C.WHITE},
-    m_steel = { title = "FORGED", colour = G.C.GREY},
-    m_stone = { title = "CRACKED", colour = darken(G.C.GREY, 5)},
-    m_cry_echo = { title = "ECHOING", colour = G.C.PURPLE},
+    m_glass = { title = "SHATTERED", colour = G.C.WHITE },
+    m_steel = { title = "FORGED", colour = G.C.GREY },
+    m_stone = { title = "CRACKED", colour = darken(G.C.GREY, 5) },
+    m_cry_echo = { title = "ECHOING", colour = G.C.PURPLE },
     m_cry_light = { title = "GLOWING", colour = G.C.YELLOW },
-    m_cry_abstract = { title = "ABSTRACTED", colour = G.C.CRY_ASCENDANT},
+    m_cry_abstract = { title = "ABSTRACTED", colour = G.C.CRY_ASCENDANT },
 }
 
 vallkarri.hand_buff_functions = {
@@ -29,17 +33,18 @@ vallkarri.hand_buff_functions = {
     m_mult = function(n) return { sound = "valk_buff_mult", xmult = (1 + n) ^ 1.25 } end,
     m_wild = function(n, cards)
         local t = vallkarri.get_hand_buff_functions()
-        return SMODS.merge_effects({pseudorandom_element(t, "m_wild_buff")(n,cards),pseudorandom_element(t, "m_wild_buff")(n,cards),{sound = "valk_buff_wild", }}) 
+        return SMODS.merge_effects({ pseudorandom_element(t, "m_wild_buff")(n, cards), pseudorandom_element(t,
+            "m_wild_buff")(n, cards), { sound = "valk_buff_wild", } })
     end,
     m_gold = function(n) return { sound = "valk_buff_gold", dollars = math.ceil((3 + n) ^ 1.1) } end,
     m_lucky = function(n)
         n = n + 1
         return {
-            sound = "valk_buff_lucky", 
+            sound = "valk_buff_lucky",
             chips = pseudorandom("chance", 1, n ^ 2),
             mult = pseudorandom("chance", 1, n ^ 2),
-            xchips = pseudorandom("chance", 1, n^0.5),
-            xmult = pseudorandom("chance", 1, n^0.5)
+            xchips = pseudorandom("chance", 1, n ^ 0.5),
+            xmult = pseudorandom("chance", 1, n ^ 0.5)
         }
     end,
     m_glass = function(n) return { sound = "valk_buff_glass", emult = (n + 1) ^ 1.15 } end,
@@ -47,19 +52,18 @@ vallkarri.hand_buff_functions = {
     m_stone = function(n) return { echips = 1 + ((n ^ 0.7) / 2) } end,
 }
 function vallkarri.add_hand_buff(key, title, colour, scoring_func)
-    vallkarri.hand_buffs[key] = { title = title, colour = colour}
+    vallkarri.hand_buffs[key] = { title = title, colour = colour }
     vallkarri.hand_buff_functions[key] = scoring_func
     if G and G.GAME then
         G.GAME.existing_buffs = vallkarri.hand_buffs
         G.GAME.buff_power[key] = 0
-        
     end
 end
 
 local uhthook = update_hand_text
 function update_hand_text(config, vals)
     uhthook(config, vals)
-    
+
     local enhancements = {}
     for i, card in ipairs(#G.hand.highlighted > 0 and G.hand.highlighted or G.play.cards) do
         for key, enhancement in pairs(SMODS.get_enhancements(card)) do
@@ -162,35 +166,65 @@ end
 
 SMODS.Sound {
     key = "buff_bonus",
-    path = "chips.ogg", 
+    path = "chips.ogg",
 }
 
 SMODS.Sound {
     key = "buff_mult",
-    path = "mult.ogg", 
+    path = "mult.ogg",
 }
 
 SMODS.Sound {
     key = "buff_wild",
-    path = "wild.ogg", 
+    path = "wild.ogg",
 }
 
 SMODS.Sound {
     key = "buff_glass",
-    path = "glass.ogg", 
+    path = "glass.ogg",
 }
 
 SMODS.Sound {
     key = "buff_steel",
-    path = "steel.ogg", 
+    path = "steel.ogg",
 }
 
 SMODS.Sound {
     key = "buff_gold",
-    path = "gold.ogg", 
+    path = "gold.ogg",
 }
 
 SMODS.Sound {
     key = "buff_lucky",
-    path = "lucky.ogg", 
+    path = "lucky.ogg",
+}
+
+SMODS.Back {
+    key = "handbuffdeck",
+    loc_txt = {
+        name = "Buffed Deck",
+        text = {
+            "All {C:attention}Hand Modifiers{} can be made with {C:attention}#1#{} cards",
+            "{C:attention}#2#{} Hand Size",
+        }
+    },
+    valk_artist = nil,
+    config = { hand_size = -1, requirement = 2 },
+    pos = { x = 4, y = 0 },
+    atlas = "phold",
+    loc_vars = function(self, info_queue, card)
+        return { vars = { self.config.requirement, self.config.hand_size } }
+    end,
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if G.GAME.buff_power then
+                    for key, _ in pairs(G.GAME.buff_power) do
+                        G.GAME.buff_power[key] = G.GAME.buff_power[key] - self.config.requirement
+                    end
+                    return true
+                end
+            end
+        }))
+    end
 }

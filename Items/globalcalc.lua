@@ -1,5 +1,6 @@
 vallkarri.calculate = function(self, context)
     vallkarri.refresh_ante_diff()
+    local s_card = G.deck.cards[1] or G.deck
     
     local cen = G.P_CENTERS[context.center]
     if context.valk_tau_probability_mod and cen and cen.hidden then
@@ -24,12 +25,7 @@ vallkarri.calculate = function(self, context)
     end
 
     -- HAND BUFF CODE BELOW:
-    if not vallkarri.add_hand_buff then
-        return
-    end
-
-
-    if context.final_scoring_step and next(G.GAME.applied_buffs) then
+    if vallkarri.config.hand_buffs and context.final_scoring_step and next(G.GAME.applied_buffs) then
 
         local effects = {}
 
@@ -39,7 +35,7 @@ vallkarri.calculate = function(self, context)
             end
         end
 
-        return effects
+        SMODS.calculate_effect(effects, s_card)
 
     end
 end

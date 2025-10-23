@@ -45,7 +45,7 @@ SMODS.DynaTextEffect {
 SMODS.DynaTextEffect {
     key = "censor",
     func = function(dynatext, index, letter)
-        local chars = "!@#$%^&*????"
+        local chars = "!@#$%^&*????abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         math.randomseed(math.floor(index*G.TIMERS.REAL))
         local a = math.random(1,#chars)
         letter.letter = love.graphics.newText(dynatext.font.FONT, string.sub(chars, a,a))

@@ -34,6 +34,7 @@ local files = {
     "Items/Jokers/rare.lua",
     "Items/Jokers/renowned.lua",
     "Items/Jokers/legendary.lua",
+    "Items/Jokers/aesthetijokers.lua",
     "Items/Jokers/exquisite.lua",
     "Items/Jokers/prestigious.lua",
     "Items/blinds.lua",
