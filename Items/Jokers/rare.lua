@@ -409,6 +409,8 @@ SMODS.Joker {
     end,
     pools = { ["Kitties"] = true },
 
+    -- :3
+
 }
 
 SMODS.Joker {
