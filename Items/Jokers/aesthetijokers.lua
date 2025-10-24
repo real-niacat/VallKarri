@@ -314,12 +314,12 @@ SMODS.Joker {
         text = {
             "Adjacent Jokers are given {C:dark_edition}Cosmic{}",
             "All {C:attention}other Jokers{} have their Editions {C:red}removed{}",
-            "{C:dark_edition}R.G.B.{} Jokers additionally give {X:dark_edition,C:white}^#1#{}",
+            "{C:dark_edition}Cosmic{} Jokers additionally give {X:dark_edition,C:white}^#1#{}",
             "Chips when triggered",
         }
     },
     valk_artist = "Lil Mr. Slipstream",
-    config = { extra = { edition = "e_valk_rgb", expo = 1.1 } },
+    config = { extra = { edition = "e_valk_cosmic", expo = 1.1 } },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue + 1] = G.P_CENTERS[card.ability.extra.edition]
         return { vars = {card.ability.extra.expo} }

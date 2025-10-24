@@ -58,13 +58,6 @@ local planetoid_cards = {
 
 }
 
-SMODS.Atlas {
-    key = "oid_micro",
-    px = 65,
-    py = 79,
-    path = "literally_just_micrometeoroid.png",
-}
-
 SMODS.Consumable {
     set = "Planetoid",
     key = "micrometeoroid",
@@ -77,8 +70,8 @@ SMODS.Consumable {
         }
     },
     valk_artist = "mailingway",
-    pos = { x = 0, y = 0 },
-    atlas = "oid_micro",
+    pos = { x = 1, y = 4 },
+    atlas = "oid",
     display_size = { w = 64, h = 78 },
     cost = 0,
     config = { extra = { increase = 0.5 } },
