@@ -80,7 +80,7 @@ SMODS.Consumable {
     valk_artist = "mailingway",
 
     can_use = function(self, card)
-        if not G.jokers.highlighted <= card.ability.extra.max then
+        if not #G.jokers.highlighted <= card.ability.extra.max then
             return false
         end
 
