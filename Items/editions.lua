@@ -252,8 +252,12 @@ SMODS.DrawStep {
             local scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) +
                 0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) *
                 (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
-            local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) +
-                0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
+
+            local etimer = G.TIMERS.REAL * 2
+            local rotate_mod = 0.05 * math.sin(1.219 * etimer) +
+                0.00 * math.sin((etimer) * math.pi * 5) * (1 - (etimer - math.floor(etimer))) ^ 2
+
+            scale_mod = scale_mod * 1.15
 
 
             card.children.halo:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil,

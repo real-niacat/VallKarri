@@ -114,9 +114,8 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Doomsday",
         text = {
-            "{C:attention}X#1#{} Joker values at end of round for the next {C:attention}#2#{} rounds",
-            "Once this has hit {C:attention}0{} rounds,",
-            "use this card to increase all Joker values by {C:attention}X#3#{}",
+            "Multiply the values of {C:attention}#1#{} random Jokers by {C:attention}X#2#{}",
+            "Multiply the values of all other Jokers by {C:attention}X#3#{}",
         }
     },
     valk_artist = "Pangaea",
@@ -124,43 +123,42 @@ SMODS.Consumable {
     atlas = "cata",
     display_size = {w=83, h=103},
 
-    config = { extra = { startrounds = 8, rounds = 8, negativemult = 0.95, bonus = 3 } },
+    config = { extra = { jokers = 2, loss = 0.5, gain = 2 } },
 
     loc_vars = function(self, info_queue, card)
 
-        return {vars = { card.ability.extra.negativemult, card.ability.extra.rounds, card.ability.extra.bonus/(card.ability.extra.negativemult ^ card.ability.extra.startrounds) }}
+        return {vars = { card.ability.extra.jokers, card.ability.extra.loss, card.ability.extra.gain }}
         
     end,
     can_use = function(self, card)
-        return card.ability.extra.rounds <= 0 or (card.area ~= G.consumeables)
+        return #G.jokers.cards > card.ability.extra.jokers
     end,
     use = function(self, card, area, copier)
-        if card.area ~= G.consumeables then
-            G.consumeables:emplace(card)
-            return
-        end 
+        local max = #G.jokers.cards
+        local needed = card.ability.extra.jokers
+
+        local choices = {}
+
+        while #choices < needed do
+            local chosen = pseudorandom("valk_doomsday_roll", 1, max)
+
+            if not table:vcontains(choices, chosen) then
+                table.insert(choices, chosen)
+            end
+        end
+
+        print(choices)
+
+        for _,v in pairs(choices) do
+            Cryptid.manipulate(G.jokers.cards[v], {value = card.ability.extra.loss})
+        end
 
         for i,joker in ipairs(G.jokers.cards) do
-            Cryptid.manipulate(joker, {value = card.ability.extra.bonus/(card.ability.extra.negativemult ^ card.ability.extra.startrounds)})
-        end
-    end,
-
-    calculate = function(self, card, context)
-        if context.end_of_round and context.main_eval then
-            card.ability.extra.rounds = card.ability.extra.rounds - 1
-            for i,joker in ipairs(G.jokers.cards) do
-                Cryptid.manipulate(joker, {value = card.ability.extra.negativemult})
+            if not table:vcontains(choices, i) then
+                Cryptid.manipulate(joker, {value = card.ability.extra.gain})
             end
-
         end
     end,
-
-    keep_on_use = function(self, card)
-        if card.area ~= G.consumeables then
-            return true
-        end
-        return false
-    end
 }
 
 SMODS.Consumable {

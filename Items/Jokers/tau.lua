@@ -73,31 +73,44 @@ SMODS.Consumable {
     loc_txt = { 
         name = "Absolute Tau",
         text = {
-            "Create a random {C:valk_fire}Tauic{} {C:legendary}Legendary{} Joker",
+            "Apply {C:blue}Transformative{} to {C:attention}#1#{}",
+            "selected eligible Joker",
         }
     },
     valk_artist = "mailingway",
 
     can_use = function(self, card)
-        return true
+        if not G.jokers.highlighted <= card.ability.extra.max then
+            return false
+        end
+
+        for _,joker in pairs(G.jokers.highlighted) do
+            if not joker.config.center.tau then
+                return false
+            end
+        end
+        return true 
     end,
 
     in_pool = function()
-        return false 
-    end,
-
-    use = function(self, card, area, copier) 
-        local allowed = {}
-        for i,joker in pairs(G.P_CENTER_POOLS.Joker) do
-            if joker.rarity == 4 and joker.tau then
-                allowed[#allowed+1] = joker.tau
+        for _,joker in pairs(G.jokers.cards) do
+            if joker.config.center.tau then
+                return true 
             end
         end
+        return false 
+    end,
+    config = {extra = {max = 1}},
+
+    use = function(self, card, area, copier) 
         
-        simple_create("Joker", G.jokers, allowed[pseudorandom("valk_absolute_tau",1,#allowed)])
+        for _,joker in pairs(G.jokers.highlighted) do
+            if joker.config.center.tau then
+                joker:add_sticker("valk_transformative")
+            end
+        end
 
     end,
-    dependencies = {"Talisman"},
 }
 
 
