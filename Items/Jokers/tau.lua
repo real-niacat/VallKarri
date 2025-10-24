@@ -80,7 +80,7 @@ SMODS.Consumable {
     valk_artist = "mailingway",
 
     can_use = function(self, card)
-        if not #G.jokers.highlighted <= card.ability.extra.max then
+        if #G.jokers.highlighted > card.ability.extra.max or #G.jokers.highlighted < 1 then
             return false
         end
 
@@ -111,6 +111,9 @@ SMODS.Consumable {
         end
 
     end,
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.max}}
+    end
 }
 
 
