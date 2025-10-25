@@ -129,7 +129,7 @@ for i, planetoid in ipairs(planetoid_cards) do
         set = "Planetoid",
         key = planetoid.name ~= "Unnamed Planetoid" and planetoid.name or planetoid.hand.."_auto_planetoid",
         loc_txt = {
-            name = planetoid.name or "placeholder to be overwritten lel",
+            name = planetoid.name,
             text = {
                 "Level up {C:attention}#1#{}",
                 "for each time {C:attention}#4#{} has been",
