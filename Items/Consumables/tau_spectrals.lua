@@ -759,7 +759,8 @@ local tauspecs = {
         use = function(self, card, area, copier)
             G.E_MANAGER:add_event(Event({
                 func = function()
-                    SMODS.add_card({ rarity = "Legendary", legendary = true --[[no clue what this does]] })
+                    SMODS.add_card({ rarity = "Legendary", set = "Joker" })
+                    return true
                 end
             }))
 
@@ -768,6 +769,7 @@ local tauspecs = {
                     for _, joker in pairs(G.jokers.cards) do
                         joker:add_sticker("valk_transformative")
                     end
+                    return true 
                 end
             }))
         end,
