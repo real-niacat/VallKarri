@@ -537,7 +537,8 @@ SMODS.Joker {
     valk_artist = "Scraptake",
     config = { extra = { emult = 3.33, outof = 1000 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.emult, 1, card.ability.extra.outof } }
+        local n,d = SMODS.get_probability_vars(card, 1, card.ability.extra.outof)
+        return { vars = { card.ability.extra.emult, n,d } }
     end,
     rarity = "valk_tauic",
     atlas = "tau",

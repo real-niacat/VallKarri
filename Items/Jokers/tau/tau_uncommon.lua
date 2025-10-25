@@ -343,7 +343,7 @@ SMODS.Joker {
 
         if (context.using_consumeable) and SMODS.pseudorandom_probability(card, 'valk_oa6', card.ability.extra.base, card.ability.extra.chance, 'oa6.28') then
 
-            G.joker:change_size(card.ability.extra.slots)
+            G.jokers:change_size(card.ability.extra.slots)
             ease_dollars(card.ability.extra.money)
 
         end
