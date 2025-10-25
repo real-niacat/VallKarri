@@ -52,7 +52,7 @@ SMODS.Joker {
         text = {
             "{C:chips}+#1#{} Chips",
             "Balance all {C:attention}Joker values{} at end of round",
-            "Gains the value of {C:attention}Sold Jokers{} as Chips",
+            "Gains the values of {C:attention}Sold Jokers{} as Chips",
 
             quote("illena"),
         }
