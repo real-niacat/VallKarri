@@ -45,10 +45,6 @@ if G.STAGE ~= G.STAGES.MAIN_MENU and G.valk_splash then
     G.valk_splash = nil
 end
 
-if not vallkarri then
-    error("VallKarri failed to load but patches succeeded. Please ensure your SMODS is up to date")
-end
-
 if G.STAGE == G.STAGES.MAIN_MENU and not G.valk_splash then
     vallkarri.initialize_splashtext()
 end
@@ -63,6 +59,43 @@ end
 match_indent = true
 
 
+[[patches]]
+[patches.pattern]
+target = """=[SMODS _ "src/loader.lua"]"""
+pattern = "SMODS.booted = true"
+position = "before"
+payload = '''
+if not vallkarri then
+    if (not CryptLib) and (not Cryptid) then
+        
+        local cryl_installed = false
+        local folder = nil
+        for _,foldername in pairs(NFS.getDirectoryItems(SMODS.MODS_DIR)) do
+            if string.find(foldername:lower(), "cryptlib") then 
+                cryl_installed = true
+                folder = foldername
+            end
+        end
+
+        if cryl_installed then
+            if NFS.remove(SMODS.MODS_DIR .. "/" .. folder .. "/.lovelyignore") then
+                error("\n\nVallKarri patches succeeded, but the mod failed\n\nYou are missing CryptLib.\nAutomatically re-enabling...\n\nYou may restart the game and ignore this error.")
+            end
+        end
+
+        local valk = SMODS.Mods["vallkarri"]
+        local dev = valk and valk.version and string.find(valk.version, "d")
+        love.system.openURL("https://github.com/SpectralPack/Cryptlib" .. (not dev and "/releases/latest" or ""))
+        error("\n\nVallKarri patches succeeded, but the mod failed\n\nYou are missing CryptLib.\nOpening download link...")
+    else
+        local valk = SMODS.Mods["vallkarri"]
+        local dev = valk and valk.version and string.find(valk.version, "d")
+        love.system.openURL("https://github.com/Steamodded/smods" .. (not dev and "/releases/latest" or ""))
+        error("\n\nVallKarri patches succeeded, but the mod failed\n\nThis is likely since your Steamodded is outdated.\nOpening download link...")
+    end
+end
+'''
+match_indent = true
 
 [[patches]]
 [patches.pattern]

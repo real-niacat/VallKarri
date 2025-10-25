@@ -52,6 +52,7 @@ local files = {
 }
 
 for i,dir in ipairs(files) do
+    print("Vallkarri: Loading " .. dir)
     assert(SMODS.load_file(dir, "vallkarri"))()
 end
 
