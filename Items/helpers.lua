@@ -964,3 +964,65 @@ function vallkarri.get_tau_probability_vars(cen, num, den)
     return (amount.numerator or num), (amount.denominator or den)
 
 end
+
+vallkarri.sum_blacklist = {
+    h_chips = true,
+    repetitions = true,
+    h_x_chips = true,
+    perma_mult = true,
+    t_mult = true,
+    h_dollars = true,
+    perma_p_dollars = true,
+    extra_value = true,
+    perma_bonus = true,
+    extra_slots_used = true,
+    perma_x_mult = true,
+    h_size = true,
+    bonus = true,
+    x_mult = true,
+    order = true,
+    perma_h_x_mult = true,
+    perma_repetitions = true,
+    hands_played_at_create = true,
+    perma_h_chips = true,
+    x_chips = true,
+    perma_h_dollars = true,
+    d_size = true,
+    perma_x_chips = true,
+    perma_h_x_chips = true,
+    p_dollars = true,
+    perma_h_mult = true,
+    h_x_mult = true,
+    t_chips = true,
+    h_mult = true,
+    immutable = true,
+    card_limit = true,
+}
+
+vallkarri.min_value = 0
+
+function vallkarri.recursive_sum(table)
+    local sum = 0
+    local count = 0
+    for key,v in pairs(table) do
+        if (type(v) == "number" or (getmetatable(v) == OmegaMeta)) and (not vallkarri.sum_blacklist[key]) and to_big(v) > to_big(vallkarri.min_value) then --pray to fucking god that it's not a card object or some bullshit
+            sum = sum + v
+            count = count + 1
+        elseif (type(v) == "table") and (not vallkarri.sum_blacklist[key]) then
+            local nsum, ncount = vallkarri.recursive_sum(v)
+            sum = sum + nsum
+            count = count + ncount
+        end
+    end
+    return sum, count
+end
+
+function vallkarri.recursive_set(table, value)
+    for key,v in pairs(table) do
+        if (type(v) == "number" or (getmetatable(v) == OmegaMeta)) and (not vallkarri.sum_blacklist[key])  and to_big(v) > to_big(vallkarri.min_value)  then --pray to fucking god that it's not a card object or some bullshit
+            table[key] = value
+        elseif (type(v) == "table") and (not vallkarri.sum_blacklist[key]) then
+            vallkarri.recursive_set(v, value)
+        end
+    end
+end

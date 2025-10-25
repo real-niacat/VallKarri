@@ -18,17 +18,18 @@ local orivander = {
     cost = 50,
     rarity = "valk_exquisite",
     atlas = "main",
-    pos = {x = 0, y = 1},
-    soul_pos = {x = 1, y = 1},
+    pos = { x = 0, y = 1 },
+    soul_pos = { x = 1, y = 1 },
     calculate = function(self, card, context)
 
     end,
     --  (select(2, next(SMODS.find_card("c_valk_gravitywell")))):quick_dissolve()
     add_to_deck = function(self, card, from_debuff)
         if (not from_debuff) then
-            local ability = create_card("Consumable", G.consumeables, nil, nil, nil, nil, "c_valk_gravitywell", "orivander")
+            local ability = create_card("Consumable", G.consumeables, nil, nil, nil, nil, "c_valk_gravitywell",
+                "orivander")
             ability:add_to_deck()
-            
+
             G.consumeables:emplace(ability)
             ability.ability.eternal = true
         end
@@ -49,38 +50,69 @@ SMODS.Joker {
     loc_txt = {
         name = "Illena Vera",
         text = {
-            "Multiply playing card values by {C:attention}X#1#{} when scored.",
-            "Multiply all Joker values by {C:attention}X#2#{} when any playing card scored.",
-            "{C:inactive}(Does not include Illena Vera){}",
+            "{C:chips}+#1#{} Chips",
+            "Balance all {C:attention}Joker values{} at end of round",
+            "Gains the values of {C:attention}Sold Jokers{} as Chips",
+
             quote("illena"),
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { strong = 1.4444, mid = 1.04444 } },
+    config = { extra = { chips = 100 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.strong, card.ability.extra.mid} }
+        return { vars = { card.ability.extra.chips } }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
     pools = { ["Kitties"] = true },
-    pos = {x=0,y=2},
-    soul_pos = {x=1, y=2},
+    pos = { x = 0, y = 2 },
+    soul_pos = { x = 1, y = 2 },
     cost = 50,
     demicoloncompat = true,
     calculate = function(self, card, context)
-        
-        if (context.individual and context.cardarea == G.play) or context.forcetrigger then
-            Cryptid.manipulate(context.other_card, {value=card.ability.extra.strong})
-
-
-            for i,c in ipairs(G.jokers.cards) do
-                if (c.config.center_key ~= "j_valk_illena") then
-                    Cryptid.manipulate(c, {value=card.ability.extra.mid})
+        if context.end_of_round and context.main_eval then
+            local sum = 0
+            local amount = 0
+            for _, joker in pairs(G.jokers.cards) do
+                if not joker.config.center.immutable then
+                    local s,c = vallkarri.recursive_sum(joker.ability)
+                    sum = sum + s
+                    amount = amount + c
                 end
-                
             end
+
+            for _, joker in pairs(G.jokers.cards) do
+                if not joker.config.center.immutable then
+                    vallkarri.recursive_set(joker.ability, sum / amount)
+                end
+            end
+
+
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    play_sound("gong", 0.94, 0.3)
+                    play_sound("gong", 0.94 * 1.5, 0.2)
+                    attention_text({
+                        scale = 1.3,
+                        text = localize("k_balanced"),
+                        hold = 2,
+                        align = 'cm',
+                        offset = { x = 0, y = -2.7 },
+                        major = G.play
+                    })
+                    return true
+                end
+            }))
         end
 
+        if context.joker_main then
+            return { chips = card.ability.extra.chips }
+        end
+
+        if context.selling_card and context.card.area == G.jokers then
+            card.ability.extra.chips = card.ability.extra.chips + vallkarri.recursive_sum(context.card.ability)
+            quick_card_speak(card, localize("k_upgrade_ex"))
+        end
     end,
     lore = {
         "Illena is a Fellinian, who was in her early life used as a",
@@ -108,52 +140,50 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = {rate = 200, copies = 2} },
+    config = { extra = { rate = 200, copies = 2 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.rate, card.ability.extra.copies} }
+        return { vars = { card.ability.extra.rate, card.ability.extra.copies } }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
-    pos = {x=8,y=14},
-    soul_pos = {x=9,y=14},
+    pos = { x = 8, y = 14 },
+    soul_pos = { x = 9, y = 14 },
     cost = 50,
     demicoloncompat = true,
     blueprint_compat = true,
-   
-    calculate = function(self, card, context)
 
+    calculate = function(self, card, context)
         if context.using_consumeable and context.consumeable.config.center.set == "Superplanet" then
-            for i=1,card.ability.extra.copies do
+            for i = 1, card.ability.extra.copies do
                 local c = create_card("Planetoid", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
                 c:add_to_deck()
                 G.consumeables:emplace(c)
             end
-            quick_card_speak(card,"We have much to discover, don't we?")
+            quick_card_speak(card, "We have much to discover, don't we?")
         end
 
         if context.using_consumeable and context.consumeable.config.center.set == "Planetoid" then
-            for i=1,card.ability.extra.copies do
+            for i = 1, card.ability.extra.copies do
                 local c = create_card("Planet", G.consumeables, nil, nil, nil, nil, nil, "valk_arris")
                 c:add_to_deck()
                 G.consumeables:emplace(c)
             end
         end
-        
     end,
- 
-    add_to_deck = function(self, card, from_debuff )
+
+    add_to_deck = function(self, card, from_debuff)
         if not from_debuff then
             G.GAME.superplanet_rate = G.GAME.superplanet_rate * card.ability.extra.rate
         end
-    end,  
+    end,
 
-    remove_from_deck = function(self, card, from_debuff )
+    remove_from_deck = function(self, card, from_debuff)
         if not from_debuff then
             G.GAME.superplanet_rate = G.GAME.superplanet_rate / card.ability.extra.rate
         end
-    end,   
+    end,
 
-        lore = {
+    lore = {
         "A 23 year old skeleton who was transformed into such ",
         "due to an incorrect death, as well as his family.",
         "",
@@ -184,26 +214,26 @@ SMODS.Joker {
     valk_artist = "Scraptake",
     config = { extra = { perblue = 0.02, perred = 0.02 } },
     loc_vars = function(self, info_queue, card)
-        
-        return {vars = {
-            card.ability.extra.perblue,
-            card.ability.extra.perred,
-            1 + (card.ability.extra.perblue * vallkarri.librat_vals.blue),
-            1 + (card.ability.extra.perred * vallkarri.librat_vals.red),
-            colours = {
-                HEX("7289DA")
+        return {
+            vars = {
+                card.ability.extra.perblue,
+                card.ability.extra.perred,
+                1 + (card.ability.extra.perblue * vallkarri.librat_vals.blue),
+                1 + (card.ability.extra.perred * vallkarri.librat_vals.red),
+                colours = {
+                    HEX("7289DA")
+                }
             }
-        }}
+        }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
-    pos = {x = 7, y = 5},
-    soul_pos = {x = 9, y = 5, extra = {x = 8, y = 5}},
+    pos = { x = 7, y = 5 },
+    soul_pos = { x = 9, y = 5, extra = { x = 8, y = 5 } },
     cost = 50,
     demicoloncompat = true,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
-        
         -- vallkarri.librat_vals.blue, vallkarri.librat_vals.red
 
         if context.joker_main then
@@ -228,12 +258,12 @@ SMODS.Joker {
     valk_artist = "Scraptake",
     config = { extra = { per = 3 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.per} }
+        return { vars = { card.ability.extra.per } }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
-    pos = {x = 7, y = 0},
-    soul_pos = {x = 9, y = 0, extra = {x = 8, y = 0}},
+    pos = { x = 7, y = 0 },
+    soul_pos = { x = 9, y = 0, extra = { x = 8, y = 0 } },
     cost = 50,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
@@ -245,7 +275,6 @@ SMODS.Joker {
                     return true
                 end
             }))
-            
         end
     end,
 
@@ -267,23 +296,23 @@ SMODS.Joker {
     valk_artist = "Pangaea",
     config = { extra = { tags = 1, increase = 1 } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {card.ability.extra.tags, card.ability.extra.increase} }
+        return { vars = { card.ability.extra.tags, card.ability.extra.increase } }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
-    pos = {x = 5, y = 12},
-    soul_pos = {x = 5, y = 13, extra = {x = 5, y = 14}},
+    pos = { x = 5, y = 12 },
+    soul_pos = { x = 5, y = 13, extra = { x = 5, y = 14 } },
     cost = 50,
     immutable = true,
     calculate = function(self, card, context)
         if context.skipping_booster then
-            local fool = SMODS.create_card({key = "c_fool", edition = "e_negative"})
+            local fool = SMODS.create_card({ key = "c_fool", edition = "e_negative" })
             fool:add_to_deck()
             G.consumeables:emplace(fool)
         end
 
         if context.using_consumeable and context.consumeable and context.consumeable.config.center.key == "c_fool" then
-            for i=1,card.ability.extra.tags do
+            for i = 1, card.ability.extra.tags do
                 add_random_tag("valk_madstone_whiskey")
             end
         end
@@ -310,23 +339,20 @@ SMODS.Joker {
     valk_artist = "Pangaea",
     config = { extra = { tags = 2, tags_base = 2, inc = 1, max = 5, mult = 5 } },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = G.P_TAGS.tag_meteor
-        return {vars = { card.ability.extra.tags, card.ability.extra.inc, card.ability.extra.max, card.ability.extra.tags_base, card.ability.extra.mult } }
+        info_queue[#info_queue + 1] = G.P_TAGS.tag_meteor
+        return { vars = { card.ability.extra.tags, card.ability.extra.inc, card.ability.extra.max, card.ability.extra.tags_base, card.ability.extra.mult } }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
-    pos = {x = 6, y = 12},
-    soul_pos = {x = 6, y = 13, extra = {x = 6, y = 14}},
+    pos = { x = 6, y = 12 },
+    soul_pos = { x = 6, y = 13, extra = { x = 6, y = 14 } },
     cost = 50,
     immutable = true,
     calculate = function(self, card, context)
-        
         if context.skip_blind then
-
-            for i=1,card.ability.extra.tags do
+            for i = 1, card.ability.extra.tags do
                 add_tag(Tag("tag_meteor"))
             end
-
         end
 
         if context.using_consumeable and context.consumeable and context.consumeable.config.center.set == "Planet" then
@@ -335,13 +361,12 @@ SMODS.Joker {
             if card.ability.extra.tags > card.ability.extra.max then
                 card.ability.extra.tags = card.ability.extra.tags_base
                 quick_card_speak(card, localize("k_reset"))
-                for name,_ in pairs(G.GAME.hands) do
+                for name, _ in pairs(G.GAME.hands) do
                     G.GAME.hands[name].l_chips = G.GAME.hands[name].l_chips * card.ability.extra.mult
-                    G.GAME.hands[name].l_mult = G.GAME.hands[name].l_mult * card.ability.extra.mult 
+                    G.GAME.hands[name].l_mult = G.GAME.hands[name].l_mult * card.ability.extra.mult
                 end
             end
         end
-
     end,
 }
 
@@ -359,24 +384,24 @@ SMODS.Joker {
     valk_artist = "Pangaea",
     config = { extra = { hand = "Four of a Kind" } },
     loc_vars = function(self, info_queue, card)
-        return {vars = {localize(card.ability.extra.hand, "poker_hands")} }
+        return { vars = { localize(card.ability.extra.hand, "poker_hands") } }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
-    pos = {x = 7, y = 12},
-    soul_pos = {x = 7, y = 13, extra = {x = 7, y = 14}},
+    pos = { x = 7, y = 12 },
+    soul_pos = { x = 7, y = 13, extra = { x = 7, y = 14 } },
     cost = 50,
 
     calculate = function(self, card, context)
         if context.before and context.scoring_name == card.ability.extra.hand then
-            for i=1,(G.consumeables.config.card_limit - G.consumeables.config.card_count) do
-                local c = SMODS.add_card({set = "Planet", area = G.consumeables})
+            for i = 1, (G.consumeables.config.card_limit - G.consumeables.config.card_count) do
+                local c = SMODS.add_card({ set = "Planet", area = G.consumeables })
                 quick_card_speak(card, localize("k_plus_planet"))
             end
         end
 
         if context.using_consumeable and context.consumeable.config.center.set ~= "Spectral" then
-            SMODS.add_card({set = "Spectral", area = G.consumeables})
+            SMODS.add_card({ set = "Spectral", area = G.consumeables })
             quick_card_speak(card, localize("k_plus_spectral"))
         end
 
@@ -384,5 +409,5 @@ SMODS.Joker {
             card.ability.extra.hand = pseudorandom_element(G.handlist, "valk_phylactequila")
         end
     end,
-    
+
 }

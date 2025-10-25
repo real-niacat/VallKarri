@@ -78,7 +78,7 @@ target = 'functions/common_events.lua'
 position = 'after'
 pattern = "local info_queue = {}"
 payload = '''
-if _c.tau then
+if _c.tau and (desc_nodes == full_UI_table.main and not full_UI_table.name) then
     info_queue[#info_queue + 1] = { set = "Other", key = "tauic_info" }
 end
 '''

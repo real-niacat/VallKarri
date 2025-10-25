@@ -69,6 +69,7 @@ SMODS.Consumable {
     pos = {x=3, y=5},
     -- is_soul = true,
     soul_rate = 0.01,
+    hidden = true,
 
     loc_txt = { 
         name = "Absolute Tau",
@@ -80,7 +81,7 @@ SMODS.Consumable {
     valk_artist = "mailingway",
 
     can_use = function(self, card)
-        if not G.jokers.highlighted <= card.ability.extra.max then
+        if #G.jokers.highlighted > card.ability.extra.max or #G.jokers.highlighted < 1 then
             return false
         end
 
@@ -105,12 +106,13 @@ SMODS.Consumable {
     use = function(self, card, area, copier) 
         
         for _,joker in pairs(G.jokers.highlighted) do
-            if joker.config.center.tau then
-                joker:add_sticker("valk_transformative")
-            end
+            joker:add_sticker("valk_transformative", true)
         end
 
     end,
+    loc_vars = function(self, info_queue, card)
+        return {vars = {card.ability.extra.max}}
+    end
 }
 
 
