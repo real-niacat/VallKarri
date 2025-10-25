@@ -58,6 +58,26 @@ local planetoid_cards = {
 
 }
 
+local planetoid_map = {}
+for i,v in ipairs(planetoid_cards) do
+    planetoid_map[v.hand] = true
+end
+
+for _,v in ipairs(G.handlist) do
+    if not planetoid_map[v] then
+        local planetoid = {
+            pos = {
+                x = 4, y = 4
+            },
+            hand = v,
+            name = "Unnamed Planetoid",
+            discovered = true,
+            no_collection = true
+        }
+        table.insert(planetoid_cards, planetoid)
+    end
+end
+
 SMODS.Consumable {
     set = "Planetoid",
     key = "micrometeoroid",
@@ -107,7 +127,7 @@ SMODS.Consumable {
 for i, planetoid in ipairs(planetoid_cards) do
     SMODS.Consumable {
         set = "Planetoid",
-        key = planetoid.name,
+        key = planetoid.name ~= "Unnamed Planetoid" and planetoid.name or planetoid.hand.."_auto_planetoid",
         loc_txt = {
             name = planetoid.name,
             text = {
@@ -119,6 +139,8 @@ for i, planetoid in ipairs(planetoid_cards) do
         },
         valk_artist = "mailingway",
         pos = planetoid.pos,
+        discovered = planetoid.discovered,
+        no_collection = planetoid.no_collection,
         atlas = "oid",
         display_size = { w = 64, h = 78 },
 
