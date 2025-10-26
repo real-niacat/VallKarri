@@ -2,14 +2,6 @@ to_big = to_big or function(x) return x end
 to_number = to_number or function(x) return x end
 -- no more talisman requirement!
 
-if (not vallkarri) then
-    vallkarri = {}
-end
-
-vallkarri = {
-    show_options_button = true,
-}
-
 SMODS.current_mod.optional_features = {
     retrigger_joker = true,
     post_trigger = true,
@@ -38,6 +30,7 @@ vallkarri.splash_options = {
     "Not very Oblivious!",
     "i  s e e  y o u ",
     "made by a real girl!",
+    "Includes 1 or 2 cats!"
 }
 
 vallkarri.credited_artists = {}
