@@ -108,6 +108,12 @@ local spectral_positions = {
     ["c_medium"] = { x = 4, y = 1 },
     ["c_cryptid"] = { x = 5, y = 1 },
     ["c_black_hole"] = { x = 6, y = 1 },
+    ["c_valk_succor"] = { x = 7, y = 1 },
+    ["c_valk_luck"] = { x = 8, y = 1 },
+    ["c_valk_estrogen"] = { x = 9, y = 1 },
+    ["c_valk_testosterone"] = { x = 5, y = 2 },
+    ["c_valk_faker"] = { x = 0, y = 2 },
+    ["c_valk_absolutetau"] = { x = 1, y = 2 },
     ["c_soul"] = { x = 2, y = 2 },
 }
 
@@ -774,6 +780,19 @@ local tauspecs = {
             }))
         end,
     },
+    -- {
+    --     original = "c_valk_succor",
+    --     desc = {
+    --         "",
+    --     },
+    --     config = { extra = {} },
+    --     can_use = function(self, card)
+            
+    --     end,
+    --     use = function(self, card, area, copier)
+            
+    --     end,
+    -- },
 }
 
 

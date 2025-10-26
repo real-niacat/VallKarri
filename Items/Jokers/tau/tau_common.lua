@@ -202,7 +202,7 @@ SMODS.Joker {
     valk_artist = "Scraptake",
     config = { extra = { gain = 3, num = 3, den = 5 } },
     loc_vars = function(self, info_queue, card)
-        local num,den = SMODS.get_probability_vars(card, card.ability.extra.num, card.ability.extra.den)
+        local num,den = SMODS.get_probability_vars(card, to_number(card.ability.extra.num), to_number(card.ability.extra.den))
         return { vars = { card.ability.extra.gain, num, den } }
     end,
     rarity = "valk_tauic",
@@ -225,7 +225,7 @@ SMODS.Joker {
 
     end,
     remove_from_deck = function(self, card, from_debuff)
-        if (not from_debuff) and SMODS.pseudorandom_probability(card, "valk_tau_egg", card.ability.extra.num, card.ability.extra.den) then
+        if (not from_debuff) and SMODS.pseudorandom_probability(card, "valk_tau_egg", to_number(card.ability.extra.num), to_number(card.ability.extra.den)) then
             SMODS.add_card({key = "j_valk_tau_egg"})
         end 
     end
@@ -789,7 +789,7 @@ SMODS.Joker {
             local nominal, card_id = 15, 15
             local raised_card = nil
             for i=1, #G.hand.cards do
-                if card_id >= G.hand.cards[i].base.id and not SMODS.has_no_rank(G.hand.cards[i]) then 
+                if card_id >= (G.hand.cards[i].base.id or math.huge) and not SMODS.has_no_rank(G.hand.cards[i]) then 
                     nominal = G.hand.cards[i].base.nominal
                     card_id = G.hand.cards[i].base.id
                     raised_card = G.hand.cards[i]
