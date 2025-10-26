@@ -1,48 +1,4 @@
-SMODS.Consumable {
-    set = "Spectral",
-    loc_txt = {
-        name = "Freeway",
-        text = {
-            "Create a random {C:valk_exquisite}Exquisite{} Joker",
-            "{X:dark_edition,C:white}^#1#{} Effective Ante",
-        }
-    },
-    valk_artist = "Pangaea",
-    key = "freeway",
-    atlas = "main",
-    pos = { x = 9, y = 3, },
-    soul_pos = { x = 7, y = 3, extra = { x = 8, y = 3 } },
-    soul_rate = 0.01,
-    hidden = true,
-    cost = 10,
-    config = { extra = { eeante = 1.25 } },
-    can_use = function(self, card)
-        return true
-    end,
-    loc_vars = function(self, info_queue, card)
-        return {
-            vars = {
-                card.ability.extra.eeante,
-            }
-        }
-    end,
-    use = function(self, card, area, copier)
-        G.E_MANAGER:add_event(Event({
-            trigger = "after",
-            delay = 0.4,
-            func = function()
-                play_sound("timpani")
-                local c = create_card("Joker", G.jokers, nil, "valk_exquisite", nil, nil, nil, "valk_freeway")
-                c:add_to_deck()
-                G.jokers:emplace(c)
-                c:juice_up(0.3, 0.5)
-                vallkarri.add_effective_ante_mod(card.ability.extra.eeante, "^")
-                return true
-            end,
-        }))
-        delay(0.6)
-    end
-}
+
 
 SMODS.Consumable {
     set = "Spectral",
@@ -379,3 +335,41 @@ end
 
 -- vallkarri
 -- freakarri
+
+SMODS.Consumable {
+    set = "Spectral",
+    loc_txt = {
+        name = "Freeway",
+        text = {
+            "Destroy {C:red}all{} Jokers except {C:attention}one{}",
+            "then create an {C:valk_exquisite}Exquisite{} Joker",
+        }
+    },
+    valk_artist = "Pangaea",
+    key = "freeway",
+    atlas = "main",
+    pos = { x = 9, y = 3, },
+    soul_pos = { x = 7, y = 3, extra = { x = 8, y = 3 } },
+    soul_rate = 0.01,
+    hidden = true,
+    cost = 10,
+    config = { extra = { } },
+    can_use = function(self, card)
+        return true
+    end,
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+            }
+        }
+    end,
+    use = function(self, card, area, copier)
+        local to_kill = vallkarri.get_cards(G.jokers)
+        local safe = pseudorandom("valk_freeway"..G.GAME.round_resets.ante, 1, #G.jokers.cards)
+        table.remove(to_kill, safe)
+        SMODS.destroy_cards(to_kill)
+
+        SMODS.add_card({set = "Joker", rarity = "valk_exquisite"})
+    end,
+    
+}

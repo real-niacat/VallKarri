@@ -7,6 +7,7 @@ SMODS.current_mod.optional_features = {
     post_trigger = true,
 }
 
+vallkarri = {} --readding this helps lsp
 vallkarri = SMODS.current_mod
 vallkarri_config = vallkarri.config
 vallkarri.enabled = copy_table(vallkarri_config)
