@@ -72,7 +72,7 @@ for k,v in pairs(SMODS.Centers) do
         --sendDebugMessage("found unbuffed enhancement "..v.key, "Vall-Karri")
         if v.valk_hand_buff then
             if type(v.valk_hand_buff) == "table" then
-                vallkarri.add_hand_buff(v.valk_hand_buff.key, v.valk_hand_buff.title, v.valk_hand_buff.colour, v.valk_hand_buff.scoring_func)
+                vallkarri.add_hand_buff(k, v.valk_hand_buff.title, v.valk_hand_buff.colour, v.valk_hand_buff.scoring_func)
             elseif type (v.valk_hand_buff) == "function" then
                 v.valk_hand_buff()
             end
