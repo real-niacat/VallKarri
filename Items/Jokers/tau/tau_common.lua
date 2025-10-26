@@ -125,7 +125,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { per = 0.2 } },
+    config = { extra = { per = 1 } },
     loc_vars = function(self, info_queue, card)
         local n = 52
         if G.deck then
@@ -327,6 +327,7 @@ SMODS.Joker {
     soul_pos = {x=9, y=0},
     cost = 4,
     no_doe = true,
+    immutable = true, --fuck you
     calculate = function(self, card, context)
         if context.money_altered and to_big(context.amount) < to_big(0) then
             ease_dollars(context.amount * -(card.ability.extra.refund / 100))
