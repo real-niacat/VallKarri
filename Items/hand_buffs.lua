@@ -72,9 +72,14 @@ for k,v in pairs(SMODS.Centers) do
         --sendDebugMessage("found unbuffed enhancement "..v.key, "Vall-Karri")
         if v.valk_hand_buff then
             if type(v.valk_hand_buff) == "table" then
-                vallkarri.add_hand_buff(k, v.valk_hand_buff.title, v.valk_hand_buff.colour, v.valk_hand_buff.scoring_func)
-            elseif type (v.valk_hand_buff) == "function" then
-                v.valk_hand_buff()
+                local title = v.valk_hand_buff.title
+                local colour = v.valk_hand_buff.colour or v.valk_hand_buff.color
+                local scoring_func = v.valk_hand_buff.scoring_func
+                if (title and colour and scoring_func) then
+                    vallkarri.add_hand_buff(k, title, colour, scoring_func)
+                else
+                    sendWarnMessage("Hand buff definition for "..k.." from "..((v.original_mod or v.mod).name or "some mod that's doing a weird").." seems incorrectly formed; check your code please")
+                end
             end
         else
             vallkarri.add_hand_buff(v.key, "FAR-FLUNG", HEX("ABCDEF"), function (n)
