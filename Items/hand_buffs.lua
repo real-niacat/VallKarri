@@ -52,11 +52,35 @@ vallkarri.hand_buff_functions = {
     m_stone = function(n) return { echips = 1 + ((n ^ 0.7) / 2) } end,
 }
 function vallkarri.add_hand_buff(key, title, colour, scoring_func)
+    if vallkarri.hand_buffs[key] then
+        if vallkarri.hand_buffs[key].title == "FAR-FLUNG" then
+            sendTraceMessage("(argh no, large priorities) Overwriting default hand buff for cross-mod enhancement "..key, "Vall-Karri")
+        else
+            sendWarnMessage("Overwriting hand buff for cross-mod enhancement "..key..", this might not be what you wanted to do?", "Vall-Karri")
+        end
+    end
     vallkarri.hand_buffs[key] = { title = title, colour = colour }
     vallkarri.hand_buff_functions[key] = scoring_func
     if G and G.GAME then
         G.GAME.existing_buffs = vallkarri.hand_buffs
         G.GAME.buff_power[key] = 0
+    end
+end
+
+for k,v in pairs(SMODS.Centers) do
+    if v.set and v.set == "Enhanced" and not vallkarri.hand_buffs[v.key] then
+        --sendDebugMessage("found unbuffed enhancement "..v.key, "Vall-Karri")
+        vallkarri.add_hand_buff(v.key, "FAR-FLUNG", HEX("ABCDEF"), function (n)
+            local ratio = n/5
+            return { --Deliberately kinda meh
+                sound = "valk_buff_wild",
+                chips = pseudorandom("far-flung", 1, n ^ 2),
+                mult = pseudorandom("far-flung", 1, n ^ 2),
+                xchips = 1 + (math.floor((pseudorandom("far-flung") * ratio)*100)/100),
+                xmult = 1 + (math.floor((pseudorandom("far-flung") * ratio)*100)/100),
+                dollars = pseudorandom("far-flung", 1, n)
+            }
+        end)
     end
 end
 
