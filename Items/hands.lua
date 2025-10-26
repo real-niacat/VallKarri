@@ -1,9 +1,9 @@
 SMODS.PokerHand {
     key = "fullmansion",
-    mult = 80,
-    chips = 860,
-    l_mult = 20,
-    l_chips = 260,
+    mult = 20,
+    chips = 400,
+    l_mult = 10,
+    l_chips = 150,
     visible = false,
     example = {
         {"S_9"},
@@ -12,57 +12,18 @@ SMODS.PokerHand {
         {"S_T"},
         {"C_T"},
         {"H_T"},
-        {"S_2"},
-        {"H_2"},
-        {"C_2"},
+        {"C_T"},
     },
     visible = false,
     loc_txt = {
         name = "Full Mansion",
         description = {
-            "3 Three of a Kinds"
+            "3 of a kind and 4 of a kind"
         }
     },
     evaluate = function(parts, hand)
-        local cardsbyrank = {}
-        local morethanthree = {}
-        local sum = {}
-        local count = 0
-
-        -- print(hand)
-
-        for i,card in ipairs(hand) do
-            -- print(card.base.id)
-            
-            if card.base.id and not cardsbyrank[card.base.id] then
-                -- print("a")
-                cardsbyrank[card.base.id] = {card}
-            elseif cardsbyrank[card.base.id] then
-                -- print("b")
-                cardsbyrank[card.base.id][#cardsbyrank[card.base.id]+1] = card
-            end
-
-        end
-
-        for name,piece in pairs(cardsbyrank) do
-            -- print("there are " .. #piece .. " " .. name .. "s")
-            if #piece >= 3 then
-                count = count + 1
-                morethanthree[#morethanthree+1] = piece
-                for _,card in ipairs(piece) do
-                    sum[#sum+1] = card
-                end
-            end
-
-        end
-
-        for name,cards in ipairs(cardsbyrank) do
-            print(name,#cards)
-        end
-
-        if #morethanthree >= 3 then
-            return { sum }
-        end
+        if #parts._3 >= 2 and #parts._4 >= 1 then return parts._all_pairs end
+        return {}
     end
 }
 
@@ -175,7 +136,7 @@ SMODS.Consumable {
     set = "Planet",
     key = "etheirys",
     loc_txt = {
-        name = "Etheirys",
+        name = "Zilch",
         text = {
             "{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
             "{C:attention}#2#{}",

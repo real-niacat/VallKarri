@@ -344,7 +344,7 @@ SMODS.Consumable {
     set = "Superplanet",
     key = "barnard",
     loc_txt = {
-        name = "Barnard 68",
+        name = "Nada",
         text = {
             expochips("#1#") .. " Chips on {C:attention}Full Mansion{}",
         }
@@ -387,7 +387,7 @@ SMODS.Consumable {
     set = "Superplanet",
     key = "bootesvoid",
     loc_txt = {
-        name = "Bootes Void",
+        name = "Zip",
         text = {
             expochips("#1#") .. " Mult on {C:attention}Full Mansion{}",
         }

@@ -51,7 +51,10 @@ SMODS.DrawStep {
                 card.children.censor.states.hover.can = false
                 card.children.censor.states.click.can = false
             end
-            card.children.censor:draw_shader('dissolve', nil, nil, true, card.config.center, card.config.center.valk_censor_scale or 0, 0)
+
+            local fakecen = card.children.center
+            fakecen.VT.r = 0
+            card.children.censor:draw_shader('dissolve', nil, nil, true, fakecen, card.config.center.valk_censor_scale or 0, 0)
         else
             card.children.censor = nil
         end

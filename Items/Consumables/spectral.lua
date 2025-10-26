@@ -49,8 +49,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Luck",
         text = {
-            "Select up to {C:attention}#1#{} Jokers, multiply all",
-            "values on selected Jokers by between {C:attention}X#2#{} and {C:attention}X#3#{}",
+            "Select up to {C:attention}#1#{} Jokers and either",
+            "{C:attention}Double{} or {C:attention}Halve{} each Jokers values",
         }
     },
     valk_artist = "mailingway",
@@ -60,10 +60,10 @@ SMODS.Consumable {
     soul_rate = 0.07,
     -- is_soul = true,
 
-    config = { extra = { jokers = 2, limit = 50, base = 1.2 } },
+    config = { extra = { jokers = 3,} },
 
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.jokers, card.ability.extra.base, card.ability.extra.base + (card.ability.extra.limit / 100) } }
+        return { vars = { card.ability.extra.jokers } }
     end,
 
     can_use = function(self, card)
@@ -74,9 +74,8 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         for i, c in ipairs(G.jokers.highlighted) do
-            Cryptid.manipulate(c,
-                { type = "X", value = pseudorandom("valk_luck", card.ability.extra.base,
-                    card.ability.extra.base + (card.ability.extra.limit / 100)) })
+            local chosen = (pseudorandom("valk_luck", 1, 2) * 1.5) - 1
+            Cryptid.manipulate(c, {value = chosen})
         end
     end
 }
