@@ -316,8 +316,9 @@ SMODS.Consumable {
         }
     },
     key = "void_potential",
-    pos = { x = 2, y = 0 },
-    atlas = "phold",
+    pos = { x = 1, y = 5 },
+    atlas = "atlas2",
+    valk_artist = "mailingway",
 
     config = { extra = { choices = 1, max = 3 } },
 
