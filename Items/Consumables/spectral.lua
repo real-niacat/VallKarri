@@ -192,7 +192,7 @@ SMODS.Consumable {
         name = "Succor",
         text = {
             "{C:attention}+#1#{} Card Selection Limit",
-            "{C:attention}#4#{} Hand Size",
+            "{C:attention}#2#{} Hand Size",
         }
     },
     valk_artist = "mailingway",
@@ -200,15 +200,12 @@ SMODS.Consumable {
     pos = { x = 0, y = 5 },
     atlas = "atlas2",
 
-    config = { extra = { limit = 2, uses = 8, hand_size = -1 } },
+    config = { extra = { limit = 2, hand_size = -1 } },
 
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
                 card.ability.extra.limit,
-                card.ability.extra.uses,
-                G.GAME.consumeable_usage[self.key] and card.ability.extra.uses - G.GAME.consumeable_usage[self.key]
-                .count or card.ability.extra.uses,
                 card.ability.extra.hand_size
             }
         }
@@ -223,10 +220,6 @@ SMODS.Consumable {
         SMODS.change_discard_limit(card.ability.extra.limit)
         G.hand:change_size(card.ability.extra.hand_size)
     end,
-    in_pool = function(self, args)
-        return (G.GAME.consumeable_usage[self.key] and to_big(G.GAME.consumeable_usage[self.key]) < to_big(self.config.extra.uses)) or
-        true
-    end
 }
 
 SMODS.Consumable {
