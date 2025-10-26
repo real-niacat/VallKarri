@@ -78,7 +78,7 @@ for k,v in pairs(SMODS.Centers) do
             end
         else
             vallkarri.add_hand_buff(v.key, "FAR-FLUNG", HEX("ABCDEF"), function (n)
-                local ratio = n/5
+                local ratio = (n+5)/5
                 return { --Deliberately kinda meh
                     sound = "valk_buff_wild",
                     chips = pseudorandom("far-flung", 1, n ^ 2),
