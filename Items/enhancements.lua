@@ -38,7 +38,7 @@ SMODS.Enhancement {
             end
             
             if card.seal ~= right_card.seal then
-                card.seal = right_card.seal
+                card:set_seal(right_card.seal, true, true)
             end
             if card.edition ~= right_card.edition then
                 card.edition = right_card.edition
