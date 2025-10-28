@@ -24,7 +24,7 @@ SMODS.Joker {
         if (context.setting_blind) then
             if G.jokers.cards[1] and G.jokers.cards[1].config.center.key ~= "j_valk_niko" then
                 G.jokers.cards[1].debuff = true
-                Cryptid.manipulate(G.jokers.cards[1], { type = "X", value = 2 }) --oh no! hardcoding!
+                Cryptid.manipulate(G.jokers.cards[1], { value = 2 }) --oh no! hardcoding!
             end
         end
 
@@ -43,13 +43,13 @@ SMODS.Joker {
     loc_txt = {
         name = "Hornet",
         text = {
-            "{X:dark_edition,C:white}^#1#{} Mult for every day since {C:attention}Hollow Knight Silksong{} was released",
-            "{C:inactive}(Currently {X:dark_edition,C:white}^#2#{C:inactive} Mult)",
+            "{X:mult,C:white}X#1#{} Mult for every day since {C:attention}Hollow Knight Silksong{} was released",
+            "{C:inactive}(Currently {X:mult,C:white}X#2#{C:inactive} Mult)",
             quote("hornet"),
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { gain = 0.05 } },
+    config = { extra = { gain = 0.1 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gain, 1 + (card.ability.extra.gain * days_since(2025, 9, 4)) } }
     end,
@@ -61,7 +61,7 @@ SMODS.Joker {
     demicoloncompat = true,
     calculate = function(self, card, context)
         if (context.joker_main) or context.forcetrigger then
-            return { emult = 1 + (card.ability.extra.gain * days_since(2025, 9, 4)) }
+            return { xmult = 1 + (card.ability.extra.gain * days_since(2025, 9, 4)) }
         end
     end
 
@@ -72,14 +72,12 @@ SMODS.Joker {
     loc_txt = {
         name = "Lilac Lilybean",
         text = {
-            "Creates a random {C:dark_edition}Negative{} {C:attention}Food Joker{} at end of round.",
-            "When boss blind defeated, Increase ",
-            "{C:attention}sell value{} of all Food Jokers by {C:attention}X#1#{}.",
+            "Multiply {C:money}Sell Value{} of all Jokers by {X:money,C:white}#1#{} at end of round",
             quote("lilac"),
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { money = 5.4 } },
+    config = { extra = { money = 5 } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.money } }
     end,
@@ -91,23 +89,9 @@ SMODS.Joker {
     cost = 20,
     calculate = function(self, card, context)
         if (context.end_of_round and not context.repetition and not context.individual and not context.blueprint) then
-            local c = create_card("Food", G.jokers, nil, nil, nil, nil, nil, "valk_lilac")
-            c:add_to_deck()
-            c:set_edition("e_negative", true)
-            G.jokers:emplace(c)
-
-            if (G.GAME.blind.boss) then
-                for _i, joker in pairs(G.jokers.cards) do
-                    local res = Cryptid.safe_get(joker.config.center, "pools", "Food")
-                    for _j, pooljoker in pairs(G.P_CENTER_POOLS.Food) do
-                        res = res or (pooljoker.key == joker.key)
-                        -- print(pooljoker.key)
-                    end
-
-                    if res then
-                        joker.sell_cost = joker.sell_cost * card.ability.extra.money
-                    end
-                end
+            for _,joker in pairs(G.jokers.cards) do
+                joker.ability.extra_value = (joker.sell_cost + joker.ability.extra_value) * card.ability.extra.money
+                joker:set_cost()
             end
         end
     end
