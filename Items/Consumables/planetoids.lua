@@ -47,7 +47,7 @@ local planetoid_cards = {
     { pos = { x = 1, y = 1 }, hand = "Five of a Kind",   name = "Tyche" },
     { pos = { x = 2, y = 1 }, hand = "Flush House",      name = "Artemis" },
     { pos = { x = 0, y = 1 }, hand = "Flush Five",       name = "Ixion" },
-    { pos = { x = 4, y = 2 }, hand = "valk_fullmansion", name = "Dalamud" },
+    { pos = { x = 4, y = 2 }, hand = "valk_fullmansion", name = "Tardis" },
 
     { pos = { x = 3, y = 1 }, hand = "cry_Bulwark",      name = "Euphrosyne",          dep = { "Cryptid" } },
     { pos = { x = 4, y = 1 }, hand = "cry_UltPair",      name = "Hektor",              dep = { "Cryptid" } },
