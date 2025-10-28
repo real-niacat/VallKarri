@@ -136,7 +136,7 @@ SMODS.Consumable {
     set = "Planet",
     key = "etheirys",
     loc_txt = {
-        name = "Zilch",
+        name = "Janssen",
         text = {
             "{S:0.8}({S:0.8,V:1}lvl.#1#{S:0.8}){} Level up",
             "{C:attention}#2#{}",
