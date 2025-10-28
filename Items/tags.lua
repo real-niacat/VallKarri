@@ -35,8 +35,10 @@ SMODS.Tag {
 
 	apply = function(self, tag, context)
 		if context.type == "valk_final_scoring_step" then --functionality assisted by reading morefluff code
-			local chips = vallkarri.count_kitty_tags() * tag.config.chips 
-			SMODS.calculate_effect({ chips = chips }, tag)
+			local chips = vallkarri.count_kitty_tags() * tag.config.chips
+			G.CARD_H = -G.CARD_H -- manipulate y_off
+			SMODS.calculate_effect({ chips = chips }, tag.HUD_tag)
+			G.CARD_H = -G.CARD_H
 		end
 	end
 }
