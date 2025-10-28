@@ -418,7 +418,8 @@ SMODS.Joker {
     loc_txt = {
         name = "Coronal Ejection",
         text = {
-            "{C:green}#1# in #2#{} chance to increase {C:gold}Ascension Power{} of played {C:attention}poker hand{} by {X:gold,C:white}+#3#{}",
+            "{C:green}#1# in #2#{} chance to increase",
+            "{C:gold}Ascension Power{} of played {C:attention}poker hand{} by {X:gold,C:white}+#3#{}",
         }
     },
     valk_artist = "mailingway",
