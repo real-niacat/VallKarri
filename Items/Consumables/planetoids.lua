@@ -16,10 +16,10 @@ SMODS.ConsumableType {
         label = "planetoid",
         name = "Planetoid Cards",
         undiscovered = {
-            name = "go turn on unlock all",
+            name = "Mysterious Planetoid",
             text = {
-                "this mod is intended to be used",
-                "with unlock all enabled"
+                "Unlock this {C:valk_planetoid}Planetoid{}",
+                "by using it in a run"
             }
         }
     },

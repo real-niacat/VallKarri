@@ -28,10 +28,10 @@ SMODS.ConsumableType {
         label = "cataclysm",
         name = "Cataclysm Cards",
         undiscovered = {
-            name = "go turn on unlock all",
+            name = "Mysterious Disaster",
             text = {
-                "this mod is intended to be used",
-                "with unlock all enabled"
+                "Unlock this {C:valk_cataclysm}Cataclysm{}",
+                "by using it in a run"
             }
         }
     },

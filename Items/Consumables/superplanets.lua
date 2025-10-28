@@ -10,10 +10,10 @@ SMODS.ConsumableType {
         label = "superplanet",
         name = "Super-planet Card",
         undiscovered = {
-            name = "go turn on unlock all",
+            name = "Distant Planet",
             text = {
-                "this mod is intended to be used",
-                "with unlock all enabled"
+                "Unlock this {C:valk_superplanet}Super-planet{}",
+                "by using it in a run"
             }
         }
     },
