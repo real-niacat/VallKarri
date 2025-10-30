@@ -258,7 +258,7 @@ SMODS.Joker {
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { prob = 1, x = 1.5 } },
+    config = { extra = { prob = 1, x = 1.025 } },
     loc_vars = function(self, info_queue, card)
         local numerator, denominator = vallkarri.get_tau_probability_vars("", 1, 0)
         return { vars = { card.ability.extra.prob, card.ability.extra.x, numerator } }
