@@ -1,23 +1,4 @@
 SMODS.Back {
-    key = "inertia",
-    loc_txt = {
-        name = "Inertia Deck",
-        text = {
-            "Normal ante gain is {C:red,E:1}disabled{}",
-            "{C:attention}Overscoring{} is substantially harsher",
-        }
-    },
-    valk_artist = "Scraptake",
-    pos = {x=7, y=7},
-    atlas = "main",
-    apply = function()
-        config_reset()
-        G.GAME.disable_ante_gain = true
-        G.GAME.overscoring_threshold_base = 2
-    end
-}
-
-SMODS.Back {
     key = "encore",
     loc_txt = {
         name = "Encore Deck",
@@ -73,11 +54,12 @@ SMODS.Back {
             "Start with {C:attention,T:v_valk_legendary_perkup}Legendary PERK-UP{},",
             "{C:attention,T:v_valk_exquisite_perkup}Exquisite PERK-UP{}, and ",
             "{C:attention,T:v_valk_prestige_up}PRESTIGE-UP{}",
-            "{C:attention}X#1#{} Effective Ante when a card is bought",
+            "{C:attention}+#1#{} Effective Ante",
+            "when buying from shop",
         }
     },
     valk_artist = "Scraptake",
-    config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exquisite_perkup", "v_valk_prestige_up" }, eante = 1.05 },
+    config = { vouchers = { "v_valk_legendary_perkup", "v_valk_exquisite_perkup", "v_valk_prestige_up" }, eante = 0.2 },
     pos = {x=9, y=8},
     atlas = "main",
     loc_vars = function(self, info_queue, card)
@@ -86,7 +68,7 @@ SMODS.Back {
     calculate = function(self, card, context)
         if context.buying_card then
             -- print("joker obtained")
-            vallkarri.add_effective_ante_mod(self.config.eante, "*") --no data to store, no self-destruct condition
+            vallkarri.add_effective_ante_mod(self.config.eante, "+") --no data to store, no self-destruct condition
         end
     end,
 }

@@ -200,7 +200,7 @@ SMODS.Voucher {
             return {vars = {"", "not applicable"}}
         end
 
-        
+
     end,
 
     in_pool = function()
@@ -224,6 +224,7 @@ SMODS.Voucher {
             decks[deckname](false, context)
         end
 
+        
         
          
     end

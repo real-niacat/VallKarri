@@ -142,6 +142,11 @@ function Game:update(dt)
     if (os.time() % 60) == 0 then
         concurrency = true
     end
+    if G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
+        G.GAME.round_resets.eante_disp = "("..number_format(G.GAME.round_resets.eante_ante_diff + G.GAME.round_resets.ante)..")"
+    else
+        G.GAME.round_resets.eante_disp = ""
+    end
 
     if G.GAME.round_resets and G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
         local operator = G.GAME.round_resets.eante_ante_diff > 0 and "+" or ""

@@ -260,7 +260,7 @@ SMODS.Back {
             func = function()
                 if G.GAME.buff_power then
                     for key, _ in pairs(G.GAME.buff_power) do
-                        G.GAME.buff_power[key] = G.GAME.buff_power[key] - self.config.requirement
+                        G.GAME.buff_power[key] = (5 - self.config.requirement) + G.GAME.buff_power[key]
                     end
                     return true
                 end

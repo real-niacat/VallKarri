@@ -20,8 +20,8 @@ function ease_ante(x)
         return
     end
 
-    if (G.GAME.disable_ante_gain and x > 0) then
-        x = 0
+    if (G.GAME.ante_gain_multiplier) then
+        x = x * G.GAME.ante_gain_multiplier
     end
     -- print(G.GAME.chips and G.GAME.blind.chips)
 
@@ -148,3 +148,25 @@ function create_UIBox_HUD_blind()
     return ret
 end
 
+
+SMODS.Back {
+    key = "inertia",
+    loc_txt = {
+        name = "Inertia Deck",
+        text = {
+            "{X:attention,C:white}X#1#{} Ante gain",
+            "{C:attention}Overscoring{} is substantially harsher",
+        }
+    },
+    valk_artist = "Scraptake",
+    pos = {x=7, y=7},
+    atlas = "main",
+    apply = function(self)
+        G.GAME.ante_gain_multiplier = self.config.antegain 
+        G.GAME.overscoring_threshold_base = 2
+    end,
+    loc_vars = function(self, info_queue, card)
+        return {vars = {self.config.antegain}}
+    end,
+    config = {antegain = 0.5},
+}

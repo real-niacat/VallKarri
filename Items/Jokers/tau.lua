@@ -33,7 +33,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Tauist",
         text = {
-            "{C:valk_fire}Tauic{} Jokers are {X:valk_tauic,C:white}X#1#{} more likely to spawn",
+            "{C:valk_tauic}Tauic{} Jokers are {X:valk_tauic,C:white}X#1#{} more likely to spawn",
             "Increase by {X:valk_tauic,C:white}X#2#{} at end of round",
         }
     },

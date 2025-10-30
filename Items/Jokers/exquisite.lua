@@ -15,7 +15,7 @@ local orivander = {
 
     end,
 
-    cost = 50,
+    cost = 35,
     rarity = "valk_exquisite",
     atlas = "main",
     pos = { x = 0, y = 1 },
@@ -67,7 +67,7 @@ SMODS.Joker {
     pools = { ["Kitties"] = true },
     pos = { x = 0, y = 2 },
     soul_pos = { x = 1, y = 2 },
-    cost = 50,
+    cost = 35,
     demicoloncompat = true,
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval then
@@ -148,7 +148,7 @@ SMODS.Joker {
     atlas = "main",
     pos = { x = 8, y = 14 },
     soul_pos = { x = 9, y = 14 },
-    cost = 50,
+    cost = 35,
     demicoloncompat = true,
     blueprint_compat = true,
 
@@ -230,7 +230,7 @@ SMODS.Joker {
     atlas = "main",
     pos = { x = 7, y = 5 },
     soul_pos = { x = 9, y = 5, extra = { x = 8, y = 5 } },
-    cost = 50,
+    cost = 35,
     demicoloncompat = true,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
@@ -250,36 +250,34 @@ SMODS.Joker {
     loc_txt = {
         name = "Scraptake",
         text = {
-            "{C:red}Lose all money{} when hand played",
-            "Earn {C:money}$#1#{} for each hand played this run at end of round",
+            "{C:valk_tauic}Tauic{} Jokers are {X:valk_tauic,C:white}X#1#{} more likely to spawn",
+            "Multiply this by {C:attention}X#2#{} at end of round",
+            "Give {X:dark_edition,C:white}^Mult{} equal to Tauic probability",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^#3#{C:inactive} Mult)",
             quote("scraptake"),
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { per = 3 } },
+    config = { extra = { prob = 1, x = 1.5 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.per } }
+        local numerator, denominator = vallkarri.get_tau_probability_vars("", 1, 0)
+        return { vars = { card.ability.extra.prob, card.ability.extra.x, numerator } }
     end,
     rarity = "valk_exquisite",
     atlas = "main",
     pos = { x = 7, y = 0 },
     soul_pos = { x = 9, y = 0, extra = { x = 8, y = 0 } },
-    cost = 50,
+    cost = 35,
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
-        if context.before then
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    ease_dollars(-G.GAME.dollars)
-                    G.GAME.dollars = 0
-                    return true
-                end
-            }))
+        if context.end_of_round and context.main_eval then
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "prob", scalar_value = "x", operation = "X"})
         end
-    end,
 
-    calc_dollar_bonus = function(self, card)
-        return G.GAME.hands_played * card.ability.extra.per
+        if context.joker_main then
+            local numerator, denominator = vallkarri.get_tau_probability_vars("", 1, 0)
+            return {emult = numerator}
+        end
     end,
 }
 
@@ -302,7 +300,7 @@ SMODS.Joker {
     atlas = "main",
     pos = { x = 5, y = 12 },
     soul_pos = { x = 5, y = 13, extra = { x = 5, y = 14 } },
-    cost = 50,
+    cost = 35,
     immutable = true,
     calculate = function(self, card, context)
         if context.skipping_booster then
@@ -346,7 +344,7 @@ SMODS.Joker {
     atlas = "main",
     pos = { x = 6, y = 12 },
     soul_pos = { x = 6, y = 13, extra = { x = 6, y = 14 } },
-    cost = 50,
+    cost = 35,
     immutable = true,
     calculate = function(self, card, context)
         if context.skip_blind then
@@ -390,7 +388,7 @@ SMODS.Joker {
     atlas = "main",
     pos = { x = 7, y = 12 },
     soul_pos = { x = 7, y = 13, extra = { x = 7, y = 14 } },
-    cost = 50,
+    cost = 35,
 
     calculate = function(self, card, context)
         if context.before and context.scoring_name == card.ability.extra.hand then
@@ -411,3 +409,50 @@ SMODS.Joker {
     end,
 
 }
+
+-- SMODS.Joker {
+--     key = "talas",
+--     pronouns = "he_him",
+--     loc_txt = {
+--         name = "TALAS",
+--         text = {
+--             "{C:attention}+#1#{} Shop Voucher slots",
+--             "{X:attention,C:white}X#2#{} Voucher values",
+--         }
+--     },
+--     atlas = "atlas2",
+--     pos = {x = 0, y = 7},
+--     soul_pos = {extra = {x = 1, y = 7}, x = 2, y = 7},
+--     cost = 35,
+--     rarity = "valk_exquisite",
+--     config = {extra = {slots = 2, values = 4, added = false}},
+--     loc_vars = function(self, info_queue, card)
+--         return {vars = {card.ability.extra.slots, card.ability.extra.values}}
+--     end,
+--     add_to_deck = function(self, card, from_debuff)
+--         SMODS.change_voucher_limit(card.ability.extra.slots)
+
+--         for i,center in ipairs(G.P_CENTER_POOLS.Voucher) do
+--             if not G.GAME.vallkarri.spawn_multipliers then
+--                 G.GAME.vallkarri.spawn_multipliers = {}
+--             end
+--             if not G.GAME.vallkarri.spawn_multipliers[center.key] then
+--                 G.GAME.vallkarri.spawn_multipliers[center.key] = 1
+--             end
+--             G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] * card.ability.extra.values
+--         end
+--     end,
+--     remove_from_deck = function(self, card, from_debuff)
+--         SMODS.change_voucher_limit(-card.ability.extra.slots)
+
+--         for i,center in ipairs(G.P_CENTER_POOLS.Voucher) do
+--             if not G.GAME.vallkarri.spawn_multipliers then
+--                 G.GAME.vallkarri.spawn_multipliers = {}
+--             end
+--             if not G.GAME.vallkarri.spawn_multipliers[center.key] then
+--                 G.GAME.vallkarri.spawn_multipliers[center.key] = 1
+--             end
+--             G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] / card.ability.extra.values
+--         end
+--     end,
+-- }

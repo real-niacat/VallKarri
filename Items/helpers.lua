@@ -959,9 +959,11 @@ end
 function vallkarri.get_tau_probability_vars(cen, num, den)
     local amount = SMODS.calculate_context({valk_tau_probability_mod = true, numerator = num, denominator = den, center = cen})
     local fixed = SMODS.calculate_context({valk_tau_fix_probability = true, numerator = num, denominator = den, center = cen})
-    amount.numerator = fixed.numerator or amount.numerator
-    amount.denominator = fixed.denominator or amount.denominator
-    return (amount.numerator or num), (amount.denominator or den)
+    if (fixed and amount) then
+        amount.numerator = fixed.numerator or amount.numerator
+        amount.denominator = fixed.denominator or amount.denominator
+    end
+    return (amount and amount.numerator or num), (amount and amount.denominator or den)
 
 end
 
