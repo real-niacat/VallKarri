@@ -43,20 +43,3 @@ function vallkarri.count_player()
 
     https.asyncRequest("https://celestial.moe:3000/countplayer", do_nothing_and_fucking_die)
 end
-
-function vallkarri.send_discord_message(message, channel_id)
-
-    if not succ then return end
-    if not channel_id then
-        channel_id = "1381059071800512554"
-    end
-    
-    local options = {
-        headers = {
-            ["Content-Type"] = "application/json"
-        },
-        data = "{\"message\":\"" .. message .. "\", \"channel_id\": \"" .. channel_id .. "\"}"
-    }
-    https.asyncRequest("https://celestial.moe:3000/send-message", options, do_nothing_and_fucking_die)
-
-end

@@ -72,7 +72,7 @@ SMODS.Joker {
     loc_txt = {
         name = "Lilac Lilybean",
         text = {
-            "Multiply {C:money}Sell Value{} of all Jokers by {X:money,C:white}#1#{} at end of round",
+            "Multiply {C:money}Sell Value{} of all Jokers by {X:money,C:white}X#1#{} at end of round",
             quote("lilac"),
         }
     },
