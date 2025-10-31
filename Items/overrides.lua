@@ -94,7 +94,6 @@ end
 local edcopy = ease_dollars
 
 function ease_dollars(mod, instant)
-
     if G.GAME.price_mod then
         edcopy(mod + G.GAME.price_mod, true)
         return
@@ -143,7 +142,8 @@ function Game:update(dt)
         concurrency = true
     end
     if G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
-        G.GAME.round_resets.eante_disp = "("..number_format(G.GAME.round_resets.eante_ante_diff + G.GAME.round_resets.ante)..")"
+        G.GAME.round_resets.eante_disp = "(" ..
+        number_format(G.GAME.round_resets.eante_ante_diff + G.GAME.round_resets.ante) .. ")"
     else
         G.GAME.round_resets.eante_disp = ""
     end
@@ -208,7 +208,7 @@ glcui = nil
 local gcui = generate_card_ui
 function generate_card_ui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
     local tab = gcui(_c, full_UI_table, specific_vars, card_type, badges, hide_desc, main_start, main_end, card)
-    glcui = tab
+    -- glcui = tab
     local center = G.P_CENTERS[_c.key]
 
     if not center then
@@ -469,13 +469,12 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
     local out = fakecreate(_type, area, legendary, _rarity, skip_materialize, soulable, forced_key, key_append)
 
     if out.config.center.tau then
-        
         local denominator = G.GAME.tau_replace
         local numerator = (((vallkarri.get_level_tauic_boost and vallkarri.get_level_tauic_boost()) or 1))
 
         numerator, denominator = vallkarri.get_tau_probability_vars(out.config.center.key, numerator, denominator)
 
-        local roll = (pseudorandom("valk_roll_tauic") * (denominator-1))+1
+        local roll = (pseudorandom("valk_roll_tauic") * (denominator - 1)) + 1
         if roll <= numerator then
             out:set_ability(out.config.center.tau)
             out:juice_up()
@@ -637,6 +636,19 @@ function SMODS.injectItems(...)
         G.P_CENTER_POOLS.Cataclysm[name].loc_vars = function(self, info_queue, card)
             info_queue[#info_queue + 1] = { set = "Other", key = "cata_self_banish" }
             return original_locvar(self, info_queue, card)
+        end
+    end
+
+    for key,cen in pairs(G.P_CENTERS) do
+        local original_locvar = G.P_CENTERS[key].loc_vars
+        G.P_CENTERS[key].loc_vars = function(self, info_queue, card)
+            local old = original_locvar and original_locvar(self, info_queue, card) or {}
+            if card.edition and card.edition.key == "e_valk_censored" then
+                -- print("censored")
+                old.vars = {}
+                for i=1,10 do table.insert(old.vars, "???") end
+            end
+            return old
         end
     end
 end
