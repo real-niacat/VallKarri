@@ -69,16 +69,16 @@ if not vallkarri then
     if (not CryptLib) and (not Cryptid) then
         
         local cryl_installed = false
-        local folder = nil
+        local cryptlib_folder = nil
         for _,foldername in pairs(NFS.getDirectoryItems(SMODS.MODS_DIR)) do
             if string.find(foldername:lower(), "cryptlib") then 
                 cryl_installed = true
-                folder = foldername
+                cryptlib_folder = foldername
             end
         end
 
         if cryl_installed then
-            if NFS.remove(SMODS.MODS_DIR .. "/" .. folder .. "/.lovelyignore") then
+            if NFS.remove(SMODS.MODS_DIR .. "/" .. cryptlib_folder .. "/.lovelyignore") then
                 error("\n\nVallKarri patches succeeded, but the mod failed\n\nYou are missing CryptLib.\nAutomatically re-enabling...\n\nYou may restart the game and ignore this error.")
             end
         end
