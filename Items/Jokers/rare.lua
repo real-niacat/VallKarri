@@ -89,7 +89,7 @@ SMODS.Joker {
     atlas = "main",
     pos = { x = 4, y = 13 },
     cost = 8,
-    blueprintcompat = true,
+    blueprint_compat = true,
 
 
     calculate = function(self, card, context)
