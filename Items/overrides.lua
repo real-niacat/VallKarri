@@ -143,7 +143,7 @@ function Game:update(dt)
     end
     if G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
         G.GAME.round_resets.eante_disp = "(" ..
-        number_format(G.GAME.round_resets.eante_ante_diff + G.GAME.round_resets.ante) .. ")"
+            number_format(G.GAME.round_resets.eante_ante_diff + G.GAME.round_resets.ante) .. ")"
     else
         G.GAME.round_resets.eante_disp = ""
     end
@@ -632,33 +632,28 @@ function SMODS.injectItems(...)
             return not (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count)
         end
         -- info_queue[#info_queue + 1] = {set = "Other", key = first}
-        local original_locvar = G.P_CENTER_POOLS.Cataclysm[name].loc_vars
-        G.P_CENTER_POOLS.Cataclysm[name].loc_vars = function(self, info_queue, card)
-            info_queue[#info_queue + 1] = { set = "Other", key = "cata_self_banish" }
-            return original_locvar(self, info_queue, card)
-        end
     end
 
-    for key,cen in pairs(G.P_CENTERS) do
-        local original_locvar = G.P_CENTERS[key].loc_vars
-        G.P_CENTERS[key].loc_vars = function(self, info_queue, card)
-            local old = original_locvar and original_locvar(self, info_queue, card) or {}
-            if card and card.edition and card.edition.key == "e_valk_censored" then
-                if self.valk_censored_loc_vars and type(self.valk_censored_loc_vars) == "function" then
-                    -- some mods use loc_vars to pass other localized text, so this can let devs more easily sidestep that
-                    -- or just return cool custom stuff
-                    return self:valk_censored_loc_vars(info_queue, card)
-                elseif #old.vars > 0 then
-                    -- this avoids destroying vars.colours and causing errors
-                    for i=1, #old.vars do
-                        -- entropy easter egg
-                        local newspeak = ((SMODS.Mods.entr or {}).can_load and Entropy.DeckOrSleeve("doc") and #tostring(old.vars[i]) >= 8) and
-                            pseudorandom_element({"[REDACTED]", "[DATA EXPUNGED]"}, "valk_scp_censor") or "???"
-                        old.vars[i] = newspeak
-                    end
+    for name, center in pairs(G.P_CENTERS) do
+        local original_locvar = G.P_CENTERS[name].loc_vars
+        G.P_CENTERS[name].loc_vars = original_locvar and function(self, info_queue, card)
+            local original_results = original_locvar(self, info_queue, card)
+            if self.set == "Cataclysm" then
+                info_queue[#info_queue + 1] = { set = "Other", key = "cata_self_banish" }
+            end
+
+            if card and card.edition and card.edition.key == "e_valk_censored" and original_results and original_results.vars and #original_results.vars > 0 then
+                for i = 1, #original_results.vars do
+                    -- entropy easter egg
+                    local options = { "[REDACTED]", "[DATA EXPUNGED]" }
+                    local newspeak = (SMODS.Mods.entr or {}).can_load and Entropy.DeckOrSleeve("doc") and
+                        options[math.random(1,#options)] or "???"
+                    original_results.vars[i] = newspeak
                 end
             end
-            return old
+
+
+            return
         end
     end
 end
