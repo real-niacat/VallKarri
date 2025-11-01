@@ -26,6 +26,13 @@ SMODS.ConsumableType {
     default = "c_valk_micrometeoroid",
 }
 
+SMODS.UndiscoveredSprite({ -- undiscovered sprite
+    key = 'Planetoid',
+    atlas = "oid",
+    pos = { x = 0, y = 5 },
+    no_overlay = true
+})
+
 local function key_to_name(str)
     str = str:gsub("__", ".")
     str = str:gsub("_", " ")
