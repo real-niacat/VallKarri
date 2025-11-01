@@ -34,7 +34,7 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
                 end
             end
 
-            if not SMODS.Mods["Talisman"] and SMODS.Mods["Talisman"].can_load then
+            if not (SMODS.Mods["Talisman"] and SMODS.Mods["Talisman"].can_load) then
                 newcard.children.alert = UIBox {
                     definition = create_UIBox_card_alert(),
                     config = {
