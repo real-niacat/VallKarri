@@ -91,6 +91,11 @@ SMODS.Consumable {
     no_grc = true,
     no_doe = true,
 
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
+
 }
 
 SMODS.Consumable {
@@ -142,6 +147,11 @@ SMODS.Consumable {
     pos = { x = 3, y = 0 },
     no_grc = true,
     no_doe = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -194,6 +204,11 @@ SMODS.Consumable {
     pos = { x = 0, y = 0 },
     no_grc = true,
     no_doe = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -246,6 +261,11 @@ SMODS.Consumable {
     pos = { x = 1, y = 0 },
     no_grc = true,
     no_doe = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -298,6 +318,11 @@ SMODS.Consumable {
     pos = { x = 6, y = 0 },
     no_grc = true,
     no_doe = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -338,6 +363,11 @@ SMODS.Consumable {
     pos = { x = 7, y = 0 },
     no_grc = true,
     no_doe = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -375,12 +405,18 @@ SMODS.Consumable {
     in_pool = function(self, args)
         return G.GAME.hands["valk_fullmansion"].played > 0
     end,
+    
 
 
     atlas = "csm",
     pos = { x = 8, y = 0 },
     no_grc = true,
     no_doe = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -424,6 +460,11 @@ SMODS.Consumable {
     pos = { x = 9, y = 0 },
     no_grc = true,
     no_doe = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -486,6 +527,11 @@ SMODS.Consumable {
     pos = { x = 0, y = 1 },
     no_grc = true,
     no_doe = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -525,7 +571,12 @@ SMODS.Consumable {
     pos = { x = 2, y = 0 },
     no_grc = true,
     no_doe = true,
-    dependencies = {"entr"}
+    dependencies = {"entr"},
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -572,6 +623,11 @@ SMODS.Consumable {
     no_grc = true,
     no_doe = true,
     dependencies = { "Talisman", "entr" },
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Booster {
