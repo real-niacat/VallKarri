@@ -664,7 +664,7 @@ function SMODS.injectItems(...)
             end
 
 
-            return
+            return original_results
         end
     end
 end
