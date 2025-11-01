@@ -644,9 +644,19 @@ function SMODS.injectItems(...)
         G.P_CENTERS[key].loc_vars = function(self, info_queue, card)
             local old = original_locvar and original_locvar(self, info_queue, card) or {}
             if card.edition and card.edition.key == "e_valk_censored" then
-                -- print("censored")
-                old.vars = {}
-                for i=1,10 do table.insert(old.vars, "???") end
+                if self.valk_censored_loc_vars and type(self.valk_censored_loc_vars) == "function") then
+                    -- some mods use loc_vars to pass other localized text, so this can let devs more easily sidestep that
+                    -- or just return cool custom stuff
+                    return self:valk_censored_loc_vars(info_queue, card)
+                elseif #old.vars > 0 then
+                    -- this avoids destroying vars.colours and causing errors
+                    for i=1, #old.vars do
+                        -- entropy easter egg
+                        local newspeak = ((SMODS.Mods.entr or {}).can_load and Entropy.DeckOrSleeve("doc") and #old.vars[i] > 8) and
+                            pseudorandom_element({"[REDACTED]", "[DATA EXPUNGED]"}, "valk_scp_censor") or "???"
+                        old.vars[i] = newspeak
+                    end
+                end
             end
             return old
         end
