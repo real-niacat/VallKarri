@@ -644,7 +644,7 @@ function SMODS.injectItems(...)
         G.P_CENTERS[key].loc_vars = function(self, info_queue, card)
             local old = original_locvar and original_locvar(self, info_queue, card) or {}
             if card.edition and card.edition.key == "e_valk_censored" then
-                if self.valk_censored_loc_vars and type(self.valk_censored_loc_vars) == "function") then
+                if self.valk_censored_loc_vars and type(self.valk_censored_loc_vars) == "function" then
                     -- some mods use loc_vars to pass other localized text, so this can let devs more easily sidestep that
                     -- or just return cool custom stuff
                     return self:valk_censored_loc_vars(info_queue, card)
