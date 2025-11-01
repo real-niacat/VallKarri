@@ -34,6 +34,17 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
                 end
             end
 
+            if not SMODS.Mods["Talisman"].can_load then
+                newcard.children.alert = UIBox {
+                    definition = create_UIBox_card_alert(),
+                    config = {
+                        align = "tri",
+                        offset = { x = 0.2, y = -0.2 },
+                        parent = newcard.children.center
+                    }
+                }
+            end
+
             vallkarri.initialize_splashtext()
             return true
         end,
@@ -647,7 +658,7 @@ function SMODS.injectItems(...)
                     -- entropy easter egg
                     local options = { "[REDACTED]", "[DATA EXPUNGED]" }
                     local newspeak = (SMODS.Mods.entr or {}).can_load and Entropy.DeckOrSleeve("doc") and
-                        options[math.random(1,#options)] or "???"
+                        options[math.random(1, #options)] or "???"
                     original_results.vars[i] = newspeak
                 end
             end

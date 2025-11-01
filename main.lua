@@ -119,6 +119,10 @@ SMODS.current_mod.extra_tabs = function()
             label = "Credits",
             tab_definition_function = vallkarri.credits_ui_def
         },
+        {
+            label = "Recommended Mods",
+            tab_definition_function = vallkarri.recomm_ui_def
+        }
     }
 end
 
