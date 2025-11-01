@@ -652,7 +652,7 @@ function SMODS.injectItems(...)
                     -- this avoids destroying vars.colours and causing errors
                     for i=1, #old.vars do
                         -- entropy easter egg
-                        local newspeak = ((SMODS.Mods.entr or {}).can_load and Entropy.DeckOrSleeve("doc") and #old.vars[i] > 8) and
+                        local newspeak = ((SMODS.Mods.entr or {}).can_load and Entropy.DeckOrSleeve("doc") and #tostring(old.vars[i]) >= 8) and
                             pseudorandom_element({"[REDACTED]", "[DATA EXPUNGED]"}, "valk_scp_censor") or "???"
                         old.vars[i] = newspeak
                     end
