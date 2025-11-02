@@ -68,7 +68,7 @@ SMODS.Edition {
         if (context.edition and context.cardarea == G.jokers and card.config.trigger) or
             (context.main_scoring and context.cardarea == G.play)
         then
-            SMODS.add_card({set = "Consumeables", area = G.consumeables, edition = "e_negative"})
+            SMODS.add_card({ set = "Consumeables", area = G.consumeables, edition = "e_negative" })
         end
 
         if context.joker_main then
@@ -234,3 +234,39 @@ SMODS.Edition {
     in_shop = true,
 }
 
+
+SMODS.Edition {
+    key = "censored",
+    shader = false,
+    loc_txt = {
+        name = "Censored",
+        label = "Censored",
+        text = {
+            "All values are {C:attention}Hidden{}",
+            "Retrigger this card {C:attention}twice{}",
+        }
+    },
+    config = {},
+    calculate = function(self, card, context)
+        if context.other_card == card and ((context.repetition and context.cardarea == G.play) or (context.retrigger_joker_check and not context.retrigger_joker)) then
+            return {
+                repetitions = 2
+            }
+        end
+    end,
+    weight = 1,
+    get_weight = function(self)
+        return G.GAME.edition_rate * self.weight
+    end,
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+
+            }
+        }
+    end,
+    in_pool = function(self, args)
+        return true
+    end,
+    in_shop = true,
+}

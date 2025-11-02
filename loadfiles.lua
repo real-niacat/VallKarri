@@ -12,6 +12,7 @@ local files = {
     "Items/operator_stuff.lua",
     "Items/configui.lua",
     "Items/credits_ui.lua",
+    "Items/recommended.lua",
     "Items/ante.lua",
     "Items/hands.lua",
     "Items/metaprogression.lua",

@@ -41,7 +41,7 @@ SMODS.draw_ignore_keys["censor"] = true
 SMODS.DrawStep {
     key = "censorship",
     func = function(card, layer)
-        local censor = card.valk_censor or card.config.center.valk_censor
+        local censor = card.valk_censor or card.config.center.valk_censor or (card.edition and card.edition.key == "e_valk_censored")
         local allowed = layer == "both" or layer == "card"
         if censor and allowed then
             if not card.children.censor then

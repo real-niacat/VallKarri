@@ -89,20 +89,20 @@ for _, edit in ipairs(aesthetic_cards) do
             } }
         end,
         can_use = function(self, card)
-            local sed = true
-            for i, jkr in ipairs(G.jokers.highlighted) do
-                if jkr.edition then
-                    sed = false
-                end
-            end
-            return (#G.jokers.highlighted > 0) and (#G.jokers.highlighted <= card.ability.extra.select) and sed
+            local highlighted = Cryptid.get_highlighted_cards({G.jokers}, card, 1, card.ability.extra.select, function(card) return not card.edition end)
+            return (#highlighted > 0) and (#highlighted <= card.ability.extra.select)
         end,
         use = function(self, card, area, copier)
-            for i, high in ipairs(G.jokers.highlighted) do
+            for i, high in ipairs(Cryptid.get_highlighted_cards({G.jokers}, card, 1, card.ability.extra.select, function(card) return not card.edition end)) do
                 high:set_edition(card.ability.extra.edition)
             end
         end,
+        demicoloncompat = true,
+        force_use = function(self, card)
+            self:use(card)
+        end,
         dependencies = edit.dep,
+
     }
 end
 
@@ -150,6 +150,10 @@ SMODS.Consumable {
             end
         end
         return false
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -180,4 +184,8 @@ SMODS.Consumable {
         end
         vallkarri.add_effective_ante_mod(card.ability.extra.ante, "+")
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }

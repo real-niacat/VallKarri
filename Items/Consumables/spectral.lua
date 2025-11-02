@@ -23,16 +23,22 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return #G.jokers.highlighted <= card.ability.extra.jokers and #G.jokers.highlighted > 0
+        local highlighted = Cryptid.get_highlighted_cards({G.jokers}, card, 1, card.ability.extra.jokers)
+        return #highlighted <= card.ability.extra.jokers and #highlighted > 0
     end,
 
 
 
     use = function(self, card, area, copier)
-        for i, c in ipairs(G.jokers.highlighted) do
+        for i, c in ipairs(Cryptid.get_highlighted_cards({G.jokers}, card, 1, card.ability.extra.jokers)) do
             local chosen = (pseudorandom("valk_luck", 1, 2) * 1.5) - 1
             Cryptid.manipulate(c, {value = chosen})
         end
+    end,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -59,18 +65,24 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return #G.jokers.highlighted <= card.ability.extra.jokers and #G.jokers.highlighted > 0
+        local highlighted = Cryptid.get_highlighted_cards({G.jokers}, card, 1, card.ability.extra.jokers)
+        return #highlighted <= card.ability.extra.jokers and #highlighted > 0
     end,
 
 
 
     use = function(self, card, area, copier)
-        for i, c in ipairs(G.jokers.highlighted) do
+        for i, c in ipairs(Cryptid.get_highlighted_cards({G.jokers}, card, 1, card.ability.extra.jokers)) do
             local copy = copy_card(c)
             copy:set_edition("e_negative", true)
             copy:add_sticker("perishable", true)
             G.jokers:emplace(copy)
         end
+    end,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -103,6 +115,10 @@ SMODS.Consumable {
             local valid = { "m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky" }
             c:set_ability(valid[pseudorandom("valk_missingno", 1, #valid)])
         end)
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -139,6 +155,10 @@ SMODS.Consumable {
             local valid = { "e_foil", "e_holo", "e_polychrome", "e_negative" }
             c:set_edition(valid[pseudorandom("valk_missingno", 1, #valid)], true)
         end)
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -176,6 +196,10 @@ SMODS.Consumable {
         SMODS.change_discard_limit(card.ability.extra.limit)
         G.hand:change_size(card.ability.extra.hand_size)
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -204,11 +228,12 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.convert
+        local highlighted = Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.convert)
+        return #highlighted > 0 and #highlighted <= card.ability.extra.convert
     end,
 
     use = function(self, card, area, copier)
-        do_while_flipped(vallkarri.get_ordered_highlighted(G.hand), function(c)
+        do_while_flipped(Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.convert), function(c)
             SMODS.change_base(c, nil, "King")
             c:set_edition("e_polychrome", true)
         end)
@@ -218,6 +243,10 @@ SMODS.Consumable {
             thou_shall_fucking_die:start_dissolve({ G.C.RED })
         end
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -246,11 +275,12 @@ SMODS.Consumable {
     end,
 
     can_use = function(self, card)
-        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.convert
+        local highlighted = Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.convert)
+        return #highlighted > 0 and #highlighted <= card.ability.extra.convert
     end,
 
     use = function(self, card, area, copier)
-        do_while_flipped(vallkarri.get_ordered_highlighted(G.hand), function(c)
+        do_while_flipped(Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.convert), function(c)
             SMODS.change_base(c, nil, "Queen")
             c:set_edition("e_polychrome", true)
         end)
@@ -260,6 +290,10 @@ SMODS.Consumable {
             thou_shall_fucking_die:start_dissolve({ G.C.RED })
         end
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -323,6 +357,10 @@ SMODS.Consumable {
             end
         end
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 G.FUNCS.open_void_potential = function(centers, choices)
@@ -371,5 +409,8 @@ SMODS.Consumable {
 
         SMODS.add_card({set = "Joker", rarity = "valk_exquisite"})
     end,
-    
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }

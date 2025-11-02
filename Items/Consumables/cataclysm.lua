@@ -103,6 +103,10 @@ SMODS.Consumable {
             G.GAME.hands[name].l_mult = G.GAME.hands[name].l_mult * card.ability.extra.scaling
         end
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -159,6 +163,10 @@ SMODS.Consumable {
             end
         end
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -203,6 +211,10 @@ SMODS.Consumable {
             end
             G.GAME.vallkarri.spawn_multipliers[joker.config.center.key] = G.GAME.vallkarri.spawn_multipliers[joker.config.center.key] * 4
         end
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -239,6 +251,10 @@ SMODS.Consumable {
         ease_discard(-G.GAME.round_resets.discards)
         G.consumeables:change_size(G.GAME.round_resets.discards)
         G.GAME.round_resets.discards = 0
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -277,6 +293,10 @@ SMODS.Consumable {
             joker:set_ability(chosen_joker.config.center.key)
             joker.ability.eternal = true
         end
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -324,6 +344,10 @@ SMODS.Consumable {
             G.deck:emplace(copy)
             table.insert(G.playing_cards, copy)
         end
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -361,6 +385,10 @@ SMODS.Consumable {
         for i,joker in ipairs(G.jokers.cards) do
             Cryptid.manipulate(joker, {value = card.ability.extra.change})
         end
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -413,6 +441,10 @@ SMODS.Consumable {
             G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] * card.ability.extra.vm
         end
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -445,6 +477,10 @@ local DISABLED_ONE = {
     end,
     use = function(self, card, area, copier)
         
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -479,6 +515,10 @@ local DISABLED_TWO = {
     use = function(self, card, area, copier)
         
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -519,6 +559,10 @@ SMODS.Consumable {
 
         mspl(card.ability.extra.mult)
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -567,6 +611,10 @@ SMODS.Consumable {
             G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] * card.ability.extra.mult
         end
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -612,6 +660,10 @@ SMODS.Consumable {
             G.GAME.hidden_override = G.GAME.hidden_override + card.ability.extra.chance
         end
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -655,6 +707,10 @@ SMODS.Consumable {
             SMODS.add_card({rarity = "Rare", key_append = "valk_bigslurp"})
         end
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -701,6 +757,10 @@ SMODS.Consumable {
             G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] * card.ability.extra.mult
         end
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -746,6 +806,10 @@ SMODS.Consumable {
 
         G.GAME.spectral_rate = G.GAME.spectral_rate + 5
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -786,6 +850,10 @@ SMODS.Consumable {
 
         G.GAME.exquisite_replace = G.GAME.exquisite_replace and (G.GAME.exquisite_replace + card.ability.extra.change) or card.ability.extra.change --no stacking :) --yes stacking
 
+    end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
     end
 }
 
@@ -865,6 +933,10 @@ SMODS.Consumable {
         end
         return false
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 SMODS.Booster {
     key = "revelations",
@@ -961,6 +1033,11 @@ SMODS.Consumable {
     no_grc = true,
     no_doe = true,
     dependencies = {"Talisman"},
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Voucher {

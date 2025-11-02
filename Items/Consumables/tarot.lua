@@ -24,12 +24,14 @@ SMODS.Consumable {
         return {vars = {card.ability.extra.cards}}
     end,
     can_use = function(self, card)
-        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.cards 
+        local highlighted = Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.cards)
+        return #highlighted > 0 and #highlighted <= card.ability.extra.cards 
     end,
 
     use = function(self, card, area, copier)
-        local first_card = vallkarri.get_ordered_highlighted(G.hand)[1]
-        do_while_flipped(vallkarri.get_ordered_highlighted(G.hand), function(ca)
+        local highlighted = Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.cards)
+        local first_card = highlighted[1]
+        do_while_flipped(highlighted, function(ca)
             copy_card(first_card, ca)
             ca:set_ability("m_steel")
             G.hand:remove_from_highlighted(ca)
@@ -37,6 +39,11 @@ SMODS.Consumable {
     end,
     soul_rate = vallkarri.merged_tarot_rate,
     hidden = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
     
 }
 
@@ -80,6 +87,11 @@ SMODS.Consumable {
     end,
     soul_rate = vallkarri.merged_tarot_rate,
     hidden = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
     
 }
 
@@ -105,7 +117,8 @@ SMODS.Consumable {
         return {vars = {card.ability.extra.cards}}
     end,
     can_use = function(self, card)
-        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.cards 
+        local highlighted = Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.cards)
+        return #highlighted > 0 and #highlighted <= card.ability.extra.cards 
     end,
 
     use = function(self, card, area, copier)
@@ -113,7 +126,7 @@ SMODS.Consumable {
             trigger = "after",
             delay = 0.1,
             func = function()
-                for i,c in ipairs(vallkarri.get_ordered_highlighted(G.hand)) do
+                for i,c in ipairs(Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.cards)) do
                     c:start_dissolve({G.C.BLACK}, nil, 2 * G.SETTINGS.GAMESPEED)
                     local joker = create_card("Joker", G.jokers, nil, 3, nil, nil, nil, "valk_godsfinger")
                     joker:add_to_deck()
@@ -127,6 +140,11 @@ SMODS.Consumable {
     end,
     soul_rate = vallkarri.merged_tarot_rate,
     hidden = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
     
 }
 
@@ -196,6 +214,11 @@ SMODS.Consumable {
     end,
     soul_rate = vallkarri.merged_tarot_rate,
     hidden = true,
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
     
 }
 
@@ -240,6 +263,11 @@ SMODS.Consumable {
     soul_rate = vallkarri.merged_tarot_rate,
     hidden = true,
     
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 SMODS.Consumable {
@@ -263,7 +291,8 @@ SMODS.Consumable {
         }}
     end,
     can_use = function(self, card)
-        return #G.hand.highlighted > 0 and #G.hand.highlighted <= card.ability.extra.cards 
+        local highlighted = Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.cards)
+        return #highlighted > 0 and #highlighted <= card.ability.extra.cards 
     end,
 
     use = function(self, card, area, copier)
@@ -277,5 +306,10 @@ SMODS.Consumable {
     end,
     soul_rate = vallkarri.merged_tarot_rate,
     hidden = true,
-    dependencies = {"Cryptid"}
+    dependencies = {"Cryptid"},
+
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }

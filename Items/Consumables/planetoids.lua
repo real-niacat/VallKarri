@@ -26,6 +26,13 @@ SMODS.ConsumableType {
     default = "c_valk_micrometeoroid",
 }
 
+SMODS.UndiscoveredSprite({ -- undiscovered sprite
+    key = 'Planetoid',
+    atlas = "oid",
+    pos = { x = 0, y = 5 },
+    no_overlay = true
+})
+
 local function key_to_name(str)
     str = str:gsub("__", ".")
     str = str:gsub("_", " ")
@@ -121,6 +128,10 @@ SMODS.Consumable {
     in_pool = function(self)
         return false
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 
@@ -167,6 +178,10 @@ for i, planetoid in ipairs(planetoid_cards) do
             return (G.GAME.hands[self.config.extra.handtype].played > 0)
         end,
         dependencies = planetoid.dep,
+        demicoloncompat = true,
+        force_use = function(self, card)
+            self:use(card)
+        end
     }
 end
 
