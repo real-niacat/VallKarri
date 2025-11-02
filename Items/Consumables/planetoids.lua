@@ -128,6 +128,10 @@ SMODS.Consumable {
     in_pool = function(self)
         return false
     end,
+    demicoloncompat = true,
+    force_use = function(self, card)
+        self:use(card)
+    end
 }
 
 
@@ -174,6 +178,10 @@ for i, planetoid in ipairs(planetoid_cards) do
             return (G.GAME.hands[self.config.extra.handtype].played > 0)
         end,
         dependencies = planetoid.dep,
+        demicoloncompat = true,
+        force_use = function(self, card)
+            self:use(card)
+        end
     }
 end
 
