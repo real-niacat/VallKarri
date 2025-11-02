@@ -159,12 +159,6 @@ function Game:update(dt)
         G.GAME.round_resets.eante_disp = ""
     end
 
-    if G.GAME.round_resets and G.GAME.round_resets.eante_ante_diff and G.GAME.round_resets.eante_ante_diff ~= 0 then
-        local operator = G.GAME.round_resets.eante_ante_diff > 0 and "+" or ""
-        G.GAME.round_resets.ante_disp = number_format(G.GAME.round_resets.ante) ..
-            "(" .. operator .. number_format(G.GAME.round_resets.eante_ante_diff) .. ")"
-    end
-
     fix_decimal_hand_levels()
 end
 

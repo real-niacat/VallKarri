@@ -27,8 +27,7 @@ SMODS.Back {
     loc_txt = {
         name = "Tauic Deck",
         text = {
-            "{C:cry_ember}Tauic{} Jokers spawn {C:attention}ten times{} as often.",
-            "and have their {C:green}chance{} increase when the roll fails",
+            "{C:cry_ember}Tauic{} Jokers are {C:attention}exponentially{} more common",
             "{X:dark_edition,C:white}^#1#{} Effective Ante",
             -- "{C:attention}X3{} Blind Size",
         }
@@ -43,6 +42,16 @@ SMODS.Back {
                 self.config.eeante
             }
         }
+    end,
+    apply = function(self, back)
+        vallkarri.add_effective_ante_mod(self.config.eeante, "^")
+    end,
+    calculate = function(self, back, context)
+        if context.valk_tau_probability_mod then
+            return {
+                denominator = context.denominator ^ 0.5
+            }
+        end
     end
 }
 
