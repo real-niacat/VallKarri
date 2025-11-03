@@ -250,8 +250,8 @@ SMODS.Back {
     },
     valk_artist = nil,
     config = { hand_size = -1, requirement = 2 },
-    pos = { x = 4, y = 0 },
-    atlas = "phold",
+    pos = { x = 5, y = 3 },
+    atlas = "atlas2",
     loc_vars = function(self, info_queue, card)
         return { vars = { self.config.requirement, self.config.hand_size } }
     end,
