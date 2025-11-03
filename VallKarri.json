@@ -6,7 +6,7 @@
 	"prefix": "valk",
 	"main_file": "main.lua",
 	"priority": 99999, 
-	"badge_colour": "e5bf3a",
+	"badge_colour": "888888",
 	"version": "0.8.4d", 
 	"dependencies": [ 
 		"Cryptlib",

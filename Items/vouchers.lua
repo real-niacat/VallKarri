@@ -87,7 +87,7 @@ local decks = {
         end 
     end,
     ["Zodiac Deck"] = function(redeeming, context)
-        if redeeming then mspl(3) end
+        if redeeming then vallkarri.multiply_all_hand_scaling(3) end
     end,
     ["Painted Deck"] = function(redeeming, context)
         if redeeming then G.GAME.handsize_on_sell = 1

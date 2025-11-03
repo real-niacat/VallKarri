@@ -175,9 +175,12 @@ function Game:start_run(args)
 
     if not G.GAME.vallkarri then
         G.GAME.vallkarri = {}
-    end
-    if not G.GAME.vallkarri.spawn_multipliers then
         G.GAME.vallkarri.spawn_multipliers = {}
+        G.GAME.vallkarri.banned_use_keys = {}
+        for key, _ in pairs(G.P_CENTERS) do
+            G.GAME.vallkarri.spawn_multipliers[key] = 1
+            G.GAME.vallkarri.banned_use_keys[key] = false
+        end
     end
 
     G.GAME.tau_increase = 0
@@ -631,22 +634,10 @@ function SMODS.injectItems(...)
         end
     end
 
-    for name, center in pairs(G.P_CENTER_POOLS.Cataclysm) do
-        G.P_CENTER_POOLS.Cataclysm[name].cost = 16
-        G.P_CENTER_POOLS.Cataclysm[name].in_pool = function(self, args)
-            return not (G.GAME.consumeable_usage[self.key] and G.GAME.consumeable_usage[self.key].count)
-        end
-        -- info_queue[#info_queue + 1] = {set = "Other", key = first}
-    end
-
     for name, center in pairs(G.P_CENTERS) do
         local original_locvar = G.P_CENTERS[name].loc_vars
         G.P_CENTERS[name].loc_vars = original_locvar and function(self, info_queue, card)
             local original_results = original_locvar(self, info_queue, card)
-            if self.set == "Cataclysm" then
-                info_queue[#info_queue + 1] = { set = "Other", key = "cata_self_banish" }
-            end
-
             if card and card.edition and card.edition.key == "e_valk_censored" and original_results and original_results.vars and #original_results.vars > 0 then
                 for i = 1, #original_results.vars do
                     -- entropy easter egg
@@ -715,4 +706,33 @@ function Card:set_debuff(debuff)
         return
     end
     olddebuff(self, debuff)
+end
+
+local cardcanuse = Card.can_use_consumeable
+function Card:can_use_consumeable(any_state, skip_check)
+    local original_value = cardcanuse(self, any_state, skip_check)
+
+    if G.GAME.vallkarri.banned_use_keys[self.config.center_key] then
+        return false
+    end
+
+    return original_value
+end
+
+local cardcanbuy = G.FUNCS.can_buy
+G.FUNCS.can_buy = function(e)
+    local key = e.config.ref_table.config.center_key
+    if G.GAME.vallkarri.banned_use_keys[key] then
+        e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+        e.config.button = nil
+        if e.config.ref_parent and e.config.ref_parent.children.buy_and_use then
+            if e.config.ref_parent.children.buy_and_use.states.visible then
+                e.UIBox.alignment.offset.y = -0.6
+            else
+                e.UIBox.alignment.offset.y = 0
+            end
+        end
+    else
+        cardcanbuy(e)
+    end
 end
