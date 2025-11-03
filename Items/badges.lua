@@ -55,6 +55,11 @@ local function matches(center, card)
     return found
 end
 
+SMODS.Shader {
+    key = "gradient_badge",
+    path = "gradient_badge.fs",
+}
+
 last_hovered_badge_object = {}
 
 local fakemodbadge = SMODS.create_mod_badges
@@ -96,6 +101,7 @@ function SMODS.create_mod_badges(obj, badges)
                                     offset_y = -0.03,
                                     spacing = 1,
                                     scale = 0.33 * 0.9,
+                                    
                                 }),
                             },
                         },
@@ -106,7 +112,13 @@ function SMODS.create_mod_badges(obj, badges)
         }
     end
 
-
+    if not SMODS.config.no_mod_badges and obj then
+        for i = 1, #badges do
+            if badges[i].nodes[1].nodes[2].config.object.string == vallkarri.display_name then
+                badges[i].nodes[1].config.shader = "valk_gradient_badge"
+            end
+        end
+    end
 
     if not SMODS.config.no_mod_badges and obj and obj.valk_artist then
         local function calc_scale_fac(text)
@@ -150,6 +162,7 @@ function SMODS.create_mod_badges(obj, badges)
                         minh = 0.36,
                         emboss = 0.05,
                         padding = 0.03 * 0.9,
+                        shader = "valk_gradient_badge"
                     },
                     nodes = {
                         { n = G.UIT.B, config = { h = 0.1, w = 0.03 } },
@@ -165,6 +178,7 @@ function SMODS.create_mod_badges(obj, badges)
                                     offset_y = -0.03,
                                     spacing = 1,
                                     scale = 0.33 * 0.9,
+                                    shader = "valk_gradient_badge"
                                 }),
                             },
                         },

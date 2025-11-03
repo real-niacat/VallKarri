@@ -192,7 +192,7 @@ function math.map(v, imi, ima, omi, oma)
     return (v - imi) * (oma - omi) / (ima - imi) + omi
 end
 
-function mspl(amt)
+function vallkarri.multiply_all_hand_scaling(amt)
     for i, hand in pairs(G.GAME.hands) do
         G.GAME.hands[i].l_chips = G.GAME.hands[i].l_chips * amt
         G.GAME.hands[i].l_mult = G.GAME.hands[i].l_mult * amt
@@ -1027,4 +1027,28 @@ function vallkarri.recursive_set(table, value)
             vallkarri.recursive_set(v, value)
         end
     end
+end
+
+-- gives a cards eternal state
+function Card:is_eternal()
+    return not not self.ability.eternal
+end
+
+-- sets a cards eternal state. bypasses if it's allowed or not
+function Card:set_eternal_bypass(_eternal)
+    self.ability.eternal = _eternal
+end
+
+function vallkarri.merge_lists(a, b)
+    local newlist = {}
+
+    for _,entry in ipairs(a) do
+        table.insert(newlist, entry)
+    end
+
+    for _,entry in ipairs(b) do
+        table.insert(newlist, entry)
+    end
+
+    return newlist  
 end
