@@ -61,6 +61,7 @@ local planetoid_cards = {
     { pos = { x = 0, y = 3 }, hand = "cry_Clusterfuck",  name = "Protoplanetary_Disk", dep = { "Cryptid" } },
     { pos = { x = 1, y = 3 }, hand = "cry_WholeDeck",    name = "2015_TC25",           dep = { "Cryptid" } },
     { pos = { x = 2, y = 3 }, hand = "cry_None",         name = "Zero",                dep = { "Cryptid" } },
+    --LOVELY PATCH TARGET: Vall-Karri planetoids
 
 
 }
@@ -134,34 +135,46 @@ SMODS.Consumable {
     end
 }
 
+local normal_planetoid_text = {
+    "Level up {C:attention}#1#{}",
+    "for each time {C:attention}#4#{} has been",
+    "used this run",
+    "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
+}
+
+local unnamed_planetoid_text = {
+    "Level up {C:attention}#1#{} for",
+    "each time {C:attention}this Unnamed Planetoid{}",
+    "has been used this run",
+    "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
+}
 
 for i, planetoid in ipairs(planetoid_cards) do
     SMODS.Consumable {
         set = "Planetoid",
         key = planetoid.name ~= "Unnamed Planetoid" and planetoid.name or planetoid.hand.."_auto_planetoid",
         loc_txt = {
-            name = planetoid.name,
-            text = {
-                "Level up {C:attention}#1#{}",
-                "for each time {C:attention}#4#{} has been",
-                "used this run",
-                "{C:inactive}(Currently {C:attention}#2#{C:inactive})",
-            }
+            name = planetoid.name..(planetoid.name == "Unnamed Planetoid" and " (#1#)" or ""),
+            text = planetoid.name ~= "Unnamed Planetoid" and normal_planetoid_text or unnamed_planetoid_text
         },
         valk_artist = "mailingway",
         pos = planetoid.pos,
         discovered = planetoid.discovered,
         no_collection = planetoid.no_collection,
-        atlas = "oid",
+        atlas = planetoid.atlas or "oid",
+        prefix_config = planetoid.atlas and { atlas = false } or nil,
         display_size = { w = 64, h = 78 },
 
         config = { extra = { handtype = planetoid.hand, increase = 1 } },
 
         loc_vars = function(self, info_queue, card)
             return {
-                vars = { localize(card.ability.extra.handtype, "poker_hands"), 1 +
-                (times_used(self.key) * card.ability.extra.increase),
-                    card.ability.extra.increase, localize { type = "name_text", set = self.set, key = self.key } }
+                vars = { 
+                localize(card.ability.extra.handtype, "poker_hands"),
+                1 + (times_used(self.key) * card.ability.extra.increase),
+                card.ability.extra.increase,
+                localize { type = "name_text", set = self.set, key = self.key }
+                }
             }
         end,
         can_use = function()
