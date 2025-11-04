@@ -44,7 +44,14 @@ SMODS.Back {
         }
     end,
     apply = function(self, back)
-        vallkarri.add_effective_ante_mod(self.config.eeante, "^")
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                vallkarri.add_effective_ante_mod(self.config.eeante, "^")
+                return true
+            end,
+            trigger = "after",
+        }))
+        
     end,
     calculate = function(self, back, context)
         if context.valk_tau_probability_mod then

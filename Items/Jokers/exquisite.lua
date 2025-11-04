@@ -75,7 +75,7 @@ SMODS.Joker {
             local amount = 0
             for _, joker in pairs(G.jokers.cards) do
                 if not joker.config.center.immutable then
-                    local s,c = vallkarri.recursive_sum(joker.ability)
+                    local s, c = vallkarri.recursive_sum(joker.ability)
                     sum = sum + s
                     amount = amount + c
                 end
@@ -271,12 +271,13 @@ SMODS.Joker {
     pools = { ["Kitties"] = true },
     calculate = function(self, card, context)
         if context.end_of_round and context.main_eval then
-            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "prob", scalar_value = "x", operation = "X"})
+            SMODS.scale_card(card,
+                { ref_table = card.ability.extra, ref_value = "prob", scalar_value = "x", operation = "X" })
         end
 
         if context.joker_main then
             local numerator, denominator = vallkarri.get_tau_probability_vars("", 1, 0)
-            return {emult = numerator}
+            return { emult = numerator }
         end
     end,
 }
@@ -410,49 +411,58 @@ SMODS.Joker {
 
 }
 
--- SMODS.Joker {
---     key = "talas",
---     pronouns = "he_him",
---     loc_txt = {
---         name = "TALAS",
---         text = {
---             "{C:attention}+#1#{} Shop Voucher slots",
---             "{X:attention,C:white}X#2#{} Voucher values",
---         }
---     },
---     atlas = "atlas2",
---     pos = {x = 0, y = 7},
---     soul_pos = {extra = {x = 1, y = 7}, x = 2, y = 7},
---     cost = 35,
---     rarity = "valk_exquisite",
---     config = {extra = {slots = 2, values = 4, added = false}},
---     loc_vars = function(self, info_queue, card)
---         return {vars = {card.ability.extra.slots, card.ability.extra.values}}
---     end,
---     add_to_deck = function(self, card, from_debuff)
---         SMODS.change_voucher_limit(card.ability.extra.slots)
-
---         for i,center in ipairs(G.P_CENTER_POOLS.Voucher) do
---             if not G.GAME.vallkarri.spawn_multipliers then
---                 G.GAME.vallkarri.spawn_multipliers = {}
---             end
---             if not G.GAME.vallkarri.spawn_multipliers[center.key] then
---                 G.GAME.vallkarri.spawn_multipliers[center.key] = 1
---             end
---             G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] * card.ability.extra.values
---         end
---     end,
---     remove_from_deck = function(self, card, from_debuff)
---         SMODS.change_voucher_limit(-card.ability.extra.slots)
-
---         for i,center in ipairs(G.P_CENTER_POOLS.Voucher) do
---             if not G.GAME.vallkarri.spawn_multipliers then
---                 G.GAME.vallkarri.spawn_multipliers = {}
---             end
---             if not G.GAME.vallkarri.spawn_multipliers[center.key] then
---                 G.GAME.vallkarri.spawn_multipliers[center.key] = 1
---             end
---             G.GAME.vallkarri.spawn_multipliers[center.key] = G.GAME.vallkarri.spawn_multipliers[center.key] / card.ability.extra.values
---         end
---     end,
--- }
+SMODS.Joker {
+    key = "talas",
+    pronouns = "he_him",
+    loc_txt = {
+        name = "TALAS",
+        text = {
+            "{C:attention}+#1#{} Shop Voucher slots",
+            "Redeem {C:attention}#2#{} extra copies of all bought {C:attention}Vouchers{}",
+        }
+    },
+    atlas = "atlas2",
+    pos = { x = 0, y = 7 },
+    soul_pos = { extra = { x = 1, y = 7 }, x = 2, y = 7 },
+    cost = 35,
+    rarity = "valk_exquisite",
+    config = { extra = { slots = 2, extra_vouchers = 2 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.slots, card.ability.extra.extra_vouchers } }
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        SMODS.change_voucher_limit(card.ability.extra.slots)
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        SMODS.change_voucher_limit(-card.ability.extra.slots)
+    end,
+    calculate = function(self, card, context)
+        if context.buying_card and context.card.config.center.set == "Voucher" and not context.card.talas_flag then
+            for i = 1, card.ability.extra.extra_vouchers do
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        local old_state = G.STATE
+                        local voucher = SMODS.create_card({ key = context.card.config.center_key })
+                        voucher.talas_flag = true
+                        voucher:start_materialize()
+                        G.play:emplace(voucher)
+                        voucher.cost = 0
+                        voucher.shop_voucher = false
+                        local current_round_voucher = G.GAME.current_round.voucher
+                        voucher:redeem()
+                        G.GAME.current_round.voucher = current_round_voucher
+                        G.E_MANAGER:add_event(Event({
+                            trigger = "after",
+                            delay = 0,
+                            func = function()
+                                voucher:start_dissolve()
+                                G.STATE = old_state
+                                return true
+                            end,
+                        }))
+                    end,
+                }))
+            end
+        end
+    end
+}
