@@ -268,3 +268,37 @@ SMODS.Back {
         }))
     end
 }
+
+if CardSleeves then
+    CardSleeves.Sleeve {
+    key = "s_handbuffdeck",
+    loc_txt = {
+        name = "Buffed Sleeve",
+        text = {
+            "All {C:attention}Hand Modifiers{} can be made with {C:attention}#1#{} cards",
+            "{C:attention}#2#{} Hand Size",
+        }
+    },
+    valk_artist = nil,
+    config = { hand_size = -1, requirement = 2 },
+    pos = { x = 2, y = 0 },
+    atlas = "slev",
+    loc_vars = function(self, info_queue, card)
+        return { vars = { self.config.requirement, self.config.hand_size } }
+    end,
+    apply = function(self, back)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if G.GAME.buff_power then
+                    for key, _ in pairs(G.GAME.buff_power) do
+                        G.GAME.buff_power[key] = (5 - self.config.requirement) + G.GAME.buff_power[key]
+                    end
+                    return true
+                end
+            end
+        }))
+    end
+}
+else
+return
+end

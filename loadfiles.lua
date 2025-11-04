@@ -41,6 +41,7 @@ local files = {
     "Items/blinds.lua",
     "Items/tags.lua",
     "Items/decks.lua",
+    "Items/sleeves.lua",
     "Items/vouchers.lua",
     "Items/enhancements.lua",
     "Items/seals.lua",
