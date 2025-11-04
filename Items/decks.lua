@@ -143,7 +143,7 @@ if vallkarri.config.hand_buffs then
             }))
         end
     }
-else
+elseif not vallkarri.config.hand_buffs then
     return
 end
 
