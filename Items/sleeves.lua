@@ -16,7 +16,7 @@ CardSleeves.Sleeve {
         name = "Encore Sleeve",
         text = {
             "After hand scores,",
-            "all Joker {C:attention}end-of-round{}",
+            "all {C:attention}end-of-round{}",
             "effects are triggered",
         }
     },
