@@ -113,40 +113,6 @@ SMODS.Back {
     end
 }
 
-if vallkarri.config.hand_buffs then
-    SMODS.Back {
-        key = "handbuffdeck",
-        loc_txt = {
-            name = "Buffed Deck",
-            text = {
-                "All {C:attention}Hand Modifiers{} can be made with {C:attention}#1#{} cards",
-                "{C:attention}#2#{} Hand Size",
-            }
-        },
-        valk_artist = nil,
-        config = { hand_size = -1, requirement = 2 },
-        pos = { x = 5, y = 3 },
-        atlas = "atlas2",
-        loc_vars = function(self, info_queue, card)
-            return { vars = { self.config.requirement, self.config.hand_size } }
-        end,
-        apply = function(self, back)
-            G.E_MANAGER:add_event(Event({
-                func = function()
-                    if G.GAME.buff_power then
-                        for key, _ in pairs(G.GAME.buff_power) do
-                            G.GAME.buff_power[key] = (5 - self.config.requirement) + G.GAME.buff_power[key]
-                        end
-                        return true
-                    end
-                end
-            }))
-        end
-    }
-elseif not vallkarri.config.hand_buffs then
-    return
-end
-
 if AKYRS then
 
     SMODS.Back {
