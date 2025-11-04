@@ -30,6 +30,15 @@ function vallkarri.calculate_power()
     return base
 end
 
+function vallkarri.set_leveling_shader(_shader)
+    if not G.HUD_META then
+        return
+    end
+
+    G.HUD_META:get_UIE_by_ID("shader_insert").config.shader = _shader
+    G.HUD_META:recalculate()
+end
+
 function create_UIBox_metaprog()
     local text_scale = 0.3
     return {
@@ -42,7 +51,7 @@ function create_UIBox_metaprog()
                 nodes = {
                     {
                         n = G.UIT.R,
-                        config = { align = "tl", colour = G.C.DYN_UI.BOSS_DARK, r = 0.1, minh = 0.25, minw = 3, padding = 0.08 },
+                        config = { align = "tl", colour = G.C.DYN_UI.BOSS_DARK, r = 0.1, minh = 0.25, minw = 3, padding = 0.08, id = "shader_insert" }, --shader go here
                         nodes = {
                             {
                                 n = G.UIT.R,
