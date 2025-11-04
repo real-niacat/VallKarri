@@ -54,9 +54,12 @@ vallkarri.hand_buff_functions = {
 function vallkarri.add_hand_buff(key, title, colour, scoring_func)
     if vallkarri.hand_buffs[key] then
         if vallkarri.hand_buffs[key].title == "FAR-FLUNG" then
-            sendTraceMessage("(argh no, large priorities) Overwriting default hand buff for cross-mod enhancement "..key, "Vall-Karri")
+            sendTraceMessage("(argh no, large priorities) Overwriting default hand buff for cross-mod enhancement " ..
+            key, "Vall-Karri")
         else
-            sendWarnMessage("Overwriting hand buff for cross-mod enhancement "..key..", this might not be what you wanted to do?", "Vall-Karri")
+            sendWarnMessage(
+            "Overwriting hand buff for cross-mod enhancement " .. key .. ", this might not be what you wanted to do?",
+                "Vall-Karri")
         end
     end
     vallkarri.hand_buffs[key] = { title = title, colour = colour }
@@ -67,7 +70,7 @@ function vallkarri.add_hand_buff(key, title, colour, scoring_func)
     end
 end
 
-for k,v in pairs(SMODS.Centers) do
+for k, v in pairs(SMODS.Centers) do
     if v.set and v.set == "Enhanced" and not vallkarri.hand_buffs[v.key] then
         --sendDebugMessage("found unbuffed enhancement "..v.key, "Vall-Karri")
         if v.valk_hand_buff then
@@ -78,25 +81,28 @@ for k,v in pairs(SMODS.Centers) do
                 if (title and colour and scoring_func) then
                     vallkarri.add_hand_buff(k, title, colour, scoring_func)
                 else
-                    sendWarnMessage("Hand buff definition for "..k.." from "..((v.original_mod or v.mod).name or "some mod that's doing a weird").." seems incorrectly formed; check your code please")
+                    sendWarnMessage("Hand buff definition for " ..
+                    k ..
+                    " from " ..
+                    ((v.original_mod or v.mod).name or "some mod that's doing a weird") ..
+                    " seems incorrectly formed; check your code please")
                 end
             end
         else
-            vallkarri.add_hand_buff(v.key, "FAR-FLUNG", HEX("ABCDEF"), function (n)
-                local ratio = (n+4)/5
+            vallkarri.add_hand_buff(v.key, "FAR-FLUNG", HEX("ABCDEF"), function(n)
+                local ratio = (n + 4) / 5
                 return { --Deliberately kinda meh
                     sound = "valk_buff_wild",
                     chips = pseudorandom("far-flung", 1, n ^ 2),
                     mult = pseudorandom("far-flung", 1, n ^ 2),
-                    xchips = 1 + (math.floor((pseudorandom("far-flung") * ratio)*100)/100),
-                    xmult = 1 + (math.floor((pseudorandom("far-flung") * ratio)*100)/100),
+                    xchips = 1 + (math.floor((pseudorandom("far-flung") * ratio) * 100) / 100),
+                    xmult = 1 + (math.floor((pseudorandom("far-flung") * ratio) * 100) / 100),
                     dollars = pseudorandom("far-flung", 1, n)
                 }
             end)
         end
 
         --v.valk_hand_buff and type(v.valk_hand_buff) == "function"
-
     end
 end
 
@@ -239,6 +245,7 @@ SMODS.Sound {
     path = "lucky.ogg",
 }
 
+
 SMODS.Back {
     key = "handbuffdeck",
     loc_txt = {
@@ -269,36 +276,34 @@ SMODS.Back {
     end
 }
 
-if CardSleeves then
+if vallkarri.config.hand_buffs then
     CardSleeves.Sleeve {
-    key = "s_handbuffdeck",
-    loc_txt = {
-        name = "Buffed Sleeve",
-        text = {
-            "All {C:attention}Hand Modifiers{} can be made with {C:attention}#1#{} cards",
-            "{C:attention}#2#{} Hand Size",
-        }
-    },
-    valk_artist = nil,
-    config = { hand_size = -1, requirement = 2 },
-    pos = { x = 2, y = 0 },
-    atlas = "slev",
-    loc_vars = function(self, info_queue, card)
-        return { vars = { self.config.requirement, self.config.hand_size } }
-    end,
-    apply = function(self, back)
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                if G.GAME.buff_power then
-                    for key, _ in pairs(G.GAME.buff_power) do
-                        G.GAME.buff_power[key] = (5 - self.config.requirement) + G.GAME.buff_power[key]
+        key = "s_handbuffdeck",
+        loc_txt = {
+            name = "Buffed Sleeve",
+            text = {
+                "All {C:attention}Hand Modifiers{} can be made with {C:attention}#1#{} cards",
+                "{C:attention}#2#{} Hand Size",
+            }
+        },
+        valk_artist = nil,
+        config = { hand_size = -1, requirement = 2 },
+        pos = { x = 2, y = 0 },
+        atlas = "slev",
+        loc_vars = function(self, info_queue, card)
+            return { vars = { self.config.requirement, self.config.hand_size } }
+        end,
+        apply = function(self, back)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    if G.GAME.buff_power then
+                        for key, _ in pairs(G.GAME.buff_power) do
+                            G.GAME.buff_power[key] = (5 - self.config.requirement) + G.GAME.buff_power[key]
+                        end
+                        return true
                     end
-                    return true
                 end
-            end
-        }))
-    end
-}
-else
-return
+            }))
+        end
+    }
 end
