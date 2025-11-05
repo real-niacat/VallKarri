@@ -54,9 +54,9 @@ vallkarri.hand_buff_functions = {
 function vallkarri.add_hand_buff(key, title, colour, scoring_func)
     if vallkarri.hand_buffs[key] then
         if vallkarri.hand_buffs[key].title == "FAR-FLUNG" then
-            sendTraceMessage("(argh no, large priorities) Overwriting default hand buff for cross-mod enhancement " ..
+            sendTraceMessage("Overwriting default hand buff for cross-mod enhancement " ..
                 key, "Vall-Karri")
-        else
+        elseif vallkarri.hand_buffs[key].title ~= title then
             sendWarnMessage(
                 "Overwriting hand buff for cross-mod enhancement " .. key .. ", this might not be what you wanted to do?",
                 "Vall-Karri")
