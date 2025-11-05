@@ -188,3 +188,30 @@ if AKYRS then
 
 end
 
+if vallkarri_config.hand_buffs then
+    SMODS.Back {
+        key = "handbuffdeck",
+        loc_txt = {
+            name = "Buffed Deck",
+            text = {
+                "All {C:attention}Hand Modifiers{} can be made with {C:attention}#1#{} cards",
+                "{C:attention}#2#{} Hand Size",
+            }
+        },
+        valk_artist = nil,
+        config = { hand_size = -1, requirement = 2 },
+        pos = { x = 5, y = 3 },
+        atlas = "atlas2",
+        loc_vars = function(self, info_queue, card)
+            return { vars = { self.config.requirement, self.config.hand_size } }
+        end,
+        apply = function(self, back)
+            G.E_MANAGER:add_event(Event({
+                func = function()
+                    G.GAME.buff_requirement = self.config.requirement
+                    return true
+                end
+            }))
+        end
+    }
+end
