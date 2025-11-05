@@ -70,40 +70,45 @@ function vallkarri.add_hand_buff(key, title, colour, scoring_func)
     end
 end
 
-for k, v in pairs(SMODS.Centers) do
-    if v.set and v.set == "Enhanced" and not vallkarri.hand_buffs[v.key] then
-        --sendDebugMessage("found unbuffed enhancement "..v.key, "Vall-Karri")
-        if v.valk_hand_buff then
-            if type(v.valk_hand_buff) == "table" then
-                local title = v.valk_hand_buff.title
-                local colour = v.valk_hand_buff.colour or v.valk_hand_buff.color
-                local scoring_func = v.valk_hand_buff.scoring_func
-                if (title and colour and scoring_func) then
-                    vallkarri.add_hand_buff(k, title, colour, scoring_func)
-                else
-                    sendWarnMessage("Hand buff definition for " ..
-                        k ..
-                        " from " ..
-                        ((v.original_mod or v.mod).name or "some mod that's doing a weird") ..
-                        " seems incorrectly formed; check your code please")
+function vallkarri.populate_crossmod_buffs()
+    local sancheck = false
+    for k, v in pairs(SMODS.Centers) do
+        if v.set and v.set == "Enhanced" and not vallkarri.hand_buffs[v.key] then
+            sancheck = true
+            --sendDebugMessage("found unbuffed enhancement "..v.key, "Vall-Karri")
+            if v.valk_hand_buff then
+                if type(v.valk_hand_buff) == "table" then
+                    local title = v.valk_hand_buff.title
+                    local colour = v.valk_hand_buff.colour or v.valk_hand_buff.color
+                    local scoring_func = v.valk_hand_buff.scoring_func
+                    if (title and colour and scoring_func) then
+                        vallkarri.add_hand_buff(k, title, colour, scoring_func)
+                    else
+                        sendWarnMessage("Hand buff definition for " ..
+                            k ..
+                            " from " ..
+                            ((v.original_mod or v.mod).name or "some mod that's doing a weird") ..
+                            " seems incorrectly formed; check your code please")
+                    end
                 end
+            else
+                vallkarri.add_hand_buff(v.key, "FAR-FLUNG", HEX("ABCDEF"), function(n)
+                    local ratio = (n + 4) / 5
+                    return { --Deliberately kinda meh
+                        sound = "valk_buff_wild",
+                        chips = pseudorandom("far-flung", 1, n ^ 2),
+                        mult = pseudorandom("far-flung", 1, n ^ 2),
+                        xchips = 1 + (math.floor((pseudorandom("far-flung") * ratio) * 100) / 100),
+                        xmult = 1 + (math.floor((pseudorandom("far-flung") * ratio) * 100) / 100),
+                        dollars = pseudorandom("far-flung", 1, n)
+                    }
+                end)
             end
-        else
-            vallkarri.add_hand_buff(v.key, "FAR-FLUNG", HEX("ABCDEF"), function(n)
-                local ratio = (n + 4) / 5
-                return { --Deliberately kinda meh
-                    sound = "valk_buff_wild",
-                    chips = pseudorandom("far-flung", 1, n ^ 2),
-                    mult = pseudorandom("far-flung", 1, n ^ 2),
-                    xchips = 1 + (math.floor((pseudorandom("far-flung") * ratio) * 100) / 100),
-                    xmult = 1 + (math.floor((pseudorandom("far-flung") * ratio) * 100) / 100),
-                    dollars = pseudorandom("far-flung", 1, n)
-                }
-            end)
-        end
 
-        --v.valk_hand_buff and type(v.valk_hand_buff) == "function"
+            --v.valk_hand_buff and type(v.valk_hand_buff) == "function"
+        end
     end
+    if sancheck == false then sendDebugMessage("all buffs populated already", "Vall-Karri") end
 end
 
 local uhthook = update_hand_text
