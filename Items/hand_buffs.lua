@@ -265,12 +265,8 @@ SMODS.Back {
     apply = function(self, back)
         G.E_MANAGER:add_event(Event({
             func = function()
-                if G.GAME.buff_power then
-                    for key, _ in pairs(G.GAME.buff_power) do
-                        G.GAME.buff_power[key] = (5 - self.config.requirement) + G.GAME.buff_power[key]
-                    end
-                    return true
-                end
+                G.GAME.buff_requirement = self.config.requirement
+                return true
             end
         }))
     end
@@ -278,29 +274,28 @@ SMODS.Back {
 
 CardSleeves.Sleeve {
     key = "s_handbuffdeck",
-    loc_txt = {
-        name = "Buffed Sleeve",
-        text = {
-            "All {C:attention}Hand Modifiers{} can be made with {C:attention}#1#{} cards",
-            "{C:attention}#2#{} Hand Size",
-        }
-    },
     valk_artist = nil,
-    config = { hand_size = -1, requirement = 2 },
+    config = { hand_size = -1, requirement = 2, alt_req = 1 },
     pos = { x = 2, y = 0 },
     atlas = "slev",
     loc_vars = function(self, info_queue, card)
-        return { vars = { self.config.requirement, self.config.hand_size } }
+        local key=self.key
+        if self.get_current_deck_key() == "b_valk_handbuffdeck" then
+            key = key.."_alt"
+        end
+        return {
+            key = key,
+            vars = { self.config.requirement, self.config.hand_size, self.config.alt_req } 
+        }
     end,
     apply = function(self, back)
         G.E_MANAGER:add_event(Event({
             func = function()
-                if G.GAME.buff_power then
-                    for key, _ in pairs(G.GAME.buff_power) do
-                        G.GAME.buff_power[key] = (5 - self.config.requirement) + G.GAME.buff_power[key]
-                    end
-                    return true
+                G.GAME.buff_requirement = self.config.requirement
+                if self.get_current_deck_key() == "b_valk_handbuffdeck" then
+                    G.GAME.buff_requirement = self.config.alt_req
                 end
+                return true
             end
         }))
     end
