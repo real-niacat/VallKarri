@@ -78,12 +78,14 @@ if vallkarri_config.hand_buffs then
         atlas = "slev",
         loc_vars = function(self, info_queue, card)
             local key=self.key
+            local sizemod = self.config.hand_size
             if self.get_current_deck_key() == "b_valk_handbuffdeck" then
                 key = key.."_alt"
+                sizemod = sizemod + self.config.hand_size
             end
             return {
                 key = key,
-                vars = { self.config.requirement, self.config.hand_size, self.config.alt_req } 
+                vars = { self.config.requirement, sizemod, self.config.alt_req } 
             }
         end,
         apply = function(self, back)
@@ -93,6 +95,7 @@ if vallkarri_config.hand_buffs then
                     G.hand:change_size(self.config.hand_size)
                     if self.get_current_deck_key() == "b_valk_handbuffdeck" then
                         G.GAME.buff_requirement = self.config.alt_req
+                        G.hand:change_size(self.config.hand_size)
                     end
                     return true
                 end
