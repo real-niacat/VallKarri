@@ -90,12 +90,23 @@ if vallkarri_config.hand_buffs then
             G.E_MANAGER:add_event(Event({
                 func = function()
                     G.GAME.buff_requirement = self.config.requirement
+                    G.hand:change_size(self.config.hand_size)
                     if self.get_current_deck_key() == "b_valk_handbuffdeck" then
                         G.GAME.buff_requirement = self.config.alt_req
                     end
                     return true
                 end
             }))
+        end,
+        calculate = function (self, sleeve, context)
+            if not (self.get_current_deck_key() == "b_valk_handbuffdeck") then return end
+            if context.setting_ability and context.other_card then
+                sendDebugMessage("Setting ability...")
+                if context.other_card.ability and context.other_card.ability.consumeable and context.other_card.ability.consumeable.mod_conv then
+                    sendDebugMessage("Card has mod_conv...", "Vall-Karri")
+                    context.other_card.ability.consumeable.max_highlighted = 1
+                end
+            end
         end
     }
 end
