@@ -1,6 +1,4 @@
-if not vallkarri.config.http_allowed then
-    return
-end
+
 
 local function set_librat_pondere(code, body, headers)
 	if body and code == 200 then
@@ -26,11 +24,14 @@ end
 
 
 local succ, https = pcall(require, "SMODS.https")
-if succ then
+if succ and vallkarri.config.http_allowed then
     https.asyncRequest("https://celestial.moe:3000/counts", set_librat_pondere) -- HUGE credit to celestial. this would not be possible without both her help and her server hosting
 end
 
 function vallkarri.update_last_message()
+    if not vallkarri.config.http_allowed then
+        return
+    end
     if not succ then
         return
     end
@@ -39,7 +40,12 @@ function vallkarri.update_last_message()
 end
 
 function vallkarri.count_player()
-    if not succ then return end
+    if not vallkarri.config.http_allowed then
+        return
+    end
+    if not succ then
+        return
+    end
 
     https.asyncRequest("https://celestial.moe:3000/countplayer", do_nothing_and_fucking_die)
 end

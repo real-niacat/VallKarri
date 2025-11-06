@@ -89,7 +89,7 @@ SMODS.Joker {
     cost = 20,
     calculate = function(self, card, context)
         if (context.end_of_round and not context.repetition and not context.individual and not context.blueprint) then
-            for _,joker in pairs(G.jokers.cards) do
+            for _, joker in pairs(G.jokers.cards) do
                 joker.ability.extra_value = (joker.sell_cost + joker.ability.extra_value) * card.ability.extra.money
                 joker:set_cost()
             end
@@ -177,13 +177,14 @@ SMODS.Joker {
                 trigger = "after",
                 func = function()
                     for i = 1, card.ability.extra.cards do
-                        local _card = SMODS.add_card({set = "Base", area = G.hand})
+                        local _card = SMODS.add_card({ set = "Base", area = G.hand })
                         _card:set_edition(poll_edition("valk_kathleen", nil, nil, true), true)
-                        _card:set_ability(G.P_CENTER_POOLS.Planet[pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
+                        _card:set_ability(G.P_CENTER_POOLS.Planet
+                        [pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
                     end
-                    return true 
+                    return true
                 end,
-            })) 
+            }))
         end
 
         if context.end_of_round and context.main_eval and G.GAME.blind.boss then
@@ -191,14 +192,15 @@ SMODS.Joker {
                 trigger = "after",
                 func = function()
                     for i = 1, card.ability.extra.sealed do
-                        local _card = SMODS.add_card({set = "Base", area = G.deck})
+                        local _card = SMODS.add_card({ set = "Base", area = G.deck })
                         _card:set_edition(poll_edition("valk_kathleen", nil, nil, true), true)
-                        _card:set_ability(G.P_CENTER_POOLS.Planet[pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
-                        _card:set_seal(SMODS.poll_seal({key = "valk_kathleen", guaranteed = true}), true)
+                        _card:set_ability(G.P_CENTER_POOLS.Planet
+                        [pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
+                        _card:set_seal(SMODS.poll_seal({ key = "valk_kathleen", guaranteed = true }), true)
                     end
-                    return true 
+                    return true
                 end,
-            })) 
+            }))
         end
     end,
 }
@@ -226,8 +228,9 @@ SMODS.Joker {
     immutable = true,
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
-            local num = card.ability.extra.min + (pseudorandom("valk_sinep") * (card.ability.extra.max - card.ability.extra.min))
-            context.other_card.ability.perma_x_chips = context.other_card.ability.perma_x_chips+num
+            local num = card.ability.extra.min +
+            (pseudorandom("valk_sinep") * (card.ability.extra.max - card.ability.extra.min))
+            context.other_card.ability.perma_x_chips = context.other_card.ability.perma_x_chips + num
             quick_card_speak(context.other_card, localize("k_upgrade_ex"))
         end
     end,
@@ -324,14 +327,15 @@ SMODS.Joker {
     loc_txt = {
         name = "ISSBROKIE",
         text = {
-            "All{C:attention} Aces, Kings, 4s{} and {C:attention}7s{} increase",
-            "chips and mult of played hand type by {C:attention}X1+(rank/100){}",
+            "All {C:attention}Aces, Kings, 4s{} and {C:attention}7s{} add their rank to",
+            "the {C:chips}Chips{} and {C:mult}Mult{} of played {C:attention}poker hand{}",
+            "{C:inactive,s:0.7}(Aces count as 14)",
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { inc = 0 } },
+    config = { extra = {} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.inc } }
+        return { vars = {} }
     end,
     rarity = 4,
     atlas = "main",
@@ -343,17 +347,12 @@ SMODS.Joker {
 
 
     calculate = function(self, card, context)
-        if (context.individual and context.cardarea == G.play) and (context.other_card:get_id() == 4 or
-                context.other_card:get_id() == 7 or
-                context.other_card:get_id() == 13 or
-                context.other_card:get_id() == 14) then
-            card.ability.extra.inc = 1 + (context.other_card:get_id() / 100)
-            local text = G.FUNCS.get_poker_hand_info(context.full_hand)
-            G.GAME.hands[text].chips = G.GAME.hands[text].chips * card.ability.extra.inc
-            G.GAME.hands[text].mult = G.GAME.hands[text].mult * card.ability.extra.inc
+        local rank = context.other_card:get_id()
+        if (context.individual and context.cardarea == G.play) and (rank == 4 or rank == 7 or rank == 13 or rank == 14) then
+            local text = context.scoring_name
+            G.GAME.hands[text].chips = G.GAME.hands[text].chips + rank
+            G.GAME.hands[text].mult = G.GAME.hands[text].mult + rank
         end
     end,
 
 }
-
-

@@ -668,7 +668,7 @@ function Game:draw()
         love.graphics.setColor(scott_blue)
         love.graphics.rectangle("fill", 0, 0, width, love.graphics.getHeight())
         love.graphics.rectangle("fill", love.graphics.getWidth() - width, 0, width, love.graphics.getHeight())
-        love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), width)
+        love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth() - width, width)
         love.graphics.rectangle("fill", 0, love.graphics.getHeight() - width, love.graphics.getWidth(), width)
     end
 end

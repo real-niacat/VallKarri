@@ -144,31 +144,21 @@ SMODS.Consumable {
         }
     },
     valk_artist = "mailingway",
-    config = { extra = {handtype = "valk_fullmansion"}},
+    config = { hand_type = "valk_fullmansion"},
     loc_vars = function(self, info_queue, card)
 
 
         return { vars = {
-            G.GAME.hands[card.ability.extra.handtype].level,
-            localize(card.ability.extra.handtype, 'poker_hands'),
-            G.GAME.hands[card.ability.extra.handtype].l_mult,
-            G.GAME.hands[card.ability.extra.handtype].l_chips,
+            G.GAME.hands[card.ability.hand_type].level,
+            localize(card.ability.hand_type, 'poker_hands'),
+            G.GAME.hands[card.ability.hand_type].l_mult,
+            G.GAME.hands[card.ability.hand_type].l_chips,
             colours = {
-                to_number(G.GAME.hands[card.ability.extra.handtype].level) == 1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, to_number(G.GAME.hands[card.ability.extra.handtype].level))]
+                to_number(G.GAME.hands[card.ability.hand_type].level) == 1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, to_number(G.GAME.hands[card.ability.hand_type].level))]
                 --credit to aikoyori for doing this so i could figure it out
             }
         }}
     end,
     atlas = "main",
     pos = {x=4, y=8},
-    can_use = function(self, card)
-        return true
-    end,
-
-    use = function(self, card, copier)
-        level_up_hand(card, card.ability.extra.handtype, nil, 1)
-    end,
-    in_pool = function(self, args)
-        return (G.GAME.hands[self.config.extra.handtype].played > 0)
-    end
 }
