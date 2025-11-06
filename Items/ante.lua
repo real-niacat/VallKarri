@@ -7,8 +7,6 @@ function config_reset()
     }
 end
 
-
-
 local easeantecopy = ease_ante
 function ease_ante(x)
     -- print("starting")
@@ -26,39 +24,51 @@ function ease_ante(x)
     -- print(G.GAME.chips and G.GAME.blind.chips)
 
     if (G.GAME.chips and G.GAME.blind.chips) then
-        local anteChange = get_ante_change()
+        local anteChange = vallkarri.get_ante_change()
         anteChange = math.ceil(anteChange)
-        display_ante_changes(anteChange)
+        vallkarri.display_ante_changes(anteChange)
         easeantecopy(x)
         vallkarri.add_effective_ante_mod(to_number(anteChange), "+")
-        
+
         return
     end
 
     easeantecopy(x)
 end
 
-function display_ante_changes(change)
+function vallkarri.display_ante_changes(change)
     if (change == 0) then
         return
     end
 
     local str = "Overscored! +" .. change .. " ante."
-    local timeWait = "1"
 
-    basic_text_announce(str, timeWait, 0.9, G.C.RED)
+    local overscore_sound = change > 4 and "overscore_harsh" or "overscore_light"
 
-    shrdr_sfx()
+    G.E_MANAGER:add_event(Event({
+        func = (function()
+            play_sound("valk_"..overscore_sound)
+            attention_text({
+                scale = 1,
+                text = str,
+                hold = 2*math.max(G.SETTINGS.GAMESPEED / 2, 1),
+                colour = G.C.RED,
+                align = 'cm',
+                offset = { x = 0, y = -2.7 },
+                major = G.play
+            })
+            return true
+        end)
+    }))
 
-    
+
     return
 end
 
-function get_ante_change(theoretical_score, debug)
-
+function vallkarri.get_ante_change(theoretical_score, debug)
     local win_pot = to_big(G.GAME.chips) - to_big(G.GAME.blind.chips)
     local ovsc = overscore_threshhold()
-    win_pot = (theoretical_score and to_big(theoretical_score)) or win_pot 
+    win_pot = (theoretical_score and to_big(theoretical_score)) or win_pot
 
     if to_big(win_pot) < to_big(ovsc) then
         return 0
@@ -72,7 +82,7 @@ function get_ante_change(theoretical_score, debug)
     while theochange < win_pot do
         anteChange = math.floor(anteChange + inc)
         inc = inc * 1.1
-        theochange = to_big(get_blind_amount(anteChange+G.GAME.round_resets.ante))
+        theochange = to_big(get_blind_amount(anteChange + G.GAME.round_resets.ante))
         -- print(anteChange, theochange)
     end
 
@@ -80,34 +90,25 @@ function get_ante_change(theoretical_score, debug)
 end
 
 function overscore_threshhold()
-    local change = G.GAME.overscoring_threshold_base or 10 
+    local change = G.GAME.overscoring_threshold_base or 10
     return get_blind_amount(change + G.GAME.round_resets.ante)
 end
 
-function shrdr_sfx()
-    play_sound("gong", 1.4, 1)
-    play_sound("timpani",0.8,2)
-end
-
 local fakeupd = Game.update
-local alltime = 0
 
 function Game:update(dt)
-    alltime = alltime + dt
     fakeupd(self, dt)
 
     if (G.GAME.blind and G.GAME.ante_config) then
-
         if (G.GAME.blind.boss) then
             local num = number_format(overscore_threshhold())
-            G.GAME.blind.overchips = vallkarri.config.overscoring and ("Overscoring at " .. num) or "Overscoring Disabled"
+            G.GAME.blind.overchips = vallkarri.config.overscoring and ("Overscoring at " .. num) or
+            "Overscoring Disabled"
         else
             G.GAME.blind.overchips = ""
         end
     end
-
 end
-
 
 local _create_UIBox_HUD_blind = create_UIBox_HUD_blind
 function create_UIBox_HUD_blind()
@@ -131,7 +132,7 @@ function create_UIBox_HUD_blind()
                         n = G.UIT.O,
                         config = {
                             object = DynaText({
-                                string = { { ref_table = G.GAME.blind, ref_value = "overchips"} },
+                                string = { { ref_table = G.GAME.blind, ref_value = "overchips" } },
                                 colours = { G.C.UI.TEXT_LIGHT },
                                 shadow = true,
                                 float = true,
@@ -148,6 +149,16 @@ function create_UIBox_HUD_blind()
     return ret
 end
 
+SMODS.Sound {
+    key = "overscore_harsh",
+    path = "overscore.ogg"
+}
+
+SMODS.Sound {
+    key = "overscore_light",
+    path = "overscore_light.ogg"
+}
+
 
 SMODS.Back {
     key = "inertia",
@@ -159,14 +170,14 @@ SMODS.Back {
         }
     },
     valk_artist = "Scraptake",
-    pos = {x=7, y=7},
+    pos = { x = 7, y = 7 },
     atlas = "main",
     apply = function(self)
-        G.GAME.ante_gain_multiplier = self.config.antegain 
+        G.GAME.ante_gain_multiplier = self.config.antegain
         G.GAME.overscoring_threshold_base = 2
     end,
     loc_vars = function(self, info_queue, card)
-        return {vars = {self.config.antegain}}
+        return { vars = { self.config.antegain } }
     end,
-    config = {antegain = 0.5},
+    config = { antegain = 0.5 },
 }

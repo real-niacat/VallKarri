@@ -1,7 +1,7 @@
 local colours = {
     code = HEX("FCA0FF"),
     art = HEX("A0CCFF"),
-    shader = HEX("A1FF9E")
+    shader = HEX("93D191")
 }
 local text_scale = 0.30
 local scale = 0.5
@@ -20,6 +20,9 @@ function vallkarri.credits_ui_def()
                         nodes = {
                             { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Programming", colour = colours.code, scale = text_scale * 2, shadow = true, align = "tm" } } } },
                             { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Lily Felli", colour = colours.code, scale = text_scale, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "InvalidOS", colour = colours.code, scale = text_scale, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "cg223", colour = colours.code, scale = text_scale, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "wingedcatgirl", colour = colours.code, scale = text_scale, shadow = true, align = "tm" } } } },
                             { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "baccon3", colour = colours.code, scale = text_scale, shadow = true, align = "tm" } } } },
                         }
                     },
@@ -32,9 +35,12 @@ function vallkarri.credits_ui_def()
                         n = G.UIT.C,
                         config = { align = "cr", minw = 3, padding = 0.1 },
                         nodes = {
-                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Shaders", colour = colours.shader, scale = text_scale * 2, shadow = true, align = "tm" } } } },
-                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Lily Felli", colour = colours.shader, scale = text_scale, shadow = true, align = "tm" } } } },
-                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "The Beautiful And Wonderful GLSL Programming Language", colour = colours.shader, scale = text_scale * 0.5, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Misc", colour = colours.shader, scale = text_scale * 2, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Lily Felli - Shaders", colour = colours.shader, scale = text_scale, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Pangaea - SFX", colour = colours.shader, scale = text_scale, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "MVBit - SFX", colour = colours.shader, scale = text_scale, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "gudusername - Deck Skin", colour = colours.shader, scale = text_scale, shadow = true, align = "tm" } } } },
+                            { n = G.UIT.R, config = {}, nodes = { { n = G.UIT.T, config = { text = "Crabus - emotional support", colour = colours.shader, scale = text_scale, shadow = true, align = "tm" } } } },
                         }
                     },
                 }

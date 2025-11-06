@@ -1,43 +1,4 @@
 SMODS.Joker {
-    key = "femtanyl",
-    loc_txt = {
-        name = "Token",
-        text = {
-            "Prevent death at the cost of {C:attention}#1#{} Joker slot",
-            "Restore {C:attention}#1#{} taken Joker slot when {C:attention}boss{} defeated on an odd ante",
-            "{C:inactive}(Does not work below {C:attention}#2#{C:inactive} Joker slots)",
-            quote("femtanyl"),
-        }
-    },
-    valk_artist = "Scraptake",
-    config = { extra = { cost = 1, req = 4, taken = 0 } },
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.cost, card.ability.extra.req } }
-    end,
-    pools = { ["Kitties"] = true },
-    rarity = 3,
-    atlas = "main",
-    pos = { x = 0, y = 5 },
-    soul_pos = { x = 1, y = 5 },
-    cost = 6,
-    immutable = true,
-    calculate = function(self, card, context)
-        if context.end_of_round and context.game_over and G.jokers.config.card_limit >= card.ability.extra.req then
-            G.jokers:change_size(-card.ability.extra.cost)
-            card.ability.extra.taken = card.ability.extra.taken + card.ability.extra.cost
-            return {
-                message = localize('k_saved_ex'),
-                saved = true,
-                colour = G.C.RED
-            }
-        elseif context.end_of_round and not context.game_over and G.GAME.blind.boss and (G.GAME.round_resets.ante % 2 == 1) and card.ability.extra.taken > 0 then
-            G.jokers:change_size(card.ability.extra.cost)
-            card.ability.extra.taken = card.ability.extra.taken - card.ability.extra.cost
-        end
-    end
-}
-
-SMODS.Joker {
     key = "planetarium",
     loc_txt = {
         name = "Planetarium",
