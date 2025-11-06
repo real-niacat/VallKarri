@@ -421,6 +421,7 @@ SMODS.Joker {
             "Redeem {C:attention}#2#{} extra copies of all bought {C:attention}Vouchers{}",
         }
     },
+    valk_artist = "Grahkon",
     atlas = "atlas2",
     pos = { x = 0, y = 7 },
     soul_pos = { extra = { x = 1, y = 7 }, x = 2, y = 7 },

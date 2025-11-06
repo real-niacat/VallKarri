@@ -144,6 +144,22 @@ return {
             }
 
         },
+        Sleeve = {
+            sleeve_valk_s_handbuffdeck = {
+                name = "Buffed Sleeve",
+                text = {
+                    "All {C:attention}Hand Modifiers{} can be made with {C:attention}#1#{} cards",
+                    "{C:attention}#2#{} Hand Size",
+                }
+            },
+            sleeve_valk_s_handbuffdeck_alt = {
+                name = "Buffed Sleeve",
+                text = {
+                    "All {C:attention}Hand Modifiers{} can be made with {C:attention}#3#{} card",
+                    "{C:attention}#2#{} Hand Size",
+                }
+            }
+        }
 
 
     },
