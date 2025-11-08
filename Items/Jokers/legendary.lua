@@ -180,7 +180,7 @@ SMODS.Joker {
                         local _card = SMODS.add_card({ set = "Base", area = G.hand })
                         _card:set_edition(poll_edition("valk_kathleen", nil, nil, true), true)
                         _card:set_ability(G.P_CENTER_POOLS.Planet
-                        [pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
+                            [pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
                     end
                     return true
                 end,
@@ -195,7 +195,7 @@ SMODS.Joker {
                         local _card = SMODS.add_card({ set = "Base", area = G.deck })
                         _card:set_edition(poll_edition("valk_kathleen", nil, nil, true), true)
                         _card:set_ability(G.P_CENTER_POOLS.Planet
-                        [pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
+                            [pseudorandom("valk_kathleen", 1, #G.P_CENTER_POOLS.Planet)])
                         _card:set_seal(SMODS.poll_seal({ key = "valk_kathleen", guaranteed = true }), true)
                     end
                     return true
@@ -229,7 +229,7 @@ SMODS.Joker {
     calculate = function(self, card, context)
         if context.individual and context.cardarea == G.play then
             local num = card.ability.extra.min +
-            (pseudorandom("valk_sinep") * (card.ability.extra.max - card.ability.extra.min))
+                (pseudorandom("valk_sinep") * (card.ability.extra.max - card.ability.extra.min))
             context.other_card.ability.perma_x_chips = context.other_card.ability.perma_x_chips + num
             quick_card_speak(context.other_card, localize("k_upgrade_ex"))
         end
@@ -362,16 +362,23 @@ SMODS.Joker {
     loc_txt = {
         name = "Token",
         text = {
-            "Prevent death at the cost of {C:attention}#1#{} Joker slot",
-            "Restore {C:attention}#1#{} taken Joker slot when {C:attention}boss{} defeated on an odd ante",
-            "{C:inactive}(Does not work below {C:attention}#2#{C:inactive} Joker slots)",
+            "Gains {C:attention}+#1#{} death prevention",
+            "for every {C:attention}#2#{} {C:inactive}[#3#]{} Jokers sold",
+            "{C:inactive}(Currently {C:attention}#5#{C:inactive} Death Prevention#6#)",
             quote("femtanyl"),
         }
     },
     valk_artist = "Scraptake",
-    config = { extra = { cost = 1, req = 4, taken = 0 } },
+    config = { extra = { gain = 1, requirement = 3, current = 3, req_inc = 1, deaths = 1 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.cost, card.ability.extra.req } }
+        return { vars = {
+            card.ability.extra.gain,
+            card.ability.extra.requirement,
+            card.ability.extra.current,
+            card.ability.extra.req_inc,
+            card.ability.extra.deaths,
+            card.ability.extra.deaths > 1 and "s" or ""
+        } }
     end,
     pools = { ["Kitties"] = true },
     rarity = 4,
@@ -381,17 +388,23 @@ SMODS.Joker {
     cost = 6,
     immutable = true,
     calculate = function(self, card, context)
-        if context.end_of_round and context.game_over and G.jokers.config.card_limit >= card.ability.extra.req then
-            G.jokers:change_size(-card.ability.extra.cost)
-            card.ability.extra.taken = card.ability.extra.taken + card.ability.extra.cost
+        if context.end_of_round and context.game_over and card.ability.extra.deaths >= 1 then
+            card.ability.extra.deaths = card.ability.extra.deaths - 1
             return {
                 message = localize('k_saved_ex'),
                 saved = true,
                 colour = G.C.RED
             }
-        elseif context.end_of_round and not context.game_over and G.GAME.blind.boss and (G.GAME.round_resets.ante % 2 == 1) and card.ability.extra.taken > 0 then
-            G.jokers:change_size(card.ability.extra.cost)
-            card.ability.extra.taken = card.ability.extra.taken - card.ability.extra.cost
+        end
+
+        if context.selling_card and context.card.config.center.set == "Joker" then
+            card.ability.extra.current = card.ability.extra.current - 1
+            if card.ability.extra.current < 1 then
+                -- SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "requirement", scalar_value = "req_inc", no_message = true})
+                SMODS.scale_card(card,
+                    { ref_table = card.ability.extra, ref_value = "current", scalar_value = "requirement", no_message = true })
+                SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "deaths", scalar_value = "gain" })
+            end
         end
     end
 }

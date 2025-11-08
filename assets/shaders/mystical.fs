@@ -29,45 +29,95 @@ extern PRECISION vec4 burn_colour_2;
 // Apply dissolve effect (when card is being "burnt", e.g. when consumable is used)
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv);
 
-// This is what actually changes the look of card
+number hue(number s, number t, number h)
+{
+	number hs = mod(h, 1.)*6.;
+	if (hs < 1.) return (t-s) * hs + s;
+	if (hs < 3.) return t;
+	if (hs < 4.) return (t-s) * (4.-hs) + s;
+	return s;
+}
+
+vec4 RGB(vec4 c)
+{
+	if (c.y < 0.0001)
+		return vec4(vec3(c.z), c.a);
+
+	number t = (c.z < .5) ? c.y*c.z + c.z : -c.y*c.z + (c.y+c.z);
+	number s = 2.0 * c.z - t;
+	return vec4(hue(s,t,c.x + 1./3.), hue(s,t,c.x), hue(s,t,c.x - 1./3.), c.w);
+}
+
+vec4 HSL(vec4 c)
+{
+	number low = min(c.r, min(c.g, c.b));
+	number high = max(c.r, max(c.g, c.b));
+	number delta = high - low;
+	number sum = high+low;
+
+	vec4 hsl = vec4(.0, .0, .5 * sum, c.a);
+	if (delta == .0)
+		return hsl;
+
+	hsl.y = (hsl.z < .5) ? delta / sum : delta / (2.0 - sum);
+
+	if (high == c.r)
+		hsl.x = (c.g - c.b) / delta;
+	else if (high == c.g)
+		hsl.x = (c.b - c.r) / delta + 2.0;
+	else
+		hsl.x = (c.r - c.g) / delta + 4.0;
+
+	hsl.x = mod(hsl.x / 6., 1.);
+	return hsl;
+}
+
+float modify(float a) {
+    return a/1.2;
+}
+
+float freaky_sin(float a) {
+    return sin(modify(a));
+}
+
+float freaky_cos(float a) {
+    return sin(modify(a));
+}
+
 vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
 {
-    if (mystical.y > 2*mystical.y) {
-    }
-    // Take pixel color (rgba) from `texture` at `texture_coords`, equivalent of texture2D in GLSL
-    // texture_coords.y = sin(texture_coords.y*texture_coords.x);
-    vec4 tex = Texel(texture, texture_coords);
-    // Position of a pixel within the sprite
-	vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
-    // 0,0 = -0.5,-0.5
-    // 1,1 = 0.5,0.5
+    vec4 tex = Texel( texture, texture_coords);
+    vec2 uv = (((texture_coords)*(image_details)) - texture_details.xy*texture_details.ba)/texture_details.ba;
+    vec2 adjusted_uv = uv - vec2(0.5, 0.5);
+    adjusted_uv.x = adjusted_uv.x*texture_details.b/texture_details.a;
 
-    vec2 center = vec2(0.5,0.5);
-    float dist = distance(uv,center);
-    float authentic_dist = dist;
-    float offset = sin(mystical.x);
-    // if (offset > 1) {offset = 1.;}
-    // if (offset < -1) {offset = -1.;}
-    dist += offset;
+    number low = min(tex.r, min(tex.g, tex.b));
+    number high = max(tex.r, max(tex.g, tex.b));
+	number delta = min(high, max(0.5, 1. - low));
 
-    float magic_number = (sin(dist*17)+2)*0.8;
-    float another_magic_number = sin(uv.x*10+sin(mystical.y)) + sin(uv.y*10+sin(mystical.y*2));
-    tex.b *= 1.2;
-    tex.rgb += another_magic_number/8;
+    number fac = max(min(2.*freaky_sin((length(90.*adjusted_uv) + mystical.r*2.) + 3.*(1.+0.8*freaky_cos(length(113.1121*adjusted_uv) - mystical.r*3.121))) - 1. - max(5.-length(90.*adjusted_uv), 0.), 1.), 0.);
+    vec2 rotater = vec2(freaky_cos(mystical.r*0.1221), freaky_sin(mystical.r*0.3512));
+    number angle = dot(rotater, adjusted_uv)/(length(rotater)*length(adjusted_uv));
+    number fac2 = max(min(5.*freaky_cos(mystical.g*0.3 + angle*3.14*(2.2+0.9*freaky_sin(mystical.r*1.65 + 0.2*mystical.g))) - 4. - max(2.-length(20.*adjusted_uv), 0.), 1.), 0.);
+    number fac3 = 0.3*max(min(2.*freaky_sin(mystical.r*5. + uv.x*3. + 3.*(1.+0.5*freaky_cos(mystical.r*7.))) - 1., 1.), -1.);
+    number fac4 = 0.3*max(min(2.*freaky_sin(mystical.r*6.66 + uv.y*3.8 + 3.*(1.+0.5*freaky_cos(mystical.r*3.414))) - 1., 1.), -1.);
 
-    tex.rgb *= magic_number;
+    number maxfac = max(max(fac, max(fac2, max(fac3, max(fac4, 0.0)))) + 2.2*(fac+fac2+fac3+fac4), 0.);
 
-    tex.rgb *= (sqrt(2.)/1.5) - authentic_dist;
+    vec3 goal_colour = vec3(0.9804*uv.y, 0.3647, 0.9804*uv.x);
+    goal_colour += 0.25;
+    float boost = 0.75;
+    float power = 0.5;
 
-    // float lowest = min(tex.r, min(tex.g, tex.b));
-    // tex.rgb -= lowest;
+    tex.rgb *= goal_colour;
 
-    
+    tex.r = tex.r-delta + delta*maxfac*(pow(goal_colour.r+boost,power));
+    tex.g = tex.g-delta + delta*maxfac*(pow(goal_colour.g+boost,power));
+    tex.b = tex.b + delta*maxfac*(pow(goal_colour.b+boost,power));
+    // tex.a = min(tex.a, 0.3*tex.a + 0.9*min(0.5, maxfac*0.1));
+    tex.a = min(0.4, tex.a * 0.9);
 
-    
-
-    // required
-    return dissolve_mask(tex*colour, texture_coords, uv);
+    return dissolve_mask(tex, texture_coords, uv);
 }
 
 vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv)
