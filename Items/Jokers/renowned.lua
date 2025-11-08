@@ -115,25 +115,22 @@ SMODS.Joker {
     demicoloncompat = true,
     loc_vars = function(self, info_queue, card)
 
-        for key,cen in pairs(G.P_CENTER_POOLS.Joker) do
-            if math.random(1,7) == 1 and not cen.original_mod then
-                info_queue[#info_queue+1] = cen
-            end
-        end
-
         return { vars = { card.ability.extra.zulu } }
     end,
 
     calculate = function(self, card, context)
+        
         if context.joker_main or context.forcetrigger then
+            local to_kill = {}
             for i, jkr in ipairs(G.jokers.cards) do
-                if jkr ~= card then jkr:start_dissolve() end
+                if jkr ~= card then table.insert(to_kill, jkr) end
             end
+            SMODS.destroy_cards(to_kill)
             return { zulu = card.ability.extra.zulu, xmult = 1, }
         end
 
         if context.other_card and context.other_card.area == G.play then
-            context.other_card:start_dissolve()
+            SMODS.destroy_cards({context.other_card})
         end
     end
 }
