@@ -3,7 +3,8 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_blue}Vall-Karri.lua",
         text = {
-            "{X:dark_edition,C:white}^^#1#{} Mult for every piece of content that {B:1,E:2,C:white}Vall-karri{} adds",
+            "{X:dark_edition,C:white}^^#1#{} Mult for every piece of {C:attention}content",
+            "that {B:1,E:2,C:white}Vall-karri{} adds",
             "{C:inactive}(Currently {X:dark_edition,C:white}^^#2#{C:inactive} Mult){}",
             quote("valklua"),
         }
@@ -12,9 +13,6 @@ SMODS.Joker {
     config = { extra = { mult = 0.01 } },
     loc_vars = function(self, info_queue, card)
         local total = valk_additions()
-
-
-
         return { vars = { card.ability.extra.mult, total * card.ability.extra.mult, colours = { HEX("e5bf3a") } } }
     end,
     rarity = "valk_prestigious",
@@ -30,7 +28,6 @@ SMODS.Joker {
             }
         end
     end,
-    dependencies = { "Talisman" },
     lore = {
         "thank you for playing my mod",
         "and thank you even more, for choosing to read the lore section.",

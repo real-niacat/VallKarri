@@ -31,7 +31,6 @@ SMODS.Joker {
         end
 
     end,
-    dependencies = {"Talisman"},
     is_tau = true,
     bases = {"j_caino"},
 }
@@ -66,7 +65,6 @@ SMODS.Joker {
         end
 
     end,
-    dependencies = {"Talisman"},
     is_tau = true,
     bases = {"j_triboulet"},
 }
@@ -76,9 +74,10 @@ SMODS.Joker {
     loc_txt = {
         name = "{C:valk_tauic}Tauic Yorick{}",
         text = {
-            "{X:dark_edition,C:white}^^#1#{} Mult",
-            "Increases by {X:dark_edition,C:white}+^#2#{} when any card discarded",
-            "Scales {C:dark_edition,E:1}Quadratically{}",
+            "This Joker gains {X:dark_edition,C:white}^^#2#{} mult",
+            "for every card {C:attention}discarded",
+            "Scales {C:dark_edition,E:1}quadratically{}",
+            "{C:inactive}(Currently {X:dark_edition,C:white}^^#1#{C:inactive} mult)",
         }
     },
     valk_artist = "Scraptake",
@@ -107,7 +106,6 @@ SMODS.Joker {
         end
 
     end,
-    dependencies = {"Talisman"},
     is_tau = true,
     bases = {"j_yorick"},
 }
@@ -146,14 +144,13 @@ SMODS.Joker {
                 card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('ph_boss_disabled')})
             end
 
-            G.GAME.blind.chips = to_big(G.GAME.blind.chips):tetrate(1 / card.ability.extra.antitetration)
+            G.GAME.blind.chips = vallkarri.tetrate(to_big(G.GAME.blind.chips), 1 / card.ability.extra.antitetration)
             G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
             G.HUD_blind:recalculate()
 
         end
 
     end,
-    dependencies = {"Talisman"},
     is_tau = true,
     bases = {"j_chicot"},
 }
@@ -207,7 +204,6 @@ SMODS.Joker {
         end
 
     end,
-    dependencies = {"Talisman"},
     is_tau = true,
     bases = {"j_perkeo"},
 }

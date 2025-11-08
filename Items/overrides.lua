@@ -267,11 +267,123 @@ function G.UIDEF.use_and_sell_buttons(card)
     return ref
 end
 
-SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys + 1] = "multe"
-SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys + 1] = "chipse"
-SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys + 1] = "eqzulu"
-SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys + 1] = "zulu"
-SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys + 1] = "xzulu"
+-- if talisman exists this function still needs to exist to avoid crashing
+local eval_hyperop = function(...) end
+
+-- eval tetration
+if not Talisman then
+	eval_hyperop = function(effect, scored_card, key, amount, from_edition)
+		if (key == "ee_chips" or key == "eechips" or key == "EEchip_mod") and amount ~= 1 then
+			if effect.card then
+				juice_card(effect.card)
+			end
+			local chips = SMODS.Scoring_Parameters["chips"]
+			chips:modify(vallkarri.tetrate(chips.current, amount) - chips.current)
+			if not effect.remove_default_message then
+				if from_edition then
+					card_eval_status_text(
+						scored_card,
+						"jokers",
+						nil,
+						percent,
+						nil,
+						{
+							message = localize{
+								type = "variable",
+								key = "a_valk_eechips",
+								vars = {
+									number_format(amount),
+								},
+							},
+							colour = G.C.DARK_EDITION,
+                            edition = true
+						}
+					)
+				elseif key ~= "EEchip_mod" then
+					if effect.eechip_message then
+                        card_eval_status_text(
+                            effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus,
+                            "extra",
+                            nil,
+                            percent,
+                            nil,
+                            effect.eechip_message
+                        )
+                    else
+                        card_eval_status_text(
+                            effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus,
+                            "ee_chips",
+                            amount,
+                            percent
+                        )
+                    end
+				end
+			end
+			return true
+		end
+		if (key == "ee_mult" or key == "eemult" or key == "EEmult_mod") and amount ~= 1 then
+			if effect.card then
+				juice_card(effect.card)
+			end
+			local mult = SMODS.Scoring_Parameters["mult"]
+			mult:modify(vallkarri.tetrate(mult.current, amount) - mult.current)
+			if not effect.remove_default_message then
+				if from_edition then
+					card_eval_status_text(
+						scored_card,
+						"jokers",
+						nil,
+						percent,
+						nil,
+						{
+                            message = localize{
+								type = "variable",
+								key = "a_valk_eemult",
+								vars = {
+									number_format(amount),
+								},
+							},
+                            colour = G.C.DARK_EDITION,
+                            edition = true
+                        }
+					)
+				elseif key ~= "EEmult_mod" then
+                    if effect.eemult_message then
+                        card_eval_status_text(
+                            effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus,
+                            "extra",
+                            nil,
+                            percent,
+                            nil,
+                            effect.eemult_message
+                        )
+                    else
+                        card_eval_status_text(
+                            effect.message_card or effect.juice_card or scored_card or effect.card or effect.focus,
+                            "ee_mult",
+                            amount,
+                            percent
+                        )
+                    end
+				end
+			end
+			return true
+		end
+	end
+	for _, v in ipairs{
+		"ee_mult", "eemult", "EEmult_mod",
+		"ee_chips", "eechips", "EEchip_mod",
+	} do
+		SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys+1] = v
+	end
+end
+
+for _, v in ipairs{
+    "multe", "chipse",
+    "eqzulu", "zulu", "xzulu",
+} do
+    SMODS.scoring_parameter_keys[#SMODS.scoring_parameter_keys+1] = v
+end
 -- MUST HAVE THIS, WILL NOT WORK WITHOUT ADDING NEW CALC KEYS
 
 local calceff = SMODS.calculate_individual_effect
@@ -283,6 +395,9 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         ease_discard(-4)
         return false
     end
+
+    local ret = calceff(effect, scored_card, key, amount, from_edition) or eval_hyperop(effect, scored_card, key, amount, from_edition)
+    if ret then return ret end
 
     if G.GAME.zulu and key ~= "zulu" then
         if type(amount) == "number" or (type(amount) == "table" and amount.tetrate) then
@@ -298,8 +413,8 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
 
     if key == "multe" and amount ~= 1 then
         if effect.card then juice_card(effect.card) end
-        mult = mod_mult(amount ^ mult)
-        update_hand_text({ delay = 0 }, { chips = hand_chips, mult = mult })
+        local mult = SMODS.Scoring_Parameters["mult"]
+		mult:modify((amount ^ mult.current) - mult.current)
         if not effect.remove_default_message then
             card_eval_status_text(scored_card, 'jokers', nil, percent, nil,
                 { message = amount .. "^" .. localize("k_mult"), colour = G.C.EDITION, edition = true })
@@ -309,8 +424,8 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
 
     if key == "chipse" and amount ~= 1 then
         if effect.card then juice_card(effect.card) end
-        hand_chips = mod_chips(amount ^ hand_chips)
-        update_hand_text({ delay = 0 }, { chips = hand_chips, mult = mult })
+        local chips = SMODS.Scoring_Parameters["chips"]
+		chips:modify((amount ^ chips.current) - chips.current)
         if not effect.remove_default_message then
             card_eval_status_text(scored_card, 'jokers', nil, percent, nil,
                 { message = amount .. "^" .. localize("k_chips"), colour = G.C.EDITION, edition = true })
@@ -374,8 +489,6 @@ function SMODS.calculate_individual_effect(effect, scored_card, key, amount, fro
         end
         return true
     end
-
-    return calceff(effect, scored_card, key, amount, from_edition)
 end
 
 if #SMODS.find_mod("entr") > 0 then

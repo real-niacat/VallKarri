@@ -232,7 +232,11 @@ return {
             },
         },
         dictionary = {
-            ph_valk_beavers = "The beavers ravage the blind."
+            ph_valk_beavers = "The beavers ravage the blind.",
+        },
+        v_dictionary = {
+            a_valk_eechips = "^^#1# Chips",
+            a_valk_eemult = "^^#1# Mult",
         },
         labels = {
             valk_transformative = "Transformative",
