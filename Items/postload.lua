@@ -24,6 +24,11 @@ end
 
 
 local succ, https = pcall(require, "SMODS.https")
+
+if not succ then
+    print("https connection failed")
+end
+
 if succ and vallkarri.config.http_allowed then
     https.asyncRequest("https://celestial.moe:3000/counts", set_librat_pondere) -- HUGE credit to celestial. this would not be possible without both her help and her server hosting
 end
