@@ -392,7 +392,7 @@ SMODS.Joker {
             card.ability.extra.deaths = card.ability.extra.deaths - 1
             return {
                 message = localize('k_saved_ex'),
-                saved = true,
+                saved = "Saved by Token",
                 colour = G.C.RED
             }
         end
