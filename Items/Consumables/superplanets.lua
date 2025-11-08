@@ -45,14 +45,14 @@ SMODS.Consumable {
     loc_txt = {
         name = "Thorne-Zytkow Object",
         text = {
-            "All hands gain " .. expochips("#1#") .. " Chips,",
-            "plus another " .. expochips("#1#") .. " Chips for every 5 levels on any hand",
+            "{C:attention}+#1#{} Chips and Mult per level on all hands",
+            "Increase by {C:attention}+#1#{} for each level on any {C:attention}poker hand{}",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
 
-    config = { extra = { echips = 1.02 } },
+    config = { extra = { } },
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.echips } }
     end,
@@ -72,15 +72,13 @@ SMODS.Consumable {
 
 
 
-        local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels / 5))
-        local str = "^" .. tostring(value)
+        local value = card.ability.extra.per * levels 
+        local str = "+" .. number_format(value)
         vallkarri.simple_hand_text("all")
         update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str })
 
         for i, hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].chips) then
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips ^ value
-            end
+            
         end
     end,
 

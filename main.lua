@@ -102,20 +102,6 @@ if Entropy then
 end
 Cryptid.mod_whitelist["Vall-karri"] = true
 
-SMODS.Scoring_Parameter:take_ownership("mult", {
-    level_up_hand = function(self, amount, hand)
-        local v = hand[self.key] + (hand["l_" .. self.key] * amount)
-        hand[self.key] = math.max(v, 0)
-    end
-})
-
-SMODS.Scoring_Parameter:take_ownership("chips", {
-    level_up_hand = function(self, amount, hand)
-        local v = hand[self.key] + (hand["l_" .. self.key] * amount)
-        hand[self.key] = math.max(v, 0)
-    end
-})
-
 
 SMODS.current_mod.extra_tabs = function()
     return {

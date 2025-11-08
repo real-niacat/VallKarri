@@ -481,10 +481,11 @@ SMODS.Joker {
         end
 
         if context.end_of_round and context.main_eval then
-            card.ability.extra.xchips = card.ability.extra.xchips + card.ability.extra.gain
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "xchips", scalar_value = "gain"})
             card.ability.extra.border_width = card.ability.extra.border_width + 1
             quick_card_speak(card, localize("k_upgrade_ex"))
             --i'll use scale_card when it's actually documented <3
+            -- or when i learn how it works, as it seems
         end
     end
 
@@ -492,7 +493,7 @@ SMODS.Joker {
 
 SMODS.Joker {
     key = "copycat",
-    rarity = "valk_renowned",
+    rarity = 3,
     loc_txt = {
         name = "Copy Cat",
         text = {
