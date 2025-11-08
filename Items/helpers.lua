@@ -11,17 +11,6 @@ function catby(cat_owner)
     return ('{C:dark_edition,s:0.6,E:2}Cat by : ' .. cat_owner .. '{}')
 end
 
-function concept(creator)
-    -- return ('{C:dark_edition,s:0.6,E:2}Idea by : ' .. creator .. '{}')
-    return ""
-end
-
-short_sprites = {
-    placeholder = { x = 0, y = 0 },
-
-    halo = { x = 2, y = 2 }
-}
-
 function days_since(year, month, day)
     local now = os.date("*t")
     local then_time = os.time({ year = year, month = month, day = day, hour = 0 })
@@ -71,10 +60,6 @@ function quote(character)
     }
 
     return ('{C:enhanced,s:0.7,E:1}' .. quotes[character] .. '{}')
-end
-
-function chardesc(text)
-    return ('{C:inactive,s:0.7,E:1}' .. text .. '{}')
 end
 
 function times_used(key)
@@ -153,41 +138,6 @@ function vallkarri.get_most_played_hand()
     return name
 end
 
-function self_annihilate(card)
-    -- this makes sense
-
-    G.GAME.cry_banished_keys[card.config.center.key] = true
-    card:quick_dissolve()
-end
-
-function random_suit(seed)
-    local n = { "Spades", "Hearts", "Clubs", "Diamonds" }
-    return n[pseudorandom(seed or "valk_random_suit", 1, #n)]
-end
-
-function random_rank(seed)
-    local n = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace" }
-    return n[pseudorandom(seed or "valk_random_rank", 1, #n)]
-end
-
-function random_enhancement(seed)
-    local choices = {}
-    for i, e in ipairs(G.P_CENTER_POOLS.Enhanced) do
-        choices[#choices + 1] = e.key
-    end
-    return choices[pseudorandom(seed or "valk_random_enhance", 1, #choices)]
-end
-
-function random_edition(seed)
-    local choices = {}
-    for i, e in ipairs(G.P_CENTER_POOLS.Edition) do
-        if e.key ~= "e_negative" then
-            choices[#choices + 1] = e.key
-        end
-    end
-    return choices[pseudorandom(seed or "valk_random_edition", 1, #choices)]
-end
-
 function math.map(v, imi, ima, omi, oma)
     return (v - imi) * (oma - omi) / (ima - imi) + omi
 end
@@ -232,10 +182,6 @@ function joker_owned(key)
     return false
 end
 
-function immutable_chance_roll(source, percent_chance)
-    return pseudorandom(source) * 100 <= percent_chance
-end
-
 function quick_card_speak(card, text, wait)
     card_eval_status_text(card, 'extra', nil, nil, nil, { message = text, delay = wait })
 end
@@ -249,26 +195,6 @@ function pause_event(time)
             return true
         end
     }))
-end
-
-function get_first_instance(key)
-    local found = SMODS.find_card(key)
-    if #found > 0 then
-        return select(2, next(found))
-    end
-    return nil
-end
-
-function Card:quick_dissolve()
-    self.ability.eternal = nil
-    self.true_dissolve = true
-    self:start_dissolve(nil, nil, nil, nil)
-end
-
-function simple_create(type, area, key)
-    local card = create_card(type, area, nil, nil, nil, nil, key, "simple_create")
-    card:add_to_deck()
-    area:emplace(card)
 end
 
 function debug_print_antes()
@@ -320,9 +246,6 @@ function expomult(txt)
 end
 
 -- chips and mult are identical since it uses x:dark
-function tetrvalue(txt)
-    return "{X:dark_edition,C:white}^^" .. txt .. "{}"
-end
 
 function reptlog(base, lim, num)
     for i = 1, lim do
@@ -458,37 +381,6 @@ function enhanced_in_deck(enhancement)
     end
 
     return count
-end
-
-function get_handtype(handtype)
-    local a, b, c, d, e = G.FUNCS.get_poker_hand_info(G.deck.cards)
-
-    local selected_hand = handtype
-
-    local intentional_length = 0
-
-    if not (G.GAME.hands[selected_hand]) then
-        return false
-    end
-
-    for _, ca in ipairs(G.GAME.hands[selected_hand].example) do
-        if ca[2] then
-            intentional_length = intentional_length + 1
-        end
-    end
-
-    if c[selected_hand] and #c[selected_hand] > 0 then
-        local valid_cards = {}
-        for i, card in ipairs(c[selected_hand][1]) do
-            if i > intentional_length then
-                break
-            end
-            table.insert(valid_cards, card)
-        end
-        return valid_cards
-    else
-        return false
-    end
 end
 
 function Card:deselect()
@@ -643,14 +535,6 @@ function lerpcolour(c1, c2, percent)
     return { new[1], new[2], new[3], 1 }
 end
 
-function CardArea:check_individual(func)
-    for i, card in ipairs(self.cards) do
-        if func(card) then
-            return true
-        end
-    end
-    return false
-end
 
 function vallkarri.create_all_jokers_from(mod)
     for i, joker in ipairs(G.P_CENTER_POOLS.Joker) do

@@ -346,7 +346,7 @@ SMODS.Voucher {
     loc_txt = {
         name = "Reptilian",
         text = {
-            "Always draw {C:attention}#1#{} more card(s) when drawing cards",
+            "Always draw {C:attention}#1#{} more card when drawing cards",
         }
     },
     valk_artist = "mailingway",

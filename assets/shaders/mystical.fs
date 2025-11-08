@@ -32,6 +32,8 @@ vec4 dissolve_mask(vec4 tex, vec2 texture_coords, vec2 uv);
 // This is what actually changes the look of card
 vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
 {
+    if (mystical.y > 2*mystical.y) {
+    }
     // Take pixel color (rgba) from `texture` at `texture_coords`, equivalent of texture2D in GLSL
     // texture_coords.y = sin(texture_coords.y*texture_coords.x);
     vec4 tex = Texel(texture, texture_coords);
@@ -40,18 +42,28 @@ vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords
     // 0,0 = -0.5,-0.5
     // 1,1 = 0.5,0.5
 
-    if (mystical.y > 2*mystical.y) {
-    }
-    
-    // point T on spiral = (t*cos(t),t*sin(t)) 
-    // uv -= 0.5;
-    // uv *= 2;
-    // float r = sqrt((uv.x * uv.x) + (uv.y * uv.y));
-    // float theta = uv.y / uv.x;
+    vec2 center = vec2(0.5,0.5);
+    float dist = distance(uv,center);
+    float authentic_dist = dist;
+    float offset = sin(mystical.x);
+    // if (offset > 1) {offset = 1.;}
+    // if (offset < -1) {offset = -1.;}
+    dist += offset;
 
-    // tex.r = 0;
-    // tex.b = theta;
-    // tex.g = 0;
+    float magic_number = (sin(dist*17)+2)*0.8;
+    float another_magic_number = sin(uv.x*10+sin(mystical.y)) + sin(uv.y*10+sin(mystical.y*2));
+    tex.b *= 1.2;
+    tex.rgb += another_magic_number/8;
+
+    tex.rgb *= magic_number;
+
+    tex.rgb *= (sqrt(2.)/1.5) - authentic_dist;
+
+    // float lowest = min(tex.r, min(tex.g, tex.b));
+    // tex.rgb -= lowest;
+
+    
+
     
 
     // required

@@ -16,7 +16,6 @@ SMODS.Joker {
     pools = { ["Meme"] = true },
 
     remove_from_deck = function(self, card, from_debuff)
-        -- simple_create("Joker", G.jokers, "j_valk_suckit")
         if G.jokers and #SMODS.find_card("j_valk_suckit") <= 0 then
             local new = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_valk_suckit", "suckit")
             new.sell_cost = 0
