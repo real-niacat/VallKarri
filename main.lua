@@ -96,6 +96,10 @@ if Cryptid.pointerblistifytype then
     Cryptid.pointerblistify("v_valk_gammaboosterator", nil)
     Cryptid.pointerblistify("c_valk_freeway", nil)
 end
+
+if Entropy then
+    Entropy.ChaosBlacklist.Superplanet = true
+end
 Cryptid.mod_whitelist["Vall-karri"] = true
 
 SMODS.Scoring_Parameter:take_ownership("mult", {
