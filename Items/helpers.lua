@@ -535,7 +535,6 @@ function lerpcolour(c1, c2, percent)
     return { new[1], new[2], new[3], 1 }
 end
 
-
 function vallkarri.create_all_jokers_from(mod)
     for i, joker in ipairs(G.P_CENTER_POOLS.Joker) do
         if joker.original_mod and joker.original_mod.id == mod then
@@ -771,19 +770,19 @@ function vallkarri.initialize_splashtext()
 end
 
 function vallkarri.simple_draw(card, to)
-    draw_card(card.area, to, nil,  nil, nil, card, nil, nil, false)
+    draw_card(card.area, to, nil, nil, nil, card, nil, nil, false)
 end
 
 function vallkarri.mods_installed()
     local mods = 0
-    for _,mod in pairs(SMODS.Mods) do
+    for _, mod in pairs(SMODS.Mods) do
         mods = mods + (mod.can_load and 1 or 0)
     end
     return mods
 end
 
 function vallkarri.poll_face(seed)
-    local faces = {"Jack", "Queen", "King"}
+    local faces = { "Jack", "Queen", "King" }
     return pseudorandom_element(faces, seed)
 end
 
@@ -792,7 +791,7 @@ function vallkarri.poll_number(seed)
 end
 
 function Card:is_in_collection()
-    for _,area in pairs(G.your_collection) do
+    for _, area in pairs(G.your_collection) do
         if self.area == area then
             return true
         end
@@ -802,7 +801,7 @@ end
 
 function vallkarri.get_cards(area)
     local cards = {}
-    for _,card in pairs(area.cards) do
+    for _, card in pairs(area.cards) do
         table.insert(cards, card)
     end
     return cards
@@ -829,26 +828,35 @@ function vallkarri.hashing_completed()
 
     G.E_MANAGER:add_event(Event({
         func = function()
-           
             if G.valk_hash_complete_text.colours[1][4] <= 0 then
                 G.valk_hash_complete_text:remove()
                 G.valk_hash_complete_text = nil
                 return true
             end
-
         end
     }), "other")
 end
 
 function vallkarri.get_tau_probability_vars(cen, num, den)
-    local amount = SMODS.calculate_context({valk_tau_probability_mod = true, numerator = num, denominator = den, center = cen})
-    local fixed = SMODS.calculate_context({valk_tau_fix_probability = true, numerator = num, denominator = den, center = cen})
+    local amount = SMODS.calculate_context({
+        valk_tau_probability_mod = true,
+        numerator = num,
+        denominator = den,
+        center =
+            cen
+    })
+    local fixed = SMODS.calculate_context({
+        valk_tau_fix_probability = true,
+        numerator = num,
+        denominator = den,
+        center =
+            cen
+    })
     if (fixed and amount) then
         amount.numerator = fixed.numerator or amount.numerator
         amount.denominator = fixed.denominator or amount.denominator
     end
     return (amount and amount.numerator or num), (amount and amount.denominator or den)
-
 end
 
 vallkarri.sum_blacklist = {
@@ -890,7 +898,7 @@ vallkarri.min_value = 0
 function vallkarri.recursive_sum(table)
     local sum = 0
     local count = 0
-    for key,v in pairs(table) do
+    for key, v in pairs(table) do
         if (type(v) == "number" or (getmetatable(v) == OmegaMeta)) and (not vallkarri.sum_blacklist[key]) and to_big(v) > to_big(vallkarri.min_value) then --pray to fucking god that it's not a card object or some bullshit
             sum = sum + v
             count = count + 1
@@ -904,8 +912,8 @@ function vallkarri.recursive_sum(table)
 end
 
 function vallkarri.recursive_set(table, value)
-    for key,v in pairs(table) do
-        if (type(v) == "number" or (getmetatable(v) == OmegaMeta)) and (not vallkarri.sum_blacklist[key])  and to_big(v) > to_big(vallkarri.min_value)  then --pray to fucking god that it's not a card object or some bullshit
+    for key, v in pairs(table) do
+        if (type(v) == "number" or (getmetatable(v) == OmegaMeta)) and (not vallkarri.sum_blacklist[key]) and to_big(v) > to_big(vallkarri.min_value) then --pray to fucking god that it's not a card object or some bullshit
             table[key] = value
         elseif (type(v) == "table") and (not vallkarri.sum_blacklist[key]) then
             vallkarri.recursive_set(v, value)
@@ -926,13 +934,204 @@ end
 function vallkarri.merge_lists(a, b)
     local newlist = {}
 
-    for _,entry in ipairs(a) do
+    for _, entry in ipairs(a) do
         table.insert(newlist, entry)
     end
 
-    for _,entry in ipairs(b) do
+    for _, entry in ipairs(b) do
         table.insert(newlist, entry)
     end
 
-    return newlist  
+    return newlist
+end
+
+-- stolen from ruby entropy
+-- function vallkarri.l_chipsmult(hand, card, l_chips, l_mult)
+--     update_hand_text({ delay = 0 },
+--         { handname = localize(hand, "poker_hands"), level = G.GAME.hands[hand].level, mult = Entropy.ascend_hand(
+--         G.GAME.hands[hand].mult, hand), chips = Entropy.ascend_hand(G.GAME.hands[hand].chips, hand) })
+--     delay(1)
+--     G.E_MANAGER:add_event(Event({
+--         trigger = 'after',
+--         delay = 0.2,
+--         func = function()
+--             play_sound('tarot1')
+--             if card and card.juice_up then card:juice_up(0.8, 0.5) end
+--             G.TAROT_INTERRUPT_PULSE = true
+--             return true
+--         end
+--     }))
+--     update_hand_text({ delay = 0 },
+--         { handname = localize("k_level_chips"), chips = G.GAME.hands[hand].l_chips, mult = G.GAME.hands[hand].l_mult })
+--     delay(2)
+--     G.GAME.hands[hand].l_chips = G.GAME.hands[hand].l_chips + l_chips
+--     update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 },
+--         { chips = G.GAME.hands[hand].l_chips, StatusText = true })
+--     delay(0.7)
+--     G.E_MANAGER:add_event(Event({
+--         trigger = 'after',
+--         delay = 0.2,
+--         func = function()
+--             play_sound('tarot1')
+--             if card and card.juice_up then card:juice_up(0.8, 0.5) end
+--             G.TAROT_INTERRUPT_PULSE = true
+--             return true
+--         end
+--     }))
+--     update_hand_text({ delay = 0 },
+--         { handname = localize("k_level_mult"), chips = G.GAME.hands[hand].l_chips, mult = G.GAME.hands[hand].l_mult })
+--     delay(2)
+--     G.GAME.hands[hand].l_mult = G.GAME.hands[hand].l_mult + l_mult
+--     update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 },
+--         { mult = G.GAME.hands[hand].l_mult, StatusText = true })
+--     delay(0.7)
+--     G.E_MANAGER:add_event(Event({
+--         trigger = 'after',
+--         delay = 0.2,
+--         func = function()
+--             play_sound('tarot1')
+--             if card and card.juice_up then card:juice_up(0.8, 0.5) end
+--             G.TAROT_INTERRUPT_PULSE = true
+--             return true
+--         end
+--     }))
+--     delay(1.3)
+--     vallkarri.reset_to_none()
+-- end
+
+function vallkarri.l_chipsmult_allhands(card, l_chips, l_mult)
+    update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), mult = "...", chips = "..." })
+    delay(1)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            play_sound('tarot1')
+            if card and card.juice_up then card:juice_up(0.8, 0.5) end
+            G.TAROT_INTERRUPT_PULSE = true
+            return true
+        end
+    }))
+    update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), chips = l_chips })
+    delay(2)
+    for key, handtype in pairs(G.GAME.hands) do
+        G.GAME.hands[key].l_chips = G.GAME.hands[key].l_chips + l_chips
+    end
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { chips = l_chips, StatusText = true })
+    delay(0.7)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            play_sound('tarot1')
+            if card and card.juice_up then card:juice_up(0.8, 0.5) end
+            G.TAROT_INTERRUPT_PULSE = true
+            return true
+        end
+    }))
+    update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), mult = l_mult })
+    delay(2)
+    for key, handtype in pairs(G.GAME.hands) do
+        G.GAME.hands[key].l_mult = G.GAME.hands[key].l_mult + l_mult
+    end
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { mult = l_mult, StatusText = true })
+    delay(0.7)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            play_sound('tarot1')
+            if card and card.juice_up then card:juice_up(0.8, 0.5) end
+            G.TAROT_INTERRUPT_PULSE = true
+            return true
+        end
+    }))
+    delay(1.3)
+    vallkarri.reset_to_none()
+end
+
+function vallkarri.xl_chipsmult_allhands(card, l_chips, l_mult)
+    update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), mult = "...", chips = "..." })
+    delay(1)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            play_sound('tarot1')
+            if card and card.juice_up then card:juice_up(0.8, 0.5) end
+            G.TAROT_INTERRUPT_PULSE = true
+            return true
+        end
+    }))
+    update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), chips = l_chips })
+    delay(2)
+    for key, handtype in pairs(G.GAME.hands) do
+        G.GAME.hands[key].l_chips = G.GAME.hands[key].l_chips * l_chips
+    end
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { chips = l_chips, StatusText = true })
+    delay(0.7)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            play_sound('tarot1')
+            if card and card.juice_up then card:juice_up(0.8, 0.5) end
+            G.TAROT_INTERRUPT_PULSE = true
+            return true
+        end
+    }))
+    update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), mult = l_mult })
+    delay(2)
+    for key, handtype in pairs(G.GAME.hands) do
+        G.GAME.hands[key].l_mult = G.GAME.hands[key].l_mult * l_mult
+    end
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { mult = l_mult, StatusText = true })
+    delay(0.7)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = 0.2,
+        func = function()
+            play_sound('tarot1')
+            if card and card.juice_up then card:juice_up(0.8, 0.5) end
+            G.TAROT_INTERRUPT_PULSE = true
+            return true
+        end
+    }))
+    delay(1.3)
+    vallkarri.reset_to_none()
+end
+
+function Moveable:juice_until(eval_func, delay, amount, rotation)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'after',
+        delay = delay or 0.1,
+        blocking = false,
+        blockable = false,
+        timer = 'REAL',
+        func = (function()
+            if eval_func(self) then
+                if self.juice_up then self:juice_up(amount or 0.1, rotation or 0.1) end; self:juice_until(eval_func, delay, amount, rotation)
+            end
+            return true
+        end)
+    }))
+end
+
+function vallkarri.juice_everything_forever(delay, amount, rotation)
+    for key,value in pairs(G.I) do
+        for _,object in pairs(value) do
+            if object.juice_until then
+                object:juice_until(function() return true end, delay, amount, rotation)
+            end
+        end
+    end
+end
+
+function vallkarri.reset_to_none()
+    update_hand_text({ delay = 0 }, {
+        mult = 0,
+        chips = 0,
+        level = "",
+        handname = "",
+    })
 end

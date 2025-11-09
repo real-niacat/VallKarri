@@ -45,20 +45,19 @@ SMODS.Consumable {
     loc_txt = {
         name = "Thorne-Zytkow Object",
         text = {
-            "{C:attention}+#1#{} Chips and Mult per level on all hands",
+            "{C:attention}+#1#{} {C:chips}Chips{} and {C:mult}Mult{} per level on all hands",
             "Increase by {C:attention}+#1#{} for each level on any {C:attention}poker hand{}",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
 
-    config = { extra = { } },
+    config = { extra = { inc = 1} },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.echips } }
+        return { vars = { card.ability.extra.inc } }
     end,
 
     can_use = function(self, card)
-        -- currently only returns true need to make it only work when u have the joker.
         return true
     end,
 
@@ -69,17 +68,9 @@ SMODS.Consumable {
                 levels = levels + G.GAME.hands[i].level
             end
         end
-
-
-
-        local value = card.ability.extra.per * levels 
-        local str = "+" .. number_format(value)
-        vallkarri.simple_hand_text("all")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str })
-
-        for i, hand in pairs(G.GAME.hands) do
-            
-        end
+        local value = card.ability.extra.inc * levels 
+        vallkarri.l_chipsmult_allhands(card, value, value)
+        
     end,
 
 

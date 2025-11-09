@@ -25,10 +25,10 @@ SMODS.DrawStep {
 
             scale_mod = scale_mod * 1.15
 
-
-            card.children.halo:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil,
-                0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
-            card.children.halo:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+            local fakecen = card.children.center
+            fakecen.VT.r = 0
+            card.children.halo:draw_shader('dissolve', 0, nil, nil, fakecen, scale_mod, rotate_mod, nil, 0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
+            card.children.halo:draw_shader('dissolve', nil, nil, nil, fakecen, scale_mod, rotate_mod)
         else
             card.children.halo = nil
         end

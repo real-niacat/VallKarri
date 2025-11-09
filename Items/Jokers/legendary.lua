@@ -385,7 +385,7 @@ SMODS.Joker {
     atlas = "main",
     pos = { x = 0, y = 5 },
     soul_pos = { x = 1, y = 5 },
-    cost = 6,
+    cost = 20,
     immutable = true,
     calculate = function(self, card, context)
         if context.end_of_round and context.game_over and card.ability.extra.deaths >= 1 then
@@ -405,6 +405,43 @@ SMODS.Joker {
                     { ref_table = card.ability.extra, ref_value = "current", scalar_value = "requirement", no_message = true })
                 SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "deaths", scalar_value = "gain" })
             end
+        end
+    end
+}
+
+SMODS.Joker {
+    key = "bags",
+    loc_txt = {
+        name = "Bags",
+        text = {
+            "{C:chips}+#1#{} Chips",
+            "Increases by {C:chips}+#2#{} at end of round",
+            "Increases the {C:attention}first{} factor by {C:chips}+#3#{} at end of round",
+            "Increases the {C:attention}second{} factor by {C:chips}+#4#{} at end of round",
+            "{C:attention}Third{} factor gets {C:attention}#5#%{} weaker at end of round",
+        }
+    },
+    valk_artist = "Scraptake",
+    config = { extra = { curchips = 25, inc = 15, incsq = 3, inccu = 3, weaken = 0.9 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.curchips, card.ability.extra.inc, card.ability.extra.incsq, card.ability.extra.inccu, (1 - card.ability.extra.weaken)*100 } }
+    end,
+    rarity = 4,
+    atlas = "main",
+    pos = { x = 5, y = 2 },
+    soul_pos = { x = 6, y = 2 },
+    cost = 20,
+    demicoloncompat = true,
+    calculate = function(self, card, context)
+        if (context.joker_main) or context.forcetrigger then
+            return { chips = card.ability.extra.curchips }
+        end
+
+        if context.end_of_round and context.main_eval then
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "curchips", scalar_value = "inc"})
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "inc", scalar_value = "incsq"})
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "incsq", scalar_value = "inccu"})
+            SMODS.scale_card(card, {ref_table = card.ability.extra, ref_value = "inccu", scalar_value = "weaken", operation = "X"})
         end
     end
 }

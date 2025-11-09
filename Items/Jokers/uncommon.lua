@@ -79,48 +79,6 @@ SMODS.Joker {
 }
 
 SMODS.Joker {
-    key = "bags",
-    loc_txt = {
-        name = "Bags",
-        text = {
-            "{C:chips}+#1#{} Chips",
-            "Increases by {C:attention}#2#{} at end of round",
-            "Scales {C:dark_edition,E:1}quadratically{}",
-        }
-    },
-    valk_artist = "Scraptake",
-    config = { extra = { curchips = 1, inc = 1, incsq = 1 } },
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.curchips, card.ability.extra.inc } }
-    end,
-    rarity = 2,
-    atlas = "main",
-    pos = { x = 5, y = 2 },
-    soul_pos = { x = 6, y = 2 },
-    cost = 4,
-    demicoloncompat = true,
-    calculate = function(self, card, context)
-        if (context.joker_main) or context.forcetrigger then
-            return { chips = card.ability.extra.curchips }
-        end
-
-        if
-            context.end_of_round
-            and not context.blueprint
-            and not context.individual
-            and not context.repetition
-            and not context.retrigger_joker
-        then
-            -- thank you smg9000..... :sob: i might be geeked
-            -- i was really tired when i made this
-
-            card.ability.extra.curchips = card.ability.extra.curchips + card.ability.extra.inc
-            card.ability.extra.inc = card.ability.extra.inc + card.ability.extra.incsq
-        end
-    end
-}
-
-SMODS.Joker {
     key = "periapt_beer",
     loc_txt = {
         name = "Periapt Beer",
