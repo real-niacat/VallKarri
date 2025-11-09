@@ -555,75 +555,7 @@ for _, cata in pairs(cataclysms) do
     }
 end
 
--- SMODS.Consumable {
-local DISABLED_ONE = {
-    no_doe = true,
-    no_grc = true,
-    set = "Cataclysm",
-    key = "takeover",
-    loc_txt = {
-        name = "Takeover",
-        text = {
-            "TO REWORK",
-        }
-    },
-    valk_artist = "Pangaea",
-    pos = { x = 8, y = 0 },
-    atlas = "cata",
-    display_size = { w = 83, h = 103 },
 
-    config = { extra = { uses = 2 } },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.uses } }
-    end,
-    can_use = function(self, card)
-        return true
-    end,
-    use = function(self, card, area, copier)
-
-    end,
-    demicoloncompat = true,
-    force_use = function(self, card)
-        self:use(card)
-    end
-}
-
--- SMODS.Consumable {
-local DISABLED_TWO = {
-    no_doe = true,
-    no_grc = true,
-    set = "Cataclysm",
-    key = "maleficence",
-    loc_txt = {
-        name = "Maleficence",
-        text = {
-            "TO REWORK",
-        }
-    },
-    valk_artist = "Pangaea",
-    pos = { x = 0, y = 1 },
-    atlas = "cata",
-    display_size = { w = 83, h = 103 },
-
-    config = { extra = {} },
-
-    loc_vars = function(self, info_queue, card)
-        -- info_queue[#info_queue+1] = G.P_CENTERS.j_jolly
-        info_queue[#info_queue + 1] = G.P_CENTERS.e_cry_m
-        return { vars = {} }
-    end,
-    can_use = function(self, card)
-        return true
-    end,
-    use = function(self, card, area, copier)
-
-    end,
-    demicoloncompat = true,
-    force_use = function(self, card)
-        self:use(card)
-    end
-}
 SMODS.Booster {
     key = "revelations",
     atlas = "cata",
@@ -665,8 +597,8 @@ SMODS.Consumable {
     loc_txt = {
         name = "Nevada",
         text = {
-            "All hands gain {X:dark_edition,C:white}^^#1#{} Chips & Mult for",
-            "each used {C:valk_cataclysm}cataclysm{} card",
+            "{C:attention}Double{} Chips and Mult per level for all hands",
+            "for each {C:valk_cataclysm}Cataclysm Card{} used",
         }
     },
     valk_artist = "Pangaea",
@@ -690,17 +622,8 @@ SMODS.Consumable {
             end
         end
 
-        local value = card.ability.extra.increase ^ levels
-        local str = "^^" .. tostring(value)
-        vallkarri.simple_hand_text("all")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str, mult = str })
-
-        for i, hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].chips) and (G.GAME.hands[i].mult) then
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips:tetrate(value)
-                G.GAME.hands[i].mult = G.GAME.hands[i].mult:tetrate(value)
-            end
-        end
+        local value = 2 ^ levels
+        vallkarri.xl_chipsmult_allhands(card, value, value)
     end,
     in_pool = function()
         for name, center in pairs(G.GAME.consumeable_usage) do
@@ -735,7 +658,4 @@ SMODS.Voucher {
         }
     },
     valk_artist = "Pangaea",
-    in_pool = function()
-        return G.GAME.round_resets.ante > 2
-    end,
 }

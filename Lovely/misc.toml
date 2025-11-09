@@ -143,3 +143,15 @@ payload = '''
 {n=G.UIT.T, config={ref_table = G.GAME.round_resets, ref_value = 'eante_disp', scale = 0.5*scale}},
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = '''
+if type(vals[name]) == 'string' then delta = vals[name] end
+'''
+position = "before"
+payload = '''
+if vals[name .. "_pre"] then delta = vals[name .. "_pre"] .. vals[name] end
+'''
+match_indent = true

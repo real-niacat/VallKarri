@@ -1063,12 +1063,12 @@ function vallkarri.xl_chipsmult_allhands(card, l_chips, l_mult)
             return true
         end
     }))
-    update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), chips = l_chips })
+    -- update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), chips = l_chips })
     delay(2)
     for key, handtype in pairs(G.GAME.hands) do
         G.GAME.hands[key].l_chips = G.GAME.hands[key].l_chips * l_chips
     end
-    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { chips = l_chips, StatusText = true })
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { chips = l_chips, StatusText = true, chips_pre = "X" })
     delay(0.7)
     G.E_MANAGER:add_event(Event({
         trigger = 'after',
@@ -1080,12 +1080,12 @@ function vallkarri.xl_chipsmult_allhands(card, l_chips, l_mult)
             return true
         end
     }))
-    update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), mult = l_mult })
+    -- update_hand_text({ delay = 0 }, { handname = localize("k_all_hands"), mult = l_mult })
     delay(2)
     for key, handtype in pairs(G.GAME.hands) do
         G.GAME.hands[key].l_mult = G.GAME.hands[key].l_mult * l_mult
     end
-    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { mult = l_mult, StatusText = true })
+    update_hand_text({ sound = 'button', volume = 0.7, pitch = 0.9, delay = 0 }, { mult = l_mult, StatusText = true, mult_pre = "X" })
     delay(0.7)
     G.E_MANAGER:add_event(Event({
         trigger = 'after',

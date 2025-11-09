@@ -91,17 +91,17 @@ SMODS.Consumable {
     loc_txt = {
         name = "Planck Star",
         text = {
-            "All hands gain " .. expomult("#1#") .. " Mult,",
-            "plus another " .. expomult("#1#") .. " Mult for every 5 levels on",
-            "{C:attention}High Card{}, {C:attention}Pair{}, and {C:attention}Two Pair{}",
+            "{X:chips,C:white}X#1#{} Chips and {X:mult,C:white}X#2#{} Mult per level for all hands",
+            "plus another {X:attention,C:white}X#3#{} of both for each level on",
+            "{C:attention}High Card, Pair,{} and {C:attention}Two Pair{}",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
 
-    config = { extra = { emult = 1.1 } },
+    config = { extra = { xc = 1, xm = 1, xi = 0.1 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.emult } }
+        return { vars = { card.ability.extra.xc, card.ability.extra.xm, card.ability.extra.xi } }
     end,
 
     can_use = function(self, card)
@@ -117,16 +117,10 @@ SMODS.Consumable {
 
 
 
-        local value = card.ability.extra.emult ^ (card.ability.extra.emult ^ math.floor(levels / 5))
-        local str = "^" .. tostring(value)
-        vallkarri.simple_hand_text("all")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
+        local chips = card.ability.extra.xc + (card.ability.extra.xi * levels)
+        local mult = card.ability.extra.xm + (card.ability.extra.xi * levels)
 
-        for i, hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].mult) then
-                G.GAME.hands[i].mult = G.GAME.hands[i].mult ^ value
-            end
-        end
+        vallkarri.xl_chipsmult_allhands(card, chips, mult)
     end,
 
 
@@ -147,17 +141,17 @@ SMODS.Consumable {
     loc_txt = {
         name = "Cosmic String",
         text = {
-            "All hands gain " .. expochips("#1#") .. " Chips,",
-            "plus another " .. expochips("#1#") .. " Chips for every 5 levels on",
+            "{X:chips,C:white}X#1#{} Chips and {X:mult,C:white}X#2#{} Mult per level for all hands",
+            "plus another {X:attention,C:white}X#3#{} of both for each level on",
             "{C:attention}Five of a Kind{}, {C:attention}Flush House{}, and {C:attention}Flush Five{}",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
 
-    config = { extra = { echips = 1.1 } },
+    config = { extra = { xc = 1, xm = 1, xi = 0.3 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.echips } }
+        return { vars = { card.ability.extra.xc, card.ability.extra.xm, card.ability.extra.xi } }
     end,
 
     can_use = function(self, card)
@@ -172,18 +166,10 @@ SMODS.Consumable {
         levels = levels + G.GAME.hands["Flush Five"].level
 
 
-        -- i know the math here is incorrect but
-        -- who's going to correct me on it?
-        local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels / 5))
-        local str = "^" .. tostring(value)
-        vallkarri.simple_hand_text("all")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str })
+        local chips = card.ability.extra.xc + (card.ability.extra.xi * levels)
+        local mult = card.ability.extra.xm + (card.ability.extra.xi * levels)
 
-        for i, hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].chips) then
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips ^ value
-            end
-        end
+        vallkarri.xl_chipsmult_allhands(card, chips, mult)
     end,
 
 
@@ -204,17 +190,17 @@ SMODS.Consumable {
     loc_txt = {
         name = "HD 209458-B",
         text = {
-            "All hands gain " .. expomult("#1#") .. " Mult,",
-            "plus another " .. expomult("#1#") .. " Mult for every 5 levels on",
+            "{X:chips,C:white}X#1#{} Chips and {X:mult,C:white}X#2#{} Mult per level for all hands",
+            "plus another {X:attention,C:white}X#3#{} of both for each level on",
             "{C:attention}Three of a Kind{}, {C:attention}Straight{}, and {C:attention}Flush{}",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
 
-    config = { extra = { echips = 1.1 } },
+    config = { extra = { xc = 1, xm = 1, xi = 0.2 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.echips } }
+        return { vars = { card.ability.extra.xc, card.ability.extra.xm, card.ability.extra.xi } }
     end,
 
     can_use = function(self, card)
@@ -229,18 +215,10 @@ SMODS.Consumable {
         levels = levels + G.GAME.hands["Flush"].level
 
 
-        -- i know the math here is incorrect but
-        -- who's going to correct me on it?
-        local value = card.ability.extra.echips ^ (card.ability.extra.echips ^ math.floor(levels / 5))
-        local str = "^" .. tostring(value)
-        vallkarri.simple_hand_text("all")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
+        local chips = card.ability.extra.xc + (card.ability.extra.xi * levels)
+        local mult = card.ability.extra.xm + (card.ability.extra.xi * levels)
 
-        for i, hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].mult) then
-                G.GAME.hands[i].mult = G.GAME.hands[i].mult ^ value
-            end
-        end
+        vallkarri.xl_chipsmult_allhands(card, chips, mult)
     end,
 
 
@@ -261,43 +239,23 @@ SMODS.Consumable {
     loc_txt = {
         name = "Milky Way",
         text = {
-            "All hands gain " .. expomult("#1#") .. " Chips & Mult,",
-            "plus another " .. expomult("#1#") .. " Chips & Mult for",
-            "every {C:attention}Jolly Joker{} owned",
+            "{C:attention}Double{} Chips and Mult per level for all hands",
+            "for each {C:attention}Jolly Joker{} owned",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
 
-    config = { extra = { eeall = 1.25 } },
+    config = { extra = {  } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.eeall } }
-    end,
-
-    can_use = function(self, card)
-        -- currently only returns true need to make it only work when u have the joker.
-        return true
+        info_queue[#info_queue+1] = G.P_CENTERS.j_jolly
+        return { vars = { } }
     end,
 
     use = function(self, card, area, copier)
-        local value = card.ability.extra.eeall
+        local value = 2 ^ #SMODS.find_card("j_jolly")
 
-        for i, joker in pairs(G.jokers.cards) do
-            if joker.config.center.key == "j_jolly" then
-                value = value ^ card.ability.extra.eeall
-            end
-        end
-
-        local str = "^" .. tostring(value)
-        vallkarri.simple_hand_text("all")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
-
-        for i, hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].mult and G.GAME.hands[i].chips) then
-                G.GAME.hands[i].mult = G.GAME.hands[i].mult ^ value
-                G.GAME.hands[i].chips = G.GAME.hands[i].chips ^ value
-            end
-        end
+        vallkarri.xl_chipsmult_allhands(card, value, value)
     end,
 
 
@@ -309,6 +267,10 @@ SMODS.Consumable {
     demicoloncompat = true,
     force_use = function(self, card)
         self:use(card)
+    end,
+
+    in_pool = function(self, args)
+        return next(SMODS.find_card("j_jolly"))
     end
 }
 
@@ -363,16 +325,18 @@ SMODS.Consumable {
     loc_txt = {
         name = "Nada",
         text = {
-            expochips("#1#") .. " Chips on {C:attention}Full Mansion{}",
+            "{X:chips,C:white}X#1#{} Chips per level for all hands",
+            "Increase by {X:attention,C:white}X#2#{} of both for each level on {C:attention}Full Mansion{}",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
-    config = { extra = { evalue = 9 } },
+    config = { extra = { base = 2, per = 3 } },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                card.ability.extra.evalue
+                card.ability.extra.base,
+                card.ability.extra.per
             }
         }
     end,
@@ -382,12 +346,8 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        local value = card.ability.extra.evalue
-        local str = "^" .. number_format(value)
-        vallkarri.simple_hand_text("cry_None")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str })
-
-        G.GAME.hands["valk_fullmansion"].chips = G.GAME.hands["valk_fullmansion"].chips ^ value
+        local value = card.ability.extra.base + (card.ability.extra.per * G.GAME.hands["valk_fullmansion"].level)
+        vallkarri.xl_chipsmult_allhands(card, value, 1)
     end,
     in_pool = function(self, args)
         return G.GAME.hands["valk_fullmansion"].played > 0
@@ -412,16 +372,18 @@ SMODS.Consumable {
     loc_txt = {
         name = "Zip",
         text = {
-            expochips("#1#") .. " Mult on {C:attention}Full Mansion{}",
+            "{X:mult,C:white}X#1#{} Mult per level for all hands",
+            "Increase by {X:attention,C:white}X#2#{} of both for each level on {C:attention}Full Mansion{}",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
-    config = { extra = { evalue = 9 } },
+    config = { extra = { base = 2, per = 3 } },
     loc_vars = function(self, info_queue, card)
         return {
             vars = {
-                card.ability.extra.evalue
+                card.ability.extra.base,
+                card.ability.extra.per
             }
         }
     end,
@@ -431,12 +393,8 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        local value = card.ability.extra.evalue
-        local str = "^" .. number_format(value)
-        vallkarri.simple_hand_text("cry_None")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { mult = str })
-
-        G.GAME.hands["valk_fullmansion"].mult = G.GAME.hands["valk_fullmansion"].mult ^ value
+        local value = card.ability.extra.base + (card.ability.extra.per * G.GAME.hands["valk_fullmansion"].level)
+        vallkarri.xl_chipsmult_allhands(card, 1, value)
     end,
     in_pool = function(self, args)
         return G.GAME.hands["valk_fullmansion"].played > 0
@@ -460,21 +418,14 @@ SMODS.Consumable {
     loc_txt = {
         name = "Lynx Constellation",
         text = {
-            expochips("#1#") .. " Chips & Mult on {C:attention}All hands{}",
-            "for each {C:attention}Kitty{} Joker owned",
+            "{C:attention}Double{} Chips and Mult per level for all hands",
+            "for each {C:attention}Kitty Joker{} owned",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
     soul_rate = 5,
-    config = { extra = { evalue = 1.9 } },
-    loc_vars = function(self, info_queue, card)
-        return {
-            vars = {
-                card.ability.extra.evalue
-            }
-        }
-    end,
+    config = { extra = {  } },
 
     can_use = function(self, card)
         return true
@@ -490,15 +441,8 @@ SMODS.Consumable {
 
 
 
-        local value = (card.ability.extra.evalue ^ levels)
-        local str = "^" .. number_format(value)
-        vallkarri.simple_hand_text("all")
-        update_hand_text({ sound = 'button', volume = 0.7, pitch = 1, delay = 1 }, { chips = str, mult = str })
-
-        for i, hand in pairs(G.GAME.hands) do
-            G.GAME.hands[i].chips = G.GAME.hands[i].chips ^ value
-            G.GAME.hands[i].mult = G.GAME.hands[i].mult ^ value
-        end
+        local value = 2 ^ levels
+        vallkarri.xl_chipsmult_allhands(card, value, value)
     end,
     in_pool = function(self, args)
         for i, joker in ipairs(G.jokers.cards) do
@@ -573,16 +517,16 @@ SMODS.Consumable {
         name = "NeVe 1",
         text = {
             "Multiply {C:chips}chips{} and {C:mult}mult{} of all hands by {C:attention}#1#{}",
-            "{X:dark_edition,C:white}^^#2#{} Chips and Mult on all hands",
+            "{X:dark_edition,C:white}^#2#{} Chips and Mult per level on all hands",
             "{X:gold,C:white}^#3#{} Ascension Power of all hands",
         }
     },
     valk_artist = "mailingway",
     no_doe = true,
 
-    config = { extra = { mult = 5, tet = 1.05, exp = 1.5 } },
+    config = { extra = { mult = 5, expchult = 2, exp = 2 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.mult, card.ability.extra.tet, card.ability.extra.exp } }
+        return { vars = { card.ability.extra.mult, card.ability.extra.expchult, card.ability.extra.exp } }
     end,
 
     can_use = function(self, card)
@@ -592,14 +536,14 @@ SMODS.Consumable {
 
     use = function(self, card, area, copier)
         for i, hand in pairs(G.GAME.hands) do
-            hand.mult = to_big(hand.mult):mul(card.ability.extra.mult)
-            hand.chips = to_big(hand.chips):mul(card.ability.extra.mult)
+            G.GAME.hands[i].mult = hand.mult * card.ability.extra.mult
+            G.GAME.hands[i].chips = hand.chips * card.ability.extra.mult
 
-            hand.l_chips = to_big(hand.l_chips):tetrate(card.ability.extra.tet):add(1)
-            hand.l_mult = to_big(hand.l_mult):tetrate(card.ability.extra.tet):add(1)
+            G.GAME.hands[i].l_chips = hand.l_chips ^ card.ability.extra.expchult
+            G.GAME.hands[i].l_mult = hand.l_mult ^ card.ability.extra.expchult
 
             if (hand.AscensionPower) then
-                hand.AscensionPower = to_big(hand.AscensionPower):pow(card.ability.extra.exp)
+                G.GAME.hands[i].AscensionPower = hand.AscensionPower ^ card.ability.extra.exp
             end
         end
     end,
@@ -609,7 +553,7 @@ SMODS.Consumable {
     pos = { x = 5, y = 0 },
     no_grc = true,
     no_doe = true,
-    dependencies = { "Talisman", "entr" },
+    dependencies = { "entr" },
 
     demicoloncompat = true,
     force_use = function(self, card)
