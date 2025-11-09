@@ -555,6 +555,8 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
 
         numerator, denominator = vallkarri.get_tau_probability_vars(out.config.center.key, numerator, denominator)
 
+        denominator = denominator * #G.P_CENTERS[out.config.center.tau].bases
+
         local roll = (pseudorandom("valk_roll_tauic") * (denominator - 1)) + 1
         if roll <= numerator then
             out:set_ability(out.config.center.tau)
