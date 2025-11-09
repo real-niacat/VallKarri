@@ -564,7 +564,7 @@ function create_card(_type, area, legendary, _rarity, skip_materialize, soulable
             play_sound("explosion_release1", 1, 3)
             G.GAME.tau_replace = G.GAME.base_tau_replace
         else
-            play_sound("tarot1")
+            -- play_sound("tarot1")
             out:juice_up()
             -- print("before: " .. G.GAME.tau_replace)
             G.GAME.tau_replace = G.GAME.tau_replace - G.GAME.tau_increase
