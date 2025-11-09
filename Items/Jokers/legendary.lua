@@ -347,7 +347,7 @@ SMODS.Joker {
 
 
     calculate = function(self, card, context)
-        local rank = context.other_card:get_id()
+        local rank = context.other_card and context.other_card:get_id()
         if (context.individual and context.cardarea == G.play) and (rank == 4 or rank == 7 or rank == 13 or rank == 14) then
             local text = context.scoring_name
             G.GAME.hands[text].chips = G.GAME.hands[text].chips + rank
