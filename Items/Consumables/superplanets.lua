@@ -45,46 +45,44 @@ SMODS.Consumable {
     loc_txt = {
         name = "Thorne-Zytkow Object",
         text = {
-            "{C:attention}+#1#{} {C:chips}Chips{} and {C:mult}Mult{} per level on all hands",
-            "Increase by {C:attention}+#1#{} for each level on any {C:attention}poker hand{}",
+            "{C:chips}+#1#{} Chips and {C:mult}+#2#{} Mult per level for all hands",
+            "plus another {C:attention}#3#{} of both for every level on any hand",
+
         }
     },
     valk_artist = "mailingway",
-    no_doe = true,
 
-    config = { extra = { inc = 1} },
+    config = { extra = { chips = 1, mult = 1, plus = 1 } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.inc } }
+        return { vars = { card.ability.extra.chips, card.ability.extra.mult, card.ability.extra.plus } }
     end,
 
     can_use = function(self, card)
+        -- currently only returns true need to make it only work when u have the joker.
         return true
     end,
 
     use = function(self, card, area, copier)
         local levels = 0
         for i, hand in pairs(G.GAME.hands) do
-            if (G.GAME.hands[i].level) then
-                levels = levels + G.GAME.hands[i].level
+            if (hand.level) then
+                levels = levels + hand.level
             end
         end
-        local value = card.ability.extra.inc * levels 
-        vallkarri.l_chipsmult_allhands(card, value, value)
-        
-    end,
 
+
+
+        local chips = levels * card.ability.extra.plus * card.ability.extra.chips
+        local mult = levels * card.ability.extra.plus * card.ability.extra.mult
+
+        vallkarri.l_chipsmult_allhands(card, chips, mult)
+    end,
 
     atlas = "csm",
     pos = { x = 4, y = 0 },
 
     no_grc = true,
     no_doe = true,
-
-    demicoloncompat = true,
-    force_use = function(self, card)
-        self:use(card)
-    end
-
 }
 
 SMODS.Consumable {
@@ -394,7 +392,7 @@ SMODS.Consumable {
     in_pool = function(self, args)
         return G.GAME.hands["valk_fullmansion"].played > 0
     end,
-    
+
 
 
     atlas = "csm",
@@ -560,7 +558,7 @@ SMODS.Consumable {
     pos = { x = 2, y = 0 },
     no_grc = true,
     no_doe = true,
-    dependencies = {"entr"},
+    dependencies = { "entr" },
 
     demicoloncompat = true,
     force_use = function(self, card)
