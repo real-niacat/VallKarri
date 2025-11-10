@@ -64,7 +64,7 @@ SMODS.Consumable {
     set = "Spectral",
     key = "absolutetau",
 
-    cost = 150,
+    cost = 25,
     atlas = "main",
     pos = {x=3, y=5},
     -- is_soul = true,

@@ -462,7 +462,7 @@ local cataclysms = {
         },
         config = {},
         rounds = 4,
-        activate = function(self, card)
+        use = function(self, card)
             for i=1,2 do
                 SMODS.add_card({set = "Cataclysm", area = G.consumeables})
             end
