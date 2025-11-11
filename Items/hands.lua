@@ -161,6 +161,6 @@ SMODS.Consumable {
     atlas = "main",
     pos = {x=4, y=8},
     in_pool = function(self, args)
-        return G.GAME.hands[self.ability.hand_type].played > 0
+        return G.GAME.hands[self.config.hand_type].played > 0
     end
 }

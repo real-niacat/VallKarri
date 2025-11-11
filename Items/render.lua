@@ -103,7 +103,7 @@ SMODS.DrawStep {
 
 function Card:valk_add_layer(atlas, position, scale)
     local next_index = #self.inf_layers + 1
-    self.inf_layers[next_index] = Sprite(self.T.x, self.T.y, self.T.w * scale, self.T.h * scale, G.ASSET_ATLAS[atlas],
-        position)
-    self.inf_layers[next_index].override_scale = scale
+    self.inf_layers[next_index] = Sprite(self.T.x, self.T.y, self.T.w * scale, self.T.h * scale, G.ASSET_ATLAS[atlas], position)
+    local original_scale = self.inf_layers[next_index].scale
+    self.inf_layers[next_index].scale = {x=original_scale.x*scale, y=original_scale.y*scale}
 end
