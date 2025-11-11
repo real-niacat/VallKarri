@@ -96,6 +96,7 @@ SMODS.Joker {
     soul_pos = {x=6, y=5},
     immutable = true,
     cost = 12,
+    blueprint_compat = true,
     calculate = function(self, card, context)
 
         if context.before then
