@@ -84,3 +84,35 @@ SMODS.Joker {
     end,
 
 }
+
+SMODS.Joker {
+    key = "glizzy",
+    loc_txt = {
+        name = "Glizzy",
+        text = {
+            "Gives {C:mult}+#1#{} Mult for",
+            "each glizzy user {C:attention}cg",
+            "has eaten in 1 sitting",
+            "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)"
+        }
+    },
+    blueprint_compat = true,
+    perishable_compat = true,
+    eternal_compat = true,
+    rarity = 1,
+    cost = 4,
+    pools = { Food = true },
+    config = { glizzies_eaten = 5, per = 3 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = { card.ability.per, card.ability.per * card.ability.glizzies_eaten }
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                mult = card.ability.per * card.ability.glizzies_eaten
+            }
+        end
+    end
+}
