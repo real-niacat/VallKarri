@@ -61,3 +61,49 @@ SMODS.DrawStep {
     end,
     order = 99
 }
+
+SMODS.DrawStep {
+    key = "infinite_layers",
+    func = function(card, layer)
+        if not card.inf_layers then
+            card.inf_layers = {}
+        end
+
+        local allowed = layer == "both" or layer == "card"
+        if not (#card.inf_layers > 0 and allowed) then
+            return
+        end
+
+        
+        local i = 0
+        local offset = 5
+        for _, child in pairs(card.inf_layers) do
+            i = i + 1
+            local individual_timer = G.TIMERS.REAL + (offset * i)
+            local scale_mod = 0.07 + 0.02 * math.sin(1.8 * individual_timer) + 0.00 * math.sin((individual_timer - math.floor(individual_timer)) * math.pi * 14) * (1 - (individual_timer - math.floor(individual_timer))) ^ 3
+
+            local rotate_mod = 0.05 * math.sin(1.219 * individual_timer) + 0.00 * math.sin((individual_timer) * math.pi * 5) * (1 - (individual_timer - math.floor(individual_timer))) ^ 2
+            if child.override_scale then
+                child.T.h = child.T.h * child.override_scale
+                child.T.w = child.T.w * child.override_scale
+                child.override_scale = nil
+            end
+            if child.states.role then
+                child.states.role.draw_major = card
+            end
+            child.states.hover.can = false
+            child.states.click.can = false
+            child:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil,
+                0.1 + 0.03 * math.sin(1.8 * individual_timer), nil, 0.6)
+            child:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
+        end
+    end,
+    order = 99299, --lily's 2nd favourite number!
+}
+
+function Card:valk_add_layer(atlas, position, scale)
+    local next_index = #self.inf_layers + 1
+    self.inf_layers[next_index] = Sprite(self.T.x, self.T.y, self.T.w * scale, self.T.h * scale, G.ASSET_ATLAS[atlas],
+        position)
+    self.inf_layers[next_index].override_scale = scale
+end

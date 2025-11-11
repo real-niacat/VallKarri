@@ -663,51 +663,6 @@ function Card:apply_aesthetijoker_edition()
     end
 end
 
-SMODS.DrawStep {
-    key = "infinite_layers",
-    func = function(card, layer)
-        if not card.inf_layers then
-            card.inf_layers = {}
-        end
-
-        local allowed = layer == "both" or layer == "card"
-        if not (#card.inf_layers > 0 and allowed) then
-            return
-        end
-
-        local scale_mod = 0.07 + 0.02 * math.sin(1.8 * G.TIMERS.REAL) +
-            0.00 * math.sin((G.TIMERS.REAL - math.floor(G.TIMERS.REAL)) * math.pi * 14) *
-            (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 3
-
-        local rotate_mod = 0.05 * math.sin(1.219 * G.TIMERS.REAL) +
-            0.00 * math.sin((G.TIMERS.REAL) * math.pi * 5) * (1 - (G.TIMERS.REAL - math.floor(G.TIMERS.REAL))) ^ 2
-
-        for _, child in pairs(card.inf_layers) do
-            if child.override_scale then
-                child.T.h = child.T.h * child.override_scale
-                child.T.w = child.T.w * child.override_scale
-                child.override_scale = nil
-            end
-            if child.states.role then
-                child.states.role.draw_major = card
-            end
-            child.states.hover.can = false
-            child.states.click.can = false
-            child:draw_shader('dissolve', 0, nil, nil, card.children.center, scale_mod, rotate_mod, nil,
-                0.1 + 0.03 * math.sin(1.8 * G.TIMERS.REAL), nil, 0.6)
-            child:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod)
-        end
-    end,
-    order = 99299, --lily's 2nd favourite number!
-}
-
-function Card:valk_add_layer(atlas, position, scale)
-    local next_index = #self.inf_layers + 1
-    self.inf_layers[next_index] = Sprite(self.T.x, self.T.y, self.T.w * scale, self.T.h * scale, G.ASSET_ATLAS[atlas],
-        position)
-    self.inf_layers[next_index].override_scale = scale
-end
-
 function vallkarri.random_key_from_pool(pool)
     local _pool, _pool_key = get_current_pool(pool, nil, nil, "valk_rand")
     local center = pseudorandom_element(_pool, pseudoseed(_pool_key))
