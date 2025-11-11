@@ -4,11 +4,12 @@ SMODS.Joker {
         name = "{C:red}Suck It{}",
         text = {
             "Creates itself when removed",
-            "{C:inactive}Suck it.{}",
+            "{C:green}#1# in #2#{} chance to not come back,",
+            "and give {C:money}$#3#{}",
         }
     },
     valk_artist = "Pangaea",
-    config = { extra = {} },
+    config = { extra = {n = 1, d = 50, money = 10} },
     rarity = 1,
     atlas = "main",
     pos = { x = 4, y = 5 },
@@ -16,12 +17,21 @@ SMODS.Joker {
     pools = { ["Meme"] = true },
 
     remove_from_deck = function(self, card, from_debuff)
-        if G.jokers and #SMODS.find_card("j_valk_suckit") <= 0 then
-            local new = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_valk_suckit", "suckit")
-            new.sell_cost = 0
-            new:add_to_deck()
-            G.jokers:emplace(new)
+        if G.jokers then
+            if SMODS.pseudorandom_probability(card, "suck_it", card.ability.extra.n, card.ability.extra.d) then
+                ease_dollars(card.ability.extra.money)
+            else
+                local new = create_card("Joker", G.jokers, nil, nil, nil, nil, "j_valk_suckit", "suckit")
+                new.sell_cost = 0
+                new:add_to_deck()
+                G.jokers:emplace(new)
+            end
+            
         end
+    end,
+    loc_vars = function(self, info_queue, card)
+        local n,d = SMODS.get_probability_vars(card, card.ability.extra.n, card.ability.extra.d)
+        return {vars = {n,d,card.ability.extra.money}}
     end
 }
 
@@ -51,7 +61,6 @@ SMODS.Joker {
             return { mult = card.ability.extra.per * amount }
         end
     end,
-
 }
 
 SMODS.Joker {
@@ -83,4 +92,60 @@ SMODS.Joker {
         end
     end,
 
+}
+
+SMODS.Joker {
+    key = "fancyjoker",
+    loc_txt = {
+        name = "Fancy Joker",
+        text = {
+            "{C:mult}+#1#{} Mult for every ",
+            "{C:attention}Enhanced{} card {C:attention}held-in-hand{}",
+        }
+    },
+    -- valk_artist = "mailingway",
+    config = { extra = { per = 6 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.per } }
+    end,
+    rarity = 1,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 3,
+    blueprint_compat = true,
+
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.hand and next(SMODS.get_enhancements(context.other_card)) then
+            return {mult = card.ability.extra.per}
+        end
+    end,
+}
+
+SMODS.Joker {
+    key = "poshjoker",
+    loc_txt = {
+        name = "Posh Joker",
+        text = {
+            "{C:mult}+#1#{} Chips for every ",
+            "{C:attention}Enhanced{} card {C:attention}held-in-hand{}",
+        }
+    },
+    -- valk_artist = "mailingway",
+    config = { extra = { per = 25 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.per } }
+    end,
+    rarity = 1,
+    atlas = "phold",
+    pos = { x = 0, y = 1 },
+    cost = 3,
+    blueprint_compat = true,
+
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.hand and next(SMODS.get_enhancements(context.other_card)) then
+            return {chips = card.ability.extra.per}
+        end
+    end,
 }

@@ -155,10 +155,12 @@ SMODS.Consumable {
             G.GAME.hands[card.ability.hand_type].l_chips,
             colours = {
                 to_number(G.GAME.hands[card.ability.hand_type].level) == 1 and G.C.UI.TEXT_DARK or G.C.HAND_LEVELS[math.min(7, to_number(G.GAME.hands[card.ability.hand_type].level))]
-                --credit to aikoyori for doing this so i could figure it out
             }
         }}
     end,
     atlas = "main",
     pos = {x=4, y=8},
+    in_pool = function(self, args)
+        return G.GAME.hands[card.ability.hand_type].played > 0
+    end
 }

@@ -59,7 +59,7 @@ SMODS.Edition {
         label = "Glow-in-the-Dark",
         text = {
             "Creates a {C:dark_edition}Negative{}",
-            "{C:attention}Consumable{} when triggered",
+            "{C:tarot}Tarot{} when hand played",
             shadercredit("Lily Felli")
         }
     },
@@ -68,7 +68,7 @@ SMODS.Edition {
         if (context.edition and context.cardarea == G.jokers and card.config.trigger) or
             (context.main_scoring and context.cardarea == G.play)
         then
-            SMODS.add_card({ set = "Consumeables", area = G.consumeables, edition = "e_negative" })
+            SMODS.add_card({ set = "Tarot", area = G.consumeables, edition = "e_negative" })
         end
 
         if context.joker_main then
