@@ -10,7 +10,7 @@ Planetoids are simply better variants of planet cards, and superplanets are extr
 
 Cataclysm cards are consumables with a massive upside and downside, they can help greatly, or make you lose if you aren't careful.
 
-Aesthetic cards apply vatiotus editions to jokers.
+Aesthetic cards apply various editions to jokers.
 
 Tauic Spectral cards are rare, empowered versions of the normal Spectral cards.
 
