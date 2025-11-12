@@ -211,7 +211,7 @@ SMODS.Joker {
     immutable = true,
     pools = { ["Meme"] = true },
     calculate = function(self, card, context)
-        if context.retrigger_joker_check then
+        if context.retrigger_joker_check and card.ability.extra.retrig > 0 then
             local my_index = 0
             for i, joker in ipairs(G.jokers.cards) do
                 if joker == card then my_index = i end

@@ -17,13 +17,13 @@ float avg(float a, float b) {
 vec4 effect( vec4 colour, Image texture, vec2 texture_coords, vec2 screen_coords )
 {
     vec4 tex = colour;
-    vec2 uv = (screen_coords - uibox_pos) / (uibox_size.xy * screen_scale * 2);
+    vec2 uv = (screen_coords - uibox_pos) / (uibox_size.xy);
     uv.x = uv.x * (love_ScreenSize.x/love_ScreenSize.y);
     uv.y = uv.y / (20.);
 
-    number low = min(tex.r, min(tex.g, tex.b));
-    number high = max(tex.r, max(tex.g, tex.b));
-	number delta = high-low -0.1;
+    // number low = min(tex.r, min(tex.g, tex.b));
+    // number high = max(tex.r, max(tex.g, tex.b));
+	// number delta = high-low -0.1;
 
     if (time > 2*time) {
         tex.r = 1;
