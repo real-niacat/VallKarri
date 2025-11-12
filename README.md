@@ -4,7 +4,7 @@ lily's terrible balatro mod!
 There are over 120 new jokers, all as unique as possible!
 
 ### Consumables
-5 new types of consumables, planetoids, superplanets, and cataclysm cards!
+5 new types of consumables: planetoids, superplanets, cataclysm, aesthetic, and tauic spectral cards!
 Planetoids are simply better variants of planet cards, and superplanets are extremely powerful, but very rare planet cards.
 Cataclysm cards are consumables with a massive upside and downside, they can help greatly, or make you lose if you aren't careful.
 Aesthetic cards, which apply editions to jokers
