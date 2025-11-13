@@ -876,6 +876,12 @@ function vallkarri.recursive_set(table, value)
     end
 end
 
+function vallkarri.set_all(table, value)
+    for k,v in pairs(table) do
+        table[k] = value
+    end
+end
+
 -- gives a cards eternal state
 function Card:is_eternal()
     return not not self.ability.eternal

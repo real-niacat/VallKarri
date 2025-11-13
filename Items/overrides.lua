@@ -814,5 +814,5 @@ end
 
 local can_sellref = Card.can_sell_card
 function Card:can_sell_card(context)
-    return can_sellref(self, context) and self:is_eternal()
+    return can_sellref(self, context) and not self:is_eternal()
 end
