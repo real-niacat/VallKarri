@@ -244,7 +244,7 @@ local cataclysms = {
         after_rounds_use = {
             "{C:attention}+#1#{} Hand Size"
         },
-        config = {cost = 3},
+        config = { cost = 3 },
         rounds = 4,
         use = function(self, card)
             G.consumeables:change_size(card.ability.extra.vars.cost)
@@ -253,8 +253,8 @@ local cataclysms = {
         activate = function(self, card)
             G.consumeables:change_size(-card.ability.extra.vars.cost)
         end,
-        loc_vars = function(self,info_queue,card)
-            return {vars = {card.ability.extra.vars.cost}}
+        loc_vars = function(self, info_queue, card)
+            return { vars = { card.ability.extra.vars.cost } }
         end,
     },
     {
@@ -267,14 +267,14 @@ local cataclysms = {
         config = {},
         rounds = 3,
         use = function(self, card)
-            for _,joker in pairs(G.jokers.cards) do
+            for _, joker in pairs(G.jokers.cards) do
                 joker:set_edition(poll_edition("valk_maleficence", nil, nil, true))
             end
         end,
         activate = function(self, card)
             local to_destroy = {}
 
-            for _,joker in pairs(G.jokers.cards) do
+            for _, joker in pairs(G.jokers.cards) do
                 if joker.edition then
                     table.insert(to_destroy, joker)
                 end
@@ -333,7 +333,7 @@ local cataclysms = {
             "{C:attention}Hidden{} {C:spectral}Spectral{} cards have a {C:green}#1#%{} chance",
             "to replace {C:attention}non-hidden{} {C:spectral}Spectral{} cards"
         },
-        config = {chance = 10},
+        config = { chance = 10 },
         rounds = 3,
         use = function(self, card)
             for _, entry in pairs(G.P_CENTER_POOLS.Tarot) do
@@ -359,8 +359,8 @@ local cataclysms = {
                 G.GAME.vallkarri.banned_use_keys[entry.key] = true
             end
         end,
-        loc_vars = function(self,info_queue,card)
-            return {vars = {card.ability.extra.vars.chance}}
+        loc_vars = function(self, info_queue, card)
+            return { vars = { card.ability.extra.vars.chance } }
         end,
     },
     {
@@ -370,15 +370,15 @@ local cataclysms = {
         after_rounds_use = {
             "Create {C:attention}#1#{} {C:dark_edition}Negative{} {C:rare}Rare{} Jokers"
         },
-        config = {jokers = 3},
+        config = { jokers = 3 },
         rounds = 3,
         use = function(self, card)
             for _, entry in pairs(G.P_CENTER_POOLS.Joker) do
                 G.GAME.vallkarri.banned_use_keys[entry.key] = false
             end
 
-            for i=1,card.ability.extra.vars.jokers do
-                SMODS.add_card({set = "Joker", edition = "e_negative", rarity = "Rare"})
+            for i = 1, card.ability.extra.vars.jokers do
+                SMODS.add_card({ set = "Joker", edition = "e_negative", rarity = "Rare" })
             end
         end,
         activate = function(self, card)
@@ -386,8 +386,8 @@ local cataclysms = {
                 G.GAME.vallkarri.banned_use_keys[entry.key] = true
             end
         end,
-        loc_vars = function(self,info_queue,card)
-            return {vars = {card.ability.extra.vars.jokers}}
+        loc_vars = function(self, info_queue, card)
+            return { vars = { card.ability.extra.vars.jokers } }
         end,
     },
     {
@@ -397,7 +397,7 @@ local cataclysms = {
         after_rounds_use = {
             "All future {C:spectral}Spectral{} cards have {C:attention}double{} values"
         },
-        config = {jokers = 3},
+        config = { jokers = 3 },
         rounds = 4,
         use = function(self, card)
             for _, entry in pairs(G.P_CENTER_POOLS.Spectral) do
@@ -416,7 +416,7 @@ local cataclysms = {
         after_rounds_use = {
             "{C:spectral}Spectral{} cards may spawn in the Shop",
         },
-        config = {rate_inc = 4},
+        config = { rate_inc = 4 },
         rounds = 4,
         calculate = function(self, card, context)
             if context.using_consumeable and context.consumeable.config.center.set == "Tarot" then
@@ -429,7 +429,7 @@ local cataclysms = {
         end,
     },
     {
-        name = "Torrent",
+        name = "Stagnancy",
         pos = { x = 7, y = 1 },
         downside_while_eternal = { "All owned Jokers become {C:purple}Eternal{}", "{C:inactive,s:0.6}(Also, if you say this cards name in the Balatro discord server you will be timed out for five minutes!)" },
         after_rounds_use = {
@@ -439,22 +439,59 @@ local cataclysms = {
         config = {},
         rounds = 6,
         activate = function(self, card)
-            for _,joker in pairs(G.jokers.cards) do
+            for _, joker in pairs(G.jokers.cards) do
                 joker:set_eternal_bypass(true)
             end
         end,
         use = function(self, card)
-            for _,joker in pairs(G.jokers.cards) do
+            for _, joker in pairs(G.jokers.cards) do
                 joker:set_eternal_bypass(false)
             end
 
-            local newjoker = SMODS.add_card({set = "Joker", rarity = "valk_exquisite"})
+            local newjoker = SMODS.add_card({ set = "Joker", rarity = "valk_exquisite" })
             newjoker:set_eternal_bypass(true)
         end,
     },
     {
-        name = "Phoenix",
-        pos = { x = 4, y = 2 },
+        name = "Tempest",
+        pos = { x = 8, y = 1 },
+        downside_while_eternal = { "{X:dark_edition,C:white}X#1#{} Blind Size" },
+        after_rounds_use = {
+            "Add {C:attention}#2# $1 Vouchers{} to the current shop",
+        },
+        config = { mul = 1.25, vouch = 2, cost = 0 },
+        rounds = 6,
+        calculate = function(self, card, context)
+            if context.setting_blind then
+                G.GAME.blind.chips = G.GAME.blind.chips * card.ability.extra.vars.mul
+                G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+                G.HUD_blind:recalculate()
+            end
+        end,
+        use = function(self, card, context)
+            for i = 1, card.ability.extra.vars.vouch do
+                local voucher_key = get_next_voucher_key(true)
+                G.shop_vouchers.config.card_limit = G.shop_vouchers.config.card_limit + 1
+                local new_card = Card(G.shop_vouchers.T.x + G.shop_vouchers.T.w / 2,
+                    G.shop_vouchers.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS[voucher_key],
+                    { bypass_discovery_center = true, bypass_discovery_ui = true })
+                new_card.bonus_cost = ((new_card.cost) * (card.ability.extra.vars.cost - 1)) - 1
+                new_card:set_cost()
+                create_shop_card_ui(new_card, 'Voucher', G.shop_vouchers)
+                new_card:start_materialize()
+                G.shop_vouchers:emplace(new_card)
+            end
+        end,
+        loc_vars = function(self, info_queue, card)
+            return { vars = { card.ability.extra.vars.mul, card.ability.extra.vars.vouch } }
+        end,
+        can_use = function(self, card)
+            return (G.STATE == G.STATES.SHOP)
+        end
+    },
+    {
+        name = "Leviathan",
+        pos = { x = 0, y = 2 },
         downside_while_eternal = { "Nothing!" },
         after_rounds_use = {
             "Create {C:attention}two{} {C:valk_cataclysm}Cataclysm{} cards",
@@ -463,8 +500,8 @@ local cataclysms = {
         config = {},
         rounds = 4,
         use = function(self, card)
-            for i=1,2 do
-                SMODS.add_card({set = "Cataclysm", area = G.consumeables})
+            for i = 1, 2 do
+                SMODS.add_card({ set = "Cataclysm", area = G.consumeables })
             end
         end,
     },
