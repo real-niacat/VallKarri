@@ -1,3 +1,12 @@
+SMODS.Rarity {
+    key = 'prestigious',
+    loc_txt = {
+        name = 'Prestigious'
+    },
+    badge_colour = G.C.VALK_PRESTIGIOUS,
+    pools = { ["Joker"] = false },
+}
+
 SMODS.Joker {
     key = "vallkarrilua",
     loc_txt = {
