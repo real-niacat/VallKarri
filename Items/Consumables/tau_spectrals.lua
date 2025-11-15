@@ -773,7 +773,7 @@ local tauspecs = {
             G.E_MANAGER:add_event(Event({
                 func = function()
                     for _, joker in pairs(G.jokers.cards) do
-                        joker:add_sticker("valk_transformative")
+                        joker:add_sticker("valk_transformative", true)
                     end
                     return true 
                 end

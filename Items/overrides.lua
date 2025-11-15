@@ -5,52 +5,43 @@ Game.main_menu = function(change_context) --code heavily adapted from cryptid
     math.randomseed(os.time())
     vallkarri.main_menu_text = vallkarri.choose_main_menu_text()
 
-    G.E_MANAGER:add_event(Event({
-        func = function()
-            local newcard = Card(
-                G.title_top.T.x,
-                G.title_top.T.y,
-                G.CARD_W,
-                G.CARD_H,
-                G.P_CARDS.empty,
-                G.P_CENTERS.j_valk_lily, --replace this with the p_center of your card, you can keep everything else the same
-                { bypass_discovery_center = true }
-            )
-            newcard.click = function(self)
-                G.FUNCS["openModUI_" .. self.config.center.mod.id]()
-            end
-            G.title_top:emplace(newcard)
-            newcard:start_materialize({ G.C.BLUE }, false, G.SETTINGS.GAMESPEED * 0.25)
-            newcard.T.w = newcard.T.w * 1.1 * 1.2
-            newcard.T.h = newcard.T.h * 1.1 * 1.2
-            newcard.no_ui = true
-            newcard:set_sprites(newcard.config.center)
+    if (G.P_CENTERS.j_valk_lily) then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                local newcard = Card(
+                    G.title_top.T.x,
+                    G.title_top.T.y,
+                    G.CARD_W,
+                    G.CARD_H,
+                    G.P_CARDS.empty,
+                    G.P_CENTERS.j_valk_lily, --replace this with the p_center of your card, you can keep everything else the same
+                    { bypass_discovery_center = true }
+                )
+                newcard.click = function(self)
+                    G.FUNCS["openModUI_" .. self.config.center.mod.id]()
+                end
+                G.title_top:emplace(newcard)
+                newcard:start_materialize({ G.C.BLUE }, false, G.SETTINGS.GAMESPEED * 0.25)
+                newcard.T.w = newcard.T.w * 1.1 * 1.2
+                newcard.T.h = newcard.T.h * 1.1 * 1.2
+                newcard.no_ui = true
+                newcard:set_sprites(newcard.config.center)
 
-            if #G.title_top.cards == 2 then
-                for _, card in pairs(G.title_top.cards) do
-                    if card.base.id then
-                        card:start_dissolve({ G.C.BLUE }, false, G.SETTINGS.GAMESPEED * 0.25)
+                if #G.title_top.cards == 2 then
+                    for _, card in pairs(G.title_top.cards) do
+                        if card.base.id then
+                            card:start_dissolve({ G.C.BLUE }, false, G.SETTINGS.GAMESPEED * 0.25)
+                        end
                     end
                 end
-            end
 
-            if not (SMODS.Mods["Talisman"] and SMODS.Mods["Talisman"].can_load) then
-                newcard.children.alert = UIBox {
-                    definition = create_UIBox_card_alert(),
-                    config = {
-                        align = "tri",
-                        offset = { x = 0.2, y = -0.2 },
-                        parent = newcard.children.center
-                    }
-                }
-            end
-
-            vallkarri.initialize_splashtext()
-            return true
-        end,
-        trigger = "after",
-        delay = 0.25,
-    }))
+                vallkarri.initialize_splashtext()
+                return true
+            end,
+            trigger = "after",
+            delay = 0.25,
+        }))
+    end
 
 
     return ret

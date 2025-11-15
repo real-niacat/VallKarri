@@ -5,28 +5,14 @@ SMODS.Atlas {
     py = 95,
 }
 
-function tauic_check()
-    for i,joker in ipairs(G.jokers.cards) do
-        if joker.config.center.tau then
-            return true
-        end
-    end
-
-    return false
-end
-
-function tauic_owned()
-
-    for i,joker in ipairs(G.jokers.cards) do
-
-        if joker.config.center.rarity == "valk_tauic" then
-            return true 
-        end 
-
-    end
-
-    return false
-end
+SMODS.Rarity {
+    key = 'tauic',
+    loc_txt = {
+        name = 'Tauic'
+    },
+    badge_colour = HEX("B080FF"),
+    pools = { ["Joker"] = false },
+}
 
 SMODS.Joker {
     key = "tauist",

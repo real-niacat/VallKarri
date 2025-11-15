@@ -1,3 +1,14 @@
+SMODS.Rarity {
+    key = 'renowned',
+    loc_txt = {
+        name = 'Renowned'
+    },
+    badge_colour = G.C.VALK_RENOWNED,
+    pools = { ["Joker"] = true },
+    default_weight = 0.01,
+    --approx 3x more common than a cryptid epic joker
+}
+
 SMODS.Joker {
     key = "raxd",
     loc_txt = {

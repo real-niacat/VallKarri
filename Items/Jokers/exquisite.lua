@@ -1,48 +1,10 @@
--- SMODS.Joker {
-local orivander = {
-    key = "orivander",
+SMODS.Rarity {
+    key = 'exquisite',
     loc_txt = {
-        name = "Orivander",
-        text = {
-            "Creates an Eternal {C:attention}Gravity Well{} when obtained.",
-            "Allows for building up score and releasing it all across multiple hands.",
-            quote("orivander"),
-        },
+        name = 'Exquisite'
     },
-    valk_artist = "Scraptake",
-    config = { extra = {} },
-    loc_vars = function(self, info_queue, card)
-
-    end,
-
-    cost = 35,
-    rarity = "valk_exquisite",
-    atlas = "main",
-    pos = { x = 0, y = 1 },
-    soul_pos = { x = 1, y = 1 },
-    calculate = function(self, card, context)
-
-    end,
-    --  (select(2, next(SMODS.find_card("c_valk_gravitywell")))):quick_dissolve()
-    add_to_deck = function(self, card, from_debuff)
-        if (not from_debuff) then
-            local ability = create_card("Consumable", G.consumeables, nil, nil, nil, nil, "c_valk_gravitywell",
-                "orivander")
-            ability:add_to_deck()
-
-            G.consumeables:emplace(ability)
-            ability.ability.eternal = true
-        end
-    end,
-
-    remove_from_deck = function(self, card, from_debuff)
-        if (not from_debuff) then
-            local found = SMODS.find_card("c_valk_gravitywell")
-            if #found > 0 then
-                (select(2, next(found))):quick_dissolve()
-            end
-        end
-    end,
+    badge_colour = G.C.VALK_EXQUISITE,
+    pools = { ["Joker"] = false },
 }
 
 SMODS.Joker {
