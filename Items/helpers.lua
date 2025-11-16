@@ -387,7 +387,7 @@ function Card:deselect()
     self.area:remove_from_highlighted(self)
 end
 
-function do_while_flipped(cards, func) --mostly borrowed from entropy, thank you ruby <3
+function vallkarri.do_while_flipped(cards, func) --mostly borrowed from entropy, thank you ruby <3
     if not Talisman or (Talisman and not Talisman.config_file.disable_anims) then
         for i, _ in ipairs(cards) do
             local card = cards[i]
