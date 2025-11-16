@@ -111,7 +111,7 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        do_while_flipped(G.hand.cards, function(c)
+        vallkarri.do_while_flipped(G.hand.cards, function(c)
             local valid = { "m_bonus", "m_mult", "m_wild", "m_glass", "m_steel", "m_gold", "m_lucky" }
             c:set_ability(valid[pseudorandom("valk_missingno", 1, #valid)])
         end)
@@ -151,7 +151,7 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        do_while_flipped(G.hand.cards, function(c)
+        vallkarri.do_while_flipped(G.hand.cards, function(c)
             local valid = { "e_foil", "e_holo", "e_polychrome", "e_negative" }
             c:set_edition(valid[pseudorandom("valk_missingno", 1, #valid)], true)
         end)
@@ -233,7 +233,7 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        do_while_flipped(Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.convert), function(c)
+        vallkarri.do_while_flipped(Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.convert), function(c)
             SMODS.change_base(c, nil, "King")
             c:set_edition("e_polychrome", true)
         end)
@@ -280,7 +280,7 @@ SMODS.Consumable {
     end,
 
     use = function(self, card, area, copier)
-        do_while_flipped(Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.convert), function(c)
+        vallkarri.do_while_flipped(Cryptid.get_highlighted_cards({G.hand}, card, 1, card.ability.extra.convert), function(c)
             SMODS.change_base(c, nil, "Queen")
             c:set_edition("e_polychrome", true)
         end)
