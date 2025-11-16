@@ -27,7 +27,7 @@ SMODS.Back {
     loc_txt = {
         name = "Tauic Deck",
         text = {
-            "{C:valk_tauic}Tauic{} Jokers are {C:attention}twice{} as common",
+            "{C:valk_tauic}Tauic{} Jokers are {C:attention}thrice{} as common",
             "for each {C:valk_tauic}non-Tauic{} Joker owned",
             "{C:attention}+#1#{} Effective Ante when buying",
             "a {C:valk_tauic}Tauic{} Joker",
@@ -54,7 +54,7 @@ SMODS.Back {
             end
 
             return {
-                denominator = context.denominator / (2 ^ count)
+                denominator = context.denominator / (3 ^ count)
             }
         end
 
