@@ -460,7 +460,7 @@ local cataclysms = {
             "Add {C:attention}#2# $1 Vouchers{} to the current shop",
         },
         config = { mul = 1.25, vouch = 2, cost = 0 },
-        rounds = 6,
+        rounds = 3,
         calculate = function(self, card, context)
             if context.setting_blind then
                 G.GAME.blind.chips = G.GAME.blind.chips * card.ability.extra.vars.mul
